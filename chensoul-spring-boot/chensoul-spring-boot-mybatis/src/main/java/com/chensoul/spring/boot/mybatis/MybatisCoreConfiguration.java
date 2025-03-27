@@ -9,9 +9,9 @@ import com.baomidou.mybatisplus.core.injector.ISqlInjector;
 import com.baomidou.mybatisplus.extension.parser.JsqlParserGlobal;
 import com.baomidou.mybatisplus.extension.parser.cache.JdkSerialCaffeineJsqlParseCache;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
+import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
 import com.chensoul.core.util.NetUtils;
 import com.chensoul.mybatis.extension.interceptor.DefaultMetaObjectHandler;
-import com.chensoul.mybatis.extension.interceptor.DefaultPaginationInnerInterceptor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -44,7 +44,9 @@ public class MybatisCoreConfiguration {
 	@Bean
 	public MybatisPlusInterceptor mybatisPlusInterceptor() {
 		MybatisPlusInterceptor mybatisPlusInterceptor = new MybatisPlusInterceptor();
-		mybatisPlusInterceptor.addInnerInterceptor(new DefaultPaginationInnerInterceptor());
+		PaginationInnerInterceptor paginationInnerInterceptor = new PaginationInnerInterceptor();
+		paginationInnerInterceptor.setMaxLimit(1000L);
+		mybatisPlusInterceptor.addInnerInterceptor(paginationInnerInterceptor);
 		return mybatisPlusInterceptor;
 	}
 
