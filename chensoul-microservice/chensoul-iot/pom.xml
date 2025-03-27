@@ -15,7 +15,7 @@
     <dependencies>
         <dependency>
             <groupId>com.chensoul</groupId>
-            <artifactId>chensoul-spring-boot-mybatis-tenant</artifactId>
+            <artifactId>chensoul-spring-boot-mybatis</artifactId>
             <version>${parent.version}</version>
         </dependency>
 
