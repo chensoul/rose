@@ -1,4 +1,4 @@
-package com.chensoul.core.validator;
+package com.chensoul.core.validation;
 
 public class Views {
 	public static class Public {

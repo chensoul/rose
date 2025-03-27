@@ -17,7 +17,7 @@ import com.chensoul.upms.event.DeleteEntityEvent;
 import com.chensoul.upms.event.SaveEntityEvent;
 import com.chensoul.upms.event.UserCacheEvictEvent;
 import com.chensoul.upms.event.UserCredentialInvalidationEvent;
-import com.chensoul.upms.mapper.UserCredentialMapper;
+import com.chensoul.upms.mapper.CredentialMapper;
 import com.chensoul.upms.mapper.UserMapper;
 import com.chensoul.upms.mapper.UserSettingMapper;
 import com.chensoul.upms.model.param.UserRegisterRequest;
@@ -48,7 +48,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 	public static final String USER_PASSWORD_HISTORY = "userPasswordHistory";
 	private static final int DEFAULT_TOKEN_LENGTH = 30;
 
-	private final UserCredentialMapper userCredentialMapper;
+	private final CredentialMapper credentialMapper;
 	private final UserSettingMapper userSettingMapper;
 	private final SystemSettingService systemSettingService;
 	private final SmsService smsService;
@@ -95,7 +95,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 	@Override
 	@Transactional(rollbackFor = Exception.class)
 	public void deleteUser(User user) {
-		userCredentialMapper.deleteById(user.getId());
+		credentialMapper.deleteById(user.getId());
 		userSettingMapper.deleteById(user.getId());
 		baseMapper.deleteById(user.getId());
 
@@ -105,13 +105,13 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
 	@Override
 	public Credential findUserCredentialByUserId(Long userId) {
-		return userCredentialMapper.selectById(userId);
+		return credentialMapper.selectById(userId);
 	}
 
 	@Override
 	@Transactional(rollbackFor = Exception.class)
 	public Credential saveUserCredential(Credential credential) {
-		userCredentialMapper.insert(credential);
+		credentialMapper.insert(credential);
 		return credential;
 	}
 
@@ -159,7 +159,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 			credential.setActivateToken(generateSafeToken(DEFAULT_TOKEN_LENGTH));
 			credential.setUserId(user.getId());
 			credential.setExtra(JacksonUtils.newObjectNode());
-			userCredentialMapper.insert(credential);
+			credentialMapper.insert(credential);
 		} else {
 			baseMapper.updateById(user);
 		}

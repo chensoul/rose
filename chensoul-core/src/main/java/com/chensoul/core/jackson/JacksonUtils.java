@@ -1,7 +1,7 @@
 package com.chensoul.core.jackson;
 
 import com.chensoul.core.util.StringPool;
-import com.chensoul.core.validator.Views;
+import com.chensoul.core.validation.Views;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.json.JsonWriteFeature;

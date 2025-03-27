@@ -2,7 +2,7 @@ package com.chensoul.mybatis.functional;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.chensoul.core.exception.BusinessException;
-import com.chensoul.core.validator.Update;
+import com.chensoul.core.validation.Update;
 import io.vavr.control.Try;
 import lombok.extern.slf4j.Slf4j;
 

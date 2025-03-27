@@ -540,7 +540,7 @@ public final class HtmlFilter {
 	private String validateEntities(final String s) {
 		StringBuffer buf = new StringBuffer();
 
-		// validator entities throughout the string
+		// validation entities throughout the string
 		Matcher m = P_VALID_ENTITIES.matcher(s);
 		while (m.find()) {
 			final String one = m.group(1); // ([^&;]*)

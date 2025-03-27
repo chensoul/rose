@@ -44,8 +44,6 @@
         <dependency>
             <groupId>com.github.yulichang</groupId>
             <artifactId>mybatis-plus-join-core</artifactId>
-            <version>1.4.13</version>
-            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>com.baomidou</groupId>

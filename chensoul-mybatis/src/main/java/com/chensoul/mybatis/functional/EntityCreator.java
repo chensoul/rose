@@ -1,7 +1,7 @@
 package com.chensoul.mybatis.functional;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.chensoul.core.validator.Insert;
+import com.chensoul.core.validation.Insert;
 import io.vavr.control.Try;
 import lombok.extern.slf4j.Slf4j;
 

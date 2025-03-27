@@ -1,8 +1,6 @@
 package com.chensoul.mybatis.model;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.Version;
+import com.baomidou.mybatisplus.annotation.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -20,4 +18,7 @@ public class BaseEntity extends AuditEntity implements Serializable {
 
 	@Version
 	protected Integer version;
+
+	@TableField(value = "is_deleted", fill = FieldFill.INSERT)
+	protected boolean isDeleted = false;
 }

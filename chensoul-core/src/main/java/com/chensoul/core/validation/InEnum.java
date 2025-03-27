@@ -1,4 +1,4 @@
-package com.chensoul.core.validator;
+package com.chensoul.core.validation;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
@@ -19,10 +19,8 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Retention(RUNTIME)
 @Documented
 @Constraint(validatedBy = {EnumCheckValidator.class})
-public @interface EnumCheck {
-
-	// 校验出错时默认返回的消息
-	String message() default "枚举数据异常";
+public @interface InEnum {
+	String message() default "必须在指定范围 {value}";
 
 	Class<?>[] groups() default {};
 
@@ -30,12 +28,7 @@ public @interface EnumCheck {
 
 	String propertyKey() default "code";
 
-	/**
-	 * 允许的枚举类型
-	 *
-	 * @return
-	 */
-	Class<?> enumClass();
+	Class<? extends Enum<?>> value();
 
 	/**
 	 * 同一个元素上指定多个该注解时使用
@@ -44,6 +37,6 @@ public @interface EnumCheck {
 	@Retention(RUNTIME)
 	@Documented
 	public @interface List {
-		EnumCheck[] value();
+		InEnum[] value();
 	}
 }

@@ -1,4 +1,4 @@
-package com.chensoul.core.validator;
+package com.chensoul.core.validation;
 
 import com.chensoul.core.exception.BusinessException;
 import lombok.experimental.UtilityClass;

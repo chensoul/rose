@@ -1,7 +1,7 @@
 package com.chensoul.upms.service.impl;
 
 import com.chensoul.core.exception.BusinessException;
-import com.chensoul.core.validator.Validators;
+import com.chensoul.core.validation.Validators;
 import com.chensoul.upms.entity.Credential;
 import com.chensoul.upms.entity.User;
 import com.chensoul.upms.service.AuthService;

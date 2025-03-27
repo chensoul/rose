@@ -18,18 +18,15 @@ import static com.chensoul.core.util.date.DatePattern.NORM_DATETIME_PATTERN;
 public class AuditEntity implements Serializable {
 	@TableField(value = "created_by", fill = FieldFill.INSERT)
 	protected String createdBy;
-	;
+
 	@JsonFormat(pattern = NORM_DATETIME_PATTERN)
 	@TableField(value = "create_time", fill = FieldFill.INSERT)
 	protected LocalDateTime createTime;
 
 	@TableField(value = "updated_by", fill = FieldFill.INSERT_UPDATE)
 	protected String updatedBy;
-	;
+
 	@JsonFormat(pattern = NORM_DATETIME_PATTERN)
 	@TableField(value = "update_time", fill = FieldFill.INSERT_UPDATE)
 	protected LocalDateTime updateTime;
-
-	@TableField(value = "is_deleted", fill = FieldFill.INSERT)
-	protected boolean isDeleted = false;
 }

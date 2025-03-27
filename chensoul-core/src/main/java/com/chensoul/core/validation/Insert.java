@@ -1,13 +1,13 @@
-package com.chensoul.core.validator;
+package com.chensoul.core.validation;
 
 import javax.validation.groups.Default;
 
 /**
- * 修改分组
+ * 插入分组
  *
  * @author <a href="mailto:ichensoul@gmail.com">chensoul</a>
  * @since 0.0.1
  */
-public interface Update extends Default {
+public interface Insert extends Default {
 
 }

@@ -1,4 +1,4 @@
-package com.chensoul.core.validator;
+package com.chensoul.core.validation;
 
 import com.chensoul.core.domain.CodeNameAware;
 import lombok.AllArgsConstructor;
