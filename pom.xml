@@ -7,6 +7,7 @@
         <groupId>com.chensoul</groupId>
         <artifactId>chensoul-build</artifactId>
         <version>0.0.1-SNAPSHOT</version>
+        <relativePath>./chensoul-build/pom.xml</relativePath>
     </parent>
     <artifactId>chensoul-cloud</artifactId>
     <version>0.0.1-SNAPSHOT</version>
