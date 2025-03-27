@@ -1,0 +1,134 @@
+services:
+  mailhog:
+    image: mailhog/mailhog:v1.0.1
+    container_name: mailhog
+    ports:
+      - "1025:1025"
+      - "8025:8025"
+
+  sonar:
+    image: sonarqube
+    environment:
+      - SONAR_FORCEAUTHENTICATION=false
+    ports:
+      - "9001:9000"
+      - "9000:9000"
+
+  chensoul-mysql:
+    image: mysql:9
+    restart: always
+    container_name: chensoul-mysql
+    command: [
+      'mysqld',
+      '--character-set-server=utf8mb4',
+      '--collation-server=utf8mb4_unicode_ci',
+      '--default-time-zone=+8:00',
+      '--lower-case-table-names=1'
+    ]
+    environment:
+      MYSQL_ROOT_HOST: "%"
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - ./docs/sql/chensoul.sql:/docker-entrypoint-initdb.d/chensoul.sql:ro
+
+    healthcheck:
+      test: [ "CMD", "mysqladmin" ,"ping", "-h", "localhost" ]
+      interval: 5s
+      timeout: 2s
+      retries: 10
+    ports:
+      - "3306:3306"
+
+  chensoul-redis:
+    image: redis:7
+    container_name: chensoul-redis
+    restart: always
+    environment:
+      ALLOW_EMPTY_PASSWORD: "yes"
+    command: "redis-server --appendonly yes"
+    healthcheck:
+      test: [ "CMD", "redis-cli","--raw", "incr","ping" ]
+      interval: 5s
+      timeout: 2s
+      retries: 10
+    ports:
+      - "6379:6379"
+
+  chensoul-nacos:
+    image: nacos/nacos-server:v2.5.1
+    container_name: chensoul-nacos
+    restart: always
+    environment:
+      - PREFER_HOST_MODE=hostname
+      - MODE=standalone
+      - SPRING_DATASOURCE_PLATFORM=mysql
+      - MYSQL_SERVICE_HOST=chensoul-mysql
+      - MYSQL_SERVICE_DB_NAME=nacos
+      - MYSQL_SERVICE_USER=root
+      - MYSQL_SERVICE_PASSWORD=root
+      - MYSQL_SERVICE_DB_PARAM=characterEncoding=utf8&connectTimeout=1000&socketTimeout=3000&autoReconnect=true&useUnicode=true&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
+    ports:
+      - "8848:8848"
+      - "9848:9848"
+      - "9849:9849"
+
+  chensoul-sentinel:
+    image: bladex/sentinel-dashboard:1.8.7
+    container_name: chensoul-sentinel
+    restart: always
+    ports:
+      - "8858:8858"
+
+  #  chensoul-nacos:
+  #    build:
+  #      context: ./chensoul-visual/chensoul-nacos
+  #    image: chensoul/chensoul-nacos
+  #    restart: always
+  #    container_name: chensoul-nacos
+  #    ports:
+  #      - "8848:8848"
+
+  chensoul-monitor:
+    build:
+      context: ./chensoul-visual/chensoul-monitor
+    restart: always
+    image: chensoul/chensoul-monitor
+    container_name: chensoul-monitor
+    ports:
+      - "7010:7010"
+
+  chensoul-xxljob:
+    build:
+      context: ./chensoul-visual/chensoul-xxljob
+    image: chensoul/chensoul-xxljob
+    container_name: chensoul-xxljob
+    restart: always
+    ports:
+      - "7020:7020"
+
+  chensoul-gateway:
+    build:
+      context: ./chensoul-gateway
+    restart: always
+    container_name: chensoul-gateway
+    image: chensoul/chensoul-gateway
+    ports:
+      - "9999:9999"
+
+  chensoul-auth:
+    build:
+      context: ./chensoul-auth
+    restart: always
+    container_name: chensoul-auth
+    image: chensoul/chensoul-auth
+    ports:
+      - "3000:3000"
+
+  chensoul-upms:
+    build:
+      context: ./chensoul-upms/chensoul-upms-service
+    restart: always
+    container_name: chensoul-upms
+    image: chensoul/chensoul-upms-service
+    ports:
+      - "8010:8010"

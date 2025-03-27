@@ -1,0 +1,3 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+    com.chensoul.oss.old.amazon.configuration.OssConfiguration
+com.chensoul.oss.old.huawei.configuration.HuaweiObsConfiguration

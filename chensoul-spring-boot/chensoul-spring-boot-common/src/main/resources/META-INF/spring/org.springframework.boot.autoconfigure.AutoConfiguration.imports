@@ -1,0 +1,8 @@
+com.chensoul.spring.boot.config.EnvironmentConfiguration
+com.chensoul.spring.boot.config.JacksonConfiguration
+com.chensoul.spring.boot.config.MetricConfiguration
+com.chensoul.spring.boot.config.RestTemplateConfiguration
+com.chensoul.spring.boot.config.RetryConfiguration
+com.chensoul.spring.boot.config.TaskExecutorConfiguration
+com.chensoul.spring.boot.config.UndertowSSLConfiguration
+com.chensoul.spring.boot.config.WebMvcConfiguration

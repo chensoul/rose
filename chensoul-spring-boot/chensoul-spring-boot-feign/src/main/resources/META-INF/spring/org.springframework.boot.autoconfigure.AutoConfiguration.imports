@@ -1,0 +1,4 @@
+com.chensoul.spring.boot.feign.FeignAutoConfiguration
+com.chensoul.spring.boot.feign.FeignRetryAutoConfiguration
+com.chensoul.spring.boot.feign.sentinel.SentinelAutoConfiguration
+com.chensoul.spring.boot.feign.sentinel.handle.GlobalExceptionHandler

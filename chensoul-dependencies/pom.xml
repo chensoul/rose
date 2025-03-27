@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.chensoul</groupId>
+        <artifactId>chensoul-cloud</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+
+    <artifactId>chensoul-dependencies</artifactId>
+    <packaging>pom</packaging>
+
+    <name>chensoul-dependencies</name>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.chensoul</groupId>
+                <artifactId>chensoul-core</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.chensoul</groupId>
+                <artifactId>chensoul-excel</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.chensoul</groupId>
+                <artifactId>chensoul-ip2region</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.chensoul</groupId>
+                <artifactId>chensoul-mybatis</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.chensoul</groupId>
+                <artifactId>chensoul-spring-boot-common</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.chensoul</groupId>
+                <artifactId>chensoul-spring-boot-feign</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.chensoul</groupId>
+                <artifactId>chensoul-spring-boot-mybatis</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.chensoul</groupId>
+                <artifactId>chensoul-spring-boot-redis</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.chensoul</groupId>
+                <artifactId>chensoul-spring-boot-security</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.chensoul</groupId>
+                <artifactId>chensoul-spring-boot-seata</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.chensoul</groupId>
+                <artifactId>chensoul-spring-boot-syslog</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.chensoul</groupId>
+                <artifactId>chensoul-spring-boot-springdoc</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.chensoul</groupId>
+                <artifactId>chensoul-spring-boot-xxljob</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+</project>

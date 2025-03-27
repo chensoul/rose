@@ -1,0 +1,7 @@
+spring:
+  autoconfigure:
+    exclude: com.chensoul.spring.boot.config.JacksonConfiguration
+  security:
+    user:
+      name: admin
+      password: 123456
