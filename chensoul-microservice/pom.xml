@@ -19,5 +19,6 @@
         <module>chensoul-gateway</module>
         <module>chensoul-upms</module>
         <module>chensoul-iot</module>
+        <module>chensoul-canal</module>
     </modules>
 </project>
