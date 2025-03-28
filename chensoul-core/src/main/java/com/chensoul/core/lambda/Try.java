@@ -155,12 +155,12 @@ public class Try {
 										 final CheckedSupplier<R> trueSupplier,
 										 final CheckedSupplier<R> falseSupplier,
 										 final CheckedFunction<Throwable, R> errorHandler) {
-		return tryGet(condition, trueSupplier, falseSupplier, errorHandler);
+		return tryGet(condition, trueSupplier, falseSupplier, errorHandler, null);
 	}
 
 	public static <R> Supplier<R> tryGet(final CheckedSupplier<R> trueSupplier,
 										 final CheckedFunction<Throwable, R> errorHandler) {
-		return tryGet(true, trueSupplier, null, errorHandler);
+		return tryGet(true, trueSupplier, null, errorHandler, null);
 	}
 
 	public static <R> Supplier<R> tryGet(final boolean condition,

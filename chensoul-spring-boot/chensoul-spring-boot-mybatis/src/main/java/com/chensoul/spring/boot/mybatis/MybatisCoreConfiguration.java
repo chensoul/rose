@@ -12,14 +12,11 @@ import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
 import com.chensoul.core.util.NetUtils;
 import com.chensoul.mybatis.extension.interceptor.DefaultMetaObjectHandler;
-import com.chensoul.spring.boot.mybatis.cosid.CosidIdentifierGenerator;
 import com.chensoul.spring.boot.mybatis.mq.rabbitmq.TenantRabbitMQInitializer;
 import com.chensoul.spring.boot.mybatis.mq.redis.TenantRedisMessageInterceptor;
 import com.chensoul.spring.boot.mybatis.mq.rocketmq.TenantRocketMQInitializer;
 import lombok.extern.slf4j.Slf4j;
-import me.ahoo.cosid.IdGenerator;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
@@ -43,16 +40,9 @@ public class MybatisCoreConfiguration {
 	}
 
 	@Bean
-	@ConditionalOnMissingBean(IdGenerator.class)
 	public IdentifierGenerator idGenerator() {
 		//通过本地 生成 workerId 和 dataCenterId
 		return new DefaultIdentifierGenerator(NetUtils.getLocalhost());
-	}
-
-	@Bean
-	@ConditionalOnBean(IdGenerator.class)
-	public IdentifierGenerator cosidGenerator() {
-		return new CosidIdentifierGenerator();
 	}
 
 	@Bean

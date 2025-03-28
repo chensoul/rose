@@ -1,6 +1,6 @@
 package com.chensoul.spring.boot.syslog.event;
 
-import com.chensoul.core.util.lang.function.CheckedConsumer;
+import com.chensoul.core.lambda.function.CheckedConsumer;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;
