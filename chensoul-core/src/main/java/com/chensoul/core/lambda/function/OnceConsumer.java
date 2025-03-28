@@ -1,4 +1,4 @@
-package com.chensoul.core.util.lang.function;
+package com.chensoul.core.lambda.function;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Consumer;

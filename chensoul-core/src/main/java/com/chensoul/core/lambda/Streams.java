@@ -1,4 +1,4 @@
-package com.chensoul.core.util.lang.function;
+package com.chensoul.core.lambda;
 
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -10,8 +10,6 @@ import java.util.stream.StreamSupport;
 import static java.util.stream.Collectors.toList;
 
 /**
- * TODO
- *
  * @author <a href="mailto:ichensoul@gmail.com">chensoul</a>
  * @since 0.0.1
  */

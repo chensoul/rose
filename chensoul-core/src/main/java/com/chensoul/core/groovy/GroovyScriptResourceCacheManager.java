@@ -1,8 +1,8 @@
 package com.chensoul.core.groovy;
 
+import com.chensoul.core.lambda.function.CheckedConsumer;
 import com.chensoul.core.spring.SpringExpressionResolver;
 import com.chensoul.core.util.concurrent.TryLock;
-import com.chensoul.core.util.lang.function.CheckedConsumer;
 import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
 import lombok.extern.slf4j.Slf4j;

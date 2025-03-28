@@ -14,10 +14,10 @@ services:
       - "9001:9000"
       - "9000:9000"
 
-  chensoul-mysql:
+  mysql:
     image: mysql:9
     restart: always
-    container_name: chensoul-mysql
+    container_name: mysql
     command: [
       'mysqld',
       '--character-set-server=utf8mb4',
@@ -30,7 +30,6 @@ services:
       MYSQL_ROOT_PASSWORD: root
     volumes:
       - ./docs/sql/chensoul.sql:/docker-entrypoint-initdb.d/chensoul.sql:ro
-
     healthcheck:
       test: [ "CMD", "mysqladmin" ,"ping", "-h", "localhost" ]
       interval: 5s
@@ -39,9 +38,9 @@ services:
     ports:
       - "3306:3306"
 
-  chensoul-redis:
+  redis:
     image: redis:7
-    container_name: chensoul-redis
+    container_name: redis
     restart: always
     environment:
       ALLOW_EMPTY_PASSWORD: "yes"
@@ -54,15 +53,72 @@ services:
     ports:
       - "6379:6379"
 
-  chensoul-nacos:
+  redis-node1:
+    image: redis:7
+    container_name: redis-node1
+    command: redis-server --port 7001 --requirepass redis --cluster-enabled yes --appendonly yes
+    ports:
+      - "7001:7001"
+      - "17001:17001"
+
+  redis-node2:
+    image: redis:7
+    container_name: redis-node2
+    command: redis-server --port 7002 --requirepass redis --cluster-enabled yes --appendonly yes
+    ports:
+      - "7002:7002"
+      - "17002:17002"
+
+  redis-node3:
+    image: redis:7
+    container_name: redis-node3
+    command: redis-server --port 7003 --requirepass redis --cluster-enabled yes --appendonly yes
+    ports:
+      - "7003:7003"
+      - "17003:17003"
+
+  redis-node4:
+    image: redis:7
+    container_name: redis-node4
+    command: redis-server --port 7004 --requirepass redis --cluster-enabled yes --appendonly yes
+    ports:
+      - "7004:7004"
+      - "17004:17004"
+
+  redis-node5:
+    image: redis:7
+    container_name: redis-node5
+    command: redis-server --port 7005 --requirepass redis --cluster-enabled yes --appendonly yes
+    ports:
+      - "7005:7005"
+      - "17005:17005"
+
+  redis-node6:
+    image: redis:7
+    container_name: redis-node6
+    command: >
+      sh -c "redis-server --port 7006 --requirepass redis --cluster-enabled yes --appendonly yes
+      && sleep 5 &&
+      echo 'yes' | redis-cli -h redis-node1 -p 7001 --cluster create redis-node1:7001 redis-node2:7002 redis-node3:7003 redis-node4:7004 redis-node5:7005 redis-node6:7006 --cluster-replicas 1 --pass redis"
+    ports:
+      - "7006:7006"
+      - "17006:17006"
+    depends_on:
+      - redis-node1
+      - redis-node2
+      - redis-node3
+      - redis-node4
+      - redis-node5
+
+  nacos:
     image: nacos/nacos-server:v2.5.1
-    container_name: chensoul-nacos
+    container_name: nacos
     restart: always
     environment:
       - PREFER_HOST_MODE=hostname
       - MODE=standalone
       - SPRING_DATASOURCE_PLATFORM=mysql
-      - MYSQL_SERVICE_HOST=chensoul-mysql
+      - MYSQL_SERVICE_HOST=mysql
       - MYSQL_SERVICE_DB_NAME=nacos
       - MYSQL_SERVICE_USER=root
       - MYSQL_SERVICE_PASSWORD=root
@@ -72,21 +128,12 @@ services:
       - "9848:9848"
       - "9849:9849"
 
-  chensoul-sentinel:
+  sentinel:
     image: bladex/sentinel-dashboard:1.8.8
-    container_name: chensoul-sentinel
+    container_name: sentinel
     restart: always
     ports:
       - "8858:8858"
-
-  #  chensoul-nacos:
-  #    build:
-  #      context: ./chensoul-visual/chensoul-nacos
-  #    image: chensoul/chensoul-nacos
-  #    restart: always
-  #    container_name: chensoul-nacos
-  #    ports:
-  #      - "8848:8848"
 
   chensoul-monitor:
     build:

@@ -1,9 +1,8 @@
 package com.chensoul.core.util.concurrent;
 
-
-import com.chensoul.core.util.lang.function.CheckedConsumer;
-import com.chensoul.core.util.lang.function.CheckedSupplier;
-import com.chensoul.core.util.lang.function.FunctionUtils;
+import com.chensoul.core.lambda.Try;
+import com.chensoul.core.lambda.function.CheckedConsumer;
+import com.chensoul.core.lambda.function.CheckedSupplier;
 
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.ReentrantLock;
@@ -18,7 +17,7 @@ public class TryLock {
 	private final ReentrantLock lock = new ReentrantLock(true);
 
 	public boolean tryLock() {
-		return FunctionUtils.tryGet(() -> lock.tryLock(LOCK_TIMEOUT_SECONDS, TimeUnit.SECONDS), e -> false).get();
+		return Try.tryGet(() -> lock.tryLock(LOCK_TIMEOUT_SECONDS, TimeUnit.SECONDS), e -> false).get();
 	}
 
 	/**

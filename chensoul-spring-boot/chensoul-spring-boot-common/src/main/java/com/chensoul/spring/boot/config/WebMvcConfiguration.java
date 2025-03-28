@@ -2,6 +2,7 @@ package com.chensoul.spring.boot.config;
 
 import com.chensoul.core.CommonConstants;
 import com.chensoul.core.jackson.Java8TimeModule;
+import com.chensoul.core.spring.WebUtils;
 import com.chensoul.core.util.date.DatePattern;
 import com.chensoul.spring.boot.filter.*;
 import lombok.RequiredArgsConstructor;
@@ -24,9 +25,6 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import javax.servlet.DispatcherType;
-import javax.servlet.Filter;
-
 import static com.chensoul.core.CommonConstants.*;
 import static org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication.Type.SERVLET;
 
@@ -45,14 +43,6 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
 	@Value("${server.http.max_payload_size:/api/image*/**=52428800;/api/resource/**=52428800;/api/**=16777216}")
 	private String maxPayloadSizeConfig;
 
-	public static <T extends Filter> FilterRegistrationBean<T> createFilterBean(T filter, Integer order) {
-		FilterRegistrationBean<T> registrationBean = new FilterRegistrationBean<>(filter);
-		registrationBean.setDispatcherTypes(DispatcherType.REQUEST);
-		registrationBean.addUrlPatterns("/*");
-		registrationBean.setName(filter.getClass().getSimpleName());
-		registrationBean.setOrder(order);
-		return registrationBean;
-	}
 
 	/**
 	 * 增加GET请求参数中时间类型转换 {@link Java8TimeModule}
@@ -113,18 +103,18 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
 
 	@Bean
 	public FilterRegistrationBean<TraceFilter> traceFilter() {
-		return createFilterBean(new TraceFilter(), TRACE_FILTER);
+		return WebUtils.createFilterBean(new TraceFilter(), TRACE_FILTER);
 	}
 
 	@Bean
 	public FilterRegistrationBean<CachingRequestFilter> cachingRequestFilter() {
-		return createFilterBean(new CachingRequestFilter(), CACHING_REQUEST_FILTER);
+		return WebUtils.createFilterBean(new CachingRequestFilter(), CACHING_REQUEST_FILTER);
 	}
 
 	@Bean
 	@ConditionalOnProperty(value = CommonConstants.PROJECT_NAME + ".xss.enabled", havingValue = "true")
 	public FilterRegistrationBean<XssFilter> xxsFilter() {
-		return createFilterBean(new XssFilter(xssProperties.getExcludeUrls()), XSS_FILTER);
+		return WebUtils.createFilterBean(new XssFilter(xssProperties.getExcludeUrls()), XSS_FILTER);
 	}
 
 	@Bean

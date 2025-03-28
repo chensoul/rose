@@ -1,44 +1,24 @@
-package com.chensoul.core.util.lang.function;
+package com.chensoul.core.lambda;
 
 import java.util.function.Predicate;
 
-/**
- * TODO
- *
- * @author <a href="mailto:ichensoul@gmail.com">chensoul</a>
- * @since 0.0.1
- */
-public abstract class Predicates {
+public final class Predicates {
 	public static Predicate[] EMPTY_PREDICATE_ARRAY = new Predicate[0];
 
-	/**
-	 * <p>emptyArray.</p>
-	 *
-	 * @param <T> a T class
-	 * @return an array of {@link Predicate} objects
-	 */
 	public static <T> Predicate<T>[] emptyArray() {
 		return (Predicate<T>[]) EMPTY_PREDICATE_ARRAY;
 	}
 
-	/**
-	 * {@link Predicate} always return <code>true</code>
-	 *
-	 * @param <T> the type to test
-	 * @return <code>true</code>
-	 */
 	public static <T> Predicate<T> alwaysTrue() {
-		return e -> true;
+		return e -> Boolean.TRUE;
 	}
 
-	/**
-	 * {@link Predicate} always return <code>false</code>
-	 *
-	 * @param <T> the type to test
-	 * @return <code>false</code>
-	 */
 	public static <T> Predicate<T> alwaysFalse() {
-		return e -> false;
+		return e -> Boolean.FALSE;
+	}
+
+	public static <T> Predicate<T> of(boolean condition) {
+		return e -> condition;
 	}
 
 	/**

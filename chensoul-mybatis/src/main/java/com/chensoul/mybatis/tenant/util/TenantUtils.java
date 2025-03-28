@@ -1,8 +1,7 @@
 package com.chensoul.mybatis.tenant.util;
 
-
-import com.chensoul.core.util.lang.function.CheckedRunnable;
-import com.chensoul.core.util.lang.function.CheckedSupplier;
+import com.chensoul.core.lambda.function.CheckedRunnable;
+import com.chensoul.core.lambda.function.CheckedSupplier;
 
 public class TenantUtils {
 	/**

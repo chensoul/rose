@@ -1,4 +1,4 @@
-package com.chensoul.core.util.lang.matcher;
+package com.chensoul.core.lambda.matcher;
 
 import java.util.ArrayList;
 import java.util.Arrays;

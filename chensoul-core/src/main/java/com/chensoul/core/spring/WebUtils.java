@@ -6,12 +6,15 @@ import com.chensoul.core.util.NetUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import javax.servlet.DispatcherType;
+import javax.servlet.Filter;
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -202,5 +205,14 @@ public class WebUtils extends org.springframework.web.util.WebUtils {
 
 	public static HttpServletResponse getResponse() {
 		return ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getResponse();
+	}
+
+	public static <T extends Filter> FilterRegistrationBean<T> createFilterBean(T filter, Integer order) {
+		FilterRegistrationBean<T> registrationBean = new FilterRegistrationBean<>(filter);
+		registrationBean.setDispatcherTypes(DispatcherType.REQUEST);
+		registrationBean.addUrlPatterns("/*");
+		registrationBean.setName(filter.getClass().getSimpleName());
+		registrationBean.setOrder(order);
+		return registrationBean;
 	}
 }

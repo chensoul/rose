@@ -1,6 +1,6 @@
 package com.chensoul.core.groovy;
 
-import com.chensoul.core.util.lang.function.CheckedSupplier;
+import com.chensoul.core.lambda.function.CheckedSupplier;
 import groovy.lang.*;
 import groovy.transform.CompileStatic;
 import lombok.extern.slf4j.Slf4j;

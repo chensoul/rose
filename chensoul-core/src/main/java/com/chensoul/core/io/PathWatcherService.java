@@ -1,7 +1,7 @@
 package com.chensoul.core.io;
 
-import com.chensoul.core.util.lang.function.CheckedConsumer;
-import com.chensoul.core.util.lang.function.CheckedSupplier;
+import com.chensoul.core.lambda.function.CheckedConsumer;
+import com.chensoul.core.lambda.function.CheckedSupplier;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 import org.apache.commons.lang3.BooleanUtils;

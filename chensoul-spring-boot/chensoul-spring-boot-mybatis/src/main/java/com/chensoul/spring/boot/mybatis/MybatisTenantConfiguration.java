@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.TenantLineInnerInterceptor;
+import com.chensoul.core.spring.WebUtils;
 import com.chensoul.mybatis.tenant.aspect.TenantIgnoreAspect;
 import com.chensoul.mybatis.tenant.aspect.TenantJobAspect;
 import com.chensoul.mybatis.tenant.feign.TenantFeignRequestInterceptor;
@@ -13,7 +14,6 @@ import com.chensoul.mybatis.tenant.handler.DefaultTenantLineHandler;
 import com.chensoul.mybatis.tenant.handler.TenantMetaObjectHandler;
 import com.chensoul.mybatis.tenant.service.TenantService;
 import com.chensoul.mybatis.util.MyBatisUtils;
-import com.chensoul.spring.boot.config.WebMvcConfiguration;
 import com.chensoul.spring.boot.mybatis.redis.TenantRedisCacheManager;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
@@ -78,12 +78,12 @@ public class MybatisTenantConfiguration {
 
 	@Bean
 	public FilterRegistrationBean<TenantContextFilter> tenantContextFilter() {
-		return WebMvcConfiguration.createFilterBean(new TenantContextFilter(), TENANT_CONTEXT_FILTER);
+		return WebUtils.createFilterBean(new TenantContextFilter(), TENANT_CONTEXT_FILTER);
 	}
 
 	@Bean
 	public FilterRegistrationBean<TenantSecurityFilter> tenantSecurityFilter(TenantProperties tenantProperties) {
-		return WebMvcConfiguration.createFilterBean(new TenantSecurityFilter(tenantProperties.getIgnoreUrls()), TENANT_SECURITY_FILTER);
+		return WebUtils.createFilterBean(new TenantSecurityFilter(tenantProperties.getIgnoreUrls()), TENANT_SECURITY_FILTER);
 	}
 
 

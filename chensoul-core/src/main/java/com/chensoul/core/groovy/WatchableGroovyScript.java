@@ -1,9 +1,9 @@
 package com.chensoul.core.groovy;
 
 import com.chensoul.core.io.FileWatcherService;
+import com.chensoul.core.lambda.function.CheckedConsumer;
+import com.chensoul.core.lambda.function.CheckedSupplier;
 import com.chensoul.core.util.concurrent.TryLock;
-import com.chensoul.core.util.lang.function.CheckedConsumer;
-import com.chensoul.core.util.lang.function.CheckedSupplier;
 import groovy.lang.GroovyObject;
 import lombok.Getter;
 import lombok.Setter;

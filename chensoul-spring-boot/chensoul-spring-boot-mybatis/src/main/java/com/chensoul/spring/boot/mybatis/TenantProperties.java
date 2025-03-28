@@ -13,8 +13,6 @@ public class TenantProperties {
 
 	private String tenantIdColumn = "tenant_id";
 
-	private String defaultTenantId = "ROOT";
-
 	/**
 	 * 全路径：com.xxx.user.mybatis-mapper.SysUserMapper.findList
 	 */

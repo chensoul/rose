@@ -1,4 +1,4 @@
-package com.chensoul.core.util.lang.pipeline;
+package com.chensoul.core.lambda.pipeline;
 
 /**
  * @param <I>
