@@ -43,8 +43,7 @@ public class JdbcUtils {
 
 	/**
 	 * 判断连接是否正确
-	 *
-	 * @param url      数据源连接
+	 * @param url 数据源连接
 	 * @param username 账号
 	 * @param password 密码
 	 * @return 是否正确
@@ -52,14 +51,14 @@ public class JdbcUtils {
 	public static boolean isConnectionOK(String url, String username, String password) {
 		try (Connection ignored = DriverManager.getConnection(url, username, password)) {
 			return true;
-		} catch (Exception ex) {
+		}
+		catch (Exception ex) {
 			return false;
 		}
 	}
 
 	/**
 	 * 获得 URL 对应的 DB 类型
-	 *
 	 * @param url URL
 	 * @return DB 类型
 	 */
@@ -69,27 +68,28 @@ public class JdbcUtils {
 
 	/**
 	 * 通过当前数据库连接获得对应的 DB 类型
-	 *
 	 * @return DB 类型
 	 */
 	public static DbType getDbType() {
 		DataSource dataSource;
 		try {
-			DynamicRoutingDataSource dynamicRoutingDataSource = SpringContextHolder.getBean(DynamicRoutingDataSource.class);
+			DynamicRoutingDataSource dynamicRoutingDataSource = SpringContextHolder
+				.getBean(DynamicRoutingDataSource.class);
 			dataSource = dynamicRoutingDataSource.determineDataSource();
-		} catch (NoSuchBeanDefinitionException e) {
+		}
+		catch (NoSuchBeanDefinitionException e) {
 			dataSource = SpringContextHolder.getBean(DataSource.class);
 		}
 		try (Connection conn = dataSource.getConnection()) {
 			return DbTypeEnum.find(conn.getMetaData().getDatabaseProductName());
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			throw new IllegalArgumentException(e.getMessage());
 		}
 	}
 
 	/**
 	 * 判断 JDBC 连接是否为 SQLServer 数据库
-	 *
 	 * @param url JDBC 连接
 	 * @return 是否为 SQLServer 数据库
 	 */
@@ -100,7 +100,6 @@ public class JdbcUtils {
 
 	/**
 	 * 判断 JDBC 连接是否为 SQLServer 数据库
-	 *
 	 * @param dbType DB 类型
 	 * @return 是否为 SQLServer 数据库
 	 */

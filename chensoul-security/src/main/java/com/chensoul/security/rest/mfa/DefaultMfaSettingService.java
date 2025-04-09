@@ -24,23 +24,32 @@ import static org.apache.commons.lang3.StringUtils.repeat;
 @Service
 @RequiredArgsConstructor
 public class DefaultMfaSettingService implements MfaSettingService {
-	private static final RuntimeException PROVIDER_NOT_CONFIGURED_ERROR = new RuntimeException("mfa provider is not configured");
-	private static final RuntimeException PROVIDER_NOT_AVAILABLE_ERROR = new RuntimeException("mfa provider is not available");
-	private final Map<MfaProviderType, MfaProvider<MfaProviderConfig, MfaConfig>> providers = new EnumMap<>(MfaProviderType.class);
+
+	private static final RuntimeException PROVIDER_NOT_CONFIGURED_ERROR = new RuntimeException(
+			"mfa provider is not configured");
+
+	private static final RuntimeException PROVIDER_NOT_AVAILABLE_ERROR = new RuntimeException(
+			"mfa provider is not available");
+
+	private final Map<MfaProviderType, MfaProvider<MfaProviderConfig, MfaConfig>> providers = new EnumMap<>(
+			MfaProviderType.class);
+
 	private final TokenFactory tokenFactory;
+
 	private final MfaProperties mfaProperties;
+
 	private final SecurityProperties securityProperties;
 
-	private static String obfuscate(String input, int seenMargin, char obfuscationChar,
-									int startIndexInclusive, int endIndexExclusive) {
+	private static String obfuscate(String input, int seenMargin, char obfuscationChar, int startIndexInclusive,
+			int endIndexExclusive) {
 		String part = input.substring(startIndexInclusive, endIndexExclusive);
 		String obfuscatedPart;
 		if (part.length() <= seenMargin * 2) {
 			obfuscatedPart = repeat(obfuscationChar, part.length());
-		} else {
-			obfuscatedPart = part.substring(0, seenMargin)
-				+ repeat(obfuscationChar, part.length() - seenMargin * 2)
-				+ part.substring(part.length() - seenMargin);
+		}
+		else {
+			obfuscatedPart = part.substring(0, seenMargin) + repeat(obfuscationChar, part.length() - seenMargin * 2)
+					+ part.substring(part.length() - seenMargin);
 		}
 		return input.substring(0, startIndexInclusive) + obfuscatedPart + input.substring(endIndexExclusive);
 	}
@@ -57,7 +66,8 @@ public class DefaultMfaSettingService implements MfaSettingService {
 		MfaConfig mfaConfig = mfaProperties.getDefaultConfig();
 		MfaProviderConfig providerConfig = mfaProperties.getProviderConfig(mfaConfig.getProviderType())
 			.orElseThrow(() -> PROVIDER_NOT_CONFIGURED_ERROR);
-		getTwoFaProvider(mfaConfig.getProviderType()).prepareVerificationCode(SecurityUtils.getCurrentUser(), providerConfig, mfaConfig);
+		getTwoFaProvider(mfaConfig.getProviderType()).prepareVerificationCode(SecurityUtils.getCurrentUser(),
+				providerConfig, mfaConfig);
 	}
 
 	@Override
@@ -70,13 +80,15 @@ public class DefaultMfaSettingService implements MfaSettingService {
 		boolean verificationSuccess = false;
 		if (StringUtils.isNotBlank(verificationCode)) {
 			if (StringUtils.isNumeric(verificationCode) || mfaConfig.getProviderType() == MfaProviderType.BACKUP_CODE) {
-				verificationSuccess = getTwoFaProvider(mfaConfig.getProviderType()).checkVerificationCode(user, verificationCode, providerConfig, mfaConfig);
+				verificationSuccess = getTwoFaProvider(mfaConfig.getProviderType()).checkVerificationCode(user,
+						verificationCode, providerConfig, mfaConfig);
 			}
 		}
 
 		if (verificationSuccess) {
 			return tokenFactory.createTokenPair(user);
-		} else {
+		}
+		else {
 			throw new RuntimeException("Verification code is incorrect");
 		}
 	}
@@ -88,24 +100,24 @@ public class DefaultMfaSettingService implements MfaSettingService {
 	@Override
 	public List<MfaAuthController.TwoFaProviderInfo> getAvailableTwoFaProviders() {
 		return mfaProperties.getAllConfigs().stream().map(config -> {
-				String contact = null;
-				switch (config.getProviderType()) {
-					case SMS:
-						String phoneNumber = ((SmsMfaConfig) config).getPhoneNumber();
-						contact = obfuscate(phoneNumber, 2, '*', phoneNumber.indexOf('+') + 1, phoneNumber.length());
-						break;
-					case EMAIL:
-						String email = ((EmailMfaConfig) config).getEmail();
-						contact = obfuscate(email, 2, '*', 0, email.indexOf('@'));
-						break;
-				}
-				return MfaAuthController.TwoFaProviderInfo.builder()
-					.type(config.getProviderType())
-					.useByDefault(config.isUseByDefault())
-					.contact(contact)
-					.minVerificationCodeSendPeriod(mfaProperties.getMinVerificationCodeSendPeriod())
-					.build();
-			})
-			.collect(Collectors.toList());
+			String contact = null;
+			switch (config.getProviderType()) {
+				case SMS:
+					String phoneNumber = ((SmsMfaConfig) config).getPhoneNumber();
+					contact = obfuscate(phoneNumber, 2, '*', phoneNumber.indexOf('+') + 1, phoneNumber.length());
+					break;
+				case EMAIL:
+					String email = ((EmailMfaConfig) config).getEmail();
+					contact = obfuscate(email, 2, '*', 0, email.indexOf('@'));
+					break;
+			}
+			return MfaAuthController.TwoFaProviderInfo.builder()
+				.type(config.getProviderType())
+				.useByDefault(config.isUseByDefault())
+				.contact(contact)
+				.minVerificationCodeSendPeriod(mfaProperties.getMinVerificationCodeSendPeriod())
+				.build();
+		}).collect(Collectors.toList());
 	}
+
 }

@@ -13,9 +13,8 @@ public interface RedisOperationInterceptor extends Ordered {
 
 	void before(Object wrapper, Object delegate, String methodName, Object[] args);
 
-	void after(Object wrapper, Object delegate, String methodName, Object[] args,
-			   @Nullable Object result,
-			   @Nullable Throwable failure);
+	void after(Object wrapper, Object delegate, String methodName, Object[] args, @Nullable Object result,
+			@Nullable Throwable failure);
 
 	default void afterReturning(Object wrapper, Object delegate, String methodName, Object[] args, Object result) {
 		after(wrapper, delegate, methodName, args, result, null);

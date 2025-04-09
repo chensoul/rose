@@ -24,6 +24,7 @@ import java.util.function.BiConsumer;
 @Data
 @Slf4j
 public class InterceptorHelper {
+
 	private static Map<Class<? extends IEncryptor>, IEncryptor> encryptorMap;
 
 	public static Object encrypt(Invocation invocation, IEncryptor encryptor, String password) throws Throwable {
@@ -31,8 +32,8 @@ public class InterceptorHelper {
 		MappedStatement mappedStatement = (MappedStatement) args[0];
 
 		SqlCommandType sqlCommandType = mappedStatement.getSqlCommandType();
-		if (SqlCommandType.UPDATE == sqlCommandType || SqlCommandType.INSERT == sqlCommandType ||
-			SqlCommandType.SELECT == sqlCommandType) {
+		if (SqlCommandType.UPDATE == sqlCommandType || SqlCommandType.INSERT == sqlCommandType
+				|| SqlCommandType.SELECT == sqlCommandType) {
 			Object paramMap = args[1];
 			Configuration configuration = mappedStatement.getConfiguration();
 			if (paramMap instanceof Map) {
@@ -49,18 +50,21 @@ public class InterceptorHelper {
 							if (encryptValue(configuration, encryptor, password, var)) {
 							}
 						}
-					} else if (entry.getValue() instanceof QueryWrapper) {
+					}
+					else if (entry.getValue() instanceof QueryWrapper) {
 						Object entity = ((QueryWrapper<?>) entry.getValue()).getEntity();
 						if (entity == null) {
 							continue;
 						}
 						encryptValue(configuration, encryptor, password, entity);
-					} else if (!encryptValue(configuration, encryptor, password, entry.getValue())) {
+					}
+					else if (!encryptValue(configuration, encryptor, password, entry.getValue())) {
 						continue;
 					}
 					return invocation.proceed();
 				}
-			} else {
+			}
+			else {
 				if (paramMap != null) {
 					encryptValue(configuration, encryptor, password, paramMap);
 				}
@@ -69,7 +73,8 @@ public class InterceptorHelper {
 		return invocation.proceed();
 	}
 
-	public static boolean encryptValue(Configuration configuration, IEncryptor encryptor, String password, Object object) {
+	public static boolean encryptValue(Configuration configuration, IEncryptor encryptor, String password,
+			Object object) {
 		return FieldSetPropertyHelper.foreachValue(configuration, object, (metaObject, fieldSetProperty) -> {
 			FieldEncrypt fieldEncrypt = fieldSetProperty.getFieldEncrypt();
 			if (null != fieldEncrypt) {
@@ -79,7 +84,8 @@ public class InterceptorHelper {
 						String value = getEncryptor(encryptor, fieldEncrypt.encryptor())
 							.encrypt(fieldEncrypt.algorithm(), password, (String) objectValue, null);
 						metaObject.setValue(fieldSetProperty.getFieldName(), value);
-					} catch (Exception e) {
+					}
+					catch (Exception e) {
 						log.error("field encrypt", e.getMessage());
 					}
 				}
@@ -99,7 +105,8 @@ public class InterceptorHelper {
 				try {
 					result = customEncryptor.newInstance();
 					encryptorMap.put(customEncryptor, result);
-				} catch (Exception var4) {
+				}
+				catch (Exception var4) {
 					log.error("fieldEncrypt encryptor newInstance error", var4);
 				}
 			}
@@ -107,11 +114,13 @@ public class InterceptorHelper {
 		return result;
 	}
 
-	public static Object decrypt(Invocation invocation, BiConsumer<MetaObject, FieldSetProperty> consumer) throws Throwable {
+	public static Object decrypt(Invocation invocation, BiConsumer<MetaObject, FieldSetProperty> consumer)
+			throws Throwable {
 		List result = (List) invocation.proceed();
 		if (result.isEmpty()) {
 			return result;
-		} else {
+		}
+		else {
 			DefaultResultSetHandler defaultResultSetHandler = (DefaultResultSetHandler) invocation.getTarget();
 			Field field = defaultResultSetHandler.getClass().getDeclaredField("mappedStatement");
 			field.setAccessible(true);
@@ -128,4 +137,5 @@ public class InterceptorHelper {
 			return result;
 		}
 	}
+
 }

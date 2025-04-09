@@ -14,9 +14,10 @@ import java.io.IOException;
  * Request Body 缓存 Filter，实现它的可重复读取
  */
 public class CachingRequestFilter extends OncePerRequestFilter {
+
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
-		throws IOException, ServletException {
+			throws IOException, ServletException {
 		filterChain.doFilter(new ContentCachingRequestWrapper(request), response);
 	}
 
@@ -25,4 +26,5 @@ public class CachingRequestFilter extends OncePerRequestFilter {
 		// 只处理 jackson 请求内容
 		return !WebUtils.isJsonRequest(request);
 	}
+
 }

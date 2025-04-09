@@ -13,8 +13,8 @@ import org.apache.commons.lang3.StringUtils;
 
 import static com.chensoul.spring.boot.feign.MetricsInterceptor.FEIGN_REQUEST_ERROR;
 
-
 public class MetricsErrorDecoder implements ErrorDecoder {
+
 	private static MeterRegistry registry = new SimpleMeterRegistry();
 
 	static {
@@ -22,8 +22,9 @@ public class MetricsErrorDecoder implements ErrorDecoder {
 	}
 
 	protected void metrics(String methodKey) {
-		Micrometers.async(() -> Metrics.counter(FEIGN_REQUEST_ERROR, "method",
-			StringUtils.substringBefore(methodKey, StringPool.LEFT_BRACKET)).increment());
+		Micrometers.async(() -> Metrics
+			.counter(FEIGN_REQUEST_ERROR, "method", StringUtils.substringBefore(methodKey, StringPool.LEFT_BRACKET))
+			.increment());
 	}
 
 	@Override
@@ -33,4 +34,5 @@ public class MetricsErrorDecoder implements ErrorDecoder {
 		FeignException exception = FeignException.errorStatus(methodKey, response);
 		return exception;
 	}
+
 }

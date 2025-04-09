@@ -22,6 +22,8 @@ import java.util.Map;
 
 @ConfigurationProperties(prefix = "cache")
 public class CacheSpecProperties {
+
 	@Getter
 	private Map<String, CacheSpecs> specs;
+
 }

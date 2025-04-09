@@ -35,9 +35,8 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * {@link DataPermission} 注解的拦截器
- * 1. 在执行方法前，将 @DataPermission 注解入栈
- * 2. 在执行方法后，将 @DataPermission 注解出栈
+ * {@link DataPermission} 注解的拦截器 1. 在执行方法前，将 @DataPermission 注解入栈 2.
+ * 在执行方法后，将 @DataPermission 注解出栈
  */
 @DataPermission // 该注解，用于 {@link DATA_PERMISSION_NULL} 的空对象
 public class DataPermissionAnnotationInterceptor implements MethodInterceptor {
@@ -45,7 +44,8 @@ public class DataPermissionAnnotationInterceptor implements MethodInterceptor {
 	/**
 	 * DataPermission 空对象，用于方法无 {@link DataPermission} 注解时，使用 DATA_PERMISSION_NULL 进行占位
 	 */
-	static final DataPermission DATA_PERMISSION_NULL = DataPermissionAnnotationInterceptor.class.getAnnotation(DataPermission.class);
+	static final DataPermission DATA_PERMISSION_NULL = DataPermissionAnnotationInterceptor.class
+		.getAnnotation(DataPermission.class);
 
 	@Getter
 	private final Map<MethodClassKey, DataPermission> dataPermissionCache = new ConcurrentHashMap<>();
@@ -60,7 +60,8 @@ public class DataPermissionAnnotationInterceptor implements MethodInterceptor {
 		try {
 			// 执行逻辑
 			return methodInvocation.proceed();
-		} finally {
+		}
+		finally {
 			// 出栈
 			if (dataPermission != null) {
 				DataPermissionContextHolder.remove();

@@ -20,9 +20,9 @@ import java.util.stream.Collectors;
  * @since 0.0.1
  */
 public class BeanUtils extends org.springframework.beans.BeanUtils {
+
 	/**
 	 * 获取所有的属性值为空属性名数组
-	 *
 	 * @param source 对象
 	 * @return 属性值
 	 */
@@ -41,9 +41,8 @@ public class BeanUtils extends org.springframework.beans.BeanUtils {
 
 	/**
 	 * 单对象基于class创建拷贝
-	 *
 	 * @param source 数据来源实体
-	 * @param desc   描述对象 转换后的对象
+	 * @param desc 描述对象 转换后的对象
 	 * @return desc
 	 */
 	public static <T, V> V copy(T source, Class<V> desc) {
@@ -59,9 +58,8 @@ public class BeanUtils extends org.springframework.beans.BeanUtils {
 
 	/**
 	 * 单对象基于对象创建拷贝
-	 *
 	 * @param source 数据来源实体
-	 * @param desc   转换后的对象
+	 * @param desc 转换后的对象
 	 * @return desc
 	 */
 	public static <T, V> V copy(T source, V desc) {
@@ -78,9 +76,8 @@ public class BeanUtils extends org.springframework.beans.BeanUtils {
 
 	/**
 	 * 列表对象基于class创建拷贝
-	 *
 	 * @param sourceList 数据来源实体列表
-	 * @param desc       描述对象 转换后的对象
+	 * @param desc 描述对象 转换后的对象
 	 * @return desc
 	 */
 	public static <T, V> List<V> copyList(List<T> sourceList, Class<V> desc) {
@@ -99,7 +96,6 @@ public class BeanUtils extends org.springframework.beans.BeanUtils {
 
 	/**
 	 * bean拷贝到map
-	 *
 	 * @param bean 数据来源实体
 	 * @return map对象
 	 */
@@ -113,8 +109,7 @@ public class BeanUtils extends org.springframework.beans.BeanUtils {
 
 	/**
 	 * map拷贝到bean
-	 *
-	 * @param map       数据来源
+	 * @param map 数据来源
 	 * @param beanClass bean类
 	 * @return bean对象
 	 */
@@ -131,8 +126,7 @@ public class BeanUtils extends org.springframework.beans.BeanUtils {
 
 	/**
 	 * map拷贝到bean
-	 *
-	 * @param map  数据来源
+	 * @param map 数据来源
 	 * @param bean bean对象
 	 * @return bean对象
 	 */
@@ -152,6 +146,7 @@ public class BeanUtils extends org.springframework.beans.BeanUtils {
 	 * 缓存用于防止多次反射造成的性能问题
 	 */
 	public enum BeanCopierCache {
+
 		/**
 		 * BeanCopier属性缓存单例
 		 */
@@ -161,10 +156,9 @@ public class BeanUtils extends org.springframework.beans.BeanUtils {
 
 		/**
 		 * 获得类与转换器生成的key在{@link BeanCopier}的Map中对应的元素
-		 *
-		 * @param srcClass    源Bean的类
+		 * @param srcClass 源Bean的类
 		 * @param targetClass 目标Bean的类
-		 * @param converter   转换器
+		 * @param converter 转换器
 		 * @return Map中对应的BeanCopier
 		 */
 		public BeanCopier get(Class<?> srcClass, Class<?> targetClass, Converter converter) {
@@ -174,19 +168,21 @@ public class BeanUtils extends org.springframework.beans.BeanUtils {
 
 		/**
 		 * 获得类与转换器生成的key
-		 *
-		 * @param srcClass    源Bean的类
+		 * @param srcClass 源Bean的类
 		 * @param targetClass 目标Bean的类
-		 * @param converter   转换器
+		 * @param converter 转换器
 		 * @return 属性名和Map映射的key
 		 */
 		private String genKey(Class<?> srcClass, Class<?> targetClass, Converter converter) {
-			final StringBuilder key = new StringBuilder()
-				.append(srcClass.getName()).append('#').append(targetClass.getName());
+			final StringBuilder key = new StringBuilder().append(srcClass.getName())
+				.append('#')
+				.append(targetClass.getName());
 			if (null != converter) {
 				key.append('#').append(converter.getClass().getName());
 			}
 			return key.toString();
 		}
+
 	}
+
 }

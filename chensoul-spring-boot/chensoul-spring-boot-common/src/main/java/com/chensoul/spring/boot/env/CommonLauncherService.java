@@ -12,9 +12,11 @@ import java.util.Properties;
  * @author smallchil
  */
 public class CommonLauncherService implements LauncherService {
+
 	@Override
 	public void initialize(ConfigurableApplicationContext applicationContext) {
 		Properties props = System.getProperties();
 		PropsUtil.setProperty(props, "spring.main.allow-bean-definition-overriding", "true");
 	}
+
 }

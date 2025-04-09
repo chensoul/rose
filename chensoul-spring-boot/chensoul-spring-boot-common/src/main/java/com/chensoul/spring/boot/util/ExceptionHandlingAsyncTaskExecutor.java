@@ -10,7 +10,9 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.Future;
 
 /**
- * <p>ExceptionHandlingAsyncTaskExecutor class.</p>
+ * <p>
+ * ExceptionHandlingAsyncTaskExecutor class.
+ * </p>
  */
 public class ExceptionHandlingAsyncTaskExecutor implements AsyncTaskExecutor, InitializingBean, DisposableBean {
 
@@ -21,8 +23,9 @@ public class ExceptionHandlingAsyncTaskExecutor implements AsyncTaskExecutor, In
 	private final AsyncTaskExecutor executor;
 
 	/**
-	 * <p>Constructor for ExceptionHandlingAsyncTaskExecutor.</p>
-	 *
+	 * <p>
+	 * Constructor for ExceptionHandlingAsyncTaskExecutor.
+	 * </p>
 	 * @param executor a {@link AsyncTaskExecutor} object.
 	 */
 	public ExceptionHandlingAsyncTaskExecutor(AsyncTaskExecutor executor) {
@@ -49,7 +52,8 @@ public class ExceptionHandlingAsyncTaskExecutor implements AsyncTaskExecutor, In
 		return () -> {
 			try {
 				return task.call();
-			} catch (Exception e) {
+			}
+			catch (Exception e) {
 				handle(e);
 				throw e;
 			}
@@ -60,15 +64,17 @@ public class ExceptionHandlingAsyncTaskExecutor implements AsyncTaskExecutor, In
 		return () -> {
 			try {
 				task.run();
-			} catch (Exception e) {
+			}
+			catch (Exception e) {
 				handle(e);
 			}
 		};
 	}
 
 	/**
-	 * <p>handle.</p>
-	 *
+	 * <p>
+	 * handle.
+	 * </p>
 	 * @param e a {@link Exception} object.
 	 */
 	protected void handle(Exception e) {
@@ -112,4 +118,5 @@ public class ExceptionHandlingAsyncTaskExecutor implements AsyncTaskExecutor, In
 			bean.afterPropertiesSet();
 		}
 	}
+
 }

@@ -7,6 +7,7 @@ import org.springframework.core.Ordered;
 import java.util.Properties;
 
 public class SpringdocLauncherService implements LauncherService {
+
 	@Override
 	public void initialize(ConfigurableApplicationContext applicationContext) {
 		Properties props = System.getProperties();
@@ -17,4 +18,5 @@ public class SpringdocLauncherService implements LauncherService {
 	public int getOrder() {
 		return Ordered.LOWEST_PRECEDENCE;
 	}
+
 }

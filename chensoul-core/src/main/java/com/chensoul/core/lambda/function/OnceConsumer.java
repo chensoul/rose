@@ -12,6 +12,7 @@ import java.util.function.Consumer;
 public final class OnceConsumer<T> {
 
 	final T t;
+
 	private final AtomicBoolean hasRun = new AtomicBoolean(false);
 
 	private OnceConsumer(final T t) {
@@ -23,8 +24,7 @@ public final class OnceConsumer<T> {
 	}
 
 	/**
-	 * Apply a computation on subject only once.
-	 * <pre><code>
+	 * Apply a computation on subject only once. <pre><code>
 	 * List&lt;String&gt; lst = new ArrayList&lt;&gt;();
 	 *
 	 * OnceConsumer&lt;List&lt;String&gt;&gt; once = OnceConsumer.of(lst);
@@ -34,7 +34,6 @@ public final class OnceConsumer<T> {
 	 * assertThat(lst).hasSize(1).contains("Hello World");
 	 *
 	 * </code></pre>
-	 *
 	 * @param consumer computation run once with input t
 	 */
 	public void applyOnce(final Consumer<T> consumer) {
@@ -42,4 +41,5 @@ public final class OnceConsumer<T> {
 			consumer.accept(t);
 		}
 	}
+
 }

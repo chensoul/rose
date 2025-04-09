@@ -16,8 +16,11 @@ import static com.chensoul.upms.service.impl.UserServiceImpl.ACTIVATE_URL_PATTER
 @RequiredArgsConstructor
 @Service
 public class AuthServiceImpl implements AuthService {
+
 	private final UserService userService;
+
 	private final SystemSettingService systemSettingService;
+
 	private final SmsService smsService;
 
 	@Override
@@ -28,7 +31,8 @@ public class AuthServiceImpl implements AuthService {
 			String baseUrl = systemSettingService.getBaseUrl();
 			String activateUrl = String.format(ACTIVATE_URL_PATTERN, baseUrl, userCredential.getActivateToken());
 			smsService.sendActivationSms(activateUrl, user.getPhone());
-		} else {
+		}
+		else {
 			throw new BusinessException("用户已经激活！");
 		}
 	}
@@ -39,8 +43,10 @@ public class AuthServiceImpl implements AuthService {
 		if (!userCredential.isEnabled() && userCredential.getActivateToken() != null) {
 			String baseUrl = systemSettingService.getBaseUrl();
 			return String.format(ACTIVATE_URL_PATTERN, baseUrl, userCredential.getActivateToken());
-		} else {
+		}
+		else {
 			throw new BusinessException("用户已经激活！");
 		}
 	}
+
 }

@@ -44,7 +44,8 @@ public class TenantRocketMQInitializer implements BeanPostProcessor {
 		if (bean instanceof DefaultRocketMQListenerContainer) {
 			DefaultRocketMQListenerContainer container = (DefaultRocketMQListenerContainer) bean;
 			initTenantConsumer(container.getConsumer());
-		} else if (bean instanceof RocketMQTemplate) {
+		}
+		else if (bean instanceof RocketMQTemplate) {
 			RocketMQTemplate template = (RocketMQTemplate) bean;
 			initTenantProducer(template.getProducer());
 		}

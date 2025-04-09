@@ -21,6 +21,7 @@ import java.time.LocalDateTime;
  */
 @Data
 public class Product {
+
 	@TableId(value = "id", type = IdType.ASSIGN_ID)
 	private String id;
 
@@ -55,8 +56,7 @@ public class Product {
 	private Integer netType;
 
 	/**
-	 * 直连设备: 直连物联网平台，且不能挂载子设备，但能作为子设备挂载到网关下的设备。
-	 * 网关子设备：不直接连接物联网平台，而是通过网关设备接入物联网平台的设备。
+	 * 直连设备: 直连物联网平台，且不能挂载子设备，但能作为子设备挂载到网关下的设备。 网关子设备：不直接连接物联网平台，而是通过网关设备接入物联网平台的设备。
 	 * 网关设备：可以挂载子设备的直连设备。网关具有子设备管理模块，可以维持子设备的拓扑关系，将与子设备的拓扑关系同步到云端。
 	 */
 	private String nodeType;
@@ -77,15 +77,17 @@ public class Product {
 	 * 保活时间
 	 */
 	private Long keepAliveTime;
+
 	/**
 	 * 产品密钥
 	 */
 	private String productSecret;
+
 	/**
 	 * 是否透传
 	 */
 	private Boolean transparent;
-	
+
 	private String description;
 
 	private String thingModelId;
@@ -109,4 +111,5 @@ public class Product {
 
 	@TableField(value = "updated_by", fill = FieldFill.UPDATE)
 	private String updatedBy;
+
 }

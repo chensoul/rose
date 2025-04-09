@@ -19,6 +19,7 @@ import java.util.stream.Collectors;
 @Data
 @ConfigurationProperties(prefix = "security.mfa", ignoreUnknownFields = false)
 public class MfaProperties {
+
 	private boolean enabled = false;
 
 	@Valid
@@ -34,14 +35,16 @@ public class MfaProperties {
 
 	@NotNull
 	@Min(value = 60)
-	private Long totalAllowedTimeForVerification = 3600L; //sec
+	private Long totalAllowedTimeForVerification = 3600L; // sec
 
 	@Valid
 	@NotNull
 	private List<Map<String, Object>> configs;
 
 	public List<MfaConfig> getAllConfigs() {
-		return configs.stream().map(twoFaConfig -> JacksonUtils.fromString(JacksonUtils.toString(twoFaConfig), MfaConfig.class)).collect(Collectors.toList());
+		return configs.stream()
+			.map(twoFaConfig -> JacksonUtils.fromString(JacksonUtils.toString(twoFaConfig), MfaConfig.class))
+			.collect(Collectors.toList());
 	}
 
 	public MfaConfig getDefaultConfig() {
@@ -51,7 +54,8 @@ public class MfaProperties {
 	public Optional<MfaProviderConfig> getProviderConfig(MfaProviderType providerType) {
 		return Optional.ofNullable(providers)
 			.flatMap(providersConfigs -> providersConfigs.stream()
-				.map(providerConfig -> JacksonUtils.fromString(JacksonUtils.toString(providerConfig), MfaProviderConfig.class))
+				.map(providerConfig -> JacksonUtils.fromString(JacksonUtils.toString(providerConfig),
+						MfaProviderConfig.class))
 				.filter(providerConfig -> providerConfig.getProviderType().equals(providerType))
 				.findFirst());
 	}

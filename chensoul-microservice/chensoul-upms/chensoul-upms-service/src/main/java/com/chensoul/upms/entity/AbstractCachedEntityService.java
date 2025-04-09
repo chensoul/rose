@@ -8,7 +8,9 @@ import org.springframework.transaction.support.TransactionSynchronizationManager
 import java.io.Serializable;
 
 @Getter
-public abstract class AbstractCachedEntityService<K extends Serializable, V extends Serializable, E> extends AbstractEntityService {
+public abstract class AbstractCachedEntityService<K extends Serializable, V extends Serializable, E>
+		extends AbstractEntityService {
+
 	protected final TransactionalCache<K, V> cache;
 
 	public AbstractCachedEntityService(ApplicationEventPublisher eventPublisher, TransactionalCache<K, V> cache) {
@@ -19,7 +21,8 @@ public abstract class AbstractCachedEntityService<K extends Serializable, V exte
 	public void publishEvictEvent(E event) {
 		if (TransactionSynchronizationManager.isActualTransactionActive()) {
 			eventPublisher.publishEvent(event);
-		} else {
+		}
+		else {
 			handleEvictEvent(event);
 		}
 	}

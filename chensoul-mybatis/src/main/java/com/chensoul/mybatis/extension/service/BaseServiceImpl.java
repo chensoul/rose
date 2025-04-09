@@ -30,7 +30,9 @@ import org.springframework.validation.annotation.Validated;
  * @param <T> model
  */
 @Validated
-public class BaseServiceImpl<M extends BaseMapper<T>, T extends BaseEntity> extends ServiceImpl<M, T> implements BaseService<T> {
+public class BaseServiceImpl<M extends BaseMapper<T>, T extends BaseEntity> extends ServiceImpl<M, T>
+		implements BaseService<T> {
+
 	@Override
 	public boolean isFieldDuplicate(SFunction<T, ?> field, Object value, Long excludedId) {
 		LambdaQueryWrapper<T> queryWrapper = Wrappers.lambdaQuery();
@@ -40,4 +42,5 @@ public class BaseServiceImpl<M extends BaseMapper<T>, T extends BaseEntity> exte
 		}
 		return baseMapper.selectCount(queryWrapper) > 0;
 	}
+
 }

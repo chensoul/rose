@@ -3,6 +3,7 @@ package com.chensoul.security.exception;
 import org.springframework.security.authentication.AuthenticationServiceException;
 
 public class AuthMethodNotSupportedException extends AuthenticationServiceException {
+
 	public AuthMethodNotSupportedException(String msg) {
 		super(msg);
 	}
@@ -10,4 +11,5 @@ public class AuthMethodNotSupportedException extends AuthenticationServiceExcept
 	public AuthMethodNotSupportedException(String msg, Throwable cause) {
 		super(msg, cause);
 	}
+
 }

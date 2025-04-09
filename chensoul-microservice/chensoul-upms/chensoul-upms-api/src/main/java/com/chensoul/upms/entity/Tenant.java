@@ -44,4 +44,5 @@ public class Tenant extends AuditEntity {
 	private String contactPhone;
 
 	private Integer status;
+
 }

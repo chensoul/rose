@@ -7,5 +7,7 @@ import org.springframework.context.ApplicationEventPublisher;
 @Slf4j
 @RequiredArgsConstructor
 public abstract class AbstractEntityService {
+
 	protected final ApplicationEventPublisher eventPublisher;
+
 }

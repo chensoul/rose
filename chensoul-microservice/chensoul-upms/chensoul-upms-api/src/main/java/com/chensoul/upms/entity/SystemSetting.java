@@ -13,6 +13,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @TableName(value = "sys_system_setting", autoResultMap = true)
 public class SystemSetting extends BaseEntity {
+
 	private static final long serialVersionUID = -7670322981725511892L;
 
 	private SystemSettingType type;

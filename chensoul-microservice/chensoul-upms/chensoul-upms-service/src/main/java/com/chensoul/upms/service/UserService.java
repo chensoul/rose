@@ -26,4 +26,5 @@ public interface UserService extends IService<User> {
 	Page<User> findUserByTenantId(Page page, String tenantId);
 
 	User findUserByPhone(String phone);
+
 }

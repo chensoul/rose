@@ -34,7 +34,7 @@ import com.chensoul.spring.boot.oss.old.storage.properties.QiNiuOssProperties;
 /**
  * @author Levin
  */
-@EnableConfigurationProperties({QiNiuOssProperties.class})
+@EnableConfigurationProperties({ QiNiuOssProperties.class })
 @ConditionalOnProperty(prefix = OSS_CONFIG_PREFIX_QINIU, name = "enabled", havingValue = "true")
 public class QiNiuOssAutoConfiguration {
 
@@ -44,7 +44,9 @@ public class QiNiuOssAutoConfiguration {
 	}
 
 	@Bean(QI_NIU_OSS_OPERATION)
-	public QiNiuOssOperation qiNiuStorageOperation(QiNiuOssProperties properties, QiNiuConnectionFactory qiNiuConnectionFactory) {
+	public QiNiuOssOperation qiNiuStorageOperation(QiNiuOssProperties properties,
+			QiNiuConnectionFactory qiNiuConnectionFactory) {
 		return new QiNiuOssOperation(properties, qiNiuConnectionFactory);
 	}
+
 }

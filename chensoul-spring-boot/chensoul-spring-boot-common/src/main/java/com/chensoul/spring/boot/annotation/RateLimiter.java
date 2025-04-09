@@ -1,6 +1,5 @@
 package com.chensoul.spring.boot.annotation;
 
-
 import com.chensoul.spring.boot.ratelimiter.LimitType;
 
 import java.lang.annotation.*;
@@ -14,6 +13,7 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 public @interface RateLimiter {
+
 	String RATE_LIMIT_KEY = "rate_limit:";
 
 	/**
@@ -35,4 +35,5 @@ public @interface RateLimiter {
 	 * 限流类型
 	 */
 	public LimitType limitType() default LimitType.DEFAULT;
+
 }

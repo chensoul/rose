@@ -39,14 +39,13 @@ public class FeignRetryAspect {
 		return retryTemplate.execute(arg0 -> {
 			int retryCount = arg0.getRetryCount();
 			log.info("Sending request method: {}, max attempt: {}, delay: {}, retryCount: {}", method.getName(),
-				feignRetry.maxAttempt(), feignRetry.backoff().delay(), retryCount);
+					feignRetry.maxAttempt(), feignRetry.backoff().delay(), retryCount);
 			return joinPoint.proceed(joinPoint.getArgs());
 		});
 	}
 
 	/**
 	 * 构造重试策略
-	 *
 	 * @param feignRetry 重试注解
 	 * @return BackOffPolicy
 	 */
@@ -57,7 +56,8 @@ public class FeignRetryAspect {
 			backOffPolicy.setMaxInterval(feignRetry.backoff().maxDelay());
 			backOffPolicy.setMultiplier(feignRetry.backoff().multiplier());
 			return backOffPolicy;
-		} else {
+		}
+		else {
 			FixedBackOffPolicy fixedBackOffPolicy = new FixedBackOffPolicy();
 			fixedBackOffPolicy.setBackOffPeriod(feignRetry.backoff().delay());
 			return fixedBackOffPolicy;
@@ -66,7 +66,6 @@ public class FeignRetryAspect {
 
 	/**
 	 * 构造重试策略
-	 *
 	 * @param feignRetry 重试注解
 	 * @return SimpleRetryPolicy
 	 */

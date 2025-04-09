@@ -21,6 +21,7 @@ import java.util.concurrent.TimeUnit;
 @Configuration
 @ConditionalOnClass(Cache.class)
 public class RedisSecondCacheConfiguration {
+
 	@Bean
 	public Cache<String, Object> localCache() {
 		return Caffeine.newBuilder()
@@ -31,8 +32,10 @@ public class RedisSecondCacheConfiguration {
 	}
 
 	@Bean
-	@ConditionalOnBean({LettuceConnectionFactory.class, TaskScheduler.class})
-	public LocalCacheService localCacheService(LettuceConnectionFactory connectionFactory, Cache cache, TaskScheduler taskScheduler) {
+	@ConditionalOnBean({ LettuceConnectionFactory.class, TaskScheduler.class })
+	public LocalCacheService localCacheService(LettuceConnectionFactory connectionFactory, Cache cache,
+			TaskScheduler taskScheduler) {
 		return new LocalCacheService(connectionFactory, cache, taskScheduler);
 	}
+
 }

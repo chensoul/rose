@@ -46,8 +46,10 @@ public class GlobalExceptionHandler {
 	@ExceptionHandler(AccessDeniedException.class)
 	@ResponseStatus(HttpStatus.UNAUTHORIZED)
 	public RestResponse<String> handleAccessDeniedException(AccessDeniedException e, HttpServletRequest request) {
-		String msg = SpringSecurityMessageSource.getAccessor().getMessage("AbstractAccessDecisionManager.accessDenied", e.getMessage());
+		String msg = SpringSecurityMessageSource.getAccessor()
+			.getMessage("AbstractAccessDecisionManager.accessDenied", e.getMessage());
 		log.warn("无权限访问, {}, {}", request.getRequestURI(), msg, e);
 		return RestResponse.error(msg);
 	}
+
 }

@@ -19,12 +19,12 @@ import java.util.stream.Stream;
  * @since TODO
  */
 public class SecurityUtils {
+
 	private SecurityUtils() {
 	}
 
 	/**
 	 * Get the login of the current user.
-	 *
 	 * @return the login of the current user.
 	 */
 	public static Optional<String> getCurrentUserLogin() {
@@ -35,11 +35,14 @@ public class SecurityUtils {
 	private static String extractPrincipal(Authentication authentication) {
 		if (authentication == null) {
 			return null;
-		} else if (authentication.getPrincipal() instanceof UserDetails) {
+		}
+		else if (authentication.getPrincipal() instanceof UserDetails) {
 			return ((UserDetails) authentication.getPrincipal()).getUsername();
-		} else if (authentication.getPrincipal() instanceof Jwt) {
+		}
+		else if (authentication.getPrincipal() instanceof Jwt) {
 			return ((Jwt) authentication.getPrincipal()).getSubject();
-		} else if (authentication.getPrincipal() instanceof String) {
+		}
+		else if (authentication.getPrincipal() instanceof String) {
 			return (String) authentication.getPrincipal();
 		}
 		return null;
@@ -47,7 +50,6 @@ public class SecurityUtils {
 
 	/**
 	 * Get the JWT of the current user.
-	 *
 	 * @return the JWT of the current user.
 	 */
 	public static Optional<String> getCurrentUserJWT() {
@@ -59,7 +61,6 @@ public class SecurityUtils {
 
 	/**
 	 * Check if a user is authenticated.
-	 *
 	 * @return true if the user is authenticated, false otherwise.
 	 */
 	public static boolean isAuthenticated() {
@@ -69,20 +70,17 @@ public class SecurityUtils {
 
 	/**
 	 * Checks if the current user has any of the authorities.
-	 *
 	 * @param authorities the authorities to check.
 	 * @return true if the current user has any of the authorities, false otherwise.
 	 */
 	public static boolean hasCurrentUserAnyOfAuthorities(String... authorities) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		return (authentication != null
-			&& getAuthorities(authentication)
+		return (authentication != null && getAuthorities(authentication)
 			.anyMatch(authority -> Arrays.asList(authorities).contains(authority)));
 	}
 
 	/**
 	 * Checks if the current user has none of the authorities.
-	 *
 	 * @param authorities the authorities to check.
 	 * @return true if the current user has none of the authorities, false otherwise.
 	 */
@@ -92,7 +90,6 @@ public class SecurityUtils {
 
 	/**
 	 * Checks if the current user has a specific authority.
-	 *
 	 * @param authority the authority to check.
 	 * @return true if the current user has the authority, false otherwise.
 	 */
@@ -108,8 +105,10 @@ public class SecurityUtils {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		if (authentication != null && authentication.getPrincipal() instanceof SecurityUser) {
 			return (SecurityUser) authentication.getPrincipal();
-		} else {
+		}
+		else {
 			throw new RuntimeException("YOU_AREN_T_AUTHORIZED_TO_PERFORM_THIS_OPERATION");
 		}
 	}
+
 }

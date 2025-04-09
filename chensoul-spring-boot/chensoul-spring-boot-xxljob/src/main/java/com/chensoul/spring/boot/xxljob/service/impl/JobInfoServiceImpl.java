@@ -22,8 +22,11 @@ import java.util.List;
 
 @RequiredArgsConstructor
 public class JobInfoServiceImpl implements JobInfoService {
+
 	private final JobLoginService jobLoginService;
+
 	private final RestTemplate restTemplate;
+
 	private final XxlJobProperties xxlJobProperties;
 
 	@SneakyThrows
@@ -97,7 +100,8 @@ public class JobInfoServiceImpl implements JobInfoService {
 		headers.set("Cookie", jobLoginService.getCookie());
 
 		HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(params, headers);
-		ResponseEntity<XxlRestResponse> response = restTemplate.postForEntity(url, requestEntity, XxlRestResponse.class);
+		ResponseEntity<XxlRestResponse> response = restTemplate.postForEntity(url, requestEntity,
+				XxlRestResponse.class);
 
 		XxlRestResponse xxlRestResponse = response.getBody();
 		if (xxlRestResponse.getCode() != 200) {
@@ -105,4 +109,5 @@ public class JobInfoServiceImpl implements JobInfoService {
 		}
 		return xxlRestResponse;
 	}
+
 }

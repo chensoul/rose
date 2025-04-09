@@ -13,6 +13,7 @@ import java.util.List;
  * @since 0.0.1
  */
 public class EnumCheckValidator implements ConstraintValidator<InEnum, Integer> {
+
 	private List<?> values;
 
 	@Override
@@ -20,7 +21,8 @@ public class EnumCheckValidator implements ConstraintValidator<InEnum, Integer> 
 		Enum<?>[] values = annotation.value().getEnumConstants();
 		if (values.length == 0) {
 			this.values = Collections.emptyList();
-		} else {
+		}
+		else {
 			this.values = Arrays.asList(values[0]);
 		}
 	}
@@ -36,8 +38,10 @@ public class EnumCheckValidator implements ConstraintValidator<InEnum, Integer> 
 		}
 		// 校验不通过，自定义提示语句
 		context.disableDefaultConstraintViolation(); // 禁用默认的 message 的值
-		context.buildConstraintViolationWithTemplate(context.getDefaultConstraintMessageTemplate()
-			.replaceAll("\\{value}", values.toString())).addConstraintViolation(); // 重新添加错误提示语句
+		context
+			.buildConstraintViolationWithTemplate(
+					context.getDefaultConstraintMessageTemplate().replaceAll("\\{value}", values.toString()))
+			.addConstraintViolation(); // 重新添加错误提示语句
 		return false;
 	}
 

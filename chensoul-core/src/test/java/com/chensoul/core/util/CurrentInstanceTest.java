@@ -34,30 +34,26 @@ public class CurrentInstanceTest {
 	@Test
 	public void testClearedWithClearAll() throws Exception {
 		CurrentInstance.set(CurrentInstanceTest.class, this);
-		Assertions.assertEquals(this,
-			CurrentInstance.get(CurrentInstanceTest.class));
+		Assertions.assertEquals(this, CurrentInstance.get(CurrentInstanceTest.class));
 		CurrentInstance.clearAll();
 
 		assertCleared();
 	}
 
-	private void assertCleared() throws SecurityException, NoSuchFieldException,
-		IllegalAccessException {
+	private void assertCleared() throws SecurityException, NoSuchFieldException, IllegalAccessException {
 		Assertions.assertNull(getInternalCurrentInstanceVariable().get());
 	}
 
 	@SuppressWarnings("unchecked")
 	private ThreadLocal<Map<Class<?>, CurrentInstance>> getInternalCurrentInstanceVariable()
-		throws SecurityException, NoSuchFieldException,
-		IllegalAccessException {
+			throws SecurityException, NoSuchFieldException, IllegalAccessException {
 		Field f = CurrentInstance.class.getDeclaredField("instances");
 		f.setAccessible(true);
 		return (ThreadLocal<Map<Class<?>, CurrentInstance>>) f.get(null);
 	}
 
 	@Test
-	public void nonInheritableThreadLocals()
-		throws InterruptedException, ExecutionException {
+	public void nonInheritableThreadLocals() throws InterruptedException, ExecutionException {
 		CurrentInstance.clearAll();
 		CurrentInstance.set(CurrentInstanceTest.class, this);
 
@@ -71,4 +67,5 @@ public class CurrentInstanceTest {
 		Future<Void> future = service.submit(runnable);
 		future.get();
 	}
+
 }

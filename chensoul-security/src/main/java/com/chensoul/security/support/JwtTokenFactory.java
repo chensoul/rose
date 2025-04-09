@@ -26,10 +26,13 @@ import static com.chensoul.security.CacheConstants.USER_TOKEN_PREFIX;
 @Slf4j
 @RequiredArgsConstructor
 public class JwtTokenFactory implements TokenFactory {
+
 	private static final String SCOPES = "scopes";
+
 	private static final String ENABLED = "enabled";
 
 	private final RedisTemplate<String, Object> redisTemplate;
+
 	private final SecurityProperties securityProperties;
 
 	@Override
@@ -37,8 +40,12 @@ public class JwtTokenFactory implements TokenFactory {
 		String accessToken = createAccessToken(securityUser, securityProperties.getAccessTokenExpireTime());
 		String refreshToken = createRefreshToken(securityUser, securityProperties.getRefreshTokenExpireTime());
 
-		redisTemplate.opsForValue().set(USER_TOKEN_PREFIX + accessToken, securityProperties.getAccessTokenExpireTime(), securityProperties.getAccessTokenExpireTime());
-		redisTemplate.opsForValue().set(USER_REFRESH_TOKEN_PREFIX + refreshToken, securityProperties.getRefreshTokenExpireTime(), securityProperties.getRefreshTokenExpireTime());
+		redisTemplate.opsForValue()
+			.set(USER_TOKEN_PREFIX + accessToken, securityProperties.getAccessTokenExpireTime(),
+					securityProperties.getAccessTokenExpireTime());
+		redisTemplate.opsForValue()
+			.set(USER_REFRESH_TOKEN_PREFIX + refreshToken, securityProperties.getRefreshTokenExpireTime(),
+					securityProperties.getRefreshTokenExpireTime());
 
 		return new TokenPair(accessToken, refreshToken, securityUser.getAuthorities());
 	}
@@ -58,7 +65,8 @@ public class JwtTokenFactory implements TokenFactory {
 			throw new IllegalArgumentException("JWT Token doesn't have any scopes");
 		}
 
-		return new SecurityUser(subject, accessToken, AuthorityUtils.createAuthorityList(scopes.toArray(new String[0])));
+		return new SecurityUser(subject, accessToken,
+				AuthorityUtils.createAuthorityList(scopes.toArray(new String[0])));
 	}
 
 	@Override
@@ -79,43 +87,52 @@ public class JwtTokenFactory implements TokenFactory {
 		if (!scopes.get(0).equals(Authority.REFRESH_TOKEN.name())) {
 			throw new IllegalArgumentException("Invalid Refresh Token scope");
 		}
-		return new SecurityUser(subject, refreshToken, AuthorityUtils.createAuthorityList(scopes.toArray(new String[0])));
+		return new SecurityUser(subject, refreshToken,
+				AuthorityUtils.createAuthorityList(scopes.toArray(new String[0])));
 	}
 
 	@Override
 	public TokenPair createPreVerificationTokenPair(SecurityUser user) {
-		JwtBuilder jwtBuilder = setUpToken(user, Collections.singletonList(Authority.PRE_VERIFICATION_TOKEN.name()), securityProperties.getAccessTokenExpireTime());
+		JwtBuilder jwtBuilder = setUpToken(user, Collections.singletonList(Authority.PRE_VERIFICATION_TOKEN.name()),
+				securityProperties.getAccessTokenExpireTime());
 		String accessToken = jwtBuilder.compact();
-		return new TokenPair(accessToken, null, AuthorityUtils.createAuthorityList(Authority.PRE_VERIFICATION_TOKEN.name()));
+		return new TokenPair(accessToken, null,
+				AuthorityUtils.createAuthorityList(Authority.PRE_VERIFICATION_TOKEN.name()));
 	}
 
 	private Jws<Claims> parseTokenClaims(String token) {
 		try {
-			return Jwts.parser().setSigningKey(securityProperties.getJwt().getTokenSigningKey()).build().parseClaimsJws(token);
-		} catch (UnsupportedJwtException | MalformedJwtException | IllegalArgumentException ex) {
+			return Jwts.parser()
+				.setSigningKey(securityProperties.getJwt().getTokenSigningKey())
+				.build()
+				.parseClaimsJws(token);
+		}
+		catch (UnsupportedJwtException | MalformedJwtException | IllegalArgumentException ex) {
 			throw new BadCredentialsException("Token is Invalid", ex);
-		} catch (SignatureException | ExpiredJwtException expiredEx) {
+		}
+		catch (SignatureException | ExpiredJwtException expiredEx) {
 			throw new ExpiredTokenException(token, "Token has expired", expiredEx);
 		}
 	}
 
 	private String createAccessToken(SecurityUser securityUser, Long accessTokenExpireTime) {
-		JwtBuilder jwtBuilder = setUpToken(securityUser, securityUser.getAuthorities().stream()
-			.map(GrantedAuthority::getAuthority).collect(Collectors.toList()), accessTokenExpireTime);
+		JwtBuilder jwtBuilder = setUpToken(securityUser,
+				securityUser.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()),
+				accessTokenExpireTime);
 		jwtBuilder.claim(ENABLED, securityUser.isEnabled());
 
 		return jwtBuilder.compact();
 	}
 
 	private String createRefreshToken(SecurityUser securityUser, Long refreshTokenExpireTime) {
-		return setUpToken(securityUser, Collections.singletonList(Authority.REFRESH_TOKEN.name()), refreshTokenExpireTime)
-			.id(UUID.randomUUID().toString()).compact();
+		return setUpToken(securityUser, Collections.singletonList(Authority.REFRESH_TOKEN.name()),
+				refreshTokenExpireTime)
+			.id(UUID.randomUUID().toString())
+			.compact();
 	}
 
 	private JwtBuilder setUpToken(SecurityUser securityUser, List<String> scopes, long expirationTime) {
-		Claims claims = Jwts.claims().setSubject(securityUser.getUsername())
-			.add(SCOPES, scopes)
-			.build();
+		Claims claims = Jwts.claims().setSubject(securityUser.getUsername()).add(SCOPES, scopes).build();
 
 		ZonedDateTime currentTime = ZonedDateTime.now();
 

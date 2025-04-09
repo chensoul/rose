@@ -19,6 +19,7 @@ import org.springframework.scheduling.annotation.EnableAsync;
 @RequiredArgsConstructor
 @ConditionalOnWebApplication
 public class SysLogConfiguration {
+
 	@Bean
 	@ConditionalOnMissingBean
 	public SysLogListener sysLogListener() {
@@ -32,4 +33,5 @@ public class SysLogConfiguration {
 		log.info("Initializing SysLogAspect");
 		return new SysLogAspect();
 	}
+
 }

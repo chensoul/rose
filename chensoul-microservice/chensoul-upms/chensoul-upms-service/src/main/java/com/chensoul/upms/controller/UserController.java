@@ -1,6 +1,5 @@
 package com.chensoul.upms.controller;
 
-
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.chensoul.core.util.RestResponse;
 import com.chensoul.security.util.TokenPair;
@@ -20,11 +19,11 @@ import static com.chensoul.upms.ControllerConstants.USER_ID;
 @RequestMapping("/api/users")
 @RequiredArgsConstructor
 public class UserController {
+
 	private final UserService userService;
 
 	/**
 	 * 注册用户
-	 *
 	 * @param userRegisterRequest 用户
 	 * @return 添加的用户
 	 */
@@ -43,7 +42,7 @@ public class UserController {
 
 	@PostMapping("/{userId}/userCredential/enabled")
 	public RestResponse<User> setUserCredentialEnabled(@PathVariable(USER_ID) Long userId,
-													   @RequestParam(required = false, defaultValue = "true") boolean userCredentialEnabled) throws Exception {
+			@RequestParam(required = false, defaultValue = "true") boolean userCredentialEnabled) throws Exception {
 		return RestResponse.ok(userService.setUserCredentialEnabled(userId, userCredentialEnabled));
 	}
 
@@ -57,13 +56,13 @@ public class UserController {
 		return RestResponse.ok(userService.getById(userId));
 	}
 
-	//	@PreAuthorize("hasAnyAuthority('SYS_ADMIN', 'TENANT_ADMIN')")
+	// @PreAuthorize("hasAnyAuthority('SYS_ADMIN', 'TENANT_ADMIN')")
 	@GetMapping("/{userId}/token")
 	public RestResponse<TokenPair> getUserToken(@PathVariable(USER_ID) Long userId) {
 		return RestResponse.ok(userService.getUserToken(userId));
 	}
 
-	//	@PreAuthorize("hasAuthority('SYS_ADMIN')")
+	// @PreAuthorize("hasAuthority('SYS_ADMIN')")
 	@GetMapping(value = "/tenant/{tenantId}/users")
 	public Page<User> findUsersByTenantId(Page page, @PathVariable(TENANT_ID) String tenantId) {
 		return userService.findUserByTenantId(page, tenantId);

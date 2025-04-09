@@ -21,6 +21,7 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class UpmsUserDetailsService implements UserDetailsService {
+
 	private final UserService userService;
 
 	@Override
@@ -35,6 +36,8 @@ public class UpmsUserDetailsService implements UserDetailsService {
 			throw new AuthenticationServiceException("用户凭证不存在");
 		}
 
-		return new SecurityUser(user.getName(), credential.getPassword(), AuthorityUtils.createAuthorityList(user.getAuthority().name()));
+		return new SecurityUser(user.getName(), credential.getPassword(),
+				AuthorityUtils.createAuthorityList(user.getAuthority().name()));
 	}
+
 }

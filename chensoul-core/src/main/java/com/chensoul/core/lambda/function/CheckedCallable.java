@@ -54,4 +54,5 @@ public interface CheckedCallable<T> {
 	 * Run this callable.
 	 */
 	T call() throws Throwable;
+
 }

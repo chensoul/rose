@@ -17,6 +17,7 @@ import java.util.List;
  * 指定数据列合并，只要指定合并列范围的单元格值和前一行的主键值相同，就合并
  */
 public class MergeByPrimaryKeyStrategy implements CellWriteHandler {
+
 	/**
 	 * 合并起始行索引
 	 */
@@ -31,13 +32,13 @@ public class MergeByPrimaryKeyStrategy implements CellWriteHandler {
 
 	private boolean mergeNullValue = false;
 
-
 	public MergeByPrimaryKeyStrategy(int headRowNumber, int[] mergeColumnIndex) {
 		this.mergeColumnIndex = mergeColumnIndex;
 		this.headRowNumber = headRowNumber;
 	}
 
-	public MergeByPrimaryKeyStrategy(int headRowNumber, int[] mergeColumnIndex, int primaryKeyIndex, boolean mergeNullValue) {
+	public MergeByPrimaryKeyStrategy(int headRowNumber, int[] mergeColumnIndex, int primaryKeyIndex,
+			boolean mergeNullValue) {
 		this.mergeColumnIndex = mergeColumnIndex;
 		this.headRowNumber = headRowNumber;
 		this.primaryKeyIndex = primaryKeyIndex;
@@ -45,18 +46,21 @@ public class MergeByPrimaryKeyStrategy implements CellWriteHandler {
 	}
 
 	@Override
-	public void beforeCellCreate(WriteSheetHolder writeSheetHolder, WriteTableHolder writeTableHolder, Row row, Head head, Integer integer, Integer integer1, Boolean aBoolean) {
+	public void beforeCellCreate(WriteSheetHolder writeSheetHolder, WriteTableHolder writeTableHolder, Row row,
+			Head head, Integer integer, Integer integer1, Boolean aBoolean) {
 
 	}
 
 	@Override
-	public void afterCellCreate(WriteSheetHolder writeSheetHolder, WriteTableHolder writeTableHolder, Cell cell, Head head, Integer integer, Boolean aBoolean) {
+	public void afterCellCreate(WriteSheetHolder writeSheetHolder, WriteTableHolder writeTableHolder, Cell cell,
+			Head head, Integer integer, Boolean aBoolean) {
 		// 隐藏 primaryKeyIndex 列
-//		 writeSheetHolder.getSheet().setColumnHidden(primaryKeyIndex, true);
+		// writeSheetHolder.getSheet().setColumnHidden(primaryKeyIndex, true);
 	}
 
 	@Override
-	public void afterCellDispose(WriteSheetHolder writeSheetHolder, WriteTableHolder writeTableHolder, List<WriteCellData<?>> list, Cell cell, Head head, Integer integer, Boolean aBoolean) {
+	public void afterCellDispose(WriteSheetHolder writeSheetHolder, WriteTableHolder writeTableHolder,
+			List<WriteCellData<?>> list, Cell cell, Head head, Integer integer, Boolean aBoolean) {
 		// 当前行
 		int curRowIndex = cell.getRowIndex();
 		// 当前列
@@ -73,22 +77,25 @@ public class MergeByPrimaryKeyStrategy implements CellWriteHandler {
 
 	/**
 	 * 当前单元格向上合并
-	 *
 	 * @param writeSheetHolder
 	 * @param cell
 	 * @param curRowIndex
 	 * @param curColIndex
 	 */
-	private void mergeWithPrevRow(WriteSheetHolder writeSheetHolder, Cell cell, int curRowIndex, int curColIndex, int primaryKeyIndex) {
+	private void mergeWithPrevRow(WriteSheetHolder writeSheetHolder, Cell cell, int curRowIndex, int curColIndex,
+			int primaryKeyIndex) {
 		// 当前行的第一个Cell
 		Cell curFirstCell = cell.getSheet().getRow(curRowIndex).getCell(primaryKeyIndex);
-		Object curFirstData = curFirstCell.getCellType() == CellType.STRING ? curFirstCell.getStringCellValue() : curFirstCell.getNumericCellValue();
+		Object curFirstData = curFirstCell.getCellType() == CellType.STRING ? curFirstCell.getStringCellValue()
+				: curFirstCell.getNumericCellValue();
 		// 上一行的第一个Cell
 		Cell preFirstCell = cell.getSheet().getRow(curRowIndex - 1).getCell(primaryKeyIndex);
-		Object preFirstData = preFirstCell.getCellType() == CellType.STRING ? preFirstCell.getStringCellValue() : preFirstCell.getNumericCellValue();
+		Object preFirstData = preFirstCell.getCellType() == CellType.STRING ? preFirstCell.getStringCellValue()
+				: preFirstCell.getNumericCellValue();
 
 		// 当前行的首列和上一行的首列相同则合并前面（mergeColumnRegion+1）列
-		if ((mergeNullValue && curFirstData.equals(preFirstData)) || (!mergeNullValue && curFirstData != null && preFirstData != null && curFirstData.equals(preFirstData))) {
+		if ((mergeNullValue && curFirstData.equals(preFirstData)) || (!mergeNullValue && curFirstData != null
+				&& preFirstData != null && curFirstData.equals(preFirstData))) {
 			Sheet sheet = writeSheetHolder.getSheet();
 			List<CellRangeAddress> mergedRegions = sheet.getMergedRegions();
 			boolean isMerged = false;
@@ -104,9 +111,11 @@ public class MergeByPrimaryKeyStrategy implements CellWriteHandler {
 			}
 			// 若上一个单元格未被合并，则新增合并单元
 			if (!isMerged) {
-				CellRangeAddress cellAddresses = new CellRangeAddress(curRowIndex - 1, curRowIndex, curColIndex, curColIndex);
+				CellRangeAddress cellAddresses = new CellRangeAddress(curRowIndex - 1, curRowIndex, curColIndex,
+						curColIndex);
 				sheet.addMergedRegion(cellAddresses);
 			}
 		}
 	}
+
 }

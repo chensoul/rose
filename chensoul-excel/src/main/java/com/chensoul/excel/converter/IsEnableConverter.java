@@ -13,6 +13,7 @@ import com.alibaba.excel.util.StringUtils;
  * @since 0.0.1
  */
 public class IsEnableConverter implements Converter<Boolean> {
+
 	@Override
 	public Class<Boolean> supportJavaTypeKey() {
 		return Boolean.class;
@@ -24,12 +25,15 @@ public class IsEnableConverter implements Converter<Boolean> {
 	}
 
 	@Override
-	public Boolean convertToJavaData(ReadCellData<?> cellData, ExcelContentProperty excelContentProperty, GlobalConfiguration globalConfiguration) throws Exception {
+	public Boolean convertToJavaData(ReadCellData<?> cellData, ExcelContentProperty excelContentProperty,
+			GlobalConfiguration globalConfiguration) throws Exception {
 		return !StringUtils.isBlank(cellData.getStringValue()) && !cellData.getStringValue().equals("禁用");
 	}
 
 	@Override
-	public WriteCellData<?> convertToExcelData(Boolean value, ExcelContentProperty excelContentProperty, GlobalConfiguration globalConfiguration) throws Exception {
+	public WriteCellData<?> convertToExcelData(Boolean value, ExcelContentProperty excelContentProperty,
+			GlobalConfiguration globalConfiguration) throws Exception {
 		return new WriteCellData<>(value ? "启用" : "禁用");
 	}
+
 }

@@ -23,12 +23,13 @@ import java.io.IOException;
 
 @Slf4j
 public class RestLoginProcessingFilter extends AbstractAuthenticationProcessingFilter {
+
 	private final AuthenticationSuccessHandler successHandler;
+
 	private final AuthenticationFailureHandler failureHandler;
 
-	public RestLoginProcessingFilter(String defaultProcessUrl,
-									 AuthenticationSuccessHandler successHandler,
-									 AuthenticationFailureHandler failureHandler) {
+	public RestLoginProcessingFilter(String defaultProcessUrl, AuthenticationSuccessHandler successHandler,
+			AuthenticationFailureHandler failureHandler) {
 		super(defaultProcessUrl);
 		this.successHandler = successHandler;
 		this.failureHandler = failureHandler;
@@ -36,7 +37,7 @@ public class RestLoginProcessingFilter extends AbstractAuthenticationProcessingF
 
 	@Override
 	public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
-		throws AuthenticationException, IOException, ServletException {
+			throws AuthenticationException, IOException, ServletException {
 		if (!HttpMethod.POST.name().equals(request.getMethod())) {
 			if (log.isDebugEnabled()) {
 				log.debug("{} authentication method not supported", request.getMethod());
@@ -47,7 +48,8 @@ public class RestLoginProcessingFilter extends AbstractAuthenticationProcessingF
 		LoginRequest loginRequest;
 		try {
 			loginRequest = JacksonUtils.readValue(request.getReader(), LoginRequest.class);
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			throw new AuthenticationServiceException("Invalid login request payload");
 		}
 
@@ -55,21 +57,23 @@ public class RestLoginProcessingFilter extends AbstractAuthenticationProcessingF
 			throw new AuthenticationServiceException("Username or password is empty");
 		}
 
-		UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword());
+		UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(loginRequest.getUsername(),
+				loginRequest.getPassword());
 		token.setDetails(authenticationDetailsSource.buildDetails(request));
 		return this.getAuthenticationManager().authenticate(token);
 	}
 
 	@Override
 	protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
-											Authentication authResult) throws IOException, ServletException {
+			Authentication authResult) throws IOException, ServletException {
 		successHandler.onAuthenticationSuccess(request, response, authResult);
 	}
 
 	@Override
 	protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response,
-											  AuthenticationException failed) throws IOException, ServletException {
+			AuthenticationException failed) throws IOException, ServletException {
 		SecurityContextHolder.clearContext();
 		failureHandler.onAuthenticationFailure(request, response, failed);
 	}
+
 }

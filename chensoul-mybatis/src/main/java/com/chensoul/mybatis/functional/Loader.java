@@ -8,6 +8,7 @@ import java.util.function.Supplier;
  * @since 0.0.1
  */
 public interface Loader<T> {
+
 	UpdateHandler<T> loadById(Serializable id);
 
 	UpdateHandler<T> load(Supplier<T> t);

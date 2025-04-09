@@ -12,7 +12,7 @@ import com.chensoul.core.util.tree.Tree;
 public interface NodeParser<T, E> {
 
 	/**
-	 * @param object   源数据实体
+	 * @param object 源数据实体
 	 * @param treeNode 树节点实体
 	 */
 	void parse(T object, Tree<E> treeNode);

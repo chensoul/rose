@@ -27,21 +27,24 @@ public final class LogstashUtils {
 	private static final Logger log = LoggerFactory.getLogger(LogstashUtils.class);
 
 	private static final String CONSOLE_APPENDER_NAME = "CONSOLE";
+
 	private static final String ASYNC_LOGSTASH_APPENDER_NAME = "ASYNC_LOGSTASH";
 
 	private LogstashUtils() {
 	}
 
 	/**
-	 * <p>addJsonConsoleAppender.</p>
-	 *
-	 * @param context      a {@link LoggerContext} object.
+	 * <p>
+	 * addJsonConsoleAppender.
+	 * </p>
+	 * @param context a {@link LoggerContext} object.
 	 * @param customFields a {@link String} object.
 	 */
 	public static void addJsonConsoleAppender(LoggerContext context, String customFields) {
 		log.info("Add JsonConsoleAppender");
 
-		// More documentation is available at: https://github.com/logstash/logstash-logback-encoder
+		// More documentation is available at:
+		// https://github.com/logstash/logstash-logback-encoder
 		ConsoleAppender<ILoggingEvent> consoleAppender = new ConsoleAppender<>();
 		consoleAppender.setContext(context);
 		consoleAppender.setEncoder(compositeJsonEncoder(context, customFields));
@@ -53,20 +56,22 @@ public final class LogstashUtils {
 	}
 
 	/**
-	 * <p>addLogstashTcpSocketAppender.</p>
-	 *
-	 * @param context            a {@link LoggerContext} object.
-	 * @param customFields       a {@link String} object.
+	 * <p>
+	 * addLogstashTcpSocketAppender.
+	 * </p>
+	 * @param context a {@link LoggerContext} object.
+	 * @param customFields a {@link String} object.
 	 * @param logstashProperties a {@link Logging.Logstash} object.
 	 */
-	public static void addLogstashTcpSocketAppender(
-		LoggerContext context, String customFields, Logging.Logstash logstashProperties) {
+	public static void addLogstashTcpSocketAppender(LoggerContext context, String customFields,
+			Logging.Logstash logstashProperties) {
 		log.info("Add LogstashTcpSocketAppender");
 
-		// More documentation is available at: https://github.com/logstash/logstash-logback-encoder
+		// More documentation is available at:
+		// https://github.com/logstash/logstash-logback-encoder
 		LogstashTcpSocketAppender logstashAppender = new LogstashTcpSocketAppender();
-		logstashAppender.addDestinations(
-			new InetSocketAddress(logstashProperties.getHost(), logstashProperties.getPort()));
+		logstashAppender
+			.addDestinations(new InetSocketAddress(logstashProperties.getHost(), logstashProperties.getPort()));
 		logstashAppender.setContext(context);
 		logstashAppender.setEncoder(logstashEncoder(customFields));
 		logstashAppender.setName(ASYNC_LOGSTASH_APPENDER_NAME);
@@ -77,14 +82,14 @@ public final class LogstashUtils {
 	}
 
 	/**
-	 * <p>addContextListener.</p>
-	 *
-	 * @param context      a {@link LoggerContext} object.
+	 * <p>
+	 * addContextListener.
+	 * </p>
+	 * @param context a {@link LoggerContext} object.
 	 * @param customFields a {@link String} object.
-	 * @param properties   a {@link Logging} object.
+	 * @param properties a {@link Logging} object.
 	 */
-	public static void addContextListener(
-		LoggerContext context, String customFields, Logging properties) {
+	public static void addContextListener(LoggerContext context, String customFields, Logging properties) {
 		LogbackLoggerContextListener loggerContextListener = new LogbackLoggerContextListener(properties, customFields);
 		loggerContextListener.setContext(context);
 		context.addListener(loggerContextListener);
@@ -149,21 +154,21 @@ public final class LogstashUtils {
 	}
 
 	private static LoggingEventFormattedTimestampJsonProvider timestampJsonProvider() {
-		LoggingEventFormattedTimestampJsonProvider timestampJsonProvider =
-			new LoggingEventFormattedTimestampJsonProvider();
+		LoggingEventFormattedTimestampJsonProvider timestampJsonProvider = new LoggingEventFormattedTimestampJsonProvider();
 		timestampJsonProvider.setTimeZone("UTC");
 		timestampJsonProvider.setFieldName("timestamp");
 		return timestampJsonProvider;
 	}
 
 	/**
-	 * Logback configuration is achieved by configuration file and API.
-	 * When configuration file change is detected, the configuration is reset.
-	 * This listener ensures that the programmatic configuration is also re-applied after reset.
+	 * Logback configuration is achieved by configuration file and API. When configuration
+	 * file change is detected, the configuration is reset. This listener ensures that the
+	 * programmatic configuration is also re-applied after reset.
 	 */
 	private static class LogbackLoggerContextListener extends ContextAwareBase implements LoggerContextListener {
 
 		private final Logging logging;
+
 		private final String customFields;
 
 		private LogbackLoggerContextListener(Logging logging, String customFields) {
@@ -205,5 +210,7 @@ public final class LogstashUtils {
 		public void onLevelChange(ch.qos.logback.classic.Logger logger, Level level) {
 			// Nothing to do.
 		}
+
 	}
+
 }

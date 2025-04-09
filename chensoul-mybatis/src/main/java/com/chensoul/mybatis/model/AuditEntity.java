@@ -16,6 +16,7 @@ import static com.chensoul.core.util.date.DatePattern.NORM_DATETIME_PATTERN;
  */
 @Data
 public class AuditEntity implements Serializable {
+
 	@TableField(value = "created_by", fill = FieldFill.INSERT)
 	protected String createdBy;
 
@@ -29,4 +30,5 @@ public class AuditEntity implements Serializable {
 	@JsonFormat(pattern = NORM_DATETIME_PATTERN)
 	@TableField(value = "update_time", fill = FieldFill.INSERT_UPDATE)
 	protected LocalDateTime updateTime;
+
 }

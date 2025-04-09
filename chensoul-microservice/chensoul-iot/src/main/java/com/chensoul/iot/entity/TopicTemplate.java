@@ -20,4 +20,5 @@ public class TopicTemplate {
 	private String name;
 
 	private String description;
+
 }

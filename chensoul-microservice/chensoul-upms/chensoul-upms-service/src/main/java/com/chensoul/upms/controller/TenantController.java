@@ -13,11 +13,13 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping("/api/tenants")
 public class TenantController {
+
 	private final TenantService tenantService;
 
 	@PostMapping("/{tenantId}/user")
 	public RestResponse<UserTenant> addUserToTenant(@PathVariable String tenantId,
-													@Valid @RequestBody AddUserToTenantRequest request) {
+			@Valid @RequestBody AddUserToTenantRequest request) {
 		return RestResponse.ok(tenantService.addUserToTenant(tenantId, request));
 	}
+
 }

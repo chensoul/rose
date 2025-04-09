@@ -5,13 +5,12 @@ import com.google.common.hash.Funnel;
 import com.google.common.hash.Hashing;
 
 /**
- * 算法过程：
- * 1. 首先需要k个hash函数，每个函数可以把key散列成为1个整数
- * 2. 初始化时，需要一个长度为n比特的数组，每个比特位初始化为0
- * 3. 某个key加入集合时，用k个hash函数计算出k个散列值，并把数组中对应的比特位置为1
- * 4. 判断某个key是否在集合时，用k个hash函数计算出k个散列值，并查询数组中对应的比特位，如果所有的比特位都是1，认为在集合中。
+ * 算法过程： 1. 首先需要k个hash函数，每个函数可以把key散列成为1个整数 2. 初始化时，需要一个长度为n比特的数组，每个比特位初始化为0 3.
+ * 某个key加入集合时，用k个hash函数计算出k个散列值，并把数组中对应的比特位置为1 4.
+ * 判断某个key是否在集合时，用k个hash函数计算出k个散列值，并查询数组中对应的比特位，如果所有的比特位都是1，认为在集合中。
  **/
 public class BloomFilterHelper<T> {
+
 	private int numHashFunctions;
 
 	private int bitSize;
@@ -61,4 +60,5 @@ public class BloomFilterHelper<T> {
 	private int optimalNumOfHashFunctions(long n, long m) {
 		return Math.max(1, (int) Math.round((double) m / n * Math.log(2)));
 	}
+
 }

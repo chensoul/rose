@@ -57,4 +57,5 @@ public class LoginLog implements Serializable {
 	private String userAgent;
 
 	private LocalDateTime createTime;
+
 }

@@ -10,6 +10,8 @@ import java.io.Serializable;
 @EqualsAndHashCode(callSuper = true)
 @Data
 public class TenantEntity extends BaseEntity implements Serializable {
+
 	@TableField(fill = FieldFill.INSERT)
 	private String tenantId;
+
 }

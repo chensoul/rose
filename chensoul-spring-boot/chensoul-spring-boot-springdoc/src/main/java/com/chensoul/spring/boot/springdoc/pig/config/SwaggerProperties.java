@@ -49,7 +49,9 @@ public class SwaggerProperties {
 
 	@Data
 	public static class Security {
+
 		private Boolean enabled = true;
+
 		/**
 		 * 获取token
 		 */
@@ -59,6 +61,7 @@ public class SwaggerProperties {
 		 * 作用域
 		 */
 		private String scope;
+
 	}
 
 }

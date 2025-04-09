@@ -26,13 +26,18 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 @RequiredArgsConstructor
-public abstract class CaffeineTransactionalCache<K extends Serializable, V extends Serializable> implements TransactionalCache<K, V> {
+public abstract class CaffeineTransactionalCache<K extends Serializable, V extends Serializable>
+		implements TransactionalCache<K, V> {
 
 	@Getter
 	protected final String cacheName;
+
 	protected final Cache cache;
+
 	protected final Lock lock = new ReentrantLock();
+
 	private final Map<K, Set<UUID>> objectTransactions = new HashMap<>();
+
 	private final Map<UUID, CaffeineCacheTransaction<K, V>> transactions = new HashMap<>();
 
 	public CaffeineTransactionalCache(CacheManager cacheManager, String cacheName) {
@@ -52,7 +57,8 @@ public abstract class CaffeineTransactionalCache<K extends Serializable, V exten
 		try {
 			failAllTransactionsByKey(key);
 			cache.put(key, value);
-		} finally {
+		}
+		finally {
 			lock.unlock();
 		}
 	}
@@ -63,7 +69,8 @@ public abstract class CaffeineTransactionalCache<K extends Serializable, V exten
 		try {
 			failAllTransactionsByKey(key);
 			doPutIfAbsent(key, value);
-		} finally {
+		}
+		finally {
 			lock.unlock();
 		}
 	}
@@ -74,7 +81,8 @@ public abstract class CaffeineTransactionalCache<K extends Serializable, V exten
 		try {
 			failAllTransactionsByKey(key);
 			doEvict(key);
-		} finally {
+		}
+		finally {
 			lock.unlock();
 		}
 	}
@@ -87,14 +95,16 @@ public abstract class CaffeineTransactionalCache<K extends Serializable, V exten
 				failAllTransactionsByKey(key);
 				doEvict(key);
 			});
-		} finally {
+		}
+		finally {
 			lock.unlock();
 		}
 	}
 
 	@Override
 	public void evictOrPut(K key, V value) {
-		//No need to put the value in case of Caffeine, because evict will cancel concurrent transaction used to "get" the missing value from cache.
+		// No need to put the value in case of Caffeine, because evict will cancel
+		// concurrent transaction used to "get" the missing value from cache.
 		evict(key);
 	}
 
@@ -126,7 +136,8 @@ public abstract class CaffeineTransactionalCache<K extends Serializable, V exten
 			}
 			transactions.put(transactionId, transaction);
 			return transaction;
-		} finally {
+		}
+		finally {
 			lock.unlock();
 		}
 	}
@@ -151,7 +162,8 @@ public abstract class CaffeineTransactionalCache<K extends Serializable, V exten
 			}
 			removeTransaction(trId);
 			return success;
-		} finally {
+		}
+		finally {
 			lock.unlock();
 		}
 	}
@@ -160,7 +172,8 @@ public abstract class CaffeineTransactionalCache<K extends Serializable, V exten
 		lock.lock();
 		try {
 			removeTransaction(id);
-		} finally {
+		}
+		finally {
 			lock.unlock();
 		}
 	}

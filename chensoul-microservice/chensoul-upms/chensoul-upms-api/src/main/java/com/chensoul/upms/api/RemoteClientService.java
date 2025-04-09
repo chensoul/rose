@@ -20,4 +20,5 @@ public interface RemoteClientService {
 
 	@GetMapping("/client/getClientByCode/{code}")
 	RestResponse<OAuth2Client> getClientByCode(@PathVariable("code") String code);
+
 }

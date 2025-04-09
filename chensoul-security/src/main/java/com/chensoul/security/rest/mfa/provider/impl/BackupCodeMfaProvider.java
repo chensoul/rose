@@ -15,9 +15,11 @@ import java.util.stream.Stream;
 
 @Component
 public class BackupCodeMfaProvider implements MfaProvider<BackupCodeMfaProviderConfig, BackupCodeMfaConfig> {
+
 	private static String generateCodes(int count, int length) {
 		return Stream.generate(() -> RandomStringUtils.random(length, "0123456789abcdef"))
-			.distinct().limit(count)
+			.distinct()
+			.limit(count)
 			.collect(Collectors.joining(","));
 	}
 
@@ -30,10 +32,12 @@ public class BackupCodeMfaProvider implements MfaProvider<BackupCodeMfaProviderC
 	}
 
 	@Override
-	public boolean checkVerificationCode(SecurityUser user, String code, BackupCodeMfaProviderConfig providerConfig, BackupCodeMfaConfig accountConfig) {
+	public boolean checkVerificationCode(SecurityUser user, String code, BackupCodeMfaProviderConfig providerConfig,
+			BackupCodeMfaConfig accountConfig) {
 		if (CollectionUtils.contains(accountConfig.getCodesForJson().iterator(), code)) {
 			return true;
-		} else {
+		}
+		else {
 			return false;
 		}
 	}

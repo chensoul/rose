@@ -11,11 +11,14 @@ import javax.servlet.http.HttpServletRequest;
 
 @Service
 @RequiredArgsConstructor
-public class SystemSettingServiceImpl extends ServiceImpl<SystemSettingMapper, SystemSetting> implements SystemSettingService {
+public class SystemSettingServiceImpl extends ServiceImpl<SystemSettingMapper, SystemSetting>
+		implements SystemSettingService {
+
 	private final HttpServletRequest request;
 
 	@Override
 	public String getBaseUrl() {
 		return "";
 	}
+
 }

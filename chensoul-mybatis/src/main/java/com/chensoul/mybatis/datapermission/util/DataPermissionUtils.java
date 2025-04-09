@@ -40,8 +40,7 @@ public class DataPermissionUtils {
 	@SneakyThrows
 	private static DataPermission getDisableDataPermissionDisable() {
 		if (DATA_PERMISSION_DISABLE == null) {
-			DATA_PERMISSION_DISABLE = DataPermissionUtils.class
-				.getDeclaredMethod("getDisableDataPermissionDisable")
+			DATA_PERMISSION_DISABLE = DataPermissionUtils.class.getDeclaredMethod("getDisableDataPermissionDisable")
 				.getAnnotation(DataPermission.class);
 		}
 		return DATA_PERMISSION_DISABLE;
@@ -49,7 +48,6 @@ public class DataPermissionUtils {
 
 	/**
 	 * 忽略数据权限，执行对应的逻辑
-	 *
 	 * @param runnable 逻辑
 	 */
 	public static void executeIgnore(Runnable runnable) {
@@ -58,14 +56,14 @@ public class DataPermissionUtils {
 		try {
 			// 执行 runnable
 			runnable.run();
-		} finally {
+		}
+		finally {
 			DataPermissionContextHolder.remove();
 		}
 	}
 
 	/**
 	 * 忽略数据权限，执行对应的逻辑
-	 *
 	 * @param callable 逻辑
 	 * @return 执行结果
 	 */
@@ -76,7 +74,8 @@ public class DataPermissionUtils {
 		try {
 			// 执行 callable
 			return callable.call();
-		} finally {
+		}
+		finally {
 			DataPermissionContextHolder.remove();
 		}
 	}

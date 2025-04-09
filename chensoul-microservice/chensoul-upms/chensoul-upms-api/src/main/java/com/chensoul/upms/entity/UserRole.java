@@ -13,6 +13,7 @@ import static com.chensoul.core.util.date.DatePattern.NORM_DATETIME_PATTERN;
 @Data
 @TableName("sys_user_role")
 public class UserRole {
+
 	private Long userId;
 
 	private Long roleId;
@@ -22,7 +23,9 @@ public class UserRole {
 
 	@TableField(value = "created_by", fill = FieldFill.INSERT)
 	private String createdBy;
+
 	@JsonFormat(pattern = NORM_DATETIME_PATTERN)
 	@TableField(value = "create_time", fill = FieldFill.INSERT)
 	private LocalDateTime createTime;
+
 }

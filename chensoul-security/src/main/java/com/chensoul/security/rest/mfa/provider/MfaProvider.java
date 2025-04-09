@@ -1,6 +1,5 @@
 package com.chensoul.security.rest.mfa.provider;
 
-
 import com.chensoul.security.rest.mfa.config.MfaConfig;
 import com.chensoul.security.util.SecurityUser;
 import org.springframework.security.core.userdetails.User;

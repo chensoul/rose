@@ -29,4 +29,5 @@ public class RedisSslCredentials {
 	private String userCertFile;
 
 	private String userKeyFile;
+
 }

@@ -20,9 +20,9 @@ import java.util.concurrent.ForkJoinPool.ManagedBlocker;
 import java.util.function.*;
 
 /**
- * A factory class for methods that wrap functional interfaces like
- * {@link Supplier} in a "blocking" ({@link ManagedBlocker}) equivalent, which
- * can be used with the {@link ForkJoinPool}.
+ * A factory class for methods that wrap functional interfaces like {@link Supplier} in a
+ * "blocking" ({@link ManagedBlocker}) equivalent, which can be used with the
+ * {@link ForkJoinPool}.
  *
  * @author Lukas Eder
  */
@@ -67,8 +67,11 @@ public final class Blocking {
 	}
 
 	static class BlockingSupplier<T> implements Supplier<T> {
+
 		private static final Object NULL = new Object();
+
 		final Supplier<? extends T> supplier;
+
 		volatile T result = (T) NULL;
 
 		BlockingSupplier(Supplier<? extends T> supplier) {
@@ -90,11 +93,14 @@ public final class Blocking {
 						return result != NULL;
 					}
 				});
-			} catch (InterruptedException e) {
+			}
+			catch (InterruptedException e) {
 				throw new RuntimeException(e);
 			}
 
 			return result;
 		}
+
 	}
+
 }

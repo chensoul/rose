@@ -23,9 +23,11 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 @ConditionalOnClass(XxlJobSpringExecutor.class)
 @EnableConfigurationProperties(XxlJobProperties.class)
 public class XxlJobExecutorConfiguration {
+
 	private static String logBasePath = "/data/logs/xxl-xxljob/";
-//	private static final String XXL_JOB_ADMIN = "chensoul-xxljob";
-//	private DiscoveryClient discoveryClient
+
+	// private static final String XXL_JOB_ADMIN = "chensoul-xxljob";
+	// private DiscoveryClient discoveryClient
 
 	@Bean
 	public BeanPostProcessor threadPoolTaskExecutorBeanPostProcessor() {
@@ -63,15 +65,18 @@ public class XxlJobExecutorConfiguration {
 		xxlJobExecutor.setLogRetentionDays(executor.getLogRetentionDays());
 		xxlJobExecutor.setAccessToken(properties.getAccessToken());
 
-//        if (StringUtils.isBlank(admin.getAddresses())) {
-//            String serverList = discoveryClient.getServices().stream().filter(s -> s.contains(XXL_JOB_ADMIN))
-//                .flatMap(s -> discoveryClient.getInstances(s).stream()).map(instance ->
-//                    String.format("http://%s:%s/%s", instance.getHost(), instance.getPort(), "xxl-xxljob-admin))
-//                .collect(Collectors.joining(","));
-//            xxlJobExecutor.setAdminAddresses(serverList);
-//        } else {
+		// if (StringUtils.isBlank(admin.getAddresses())) {
+		// String serverList = discoveryClient.getServices().stream().filter(s ->
+		// s.contains(XXL_JOB_ADMIN))
+		// .flatMap(s -> discoveryClient.getInstances(s).stream()).map(instance ->
+		// String.format("http://%s:%s/%s", instance.getHost(), instance.getPort(),
+		// "xxl-xxljob-admin))
+		// .collect(Collectors.joining(","));
+		// xxlJobExecutor.setAdminAddresses(serverList);
+		// } else {
 		xxlJobExecutor.setAdminAddresses(properties.getAdmin().getAddresses());
-//        }
+		// }
 		return xxlJobExecutor;
 	}
+
 }

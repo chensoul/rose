@@ -15,7 +15,8 @@ public class BlockingTest {
 	private static ForkJoinPool pool = new ForkJoinPool(1);
 
 	/**
-	 * Test that {@link Blocking#runnable(java.lang.Runnable) } executes the given runnable.
+	 * Test that {@link Blocking#runnable(java.lang.Runnable) } executes the given
+	 * runnable.
 	 */
 	@Test
 	public void testRunnable_run() {
@@ -26,4 +27,5 @@ public class BlockingTest {
 		CompletableFuture.runAsync(runnable, pool).join();
 		Assert.assertTrue("The given runnable has not been executed", executed.get());
 	}
+
 }

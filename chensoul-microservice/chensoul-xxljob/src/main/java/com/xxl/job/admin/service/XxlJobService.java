@@ -1,6 +1,5 @@
 package com.xxl.job.admin.service;
 
-
 import com.xxl.job.admin.core.model.XxlJobInfo;
 import com.xxl.job.admin.core.model.XxlJobUser;
 import com.xxl.job.core.biz.model.ReturnT;
@@ -17,7 +16,6 @@ public interface XxlJobService {
 
 	/**
 	 * page list
-	 *
 	 * @param start
 	 * @param length
 	 * @param jobGroup
@@ -26,11 +24,11 @@ public interface XxlJobService {
 	 * @param author
 	 * @return
 	 */
-	public Map<String, Object> pageList(int start, int length, int jobGroup, int triggerStatus, String jobDesc, String executorHandler, String author);
+	public Map<String, Object> pageList(int start, int length, int jobGroup, int triggerStatus, String jobDesc,
+			String executorHandler, String author);
 
 	/**
 	 * add job
-	 *
 	 * @param jobInfo
 	 * @return
 	 */
@@ -38,16 +36,13 @@ public interface XxlJobService {
 
 	/**
 	 * update job
-	 *
 	 * @param jobInfo
 	 * @return
 	 */
 	public ReturnT<String> update(XxlJobInfo jobInfo, XxlJobUser loginUser);
 
 	/**
-	 * remove job
-	 * *
-	 *
+	 * remove job *
 	 * @param id
 	 * @return
 	 */
@@ -55,7 +50,6 @@ public interface XxlJobService {
 
 	/**
 	 * start job
-	 *
 	 * @param id
 	 * @return
 	 */
@@ -63,7 +57,6 @@ public interface XxlJobService {
 
 	/**
 	 * stop job
-	 *
 	 * @param id
 	 * @return
 	 */
@@ -71,7 +64,6 @@ public interface XxlJobService {
 
 	/**
 	 * trigger
-	 *
 	 * @param loginUser
 	 * @param jobId
 	 * @param executorParam
@@ -82,14 +74,12 @@ public interface XxlJobService {
 
 	/**
 	 * dashboard info
-	 *
 	 * @return
 	 */
 	public Map<String, Object> dashboardInfo();
 
 	/**
 	 * chart info
-	 *
 	 * @param startDate
 	 * @param endDate
 	 * @return

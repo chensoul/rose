@@ -17,4 +17,5 @@ public interface JobInfoService {
 	void startJob(Integer jobId);
 
 	void stopJob(Integer jobId);
+
 }

@@ -16,7 +16,9 @@ import org.springframework.util.Assert;
 @Component
 @RequiredArgsConstructor
 public class RestRefreshAuthenticationProvider implements AuthenticationProvider {
+
 	private final UserDetailsService userDetailsService;
+
 	private final TokenFactory tokenFactory;
 
 	@Override
@@ -41,4 +43,5 @@ public class RestRefreshAuthenticationProvider implements AuthenticationProvider
 	public boolean supports(Class<?> authentication) {
 		return (RestRefreshAuthenticationToken.class.isAssignableFrom(authentication));
 	}
+
 }

@@ -13,6 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
  * @since TODO
  */
 class AsyncTest {
+
 	@Test
 	public void testNoCustomExecutor() {
 		CompletionStage<Void> completionStage = Async.runAsync(() -> {
@@ -22,4 +23,5 @@ class AsyncTest {
 		completionStage = Async.supplyAsync(() -> null);
 		assertNull(completionStage.toCompletableFuture().join());
 	}
+
 }

@@ -24,6 +24,7 @@ import java.util.Objects;
 @NoArgsConstructor
 @AllArgsConstructor
 public class StringSensitiveSerialize extends JsonSerializer<String> implements ContextualSerializer {
+
 	private FieldSensitive fieldSensitive;
 
 	@SneakyThrows
@@ -60,24 +61,27 @@ public class StringSensitiveSerialize extends JsonSerializer<String> implements 
 			case FIRST_MASK:
 				return Sensitives.deSensitive(origin, 1, 0, fieldSensitive.mask());
 			case CUSTOM:
-				return Sensitives.deSensitive(origin, fieldSensitive.prefixKeep(), fieldSensitive.suffixKeep(), fieldSensitive.mask());
+				return Sensitives.deSensitive(origin, fieldSensitive.prefixKeep(), fieldSensitive.suffixKeep(),
+						fieldSensitive.mask());
 			default:
 				throw new IllegalArgumentException("Unknown sensitive type enum " + fieldSensitive.type());
 		}
 	}
 
 	@Override
-	public void serialize(final String origin, final JsonGenerator jsonGenerator, final SerializerProvider serializerProvider) throws IOException {
+	public void serialize(final String origin, final JsonGenerator jsonGenerator,
+			final SerializerProvider serializerProvider) throws IOException {
 		jsonGenerator.writeString(handler(fieldSensitive, origin));
 	}
 
 	@Override
-	public JsonSerializer<?> createContextual(final SerializerProvider serializerProvider, final BeanProperty beanProperty) throws JsonMappingException {
+	public JsonSerializer<?> createContextual(final SerializerProvider serializerProvider,
+			final BeanProperty beanProperty) throws JsonMappingException {
 		FieldSensitive annotation = beanProperty.getAnnotation(FieldSensitive.class);
 		if (Objects.nonNull(annotation) && Objects.equals(String.class, beanProperty.getType().getRawClass())) {
 			return new StringSensitiveSerialize(annotation);
 		}
 		return serializerProvider.findValueSerializer(beanProperty.getType(), beanProperty);
 	}
-}
 
+}

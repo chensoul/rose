@@ -75,4 +75,5 @@ public class StringListTypeHandler implements TypeHandler<List<String>> {
 		}
 		return Arrays.asList(value.split(StringPool.COMMA));
 	}
+
 }

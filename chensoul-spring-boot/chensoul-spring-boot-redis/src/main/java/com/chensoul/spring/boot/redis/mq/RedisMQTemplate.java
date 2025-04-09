@@ -48,6 +48,7 @@ public class RedisMQTemplate {
 
 	@Getter
 	private final RedisTemplate<String, ?> redisTemplate;
+
 	/**
 	 * 拦截器数组
 	 */
@@ -56,7 +57,6 @@ public class RedisMQTemplate {
 
 	/**
 	 * 发送 Redis 消息，基于 Redis pub/sub 实现
-	 *
 	 * @param message 消息
 	 */
 	public <T extends AbstractRedisChannelMessage> void send(T message) {
@@ -64,14 +64,14 @@ public class RedisMQTemplate {
 			sendMessageBefore(message);
 			// 发送消息
 			redisTemplate.convertAndSend(message.getChannel(), JacksonUtils.toString(message));
-		} finally {
+		}
+		finally {
 			sendMessageAfter(message);
 		}
 	}
 
 	/**
 	 * 发送 Redis 消息，基于 Redis Stream 实现
-	 *
 	 * @param message 消息
 	 * @return 消息记录的编号对象
 	 */
@@ -79,17 +79,18 @@ public class RedisMQTemplate {
 		try {
 			sendMessageBefore(message);
 			// 发送消息
-			return redisTemplate.opsForStream().add(StreamRecords.newRecord()
-				.ofObject(Objects.requireNonNull(JacksonUtils.toString(message))) // 设置内容
-				.withStreamKey(message.getStreamKey())); // 设置 stream key
-		} finally {
+			return redisTemplate.opsForStream()
+				.add(StreamRecords.newRecord()
+					.ofObject(Objects.requireNonNull(JacksonUtils.toString(message))) // 设置内容
+					.withStreamKey(message.getStreamKey())); // 设置 stream key
+		}
+		finally {
 			sendMessageAfter(message);
 		}
 	}
 
 	/**
 	 * 添加拦截器
-	 *
 	 * @param interceptor 拦截器
 	 */
 	public void addInterceptor(RedisMessageInterceptor interceptor) {

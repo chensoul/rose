@@ -27,4 +27,5 @@ class WatchableGroovyScriptTests {
 		Files.setLastModifiedTime(file.toPath(), FileTime.from(Instant.now()));
 		Thread.sleep(5_000);
 	}
+
 }

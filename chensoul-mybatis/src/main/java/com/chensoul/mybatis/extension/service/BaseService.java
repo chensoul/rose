@@ -27,11 +27,11 @@ public interface BaseService<T> extends IService<T> {
 
 	/**
 	 * 判断字段是否重复
-	 *
-	 * @param field      字段
-	 * @param value      字段值
+	 * @param field 字段
+	 * @param value 字段值
 	 * @param excludedId 排除的id
 	 * @return boolean
 	 */
 	boolean isFieldDuplicate(SFunction<T, ?> field, Object value, Long excludedId);
+
 }

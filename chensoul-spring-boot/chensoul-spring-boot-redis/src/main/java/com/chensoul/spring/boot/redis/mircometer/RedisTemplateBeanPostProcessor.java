@@ -32,19 +32,18 @@ public class RedisTemplateBeanPostProcessor implements BeanPostProcessor, BeanFa
 
 	private void enhanceValueOperations(RedisTemplate<?, ?> redisTemplate) {
 		ReflectionUtils.doWithFields(RedisTemplate.class, field -> {
-				field.setAccessible(true);
-				// 代理对象
-				ValueOperations<?, ?> delegate = (ValueOperations<?, ?>) field.get(redisTemplate);
-				ValueOperationsWrapper wrapper = new ValueOperationsWrapper(delegate, interceptors);
-				// 设置 Wrapper 成为 valueOps 字段内容
-				field.set(redisTemplate, wrapper);
-			},
-			field -> "valueOps".equals(field.getName()) && ValueOperations.class.equals(field.getType())
-		);
+			field.setAccessible(true);
+			// 代理对象
+			ValueOperations<?, ?> delegate = (ValueOperations<?, ?>) field.get(redisTemplate);
+			ValueOperationsWrapper wrapper = new ValueOperationsWrapper(delegate, interceptors);
+			// 设置 Wrapper 成为 valueOps 字段内容
+			field.set(redisTemplate, wrapper);
+		}, field -> "valueOps".equals(field.getName()) && ValueOperations.class.equals(field.getType()));
 	}
 
 	@Override
 	public void setBeanFactory(BeanFactory beanFactory) throws BeansException {
 		this.interceptors = beanFactory.getBeanProvider(RedisOperationInterceptor.class);
 	}
+
 }

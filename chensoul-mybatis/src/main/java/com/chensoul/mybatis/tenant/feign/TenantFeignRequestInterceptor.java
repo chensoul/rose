@@ -10,6 +10,7 @@ import static com.chensoul.core.CommonConstants.HEADER_TENANT_ID;
 
 @Slf4j
 public class TenantFeignRequestInterceptor implements RequestInterceptor {
+
 	@Override
 	public void apply(RequestTemplate requestTemplate) {
 		String tenantId = TenantContextHolder.getTenantId();
@@ -17,4 +18,5 @@ public class TenantFeignRequestInterceptor implements RequestInterceptor {
 			requestTemplate.header(HEADER_TENANT_ID, tenantId);
 		}
 	}
+
 }

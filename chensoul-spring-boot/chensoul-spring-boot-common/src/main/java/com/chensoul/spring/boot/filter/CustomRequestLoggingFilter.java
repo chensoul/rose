@@ -24,17 +24,22 @@ import java.util.function.Predicate;
 @Setter
 @RequiredArgsConstructor
 public class CustomRequestLoggingFilter extends CommonsRequestLoggingFilter {
+
 	public static final String START_TIME = "x-request-start-time";
 
 	private final int maxResponseTimeToLogInMs;
-	private List<String> ignoreHeaders = Arrays.asList("password", "authorization", "token", "accessToken", "access_token", "refreshToken");
+
+	private List<String> ignoreHeaders = Arrays.asList("password", "authorization", "token", "accessToken",
+			"access_token", "refreshToken");
 
 	@PostConstruct
 	public void init() {
-		Predicate<String> headerPredicate = headerName -> ObjectUtils.isEmpty(ignoreHeaders) || !ignoreHeaders.contains(headerName);
+		Predicate<String> headerPredicate = headerName -> ObjectUtils.isEmpty(ignoreHeaders)
+				|| !ignoreHeaders.contains(headerName);
 		if (getHeaderPredicate() == null) {
 			setHeaderPredicate(headerPredicate);
-		} else {
+		}
+		else {
 			setHeaderPredicate(getHeaderPredicate().or(headerPredicate));
 		}
 	}
@@ -57,10 +62,12 @@ public class CustomRequestLoggingFilter extends CommonsRequestLoggingFilter {
 			message = message + ", cost " + cost + " ms";
 
 			if (cost >= this.maxResponseTimeToLogInMs) {
-				String execTime = TimeUtils.format(TimeUtils.fromMilliseconds(startTime), DatePattern.NORM_DATETIME_MS_PATTERN);
+				String execTime = TimeUtils.format(TimeUtils.fromMilliseconds(startTime),
+						DatePattern.NORM_DATETIME_MS_PATTERN);
 				log.warn("[SLOW_REQUEST] {} {} {} {}", execTime, request.getMethod(), request.getRequestURI(), cost);
 			}
 		}
 		log.info(message);
 	}
+
 }

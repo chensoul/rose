@@ -10,7 +10,6 @@ public interface WatcherService extends Closeable {
 
 	/**
 	 * No op watcher util.
-	 *
 	 * @return the watcher util
 	 */
 	static WatcherService noOp() {
@@ -27,9 +26,9 @@ public interface WatcherService extends Closeable {
 
 	/**
 	 * Start the watch.
-	 *
 	 * @param name the name
 	 */
 	default void start(final String name) {
 	}
+
 }

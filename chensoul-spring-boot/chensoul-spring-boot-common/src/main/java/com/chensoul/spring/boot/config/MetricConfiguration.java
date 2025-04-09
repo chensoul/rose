@@ -27,6 +27,7 @@ import java.util.Objects;
 @Import(MetricsInterceptor.class)
 @AutoConfigureAfter(MetricsEndpointAutoConfiguration.class)
 public class MetricConfiguration {
+
 	@Bean
 	@ConditionalOnAvailableEndpoint
 	public AggravateMetricsEndpoint aggravateMetricsEndpoint(MeterRegistry meterRegistry) {
@@ -43,9 +44,8 @@ public class MetricConfiguration {
 
 	@Bean
 	MeterRegistryCustomizer<MeterRegistry> meterRegistryCustomizer() {
-		return registry -> registry.config().commonTags(
-			Collections.singletonList(
-				Tag.of("host", Objects.requireNonNull(NetUtils.getLocalhostStr()))
-			));
+		return registry -> registry.config()
+			.commonTags(Collections.singletonList(Tag.of("host", Objects.requireNonNull(NetUtils.getLocalhostStr()))));
 	}
+
 }

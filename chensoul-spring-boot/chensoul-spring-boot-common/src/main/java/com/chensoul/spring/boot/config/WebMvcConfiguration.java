@@ -33,8 +33,9 @@ import static org.springframework.boot.autoconfigure.condition.ConditionalOnWebA
 @Order(Ordered.HIGHEST_PRECEDENCE)
 @RequiredArgsConstructor
 @ConditionalOnWebApplication(type = SERVLET)
-@EnableConfigurationProperties({XssProperties.class})
+@EnableConfigurationProperties({ XssProperties.class })
 public class WebMvcConfiguration implements WebMvcConfigurer {
+
 	private final XssProperties xssProperties;
 
 	@Value("${server.http.max-response-time-to-log-in-ms:2000}")
@@ -43,7 +44,6 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
 	@Value("${server.http.max_payload_size:/api/image*/**=52428800;/api/resource/**=52428800;/api/**=16777216}")
 	private String maxPayloadSizeConfig;
 
-
 	/**
 	 * 增加GET请求参数中时间类型转换 {@link Java8TimeModule}
 	 * <ul>
@@ -51,7 +51,6 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
 	 * <li>yyyy-MM-dd -> LocalDate</li>
 	 * <li>yyyy-MM-dd HH:mm:ss -> LocalDateTime</li>
 	 * </ul>
-	 *
 	 * @param registry
 	 */
 	@Override
@@ -65,7 +64,6 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
 
 	/**
 	 * 系统国际化文件配置
-	 *
 	 * @return MessageSource
 	 */
 	@Bean
@@ -83,11 +81,7 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
 
 	@Override
 	public void addCorsMappings(final CorsRegistry registry) {
-		registry.addMapping("/**")
-			.allowedOrigins("**")
-			.allowedHeaders("*")
-			.allowedMethods("*")
-			.maxAge(86400);
+		registry.addMapping("/**").allowedOrigins("**").allowedHeaders("*").allowedMethods("*").maxAge(86400);
 	}
 
 	@Bean
@@ -121,4 +115,5 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
 	protected PayloadSizeFilter payloadSizeFilter() {
 		return new PayloadSizeFilter(maxPayloadSizeConfig);
 	}
+
 }

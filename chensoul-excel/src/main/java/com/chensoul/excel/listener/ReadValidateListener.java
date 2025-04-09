@@ -22,9 +22,12 @@ import java.util.stream.Collectors;
  * @since 0.0.1
  */
 public class ReadValidateListener<T extends ReadFailMessageAware> extends AnalysisEventListener<T> {
+
 	public static final Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
+
 	@Getter
 	private final List<T> failData = new ArrayList<>();
+
 	@Getter
 	private final List<T> successData = new ArrayList<>();
 
@@ -51,11 +54,13 @@ public class ReadValidateListener<T extends ReadFailMessageAware> extends Analys
 		if (!CollectionUtils.isEmpty(constraintViolations)) {
 			data.setMessage(constraintViolations.stream().map(a -> a.getMessage()).collect(Collectors.joining("、")));
 			failData.add(data);
-		} else {
+		}
+		else {
 			String customValidateResult = customValidate(successData, data);
 			if (StringUtils.isEmpty(customValidateResult)) {
 				successData.add(data);
-			} else {
+			}
+			else {
 				data.setMessage(customValidateResult);
 				failData.add(data);
 			}

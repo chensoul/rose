@@ -24,8 +24,11 @@ import org.springframework.web.client.RestTemplate;
 @EnableConfigurationProperties(XxlJobProperties.class)
 @ConditionalOnProperty(prefix = "xxl.xxljob.client", name = "enabled", havingValue = "true")
 public class XxlJobClientConfiguration {
+
 	private final RestTemplate restTemplate;
+
 	private final XxlJobProperties xxlJobProperties;
+
 	private final Environment environment;
 
 	@Bean
@@ -49,4 +52,5 @@ public class XxlJobClientConfiguration {
 
 		return new XxlJobAutoRegister(jobGroupService(), jobInfoService(), xxlJobProperties, environment);
 	}
+
 }

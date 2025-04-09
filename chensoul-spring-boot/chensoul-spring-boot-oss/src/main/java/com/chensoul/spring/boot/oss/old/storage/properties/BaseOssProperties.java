@@ -55,10 +55,8 @@ public class BaseOssProperties implements java.io.Serializable {
 		/**
 		 * MINIO
 		 */
-		MINIO,
-		ALIYUN,
-		TENCENT,
-		QINIU
+		MINIO, ALIYUN, TENCENT, QINIU
+
 	}
 
 }

@@ -23,8 +23,8 @@ import java.util.function.Predicate;
 @Getter
 @ToString
 public class RestResponse<T> implements Serializable {
-	public static final Predicate<RestResponse<?>> CODE_SUCCESS = r -> ResultCode.SUCCESS.getCode() == r.getCode();
 
+	public static final Predicate<RestResponse<?>> CODE_SUCCESS = r -> ResultCode.SUCCESS.getCode() == r.getCode();
 
 	private int code;
 
@@ -97,26 +97,29 @@ public class RestResponse<T> implements Serializable {
 		return !codeEquals(value);
 	}
 
-	public <Ex extends Exception> RestResponse<T> assertCode(int expect, Function<? super RestResponse<T>, ? extends Ex> func)
-		throws Ex {
+	public <Ex extends Exception> RestResponse<T> assertCode(int expect,
+			Function<? super RestResponse<T>, ? extends Ex> func) throws Ex {
 		if (codeNotEquals(expect)) {
 			throw func.apply(this);
 		}
 		return this;
 	}
 
-	public <Ex extends Exception> RestResponse<T> assertSuccess(Function<? super RestResponse<T>, ? extends Ex> func) throws Ex {
+	public <Ex extends Exception> RestResponse<T> assertSuccess(Function<? super RestResponse<T>, ? extends Ex> func)
+			throws Ex {
 		return assertCode(ResultCode.SUCCESS.getCode(), func);
 	}
 
-	public <Ex extends Exception> RestResponse<T> assertDataNotNull(Function<? super RestResponse<T>, ? extends Ex> func) throws Ex {
+	public <Ex extends Exception> RestResponse<T> assertDataNotNull(
+			Function<? super RestResponse<T>, ? extends Ex> func) throws Ex {
 		if (Objects.isNull(this.getData())) {
 			throw func.apply(this);
 		}
 		return this;
 	}
 
-	public <Ex extends Exception> RestResponse<T> assertDataNotEmpty(Function<? super RestResponse<T>, ? extends Ex> func) throws Ex {
+	public <Ex extends Exception> RestResponse<T> assertDataNotEmpty(
+			Function<? super RestResponse<T>, ? extends Ex> func) throws Ex {
 		if (ObjectUtils.isEmpty(this.getData())) {
 			throw func.apply(this);
 		}

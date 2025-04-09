@@ -42,23 +42,22 @@ import java.io.IOException;
 import java.util.Set;
 
 /**
- * 多租户 Security Web 过滤器
- * 1. 如果是登陆的用户，校验是否有权限访问该租户，避免越权问题。
- * 2. 如果请求未带租户的编号，检查是否是忽略的 URL，否则也不允许访问。
- * 3. 校验租户是合法，例如说被禁用、到期
+ * 多租户 Security Web 过滤器 1. 如果是登陆的用户，校验是否有权限访问该租户，避免越权问题。 2. 如果请求未带租户的编号，检查是否是忽略的
+ * URL，否则也不允许访问。 3. 校验租户是合法，例如说被禁用、到期
  *
  * @author EnjoyIot
  */
 @Slf4j
 @RequiredArgsConstructor
 public class TenantSecurityFilter extends OncePerRequestFilter {
+
 	private static final AntPathMatcher pathMatcher = new AntPathMatcher();
 
 	private final Set<String> ignoreUrls;
 
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
-		throws ServletException, IOException {
+			throws ServletException, IOException {
 		String tenantId = TenantContextHolder.getTenantId();
 
 		// 如果非允许忽略租户的 URL，则校验租户是否合法
@@ -69,15 +68,17 @@ public class TenantSecurityFilter extends OncePerRequestFilter {
 				WebUtils.renderJson(HttpStatus.FORBIDDEN.value(), RestResponse.error("请求的租户标识未传递"));
 				return;
 			}
-//			// 校验租户是合法，例如说被禁用、到期
-//			try {
-//				tenantFrameworkService.validTenant(tenantId);
-//			} catch (Throwable ex) {
-//				CommonResult<?> result = globalExceptionHandler.allExceptionHandler(request, ex);
-//				ServletUtils.writeJSON(response, result);
-//				return;
-//			}
-		} else {
+			// // 校验租户是合法，例如说被禁用、到期
+			// try {
+			// tenantFrameworkService.validTenant(tenantId);
+			// } catch (Throwable ex) {
+			// CommonResult<?> result =
+			// globalExceptionHandler.allExceptionHandler(request, ex);
+			// ServletUtils.writeJSON(response, result);
+			// return;
+			// }
+		}
+		else {
 			// 如果是允许忽略租户的 URL，若未传递租户编号，则默认忽略租户编号，避免报错
 			if (tenantId == null) {
 				TenantContextHolder.setIgnore(true);
@@ -92,9 +93,10 @@ public class TenantSecurityFilter extends OncePerRequestFilter {
 				tenantId = user.getTenants().get(0);
 				TenantContextHolder.setTenantId(tenantId);
 				// 如果传递了租户编号，则进行比对租户编号，避免越权问题
-			} else if (!user.getTenants().contains(TenantContextHolder.getTenantId())) {
-				log.error("用户{}越权访问租户({}) URL({}/{})]",
-					user.getUsername(), TenantContextHolder.getTenantId(), request.getRequestURI(), request.getMethod());
+			}
+			else if (!user.getTenants().contains(TenantContextHolder.getTenantId())) {
+				log.error("用户{}越权访问租户({}) URL({}/{})]", user.getUsername(), TenantContextHolder.getTenantId(),
+						request.getRequestURI(), request.getMethod());
 				WebUtils.renderJson(HttpStatus.FORBIDDEN.value(), RestResponse.error("您无权访问该租户的数据"));
 				return;
 			}

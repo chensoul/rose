@@ -13,4 +13,5 @@ public class RestAccessAuthenticationToken extends AbstractRestAuthenticationTok
 	public RestAccessAuthenticationToken(SecurityUser securityUser) {
 		super(securityUser);
 	}
+
 }

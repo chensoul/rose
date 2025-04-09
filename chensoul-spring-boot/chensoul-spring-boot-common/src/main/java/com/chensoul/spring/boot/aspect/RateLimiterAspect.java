@@ -28,10 +28,12 @@ import java.util.List;
 @Aspect
 @Slf4j
 @Component
-@ConditionalOnBean({RedisTemplate.class, RedisScript.class})
+@ConditionalOnBean({ RedisTemplate.class, RedisScript.class })
 @RequiredArgsConstructor
 public class RateLimiterAspect {
+
 	private final RedisTemplate<String, Object> redisTemplate;
+
 	private final RedisScript<Long> limitScript;
 
 	@Before("@annotation(rateLimiter)")
@@ -47,9 +49,11 @@ public class RateLimiterAspect {
 				throw new TooManyRequestException("访问过于频繁，请稍候再试");
 			}
 			log.info("限制请求'{}',当前请求'{}',缓存key'{}'", count, number.intValue(), combineKey);
-		} catch (TooManyRequestException e) {
+		}
+		catch (TooManyRequestException e) {
 			throw e;
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			throw new RuntimeException("服务器限流异常，请稍候再试");
 		}
 	}
@@ -65,4 +69,5 @@ public class RateLimiterAspect {
 		stringBuffer.append(targetClass.getName()).append("-").append(method.getName());
 		return stringBuffer.toString();
 	}
+
 }

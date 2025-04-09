@@ -34,8 +34,13 @@ import static org.springframework.http.HttpHeaders.USER_AGENT;
  */
 @Slf4j
 public class WebUtils extends org.springframework.web.util.WebUtils {
-	private static final List<String> CLIENT_IP_HEADER_NAMES = Arrays.asList("X-Forwarded-For",
-		"X-Real-IP", "Proxy-Client-IP", "WL-Proxy-Client-IP", "HTTP_CLIENT_IP", "HTTP_X_FORWARDED_FOR");
+
+	public static final String X_REQUESTED_WITH = "X-Requested-With";
+
+	public static final String XMLHTTP_REQUEST = "XMLHttpRequest";
+
+	private static final List<String> CLIENT_IP_HEADER_NAMES = Arrays.asList("X-Forwarded-For", "X-Real-IP",
+			"Proxy-Client-IP", "WL-Proxy-Client-IP", "HTTP_CLIENT_IP", "HTTP_X_FORWARDED_FOR");
 
 	public static String getUsername() {
 		HttpServletRequest request = WebUtils.ofRequest().get();
@@ -115,7 +120,8 @@ public class WebUtils extends org.springframework.web.util.WebUtils {
 		if (request == null) {
 			return null;
 		}
-		return StringUtils.defaultString(request.getQueryParams().getFirst(headerName), request.getHeaders().getFirst(headerName));
+		return StringUtils.defaultString(request.getQueryParams().getFirst(headerName),
+				request.getHeaders().getFirst(headerName));
 	}
 
 	public static boolean isJsonRequest(ServletRequest request) {
@@ -123,11 +129,8 @@ public class WebUtils extends org.springframework.web.util.WebUtils {
 	}
 
 	public static String constructUrl(HttpServletRequest request) {
-		return String.format("%s://%s:%d%s",
-			getScheme(request),
-			getDomainName(request),
-			getPort(request),
-			request.getRequestURI());
+		return String.format("%s://%s:%d%s", getScheme(request), getDomainName(request), getPort(request),
+				request.getRequestURI());
 	}
 
 	public static String getScheme(HttpServletRequest request) {
@@ -166,9 +169,11 @@ public class WebUtils extends org.springframework.web.util.WebUtils {
 		if (request.getHeader("x-forwarded-port") != null) {
 			try {
 				serverPort = request.getIntHeader("x-forwarded-port");
-			} catch (NumberFormatException e) {
 			}
-		} else if (forwardedProto != null) {
+			catch (NumberFormatException e) {
+			}
+		}
+		else if (forwardedProto != null) {
 			switch (forwardedProto) {
 				case "http":
 					serverPort = 80;
@@ -195,8 +200,7 @@ public class WebUtils extends org.springframework.web.util.WebUtils {
 	}
 
 	public static Optional<HttpServletRequest> ofRequest() {
-		return Optional
-			.of(((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest());
+		return Optional.of(((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest());
 	}
 
 	public static HttpServletRequest getRequest() {
@@ -215,4 +219,29 @@ public class WebUtils extends org.springframework.web.util.WebUtils {
 		registrationBean.setOrder(order);
 		return registrationBean;
 	}
+
+	public static boolean isJsonRequest(HttpServletRequest request) {
+		// 优先检查明确标识：X-Requested-With
+		String requestedWith = request.getHeader(X_REQUESTED_WITH);
+		if (XMLHTTP_REQUEST.equalsIgnoreCase(requestedWith)) {
+			return Boolean.TRUE;
+		}
+
+		// 补充检查：Content-Type 是否为 JSON（适用于 POST/PUT）
+		String contentType = request.getContentType();
+		if (contentType != null && contentType.toLowerCase().startsWith(MediaType.APPLICATION_JSON_VALUE)) {
+			return Boolean.TRUE;
+		}
+
+		// 谨慎检查 Accept 头
+		String acceptHeader = request.getHeader("Accept");
+		if (acceptHeader != null) {
+			if (acceptHeader.toLowerCase().contains(MediaType.APPLICATION_JSON_VALUE)) {
+				return Boolean.TRUE;
+			}
+		}
+
+		return Boolean.FALSE;
+	}
+
 }

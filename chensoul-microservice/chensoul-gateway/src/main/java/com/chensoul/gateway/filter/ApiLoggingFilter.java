@@ -29,8 +29,8 @@ public class ApiLoggingFilter implements GlobalFilter, Ordered {
 	public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
 		if (log.isDebugEnabled()) {
 			String info = String.format("Method:{%s} Host:{%s} Path:{%s} Query:{%s}",
-				exchange.getRequest().getMethod().name(), exchange.getRequest().getURI().getHost(),
-				exchange.getRequest().getURI().getPath(), exchange.getRequest().getQueryParams());
+					exchange.getRequest().getMethod().name(), exchange.getRequest().getURI().getHost(),
+					exchange.getRequest().getURI().getPath(), exchange.getRequest().getQueryParams());
 			log.debug(info);
 		}
 		exchange.getAttributes().put(START_TIME, System.currentTimeMillis());

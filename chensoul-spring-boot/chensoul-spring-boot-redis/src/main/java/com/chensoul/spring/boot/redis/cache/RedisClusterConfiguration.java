@@ -53,17 +53,15 @@ public class RedisClusterConfiguration extends RedisCacheConfiguration {
 	}
 
 	private JedisClientConfiguration buildClientConfig() {
-		JedisClientConfiguration.JedisClientConfigurationBuilder jedisClientConfigurationBuilder = JedisClientConfiguration.builder();
+		JedisClientConfiguration.JedisClientConfigurationBuilder jedisClientConfigurationBuilder = JedisClientConfiguration
+			.builder();
 		if (!useDefaultPoolConfig) {
-			jedisClientConfigurationBuilder
-				.usePooling()
-				.poolConfig(buildPoolConfig());
+			jedisClientConfigurationBuilder.usePooling().poolConfig(buildPoolConfig());
 		}
 		if (useSsl) {
-			jedisClientConfigurationBuilder
-				.useSsl()
-				.sslSocketFactory(createSslSocketFactory());
+			jedisClientConfigurationBuilder.useSsl().sslSocketFactory(createSslSocketFactory());
 		}
 		return jedisClientConfigurationBuilder.build();
 	}
+
 }

@@ -24,8 +24,8 @@ public class BladeOssRule implements OssRule {
 
 	@Override
 	public String fileName(String originalFilename) {
-		return "upload" + StringPool.SLASH + TimeUtils.format(LocalDateTime.now(), DatePattern.PURE_DATE_PATTERN) +
-			StringPool.SLASH + UUID.randomUUID() + StringPool.DOT + FilenameUtils.getExtension(originalFilename);
+		return "upload" + StringPool.SLASH + TimeUtils.format(LocalDateTime.now(), DatePattern.PURE_DATE_PATTERN)
+				+ StringPool.SLASH + UUID.randomUUID() + StringPool.DOT + FilenameUtils.getExtension(originalFilename);
 	}
 
 }

@@ -181,13 +181,13 @@ public final class HtmlFilter {
 		vAllowed.put("i", no_atts);
 		vAllowed.put("em", no_atts);
 
-		vSelfClosingTags = new String[]{"img"};
-		vNeedClosingTags = new String[]{"a", "b", "strong", "i", "em"};
-		vDisallowed = new String[]{};
-		vAllowedProtocols = new String[]{"http", "mailto", "https"}; // no ftp.
-		vProtocolAtts = new String[]{"src", "href"};
-		vRemoveBlanks = new String[]{"a", "b", "strong", "i", "em"};
-		vAllowedEntities = new String[]{"amp", "gt", "lt", "quot"};
+		vSelfClosingTags = new String[] { "img" };
+		vNeedClosingTags = new String[] { "a", "b", "strong", "i", "em" };
+		vDisallowed = new String[] {};
+		vAllowedProtocols = new String[] { "http", "mailto", "https" }; // no ftp.
+		vProtocolAtts = new String[] { "src", "href" };
+		vRemoveBlanks = new String[] { "a", "b", "strong", "i", "em" };
+		vAllowedEntities = new String[] { "amp", "gt", "lt", "quot" };
 		stripComment = true;
 		encodeQuotes = true;
 		alwaysMakeTags = true;
@@ -196,7 +196,6 @@ public final class HtmlFilter {
 	/**
 	 * Set debug flag to true. Otherwise use default settings. See the default
 	 * constructor.
-	 *
 	 * @param debug turn debug on with a true argument
 	 */
 	public HtmlFilter(final boolean debug) {
@@ -207,7 +206,6 @@ public final class HtmlFilter {
 
 	/**
 	 * Map-parameter configurable constructor.
-	 *
 	 * @param conf map containing configuration. keys match field names.
 	 */
 	public HtmlFilter(final Map<String, Object> conf) {
@@ -277,7 +275,6 @@ public final class HtmlFilter {
 
 	/**
 	 * given a user submitted input String, filter out any invalid or restricted html.
-	 *
 	 * @param input text (i.e. submitted by a user) than may contain html
 	 * @return "clean" version of input, with only valid, whitelisted html elements
 	 * allowed
@@ -337,7 +334,8 @@ public final class HtmlFilter {
 			s = regexReplace(P_BODY_TO_END, "<$1>", s);
 			s = regexReplace(P_XML_CONTENT, "$1<$2", s);
 
-		} else {
+		}
+		else {
 			//
 			// escape stray brackets
 			//
@@ -463,14 +461,17 @@ public final class HtmlFilter {
 				if (ending == null || ending.length() < 1) {
 					if (vTagCounts.containsKey(name)) {
 						vTagCounts.put(name, vTagCounts.get(name) + 1);
-					} else {
+					}
+					else {
 						vTagCounts.put(name, 1);
 					}
-				} else {
+				}
+				else {
 					ending = " /";
 				}
 				return "<" + name + params + ending + ">";
-			} else {
+			}
+			else {
 				return "";
 			}
 		}
@@ -564,7 +565,8 @@ public final class HtmlFilter {
 			}
 			m.appendTail(buf);
 			return buf.toString();
-		} else {
+		}
+		else {
 			return s;
 		}
 	}

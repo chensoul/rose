@@ -27,13 +27,16 @@ import static com.chensoul.core.util.StringPool.COLON;
 @RequiredArgsConstructor
 @Configuration(proxyBeanMethods = false)
 public class RedisCacheAutoConfiguration {
+
 	private final RedisSerializer<Object> redisSerializer;
+
 	private final CacheProperties cacheProperties;
+
 	private final CacheManagerCustomizers cacheManagerCustomizers;
 
 	@Bean
 	public RedisCacheManager redisCacheManager(RedisTemplate<String, Object> redisTemplate,
-											   RedisCacheConfiguration redisCacheConfiguration) {
+			RedisCacheConfiguration redisCacheConfiguration) {
 		// 创建 RedisCacheWriter 对象
 		RedisConnectionFactory connectionFactory = Objects.requireNonNull(redisTemplate.getConnectionFactory());
 		RedisCacheWriter cacheWriter = RedisCacheWriter.nonLockingRedisCacheWriter(connectionFactory);
@@ -58,9 +61,9 @@ public class RedisCacheAutoConfiguration {
 			return cacheName + COLON;
 		});
 
-
 		CacheProperties.Redis redisProperties = this.cacheProperties.getRedis();
-		config = config.serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(redisSerializer));
+		config = config
+			.serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(redisSerializer));
 		if (redisProperties.getTimeToLive() != null) {
 			config = config.entryTtl(redisProperties.getTimeToLive());
 		}
@@ -79,4 +82,5 @@ public class RedisCacheAutoConfiguration {
 
 		return config;
 	}
+
 }

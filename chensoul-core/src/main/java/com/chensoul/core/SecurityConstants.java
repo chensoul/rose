@@ -35,14 +35,13 @@ public interface SecurityConstants {
 	 * sys_client 表的字段，code 指 client_id
 	 */
 	String CLIENT_FIELDS = "code, CONCAT('{noop}',secret) as client_secret, resource_ids, scope, "
-		+ "authorized_grant_types, web_server_redirect_uri, authorities, access_token_validity, "
-		+ "refresh_token_validity, additional_information, autoapprove";
+			+ "authorized_grant_types, web_server_redirect_uri, authorities, access_token_validity, "
+			+ "refresh_token_validity, additional_information, autoapprove";
 
 	/**
 	 * JdbcClientDetailsService 查询语句
 	 */
-	String BASE_FIND_STATEMENT = "select " + CLIENT_FIELDS
-		+ " from sys_client";
+	String BASE_FIND_STATEMENT = "select " + CLIENT_FIELDS + " from sys_client";
 
 	/**
 	 * 默认的查询语句
@@ -63,18 +62,22 @@ public interface SecurityConstants {
 	 * 刷新模式
 	 */
 	String REFRESH_TOKEN = "refresh_token";
+
 	/**
 	 * 授权码模式
 	 */
 	String AUTHORIZATION_CODE = "authorization_code";
+
 	/**
 	 * 客户端模式
 	 */
 	String CLIENT_CREDENTIALS = "client_credentials";
+
 	/**
 	 * 密码模式
 	 */
 	String PASSWORD = "password";
+
 	/**
 	 * 简化模式
 	 */

@@ -159,4 +159,5 @@ public class QueryWrapperX<T> extends QueryWrapper<T> {
 		super.in(column, coll);
 		return this;
 	}
+
 }

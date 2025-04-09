@@ -18,7 +18,8 @@ import java.io.IOException;
 public class RestAccessDeniedHandler implements AccessDeniedHandler {
 
 	@Override
-	public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException e) throws IOException, ServletException {
+	public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException e)
+			throws IOException, ServletException {
 		if (response.isCommitted()) {
 			return;
 		}
@@ -26,4 +27,5 @@ public class RestAccessDeniedHandler implements AccessDeniedHandler {
 		log.error("Access denied: {}", e.getMessage(), e);
 		WebUtils.renderJson(HttpStatus.FORBIDDEN.value(), RestResponse.error("无权限访问"));
 	}
+
 }

@@ -24,9 +24,11 @@ import java.util.Map;
 @ToString(of = "script")
 @RequiredArgsConstructor
 public class GroovyShellScript implements ExecutableScript {
+
 	private static final ThreadLocal<Map<String, Object>> BINDING_THREAD_LOCAL = new InheritableThreadLocal<>();
 
 	private final TryLock lock = new TryLock();
+
 	private final String script;
 
 	private Script groovyScript;
@@ -58,9 +60,11 @@ public class GroovyShellScript implements ExecutableScript {
 				val result = ScriptingUtils.executeGroovyShellScript(groovyScript, clazz);
 				log.debug("Groovy script [{}] returns result [{}]", this, result);
 				return result;
-			} catch (final GroovyRuntimeException e) {
+			}
+			catch (final GroovyRuntimeException e) {
 				log.error("Groovy script [{}] execution error", this, e);
-			} finally {
+			}
+			finally {
 				BINDING_THREAD_LOCAL.remove();
 				if (groovyScript != null) {
 					groovyScript.setBinding(new Binding(new HashMap()));

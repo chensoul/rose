@@ -28,4 +28,5 @@ public abstract class BaseEntityOperation implements EntityOperation {
 			throw new BusinessException(message.get(0));
 		}
 	}
+
 }

@@ -22,6 +22,7 @@ import java.util.stream.Collectors;
 @Slf4j
 @Lazy(false)
 public class SpringContextHolder implements ApplicationContextAware, DisposableBean {
+
 	@Getter
 	private static ApplicationContext applicationContext;
 
@@ -54,7 +55,8 @@ public class SpringContextHolder implements ApplicationContextAware, DisposableB
 	}
 
 	public static String getApplicationName() {
-		return applicationContext.getEnvironment().getProperty("spring.application.name", String.class, StringPool.DASHDASH);
+		return applicationContext.getEnvironment()
+			.getProperty("spring.application.name", String.class, StringPool.DASHDASH);
 	}
 
 	public static Set<String> getActiveProfiles() {
@@ -74,7 +76,8 @@ public class SpringContextHolder implements ApplicationContextAware, DisposableB
 	}
 
 	public static boolean isMicro() {
-		return applicationContext.getEnvironment().getProperty("spring.cloud.nacos.discovery.enabled", Boolean.class, true);
+		return applicationContext.getEnvironment()
+			.getProperty("spring.cloud.nacos.discovery.enabled", Boolean.class, true);
 	}
 
 	public static void clearHolder() {
@@ -94,4 +97,5 @@ public class SpringContextHolder implements ApplicationContextAware, DisposableB
 	public void setApplicationContext(ApplicationContext applicationContext) {
 		SpringContextHolder.applicationContext = applicationContext;
 	}
+
 }

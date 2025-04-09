@@ -34,10 +34,11 @@ public class ValueOperationsWrapper implements ValueOperations {
 
 	@Override
 	public void set(Object key, Object value) {
-		execute(delegate, "set", new Object[]{key, value}, a -> a.set(key, value));
+		execute(delegate, "set", new Object[] { key, value }, a -> a.set(key, value));
 	}
 
-	private void execute(ValueOperations delegate, String methodName, Object[] args, Consumer<ValueOperations> consumer) {
+	private void execute(ValueOperations delegate, String methodName, Object[] args,
+			Consumer<ValueOperations> consumer) {
 		// 拦截该方法
 		// 前置拦截
 		iterable(interceptor -> interceptor.before(this, delegate, methodName, args));
@@ -46,7 +47,8 @@ public class ValueOperationsWrapper implements ValueOperations {
 			// 正常执行
 			// 后置拦截（正常）
 			iterable(interceptor -> interceptor.afterReturning(this, delegate, methodName, args, null));
-		} catch (Throwable e) {
+		}
+		catch (Throwable e) {
 			// 后置拦截（异常）
 			// 1. Redis 服务器无法访问
 			// 2. Redis 连接池不够用（超时）
@@ -61,7 +63,7 @@ public class ValueOperationsWrapper implements ValueOperations {
 
 	@Override
 	public void set(Object key, Object value, long timeout, TimeUnit unit) {
-		execute(delegate, "set", new Object[]{key, value, timeout, unit}, a -> a.set(key, value, timeout, unit));
+		execute(delegate, "set", new Object[] { key, value, timeout, unit }, a -> a.set(key, value, timeout, unit));
 	}
 
 	@Override
@@ -229,4 +231,5 @@ public class ValueOperationsWrapper implements ValueOperations {
 	public RedisOperations getOperations() {
 		return delegate.getOperations();
 	}
+
 }

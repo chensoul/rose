@@ -38,6 +38,7 @@ public class TencentOssProperties extends BaseOssProperties {
 	 * AppId
 	 */
 	private String appId;
+
 	/**
 	 * 前缀
 	 */

@@ -11,7 +11,6 @@ public class FeignRequestCloseInterceptor implements RequestInterceptor {
 
 	/**
 	 * set connection close
-	 *
 	 * @param template
 	 */
 	@Override

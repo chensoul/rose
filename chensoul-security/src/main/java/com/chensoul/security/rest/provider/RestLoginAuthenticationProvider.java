@@ -19,8 +19,11 @@ import org.springframework.util.Assert;
 @Slf4j
 @RequiredArgsConstructor
 public class RestLoginAuthenticationProvider implements AuthenticationProvider {
+
 	private final UserDetailsService userDetailsService;
+
 	private final PasswordEncoder encoder;
+
 	private final MfaProperties mfaProperties;
 
 	@Override
@@ -39,7 +42,8 @@ public class RestLoginAuthenticationProvider implements AuthenticationProvider {
 		return new UsernamePasswordAuthenticationToken(securityUser, null, securityUser.getAuthorities());
 	}
 
-	private SecurityUser authenticateByUsernameAndPassword(Authentication authentication, String username, String password) {
+	private SecurityUser authenticateByUsernameAndPassword(Authentication authentication, String username,
+			String password) {
 		UserDetails user = userDetailsService.loadUserByUsername(username);
 		if (user == null) {
 			throw new UsernameNotFoundException("User not found: " + username);
@@ -56,4 +60,5 @@ public class RestLoginAuthenticationProvider implements AuthenticationProvider {
 	public boolean supports(Class<?> authentication) {
 		return (UsernamePasswordAuthenticationToken.class.isAssignableFrom(authentication));
 	}
+
 }

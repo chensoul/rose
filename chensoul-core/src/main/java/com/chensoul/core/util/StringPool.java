@@ -7,6 +7,7 @@ package com.chensoul.core.util;
  * @since 0.0.1
  */
 public final class StringPool {
+
 	// @formatter:off
 	public static final String  AMPERSAND = "&";
 	public static final String  AND = "and";

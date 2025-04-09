@@ -46,20 +46,25 @@ public interface OssOperation {
 	 * 配置文件前缀
 	 */
 	String OSS_CONFIG_PREFIX_ALIYUN = "support.oss.cloud.aliyun";
+
 	String OSS_CONFIG_PREFIX_MINIO = "support.oss.cloud.minio";
+
 	String OSS_CONFIG_PREFIX_QINIU = "support.oss.cloud.qiniu";
+
 	String OSS_CONFIG_PREFIX_TENCENT = "support.oss.cloud.tencent";
 
 	String MINIO_OSS_OPERATION = "minioOssOperation";
+
 	String ALI_YUN_OSS_OPERATION = "aliYunOssOperation";
+
 	String QI_NIU_OSS_OPERATION = "qiNiuOssOperation";
+
 	String TENCENT_OSS_OPERATION = "tencentOssOperation";
 
 	/**
 	 * 获取临时token
-	 *
 	 * @param originName originName
-	 * @param random     random
+	 * @param random random
 	 * @return token
 	 */
 	default String token(String originName, boolean random) {
@@ -68,10 +73,9 @@ public interface OssOperation {
 
 	/**
 	 * 获取临时token
-	 *
-	 * @param bucket     bucket
+	 * @param bucket bucket
 	 * @param originName originName
-	 * @param random     random
+	 * @param random random
 	 * @return token
 	 */
 	default String token(String bucket, String originName, boolean random) {
@@ -81,7 +85,6 @@ public interface OssOperation {
 
 	/**
 	 * 文件下载（流式下载）
-	 *
 	 * @param fileName 文件名
 	 * @return BufferedReader BufferedReader
 	 */
@@ -89,40 +92,35 @@ public interface OssOperation {
 
 	/**
 	 * 文件下载（流式下载）
-	 *
 	 * @param bucketName 存储桶名
-	 * @param fileName   文件名
+	 * @param fileName 文件名
 	 * @return BufferedReader BufferedReader
 	 */
 	DownloadResponse download(String bucketName, String fileName);
 
 	/**
 	 * 文件下载（文件下载到本地）
-	 *
 	 * @param bucketName 存储桶名
-	 * @param fileName   文件名
-	 * @param file       保存的本地文件路径
+	 * @param fileName 文件名
+	 * @param file 保存的本地文件路径
 	 */
 	void download(String bucketName, String fileName, File file);
 
 	/**
 	 * 文件下载（文件下载到本地）
-	 *
 	 * @param fileName 文件名
-	 * @param file     保存的本地文件路径
+	 * @param file 保存的本地文件路径
 	 */
 	void download(String fileName, File file);
 
 	/**
 	 * 文件列表
-	 *
 	 * @return 文件内容
 	 */
 	List<StorageItem> list();
 
 	/**
 	 * 重命名
-	 *
 	 * @param oldName 原始名称
 	 * @param newName 新名称
 	 */
@@ -130,45 +128,40 @@ public interface OssOperation {
 
 	/**
 	 * 重命名
-	 *
 	 * @param bucketName 存储桶名
-	 * @param oldName    原始名称
-	 * @param newName    新名称
+	 * @param oldName 原始名称
+	 * @param newName 新名称
 	 */
 	void rename(String bucketName, String oldName, String newName);
 
 	/**
 	 * 上传文件到指定的 bucket
-	 *
 	 * @param fileName 文件名字
-	 * @param content  文件内容
+	 * @param content 文件内容
 	 * @return StorageResponse
 	 */
 	StorageResponse upload(String fileName, byte[] content);
 
 	/**
 	 * 上传文件到指定的 bucket
-	 *
 	 * @param bucketName 存储桶名
-	 * @param fileName   文件名字
-	 * @param content    文件内容
+	 * @param fileName 文件名字
+	 * @param content 文件内容
 	 * @return StorageResponse
 	 */
 	StorageResponse upload(String bucketName, String fileName, InputStream content);
 
 	/**
 	 * 上传文件到指定的 bucket
-	 *
 	 * @param bucketName 存储桶名
-	 * @param fileName   文件名字
-	 * @param content    文件内容
+	 * @param fileName 文件名字
+	 * @param content 文件内容
 	 * @return StorageResponse
 	 */
 	StorageResponse upload(String bucketName, String fileName, byte[] content);
 
 	/**
 	 * 简化上传复杂度
-	 *
 	 * @param request request
 	 * @return 上传结果
 	 */
@@ -176,30 +169,26 @@ public interface OssOperation {
 
 	/**
 	 * 删除文件
-	 *
 	 * @param fileName 文件名
 	 */
 	void remove(String fileName);
 
 	/**
 	 * 删除文件
-	 *
 	 * @param bucketName 存储桶名
-	 * @param fileName   文件名
+	 * @param fileName 文件名
 	 */
 	void remove(String bucketName, String fileName);
 
 	/**
 	 * 删除文件
-	 *
 	 * @param bucketName 存储桶名
-	 * @param path       文件路径
+	 * @param path 文件路径
 	 */
 	void remove(String bucketName, Path path);
 
 	/**
 	 * 获取目标名字
-	 *
 	 * @param request request
 	 * @return 目标名称
 	 * @throws RuntimeException RuntimeException
@@ -231,8 +220,7 @@ public interface OssOperation {
 
 	/**
 	 * 上传失败异常
-	 *
-	 * @param type    type
+	 * @param type type
 	 * @param message message
 	 * @return StorageException
 	 * @see StorageException
@@ -243,9 +231,8 @@ public interface OssOperation {
 
 	/**
 	 * 上传失败异常
-	 *
 	 * @param type type
-	 * @param e    异常
+	 * @param e 异常
 	 * @return StorageException
 	 * @see StorageException
 	 */
@@ -255,13 +242,13 @@ public interface OssOperation {
 
 	/**
 	 * 下载失败异常
-	 *
 	 * @param type type
-	 * @param e    异常
+	 * @param e 异常
 	 * @return StorageException
 	 * @see StorageException
 	 */
 	default StorageException downloadError(BaseOssProperties.StorageType type, Exception e) {
 		return new StorageException(type, "文件下载失败," + e.getMessage());
 	}
+
 }

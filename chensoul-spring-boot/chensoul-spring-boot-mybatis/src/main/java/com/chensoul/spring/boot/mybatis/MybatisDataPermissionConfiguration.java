@@ -41,6 +41,7 @@ import java.util.List;
  */
 @AutoConfiguration
 public class MybatisDataPermissionConfiguration {
+
 	@Bean
 	public DataPermissionRuleFactory dataPermissionRuleFactory(List<DataPermissionRule> rules) {
 		return new DataPermissionRuleFactoryImpl(rules);
@@ -48,7 +49,7 @@ public class MybatisDataPermissionConfiguration {
 
 	@Bean
 	public DataPermissionRuleHandler dataPermissionRuleHandler(MybatisPlusInterceptor interceptor,
-															   DataPermissionRuleFactory ruleFactory) {
+			DataPermissionRuleFactory ruleFactory) {
 		// 创建 DataPermissionInterceptor 拦截器
 		DataPermissionRuleHandler handler = new DataPermissionRuleHandler(ruleFactory);
 		DataPermissionInterceptor inner = new DataPermissionInterceptor(handler);

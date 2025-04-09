@@ -46,8 +46,6 @@ public enum SensitiveType {
 	/**
 	 * 密码, 永远是 ******, 与长度无关
 	 */
-	SECRET,
-	IPV4,
-	IPV6,
-	FIRST_MASK
+	SECRET, IPV4, IPV6, FIRST_MASK
+
 }

@@ -19,9 +19,13 @@ import java.util.function.BiConsumer;
  * @since 0.0.1
  */
 public class FieldSetPropertyHelper {
+
 	private static boolean hasFieldEncrypt = false;
+
 	private static boolean hasFieldBind = false;
+
 	private static Map<Class<?>, List<FieldSetProperty>> clazzMap;
+
 	private static Set<Class<?>> excludeClazzSet;
 
 	private FieldSetPropertyHelper() {
@@ -46,7 +50,8 @@ public class FieldSetPropertyHelper {
 
 		if (clazz.isAssignableFrom(HashMap.class)) {
 			excludeClazzSet.add(clazz);
-		} else {
+		}
+		else {
 			List<FieldSetProperty> finalFieldSetPropertyList = new ArrayList<>();
 
 			for (Field field : FieldUtils.getAllFields(clazz)) {
@@ -71,7 +76,8 @@ public class FieldSetPropertyHelper {
 
 			if (fieldSetPropertyList.isEmpty()) {
 				excludeClazzSet.add(clazz);
-			} else {
+			}
+			else {
 				clazzMap.put(clazz, fieldSetPropertyList);
 			}
 		}
@@ -79,17 +85,21 @@ public class FieldSetPropertyHelper {
 		return fieldSetPropertyList;
 	}
 
-	public static boolean foreachValue(Configuration configuration, Object value, BiConsumer<MetaObject, FieldSetProperty> consumer) {
+	public static boolean foreachValue(Configuration configuration, Object value,
+			BiConsumer<MetaObject, FieldSetProperty> consumer) {
 		if (value == null) {
 			return Boolean.FALSE;
 		}
 		List<FieldSetProperty> fieldSetPropertyList = getFieldSetPropertyList(value.getClass());
 		if (!CollectionUtils.isEmpty(fieldSetPropertyList)) {
 			MetaObject metaObject = configuration.newMetaObject(value);
-			fieldSetPropertyList.parallelStream().forEach(fieldSetProperty -> consumer.accept(metaObject, fieldSetProperty));
+			fieldSetPropertyList.parallelStream()
+				.forEach(fieldSetProperty -> consumer.accept(metaObject, fieldSetProperty));
 			return Boolean.TRUE;
-		} else {
+		}
+		else {
 			return Boolean.FALSE;
 		}
 	}
+
 }

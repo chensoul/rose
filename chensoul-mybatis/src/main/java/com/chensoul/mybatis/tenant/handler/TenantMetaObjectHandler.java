@@ -15,6 +15,7 @@ import org.apache.ibatis.reflection.MetaObject;
 @Getter
 @RequiredArgsConstructor
 public class TenantMetaObjectHandler extends DefaultMetaObjectHandler {
+
 	private final String tenantFiledName;
 
 	@Override
@@ -22,4 +23,5 @@ public class TenantMetaObjectHandler extends DefaultMetaObjectHandler {
 		super.insertFill(metaObject);
 		fillValIfNullByName(tenantFiledName, TenantContextHolder.getTenantId(), metaObject, false);
 	}
+
 }

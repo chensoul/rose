@@ -25,8 +25,11 @@ class GroovyShellScriptTests {
 
 	@RequiredArgsConstructor
 	private static final class RunnableScript implements Runnable {
+
 		private final Map<String, Object> attributes;
+
 		private final GroovyShellScript shellScript;
+
 		private final Object expectedAttribute;
 
 		@Override
@@ -36,25 +39,25 @@ class GroovyShellScriptTests {
 				List returnValue = shellScript.execute(ArrayUtils.EMPTY_OBJECT_ARRAY, List.class);
 				assertEquals(1, returnValue.size());
 				assertEquals(expectedAttribute, returnValue.get(0));
-			} catch (final Throwable e) {
+			}
+			catch (final Throwable e) {
 				throw new RuntimeException(e);
 			}
 		}
+
 	}
 
 	@Nested
 	class StaticCompilationTests {
+
 		@Test
 		void verifyOperation() throws Exception {
-			String script =
-				"   def logger = (Logger) binding.getVariable('log') \n" +
-					"   def attributes = (Map) binding.getVariable('attributes') \n" +
-					"   logger.info('Attributes: {}', attributes) \n" +
-					"   if ((attributes.get('entitlement') as List).contains('admin')){ \n" +
-					"       return [(attributes['uid'] as List).get(0).toString().toUpperCase()]\n" +
-					"   } else{ \n" +
-					"       return attributes['identifier'] as List \n" +
-					"   } \n";
+			String script = "   def logger = (Logger) binding.getVariable('log') \n"
+					+ "   def attributes = (Map) binding.getVariable('attributes') \n"
+					+ "   logger.info('Attributes: {}', attributes) \n"
+					+ "   if ((attributes.get('entitlement') as List).contains('admin')){ \n"
+					+ "       return [(attributes['uid'] as List).get(0).toString().toUpperCase()]\n" + "   } else{ \n"
+					+ "       return attributes['identifier'] as List \n" + "   } \n";
 			GroovyShellScript shellScript = new GroovyShellScript(script.trim());
 
 			Map<String, Object> attributes1 = new HashMap();
@@ -63,19 +66,18 @@ class GroovyShellScriptTests {
 			attributes1.put("identifier", Collections.singletonList("1984"));
 			new RunnableScript(attributes1, shellScript, "CASADMIN").run();
 		}
+
 	}
 
 	@Nested
 	class ConcurrentTests {
+
 		@Test
 		void verifyOperation() {
-			String script =
-				"   def attributes = (Map) binding.getVariable('attributes') \n" +
-					"   if ((attributes.get('entitlement') as List).contains('admin')){ \n" +
-					"       return [(attributes['uid'] as List).get(0).toString().toUpperCase()]\n" +
-					"   } else{ \n" +
-					"       return attributes['identifier'] as List \n" +
-					"   } \n";
+			String script = "   def attributes = (Map) binding.getVariable('attributes') \n"
+					+ "   if ((attributes.get('entitlement') as List).contains('admin')){ \n"
+					+ "       return [(attributes['uid'] as List).get(0).toString().toUpperCase()]\n" + "   } else{ \n"
+					+ "       return attributes['identifier'] as List \n" + "   } \n";
 
 			GroovyShellScript shellScript = new GroovyShellScript(script.trim());
 
@@ -92,9 +94,8 @@ class GroovyShellScriptTests {
 			AtomicBoolean testHasFailed = new AtomicBoolean();
 			List<Thread> threads = new ArrayList();
 			for (int i = 1; i <= 10; i++) {
-				RunnableScript runnable = i % 2 == 0
-					? new RunnableScript(attributes1, shellScript, "CASADMIN")
-					: new RunnableScript(attributes2, shellScript, "dev-pwd");
+				RunnableScript runnable = i % 2 == 0 ? new RunnableScript(attributes1, shellScript, "CASADMIN")
+						: new RunnableScript(attributes2, shellScript, "dev-pwd");
 				Thread thread = new Thread(runnable);
 				thread.setName("Thread-" + i);
 				thread.setUncaughtExceptionHandler((t, e) -> {
@@ -107,7 +108,8 @@ class GroovyShellScriptTests {
 			for (Thread thread : threads) {
 				try {
 					thread.join();
-				} catch (final Throwable e) {
+				}
+				catch (final Throwable e) {
 					fail(e);
 				}
 			}
@@ -115,10 +117,12 @@ class GroovyShellScriptTests {
 				fail("Test failed");
 			}
 		}
+
 	}
 
 	@Nested
 	class DefaultTests {
+
 		@Test
 		void verifyExec() {
 			try (GroovyShellScript shell = new GroovyShellScript("println 'test'")) {
@@ -139,5 +143,7 @@ class GroovyShellScriptTests {
 				});
 			}
 		}
+
 	}
+
 }

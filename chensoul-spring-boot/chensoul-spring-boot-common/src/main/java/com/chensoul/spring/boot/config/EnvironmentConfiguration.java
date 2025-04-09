@@ -25,4 +25,5 @@ public class EnvironmentConfiguration {
 		String profiles = String.join(StringPool.COMMA, SpringContextHolder.getActiveProfiles());
 		log.info("{} 启动完成，当前使用的端口: {} ，启用的 Profile: {}", appName, localPort, profiles);
 	}
+
 }

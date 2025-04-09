@@ -39,13 +39,15 @@ public class ResourceUtils {
 		InputStream classPathStream = classLoader.getResourceAsStream(path);
 		if (classPathStream != null) {
 			return true;
-		} else {
+		}
+		else {
 			try {
 				URL url = getResource(path);
 				if (url != null) {
 					return true;
 				}
-			} catch (IllegalArgumentException e) {
+			}
+			catch (IllegalArgumentException e) {
 			}
 		}
 		return false;
@@ -74,7 +76,8 @@ public class ResourceUtils {
 			if (classPathStream != null) {
 				log.info("Reading resource data from class path {}", filePath);
 				return classPathStream;
-			} else {
+			}
+			else {
 				URL url = getResource(path);
 				if (url != null) {
 					URI uri = url.toURI();
@@ -82,10 +85,12 @@ public class ResourceUtils {
 					return new FileInputStream(new File(uri));
 				}
 			}
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			if (e instanceof NullPointerException) {
 				log.warn("Unable to find resource: " + filePath);
-			} else {
+			}
+			else {
 				log.warn("Unable to find resource: " + filePath, e);
 			}
 		}
@@ -102,14 +107,17 @@ public class ResourceUtils {
 			if (resourceFile.exists()) {
 				log.info("Reading resource data from file {}", filePath);
 				return resourceFile.getAbsolutePath();
-			} else {
+			}
+			else {
 				URL url = classLoader.getResource(filePath);
 				return url.toURI().toString();
 			}
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			if (e instanceof NullPointerException) {
 				log.warn("Unable to find resource: " + filePath);
-			} else {
+			}
+			else {
 				log.warn("Unable to find resource: " + filePath, e);
 			}
 			throw new RuntimeException("Unable to find resource: " + filePath);
@@ -117,9 +125,11 @@ public class ResourceUtils {
 	}
 
 	public static URL getResource(String resourceName) {
-		ClassLoader loader = (ClassLoader) ObjectUtils.firstNonNull(Thread.currentThread().getContextClassLoader(), ResourceUtils.class.getClassLoader());
+		ClassLoader loader = (ClassLoader) ObjectUtils.firstNonNull(Thread.currentThread().getContextClassLoader(),
+				ResourceUtils.class.getClassLoader());
 		URL url = loader.getResource(resourceName);
 		Assert.notNull(url, String.format("resource %s not found.", resourceName));
 		return url;
 	}
+
 }

@@ -13,18 +13,21 @@ import org.springframework.context.annotation.Configuration;
  * SSL configuration for Undertow.
  * <p>
  * SSL_USER_CIPHER_SUITES_ORDER : It will force the cipher suite defined by the user,
- * allowing to achieve perfect forward secrecy.
- * This can only be activated with HTTPS and a cipher suite defined by the user (server.ssl.ciphers).
+ * allowing to achieve perfect forward secrecy. This can only be activated with HTTPS and
+ * a cipher suite defined by the user (server.ssl.ciphers).
  * <p>
- * Please note that when using ChenSoul, you can use the `server.ssl.ciphers` property that is available
- * in your `application-tls.yml` file, and which is ready to work with this configuration.
+ * Please note that when using ChenSoul, you can use the `server.ssl.ciphers` property
+ * that is available in your `application-tls.yml` file, and which is ready to work with
+ * this configuration.
  *
- * @see <a href="https://github.com/ssllabs/research/wiki/SSL-and-TLS-Deployment-Best-Practices#25-use-forward-secrecy" target="_blank">More explanation on perfect forward secrecy</a>
+ * @see <a href=
+ * "https://github.com/ssllabs/research/wiki/SSL-and-TLS-Deployment-Best-Practices#25-use-forward-secrecy"
+ * target="_blank">More explanation on perfect forward secrecy</a>
  */
 @Configuration
 @ConditionalOnBean(UndertowServletWebServerFactory.class)
 @ConditionalOnClass(UndertowOptions.class)
-@ConditionalOnProperty({"server.ssl.ciphers", "server.ssl.key-store"})
+@ConditionalOnProperty({ "server.ssl.ciphers", "server.ssl.key-store" })
 public class UndertowSSLConfiguration {
 
 	private final UndertowServletWebServerFactory factory;
@@ -39,6 +42,7 @@ public class UndertowSSLConfiguration {
 	private void configuringUserCipherSuiteOrder() {
 		log.info("Configuring Undertow Setting user cipher suite order to true");
 		factory.addBuilderCustomizers(
-			builder -> builder.setSocketOption(UndertowOptions.SSL_USER_CIPHER_SUITES_ORDER, Boolean.TRUE));
+				builder -> builder.setSocketOption(UndertowOptions.SSL_USER_CIPHER_SUITES_ORDER, Boolean.TRUE));
 	}
+
 }

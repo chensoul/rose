@@ -71,23 +71,20 @@ public class RedisStandaloneConfiguration extends RedisCacheConfiguration {
 	}
 
 	private JedisClientConfiguration buildClientConfig() {
-		JedisClientConfiguration.JedisClientConfigurationBuilder jedisClientConfigurationBuilder = JedisClientConfiguration.builder();
+		JedisClientConfiguration.JedisClientConfigurationBuilder jedisClientConfigurationBuilder = JedisClientConfiguration
+			.builder();
 		if (!useDefaultClientConfig) {
-			jedisClientConfigurationBuilder
-				.clientName(clientName)
+			jedisClientConfigurationBuilder.clientName(clientName)
 				.connectTimeout(Duration.ofMillis(connectTimeout))
 				.readTimeout(Duration.ofMillis(readTimeout));
 		}
 		if (useSsl) {
-			jedisClientConfigurationBuilder
-				.useSsl()
-				.sslSocketFactory(createSslSocketFactory());
+			jedisClientConfigurationBuilder.useSsl().sslSocketFactory(createSslSocketFactory());
 		}
 		if (usePoolConfig) {
-			jedisClientConfigurationBuilder
-				.usePooling()
-				.poolConfig(buildPoolConfig());
+			jedisClientConfigurationBuilder.usePooling().poolConfig(buildPoolConfig());
 		}
 		return jedisClientConfigurationBuilder.build();
 	}
+
 }

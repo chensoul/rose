@@ -19,7 +19,9 @@ import java.util.Map;
 @Data
 @AllArgsConstructor
 public class CustomSheetWriteHandler implements SheetWriteHandler {
+
 	Map<Integer, List<String>> explicitListConstraintMap;
+
 	Integer rowCount;
 
 	@Override
@@ -66,4 +68,5 @@ public class CustomSheetWriteHandler implements SheetWriteHandler {
 			writeSheetHolder.getSheet().addValidationData(dataValidation);
 		}
 	}
+
 }

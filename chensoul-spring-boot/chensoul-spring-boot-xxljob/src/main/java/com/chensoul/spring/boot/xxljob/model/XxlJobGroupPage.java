@@ -12,4 +12,5 @@ public class XxlJobGroupPage {
 	private Long recordsTotal;
 
 	private List<XxlJobGroup> data;
+
 }

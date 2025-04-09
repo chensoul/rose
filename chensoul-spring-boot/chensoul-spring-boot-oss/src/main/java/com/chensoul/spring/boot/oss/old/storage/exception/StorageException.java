@@ -29,22 +29,22 @@ import com.chensoul.spring.boot.oss.old.storage.properties.BaseOssProperties;
 
 public class StorageException extends RuntimeException {
 
-    @Getter
-    @Setter
-    private BaseOssProperties.StorageType storageType;
+	@Getter
+	@Setter
+	private BaseOssProperties.StorageType storageType;
 
-    public StorageException(String message, Throwable cause) {
-        super(message, cause);
-    }
+	public StorageException(String message, Throwable cause) {
+		super(message, cause);
+	}
 
-    public StorageException(BaseOssProperties.StorageType storageType, String message) {
-        super(message);
-        this.setStorageType(storageType);
-    }
+	public StorageException(BaseOssProperties.StorageType storageType, String message) {
+		super(message);
+		this.setStorageType(storageType);
+	}
 
-    public StorageException(BaseOssProperties.StorageType storageType, String message, Throwable cause) {
-        super(message, cause);
-        this.setStorageType(storageType);
-    }
+	public StorageException(BaseOssProperties.StorageType storageType, String message, Throwable cause) {
+		super(message, cause);
+		this.setStorageType(storageType);
+	}
 
 }

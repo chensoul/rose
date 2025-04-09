@@ -13,6 +13,7 @@ import java.io.Serializable;
 @EqualsAndHashCode(callSuper = true)
 @Data
 public class BaseEntity extends AuditEntity implements Serializable {
+
 	@TableId(value = "id", type = IdType.ASSIGN_ID)
 	protected Long id;
 
@@ -21,4 +22,5 @@ public class BaseEntity extends AuditEntity implements Serializable {
 
 	@TableField(value = "is_deleted", fill = FieldFill.INSERT)
 	protected boolean isDeleted = false;
+
 }

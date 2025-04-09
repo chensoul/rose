@@ -24,14 +24,18 @@ import static com.chensoul.security.CacheConstants.USER_TOKEN_PREFIX;
  */
 @RequiredArgsConstructor
 public class RestTokenFactory implements TokenFactory {
+
 	private final RedisTemplate<String, Object> redisTemplate;
+
 	private final SecurityProperties securityProperties;
 
 	@Override
 	public TokenPair createPreVerificationTokenPair(SecurityUser securityUser) {
 		String accessToken = RandomStringUtils.randomAlphabetic(20);
-		redisTemplate.opsForValue().set(USER_TOKEN_PREFIX + accessToken, securityUser, securityProperties.getAccessTokenExpireTime());
-		return new TokenPair(accessToken, null, AuthorityUtils.createAuthorityList(Authority.PRE_VERIFICATION_TOKEN.name()));
+		redisTemplate.opsForValue()
+			.set(USER_TOKEN_PREFIX + accessToken, securityUser, securityProperties.getAccessTokenExpireTime());
+		return new TokenPair(accessToken, null,
+				AuthorityUtils.createAuthorityList(Authority.PRE_VERIFICATION_TOKEN.name()));
 	}
 
 	@Override
@@ -39,8 +43,10 @@ public class RestTokenFactory implements TokenFactory {
 		String accessToken = UUID.randomUUID().toString();
 		String refreshToken = UUID.randomUUID().toString();
 
-		redisTemplate.opsForValue().set(USER_TOKEN_PREFIX + accessToken, securityUser, securityProperties.getAccessTokenExpireTime());
-		redisTemplate.opsForValue().set(USER_REFRESH_TOKEN_PREFIX + refreshToken, accessToken, securityProperties.getRefreshTokenExpireTime());
+		redisTemplate.opsForValue()
+			.set(USER_TOKEN_PREFIX + accessToken, securityUser, securityProperties.getAccessTokenExpireTime());
+		redisTemplate.opsForValue()
+			.set(USER_REFRESH_TOKEN_PREFIX + refreshToken, accessToken, securityProperties.getRefreshTokenExpireTime());
 
 		return new TokenPair(accessToken, refreshToken, securityUser.getAuthorities());
 	}
@@ -62,4 +68,5 @@ public class RestTokenFactory implements TokenFactory {
 		}
 		return parseAccessToken((String) accessToken);
 	}
+
 }

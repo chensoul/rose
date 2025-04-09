@@ -16,8 +16,11 @@ import org.apache.commons.lang3.StringUtils;
  * @since 1.0.0
  */
 public class MetricsInterceptor implements RequestInterceptor, MeterBinder {
+
 	public static final String FEIGN_REQUEST = "feign.requests";
+
 	public static final String FEIGN_REQUEST_ERROR = FEIGN_REQUEST + ".error";
+
 	private static MeterRegistry meterRegistry;
 
 	@Override
@@ -27,7 +30,11 @@ public class MetricsInterceptor implements RequestInterceptor, MeterBinder {
 			// 方法统计
 			String methodKey = template.methodMetadata().configKey();
 			Counter counter = Counter.builder(FEIGN_REQUEST)
-				.tags("method", StringUtils.substringBefore(methodKey, StringPool.LEFT_BRACKET))                   // Feign 调用方法（接口 + 方法） Tag
+				.tags("method", StringUtils.substringBefore(methodKey, StringPool.LEFT_BRACKET)) // Feign
+																									// 调用方法（接口
+																									// +
+																									// 方法）
+																									// Tag
 				.register(meterRegistry);
 			counter.increment();
 		});
@@ -38,4 +45,5 @@ public class MetricsInterceptor implements RequestInterceptor, MeterBinder {
 	public void bindTo(MeterRegistry registry) { // Spring Boot 主上下文调用
 		this.meterRegistry = registry;
 	}
+
 }

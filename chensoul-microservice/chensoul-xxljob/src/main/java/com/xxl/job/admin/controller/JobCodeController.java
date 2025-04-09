@@ -20,14 +20,16 @@ import java.util.List;
 
 /**
  * job code controller
+ *
  * @author xuxueli 2015-12-19 16:13:16
  */
 @Controller
 @RequestMapping("/jobcode")
 public class JobCodeController {
-	
+
 	@Resource
 	private XxlJobInfoDao xxlJobInfoDao;
+
 	@Resource
 	private XxlJobLogGlueDao xxlJobLogGlueDao;
 
@@ -53,15 +55,16 @@ public class JobCodeController {
 		model.addAttribute("jobLogGlues", jobLogGlues);
 		return "jobcode/jobcode.index";
 	}
-	
+
 	@RequestMapping("/save")
 	@ResponseBody
 	public ReturnT<String> save(HttpServletRequest request, int id, String glueSource, String glueRemark) {
 		// valid
-		if (glueRemark==null) {
-			return new ReturnT<String>(500, (I18nUtil.getString("system_please_input") + I18nUtil.getString("jobinfo_glue_remark")) );
+		if (glueRemark == null) {
+			return new ReturnT<String>(500,
+					(I18nUtil.getString("system_please_input") + I18nUtil.getString("jobinfo_glue_remark")));
 		}
-		if (glueRemark.length()<4 || glueRemark.length()>100) {
+		if (glueRemark.length() < 4 || glueRemark.length() > 100) {
 			return new ReturnT<String>(500, I18nUtil.getString("jobinfo_glue_remark_limit"));
 		}
 		XxlJobInfo existsJobInfo = xxlJobInfoDao.loadById(id);
@@ -71,7 +74,7 @@ public class JobCodeController {
 
 		// valid permission
 		PermissionInterceptor.validJobGroupPermission(request, existsJobInfo.getJobGroup());
-		
+
 		// update new code
 		existsJobInfo.setGlueSource(glueSource);
 		existsJobInfo.setGlueRemark(glueRemark);
@@ -96,5 +99,5 @@ public class JobCodeController {
 
 		return ReturnT.SUCCESS;
 	}
-	
+
 }

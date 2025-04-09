@@ -15,6 +15,7 @@ import javax.validation.constraints.NotNull;
 @EqualsAndHashCode(callSuper = true)
 @TableName(value = "sys_user_setting", autoResultMap = true)
 public class UserSetting extends BaseEntity {
+
 	private static final long serialVersionUID = 2628320657987010348L;
 
 	@NotNull(message = "用户ID不能为空")
@@ -25,4 +26,5 @@ public class UserSetting extends BaseEntity {
 
 	@TableField(typeHandler = JacksonTypeHandler.class)
 	private JsonNode value;
+
 }

@@ -27,6 +27,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @ConditionalOnProperty(name = "swagger.enabled", matchIfMissing = true)
 public class OpenAPIDefinition extends OpenAPI implements InitializingBean, ApplicationContextAware {
+
 	@Setter
 	private String path;
 

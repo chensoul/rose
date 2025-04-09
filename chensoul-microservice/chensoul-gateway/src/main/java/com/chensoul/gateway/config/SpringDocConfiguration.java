@@ -38,6 +38,7 @@ public class SpringDocConfiguration implements InitializingBean {
 		swaggerDocRegister.onEvent(null);
 		NotifyCenter.registerSubscriber(swaggerDocRegister);
 	}
+
 }
 
 /**
@@ -45,12 +46,13 @@ public class SpringDocConfiguration implements InitializingBean {
  */
 @RequiredArgsConstructor
 class SwaggerDocRegister extends Subscriber<InstancesChangeEvent> {
+
 	private final SwaggerUiConfigProperties swaggerUiConfigProperties;
+
 	private final DiscoveryClient discoveryClient;
 
 	/**
 	 * 事件回调方法，处理InstancesChangeEvent事件
-	 *
 	 * @param event 事件对象
 	 */
 	@Override
@@ -72,7 +74,6 @@ class SwaggerDocRegister extends Subscriber<InstancesChangeEvent> {
 
 	/**
 	 * 订阅类型方法，返回订阅的事件类型
-	 *
 	 * @return 订阅的事件类型
 	 */
 	@Override

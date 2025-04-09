@@ -25,6 +25,7 @@ package com.chensoul.spring.boot.oss.old.storage.cloud.qiniu;
  * @author Levin
  */
 public enum QiNiuRegion {
+
 	/**
 	 * 华东
 	 */
@@ -37,4 +38,5 @@ public enum QiNiuRegion {
 	 * 华南
 	 */
 	region2
+
 }

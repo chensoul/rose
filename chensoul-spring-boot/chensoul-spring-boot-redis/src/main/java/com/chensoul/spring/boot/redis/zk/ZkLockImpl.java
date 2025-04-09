@@ -19,8 +19,11 @@ import java.util.concurrent.locks.ReentrantLock;
 public class ZkLockImpl implements ZkLock, InitializingBean {
 
 	private final static String LOCK_ROOT_PATH = "/ZkLock";
+
 	private final CuratorFramework curatorFramework;
+
 	private Map<String, CountDownLatch> concurrentMap = new ConcurrentHashMap<>();
+
 	private ReentrantLock lock = new ReentrantLock();
 
 	@Override
@@ -28,38 +31,39 @@ public class ZkLockImpl implements ZkLock, InitializingBean {
 		boolean result = false;
 		String keyPath = LOCK_ROOT_PATH + lockpath;
 		try {
-			curatorFramework
-				.create()
+			curatorFramework.create()
 				.creatingParentsIfNeeded()
 				.withMode(CreateMode.EPHEMERAL)
 				.withACL(ZooDefs.Ids.OPEN_ACL_UNSAFE)
 				.forPath(keyPath);
 			result = true;
 			log.info("success to acquire mutex lock for path:{}", keyPath);
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			log.info("Thread:{};failed to acquire mutex lock for path:{}", Thread.currentThread().getName(), keyPath);
 			if (!concurrentMap.containsKey(lockpath)) {
 				try {
 					/*
-					 * 这里考虑到高并发场景,必须保证对同一个节点加锁的线程失败后是落在同一个countdown对象上
-					 * ,否则有的线程永远没有办法唤醒了
+					 * 这里考虑到高并发场景,必须保证对同一个节点加锁的线程失败后是落在同一个countdown对象上 ,否则有的线程永远没有办法唤醒了
 					 */
 					lock.lock();
-					//双重校验,考虑高并发问题
+					// 双重校验,考虑高并发问题
 					if (!concurrentMap.containsKey(lockpath)) {
 						concurrentMap.put(lockpath, new CountDownLatch(1));
 					}
-				} finally {
+				}
+				finally {
 					lock.unlock();
 				}
 			}
 			try {
 				CountDownLatch countDownLatch = concurrentMap.get(lockpath);
-				//这里为什么要判断呢？大家可以思考一下,高并发场景
+				// 这里为什么要判断呢？大家可以思考一下,高并发场景
 				if (countDownLatch != null) {
 					countDownLatch.await();
 				}
-			} catch (InterruptedException e1) {
+			}
+			catch (InterruptedException e1) {
 				log.info("InterruptedException message:{}", e1.getMessage());
 			}
 		}
@@ -73,7 +77,8 @@ public class ZkLockImpl implements ZkLock, InitializingBean {
 			if (curatorFramework.checkExists().forPath(keyPath) != null) {
 				curatorFramework.delete().forPath(keyPath);
 			}
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			log.error("failed to release mutex lock");
 			return false;
 		}
@@ -82,14 +87,14 @@ public class ZkLockImpl implements ZkLock, InitializingBean {
 
 	/**
 	 * 监听节点事件
-	 *
 	 * @param lockPath 加锁的路径
 	 */
 	private void addWatcher(String lockPath) throws Exception {
 		String keyPath;
 		if (LOCK_ROOT_PATH.equals(lockPath)) {
 			keyPath = lockPath;
-		} else {
+		}
+		else {
 			keyPath = LOCK_ROOT_PATH + lockPath;
 		}
 
@@ -105,7 +110,7 @@ public class ZkLockImpl implements ZkLock, InitializingBean {
 				log.info("oldPath delete:{},redis缓存已经更新！", oldPath);
 				if (oldPath.contains(lockPath)) {
 					CountDownLatch countDownLatch = concurrentMap.remove(oldPath);
-					if (countDownLatch != null) {//有可能没有竞争,countdown不存在
+					if (countDownLatch != null) {// 有可能没有竞争,countdown不存在
 						countDownLatch.countDown();
 					}
 				}
@@ -118,16 +123,16 @@ public class ZkLockImpl implements ZkLock, InitializingBean {
 		curatorFramework.usingNamespace("zklock-namespace");
 		try {
 			if (curatorFramework.checkExists().forPath(LOCK_ROOT_PATH) == null) {
-				curatorFramework
-					.create()
+				curatorFramework.create()
 					.creatingParentsIfNeeded()
 					.withMode(CreateMode.PERSISTENT)
 					.withACL(ZooDefs.Ids.OPEN_ACL_UNSAFE)
 					.forPath(LOCK_ROOT_PATH);
 			}
-			//启动监听器
+			// 启动监听器
 			addWatcher(LOCK_ROOT_PATH);
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			log.error("connect zookeeper failed:{}", e.getMessage(), e);
 		}
 	}

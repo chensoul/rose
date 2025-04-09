@@ -11,4 +11,5 @@ class BetweenFormatterTest {
 		Assertions.assertEquals("1分钟", betweenFormatter.format());
 		Assertions.assertEquals("1分钟", betweenFormatter.toString());
 	}
+
 }

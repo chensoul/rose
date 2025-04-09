@@ -10,5 +10,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 public abstract class IdBased<I extends Serializable> implements HasId<I> {
+
 	protected I id;
+
 }

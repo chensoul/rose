@@ -10,7 +10,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class SkipPathRequestMatcher implements RequestMatcher {
+
 	private final OrRequestMatcher matchers;
+
 	private final RequestMatcher processingMatcher;
 
 	public SkipPathRequestMatcher(List<String> pathsToSkip, String processingPath) {
@@ -27,4 +29,5 @@ public class SkipPathRequestMatcher implements RequestMatcher {
 		}
 		return processingMatcher.matches(request);
 	}
+
 }

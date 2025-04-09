@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 public class SysLogInfo implements Serializable {
+
 	private static final long serialVersionUID = 1129753896999673095L;
 
 	private String name;

@@ -40,6 +40,7 @@ import java.util.Collection;
  * @param <T> 数据类型
  */
 public class MPJLambdaWrapperX<T> extends MPJLambdaWrapper<T> {
+
 	public MPJLambdaWrapperX<T> likeIfPresent(SFunction<T, ?> column, String val) {
 		MPJWrappers.lambdaJoin().like(column, val);
 		if (StringUtils.hasText(val)) {
@@ -122,4 +123,5 @@ public class MPJLambdaWrapperX<T> extends MPJLambdaWrapper<T> {
 		Object val2 = ArrayUtils.get(values, 1);
 		return betweenIfPresent(column, val1, val2);
 	}
+
 }

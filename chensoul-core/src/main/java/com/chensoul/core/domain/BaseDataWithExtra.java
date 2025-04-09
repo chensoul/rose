@@ -26,6 +26,7 @@ import java.util.function.Supplier;
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 public abstract class BaseDataWithExtra<I extends Serializable> extends BaseData<I> implements HasExtra, HasId<I> {
+
 	@NotNull(message = "附加信息不能为空")
 	protected transient JsonNode extra;
 
@@ -50,16 +51,19 @@ public abstract class BaseDataWithExtra<I extends Serializable> extends BaseData
 		JsonNode json = jsonData.get();
 		if (json != null) {
 			return json;
-		} else {
+		}
+		else {
 			byte[] data = binaryData.get();
 			if (data != null) {
 				try {
 					return mapper.readTree(new ByteArrayInputStream(data));
-				} catch (IOException e) {
+				}
+				catch (IOException e) {
 					log.warn("Can't deserialize jackson data: ", e);
 					return null;
 				}
-			} else {
+			}
+			else {
 				return null;
 			}
 		}
@@ -69,7 +73,8 @@ public abstract class BaseDataWithExtra<I extends Serializable> extends BaseData
 		jsonConsumer.accept(json);
 		try {
 			bytesConsumer.accept(mapper.writeValueAsBytes(json));
-		} catch (JsonProcessingException e) {
+		}
+		catch (JsonProcessingException e) {
 			log.warn("Can't serialize jackson data: ", e);
 		}
 	}
@@ -99,4 +104,5 @@ public abstract class BaseDataWithExtra<I extends Serializable> extends BaseData
 	public void setExtra(JsonNode extra) {
 		setJson(extra, json -> this.extra = json, bytes -> this.extraBytes = bytes);
 	}
+
 }

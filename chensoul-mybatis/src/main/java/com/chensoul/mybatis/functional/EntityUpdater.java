@@ -18,9 +18,13 @@ import java.util.function.Supplier;
  */
 @Slf4j
 public class EntityUpdater<T> extends BaseEntityOperation implements Loader<T>, UpdateHandler<T>, Executor<T> {
+
 	private final BaseMapper<T> baseMapper;
+
 	private T entity;
+
 	private Consumer<T> successHook = t -> log.info("update success");
+
 	private Consumer<? super Throwable> errorHook = e -> log.error("update error", e);
 
 	public EntityUpdater(BaseMapper<T> baseMapper) {
@@ -31,11 +35,9 @@ public class EntityUpdater<T> extends BaseEntityOperation implements Loader<T>, 
 	public Optional<T> execute() {
 		doValidate(this.entity, Update.class);
 		T save = Try.of(() -> {
-				baseMapper.updateById(entity);
-				return this.entity;
-			})
-			.onSuccess(successHook)
-			.onFailure(errorHook).getOrNull();
+			baseMapper.updateById(entity);
+			return this.entity;
+		}).onSuccess(successHook).onFailure(errorHook).getOrNull();
 		return Optional.ofNullable(save);
 	}
 
@@ -45,7 +47,8 @@ public class EntityUpdater<T> extends BaseEntityOperation implements Loader<T>, 
 		T t = baseMapper.selectById(id);
 		if (Objects.isNull(t)) {
 			throw new BusinessException("entity not found");
-		} else {
+		}
+		else {
 			this.entity = t;
 		}
 		return this;

@@ -33,9 +33,9 @@ import static com.chensoul.spring.boot.oss.old.storage.OssOperation.OSS_CONFIG_P
 @ConfigurationProperties(prefix = OSS_CONFIG_PREFIX_ALIYUN)
 public class AliYunOssProperties extends BaseOssProperties {
 
-    /**
-     * endpoint
-     */
-    private String endpoint = "http://cloud.aliyuncs.com";
+	/**
+	 * endpoint
+	 */
+	private String endpoint = "http://cloud.aliyuncs.com";
 
 }

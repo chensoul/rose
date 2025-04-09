@@ -8,10 +8,10 @@ import feign.RequestTemplate;
  * @since 4.0.5
  */
 public class JsonHeaderRequestInterceptor implements RequestInterceptor {
+
 	@Override
 	public void apply(RequestTemplate template) {
-		template
-			.header("Content-Type", "application/jackson;charset=UTF-8")
-			.header("Accept", "application/jackson");
+		template.header("Content-Type", "application/jackson;charset=UTF-8").header("Accept", "application/jackson");
 	}
+
 }

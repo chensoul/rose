@@ -46,7 +46,6 @@ public class MinioTemplate implements OssTemplate {
 
 	/**
 	 * 获取存储桶策略
-	 *
 	 * @param bucketName 存储桶名称
 	 * @param policyType 策略枚举
 	 * @return String
@@ -134,17 +133,12 @@ public class MinioTemplate implements OssTemplate {
 	@Override
 	@SneakyThrows
 	public void makeBucket(String bucketName) {
-		if (
-			!client.bucketExists(
-				BucketExistsArgs.builder().bucket(getBucketName(bucketName)).build()
-			)
-		) {
-			client.makeBucket(
-				MakeBucketArgs.builder().bucket(getBucketName(bucketName)).build()
-			);
-			client.setBucketPolicy(
-				SetBucketPolicyArgs.builder().bucket(getBucketName(bucketName)).config(getPolicyType(getBucketName(bucketName), PolicyType.READ)).build()
-			);
+		if (!client.bucketExists(BucketExistsArgs.builder().bucket(getBucketName(bucketName)).build())) {
+			client.makeBucket(MakeBucketArgs.builder().bucket(getBucketName(bucketName)).build());
+			client.setBucketPolicy(SetBucketPolicyArgs.builder()
+				.bucket(getBucketName(bucketName))
+				.config(getPolicyType(getBucketName(bucketName), PolicyType.READ))
+				.build());
 		}
 	}
 
@@ -155,7 +149,10 @@ public class MinioTemplate implements OssTemplate {
 
 	@SneakyThrows
 	public Bucket getBucket(String bucketName) {
-		Optional<Bucket> bucketOptional = client.listBuckets().stream().filter(bucket -> bucket.name().equals(getBucketName(bucketName))).findFirst();
+		Optional<Bucket> bucketOptional = client.listBuckets()
+			.stream()
+			.filter(bucket -> bucket.name().equals(getBucketName(bucketName)))
+			.findFirst();
 		return bucketOptional.orElse(null);
 	}
 
@@ -167,17 +164,13 @@ public class MinioTemplate implements OssTemplate {
 	@Override
 	@SneakyThrows
 	public void removeBucket(String bucketName) {
-		client.removeBucket(
-			RemoveBucketArgs.builder().bucket(getBucketName(bucketName)).build()
-		);
+		client.removeBucket(RemoveBucketArgs.builder().bucket(getBucketName(bucketName)).build());
 	}
 
 	@Override
 	@SneakyThrows
 	public boolean bucketExists(String bucketName) {
-		return client.bucketExists(
-			BucketExistsArgs.builder().bucket(getBucketName(bucketName)).build()
-		);
+		return client.bucketExists(BucketExistsArgs.builder().bucket(getBucketName(bucketName)).build());
 	}
 
 	@Override
@@ -189,13 +182,11 @@ public class MinioTemplate implements OssTemplate {
 	@Override
 	@SneakyThrows
 	public void copyFile(String bucketName, String fileName, String destBucketName, String destFileName) {
-		client.copyObject(
-			CopyObjectArgs.builder()
-				.source(CopySource.builder().bucket(getBucketName(bucketName)).object(fileName).build())
-				.bucket(getBucketName(destBucketName))
-				.object(destFileName)
-				.build()
-		);
+		client.copyObject(CopyObjectArgs.builder()
+			.source(CopySource.builder().bucket(getBucketName(bucketName)).object(fileName).build())
+			.bucket(getBucketName(destBucketName))
+			.object(destFileName)
+			.build());
 	}
 
 	@Override
@@ -207,9 +198,8 @@ public class MinioTemplate implements OssTemplate {
 	@Override
 	@SneakyThrows
 	public OssFile statFile(String bucketName, String fileName) {
-		StatObjectResponse stat = client.statObject(
-			StatObjectArgs.builder().bucket(getBucketName(bucketName)).object(fileName).build()
-		);
+		StatObjectResponse stat = client
+			.statObject(StatObjectArgs.builder().bucket(getBucketName(bucketName)).object(fileName).build());
 		OssFile ossFile = new OssFile();
 		ossFile.setName(StringUtils.isEmpty(stat.object()) ? fileName : stat.object());
 		ossFile.setLink(fileLink(ossFile.getName()));
@@ -239,7 +229,10 @@ public class MinioTemplate implements OssTemplate {
 	@Override
 	@SneakyThrows
 	public String fileLink(String bucketName, String fileName) {
-		return getEndpoint().concat(StringPool.SLASH).concat(getBucketName(bucketName)).concat(StringPool.SLASH).concat(fileName);
+		return getEndpoint().concat(StringPool.SLASH)
+			.concat(getBucketName(bucketName))
+			.concat(StringPool.SLASH)
+			.concat(fileName);
 	}
 
 	@Override
@@ -277,14 +270,12 @@ public class MinioTemplate implements OssTemplate {
 		makeBucket(bucketName);
 		String originalName = fileName;
 		fileName = getFileName(fileName);
-		client.putObject(
-			PutObjectArgs.builder()
-				.bucket(getBucketName(bucketName))
-				.object(fileName)
-				.stream(stream, stream.available(), -1)
-				.contentType(contentType)
-				.build()
-		);
+		client.putObject(PutObjectArgs.builder()
+			.bucket(getBucketName(bucketName))
+			.object(fileName)
+			.stream(stream, stream.available(), -1)
+			.contentType(contentType)
+			.build());
 		BladeFile file = new BladeFile();
 		file.setOriginalName(originalName);
 		file.setName(fileName);
@@ -302,9 +293,7 @@ public class MinioTemplate implements OssTemplate {
 	@Override
 	@SneakyThrows
 	public void removeFile(String bucketName, String fileName) {
-		client.removeObject(
-			RemoveObjectArgs.builder().bucket(getBucketName(bucketName)).object(fileName).build()
-		);
+		client.removeObject(RemoveObjectArgs.builder().bucket(getBucketName(bucketName)).object(fileName).build());
 	}
 
 	@Override
@@ -317,12 +306,12 @@ public class MinioTemplate implements OssTemplate {
 	@SneakyThrows
 	public void removeFiles(String bucketName, List<String> fileNames) {
 		Stream<DeleteObject> stream = fileNames.stream().map(DeleteObject::new);
-		client.removeObjects(RemoveObjectsArgs.builder().bucket(getBucketName(bucketName)).objects(stream::iterator).build());
+		client.removeObjects(
+				RemoveObjectsArgs.builder().bucket(getBucketName(bucketName)).objects(stream::iterator).build());
 	}
 
 	/**
 	 * 根据规则生成存储桶名称规则
-	 *
 	 * @return String
 	 */
 	private String getBucketName() {
@@ -331,7 +320,6 @@ public class MinioTemplate implements OssTemplate {
 
 	/**
 	 * 根据规则生成存储桶名称规则
-	 *
 	 * @param bucketName 存储桶名称
 	 * @return String
 	 */
@@ -341,7 +329,6 @@ public class MinioTemplate implements OssTemplate {
 
 	/**
 	 * 根据规则生成文件名称规则
-	 *
 	 * @param originalFilename 原始文件名
 	 * @return string
 	 */
@@ -351,27 +338,23 @@ public class MinioTemplate implements OssTemplate {
 
 	/**
 	 * 获取文件外链
-	 *
 	 * @param bucketName bucket名称
-	 * @param fileName   文件名称
-	 * @param expires    过期时间
+	 * @param fileName 文件名称
+	 * @param expires 过期时间
 	 * @return url
 	 */
 	@SneakyThrows
 	public String getPresignedObjectUrl(String bucketName, String fileName, Integer expires) {
-		return client.getPresignedObjectUrl(
-			GetPresignedObjectUrlArgs.builder()
-				.method(Method.GET)
-				.bucket(getBucketName(bucketName))
-				.object(fileName)
-				.expiry(expires)
-				.build()
-		);
+		return client.getPresignedObjectUrl(GetPresignedObjectUrlArgs.builder()
+			.method(Method.GET)
+			.bucket(getBucketName(bucketName))
+			.object(fileName)
+			.expiry(expires)
+			.build());
 	}
 
 	/**
 	 * 获取存储桶策略
-	 *
 	 * @param policyType 策略枚举
 	 * @return String
 	 */
@@ -381,7 +364,6 @@ public class MinioTemplate implements OssTemplate {
 
 	/**
 	 * 获取域名
-	 *
 	 * @param bucketName 存储桶名称
 	 * @return String
 	 */
@@ -391,7 +373,6 @@ public class MinioTemplate implements OssTemplate {
 
 	/**
 	 * 获取域名
-	 *
 	 * @return String
 	 */
 	public String getOssHost() {
@@ -400,7 +381,6 @@ public class MinioTemplate implements OssTemplate {
 
 	/**
 	 * 获取服务地址
-	 *
 	 * @return String
 	 */
 	public String getEndpoint() {
@@ -409,6 +389,5 @@ public class MinioTemplate implements OssTemplate {
 		}
 		return ossProperties.getTransformEndpoint();
 	}
-
 
 }

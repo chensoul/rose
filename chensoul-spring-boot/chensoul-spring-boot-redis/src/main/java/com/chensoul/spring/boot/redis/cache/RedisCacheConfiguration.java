@@ -61,6 +61,7 @@ import java.util.stream.Collectors;
 public abstract class RedisCacheConfiguration {
 
 	private static final String COMMA = ",";
+
 	private static final String COLON = ":";
 
 	@Value("${mq.evictTtlInMs:60000}")
@@ -101,6 +102,7 @@ public abstract class RedisCacheConfiguration {
 
 	@Value("${mq.ssl.enabled:false}")
 	private boolean sslEnabled;
+
 	@Autowired
 	private RedisSslCredentials redisSslCredentials;
 
@@ -116,18 +118,18 @@ public abstract class RedisCacheConfiguration {
 	protected abstract JedisConnectionFactory loadFactory();
 
 	/**
-	 * Transaction aware RedisCacheManager.
-	 * Enable RedisCaches to synchronize cache put/evict operations with ongoing Spring-managed transactions.
+	 * Transaction aware RedisCacheManager. Enable RedisCaches to synchronize cache
+	 * put/evict operations with ongoing Spring-managed transactions.
 	 */
 	@Bean
 	public CacheManager cacheManager(RedisConnectionFactory cf) {
 		DefaultFormattingConversionService redisConversionService = new DefaultFormattingConversionService();
 		org.springframework.data.redis.cache.RedisCacheConfiguration.registerDefaultConverters(redisConversionService);
 		registerDefaultConverters(redisConversionService);
-		org.springframework.data.redis.cache.RedisCacheConfiguration configuration = org.springframework.data.redis.cache.RedisCacheConfiguration.defaultCacheConfig().withConversionService(redisConversionService);
-		return RedisCacheManager.builder(cf).cacheDefaults(configuration)
-			.transactionAware()
-			.build();
+		org.springframework.data.redis.cache.RedisCacheConfiguration configuration = org.springframework.data.redis.cache.RedisCacheConfiguration
+			.defaultCacheConfig()
+			.withConversionService(redisConversionService);
+		return RedisCacheManager.builder(cf).cacheDefaults(configuration).transactionAware().build();
 	}
 
 	@Bean
@@ -157,7 +159,8 @@ public abstract class RedisCacheConfiguration {
 		List<RedisNode> result;
 		if (org.apache.commons.lang3.StringUtils.isBlank(nodes)) {
 			result = Collections.emptyList();
-		} else {
+		}
+		else {
 			result = new ArrayList<>();
 			for (String hostPort : nodes.split(COMMA)) {
 				String host = hostPort.split(COLON)[0];
@@ -175,7 +178,8 @@ public abstract class RedisCacheConfiguration {
 			TrustManagerFactory trustManagerFactory = createAndInitTrustManagerFactory();
 			sslContext.init(keyManagerFactory.getKeyManagers(), trustManagerFactory.getTrustManagers(), null);
 			return sslContext.getSocketFactory();
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			throw new RuntimeException("Creating TLS factory failed!", e);
 		}
 	}
@@ -188,7 +192,8 @@ public abstract class RedisCacheConfiguration {
 			caKeyStore.setCertificateEntry("mq-caCert-cert-" + caCert.getSubjectX500Principal().getName(), caCert);
 		}
 
-		TrustManagerFactory trustManagerFactory = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
+		TrustManagerFactory trustManagerFactory = TrustManagerFactory
+			.getInstance(TrustManagerFactory.getDefaultAlgorithm());
 		trustManagerFactory.init(caKeyStore);
 		return trustManagerFactory;
 	}
@@ -199,7 +204,8 @@ public abstract class RedisCacheConfiguration {
 		return kmf;
 	}
 
-	private KeyStore loadKeyStore() throws KeyStoreException, IOException, NoSuchAlgorithmException, CertificateException {
+	private KeyStore loadKeyStore()
+			throws KeyStoreException, IOException, NoSuchAlgorithmException, CertificateException {
 		if (redisSslCredentials.getUserCertFile().isEmpty() || redisSslCredentials.getUserKeyFile().isEmpty()) {
 			return null;
 		}
@@ -222,4 +228,5 @@ public abstract class RedisCacheConfiguration {
 		}
 		return keyStore;
 	}
+
 }

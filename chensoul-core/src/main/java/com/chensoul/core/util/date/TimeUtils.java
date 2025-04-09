@@ -12,7 +12,9 @@ import java.util.*;
  * @since 0.0.1
  */
 public class TimeUtils {
+
 	public static final int SECONDS_IN_DAY = 60 * 60 * 24;
+
 	public static final long MILLIS_IN_DAY = 1000L * SECONDS_IN_DAY;
 
 	public static String format(final LocalDate localDate, String datePattern) {
@@ -126,4 +128,5 @@ public class TimeUtils {
 		}
 		return result;
 	}
+
 }

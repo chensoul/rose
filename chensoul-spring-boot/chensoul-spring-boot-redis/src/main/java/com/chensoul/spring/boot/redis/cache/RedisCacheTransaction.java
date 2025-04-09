@@ -26,7 +26,9 @@ import java.util.Objects;
 @Slf4j
 @RequiredArgsConstructor
 public class RedisCacheTransaction<K extends Serializable, V extends Serializable> implements CacheTransaction<K, V> {
+
 	private final RedisTransactionalCache<K, V> cache;
+
 	private final RedisConnection connection;
 
 	@Override
@@ -39,7 +41,8 @@ public class RedisCacheTransaction<K extends Serializable, V extends Serializabl
 		try {
 			List<Object> execResult = connection.exec();
 			return execResult.stream().anyMatch(Objects::nonNull);
-		} finally {
+		}
+		finally {
 			connection.close();
 		}
 	}
@@ -48,7 +51,8 @@ public class RedisCacheTransaction<K extends Serializable, V extends Serializabl
 	public void rollback() {
 		try {
 			connection.discard();
-		} finally {
+		}
+		finally {
 			connection.close();
 		}
 	}

@@ -6,4 +6,5 @@ package com.chensoul.core.domain;
 public interface HasTenantId {
 
 	String getTenantId();
+
 }

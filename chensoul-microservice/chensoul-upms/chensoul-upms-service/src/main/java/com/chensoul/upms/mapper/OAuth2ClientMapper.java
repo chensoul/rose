@@ -6,4 +6,5 @@ import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface OAuth2ClientMapper extends BaseMapper<OAuth2Client> {
+
 }

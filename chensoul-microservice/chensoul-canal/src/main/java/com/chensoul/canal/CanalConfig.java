@@ -21,18 +21,19 @@ public class CanalConfig {
 	@Value("${canal.server.port}")
 	private int canalServerPort;
 
-	@Value("${canal.server.username:}")
+	@Value("${canal.server.username:canal}")
 	private String username;
 
-	@Value("${canal.server.password:}")
+	@Value("${canal.server.password:canal}")
 	private String password;
 
-	@Value("${canal.destination:test}")
-	private String destination;
+	@Value("${canal.destinations:test}")
+	private String destinations;
 
 	@Bean("promotionConnector")
 	public CanalConnector newSingleConnector() {
-		return CanalConnectors.newSingleConnector(new InetSocketAddress(canalServerIp,
-			canalServerPort), destination, username, password);
+		return CanalConnectors.newSingleConnector(new InetSocketAddress(canalServerIp, canalServerPort), destinations,
+				username, password);
 	}
+
 }

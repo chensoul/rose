@@ -19,4 +19,5 @@ public class EmailMfaConfig extends OtpBasedMfaConfig {
 	public MfaProviderType getProviderType() {
 		return MfaProviderType.EMAIL;
 	}
+
 }

@@ -13,6 +13,39 @@
     <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
 
+    <scm>
+        <url>https://github.com/chensoul/chensoul-cloud</url>
+        <connection>git://github.com/chensoul/chensoul-cloud.git</connection>
+        <developerConnection>git@github.com/chensoul/chensoul-cloud.git</developerConnection>
+    </scm>
+
+    <issueManagement>
+        <system>Github Issues</system>
+        <url>https://github.com/chensoul/chensoul-cloud/issues</url>
+    </issueManagement>
+    <ciManagement>
+        <system>Github Actions</system>
+        <url>https://github.com/chensoul/chensoul-cloud/actions</url>
+    </ciManagement>
+
+    <organization>
+        <name>Chensoul</name>
+        <url>https://blog.chensoul.cc</url>
+    </organization>
+
+    <licenses>
+        <license>
+            <name>MIT License</name>
+            <url>http://www.opensource.org/licenses/mit-license.php</url>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <name>chensoul</name>
+        </developer>
+    </developers>
+
     <properties>
         <spring-boot.version>2.7.18</spring-boot.version>
         <spring-cloud.version>2021.0.9</spring-cloud.version>
@@ -35,13 +68,6 @@
         <easyexcel.version>3.3.4</easyexcel.version>
         <netty.version>4.1.116.Final</netty.version>
     </properties>
-
-    <scm>
-        <url>https://github.com/chensoul/chensoul-cloud</url>
-        <connection>scm:git:${project.scm.url}</connection>
-        <developerConnection>scm:git:${project.scm.url}</developerConnection>
-        <tag>HEAD</tag>
-    </scm>
 
     <modules>
         <module>chensoul-build</module>

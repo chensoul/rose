@@ -13,6 +13,7 @@ import java.util.UUID;
  */
 @Slf4j
 class NanoIdUtilsTest {
+
 	@Test
 	public void testNanoId() {
 		log.info(NanoIdUtils.randomNanoId());
@@ -25,4 +26,5 @@ class NanoIdUtilsTest {
 		log.info("length: {}", UUID.randomUUID().toString().length());
 
 	}
+
 }

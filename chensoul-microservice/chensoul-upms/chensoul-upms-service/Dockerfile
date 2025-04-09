@@ -2,6 +2,6 @@ FROM library/alpine-jdk:8
 
 EXPOSE 8010
 
-ADD target/"*[!javadoc]".jar app.jar
+COPY target/*.jar app.jar
 
 ENTRYPOINT ["java","-Xms128m","-Xmx256m", "-Djava.security.egd=file:/dev/./urandom", "-jar", "app.jar", "--spring.profiles.active=dev"]

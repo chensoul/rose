@@ -1,6 +1,5 @@
 package com.chensoul.core.util;
 
-
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -26,4 +25,5 @@ public class FormatUtilsTest {
 		message = FormatUtils.format("A,{},C,{},E", 1, 2, 3);
 		assertEquals("A,1,C,2,E", message);
 	}
+
 }

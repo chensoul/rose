@@ -14,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 @AllArgsConstructor
 @Slf4j
 public class CaffeineCacheAccessor implements CacheAccessor {
+
 	private Cache cache;
 
 	@Override
@@ -35,4 +36,5 @@ public class CaffeineCacheAccessor implements CacheAccessor {
 
 		cache.invalidate(key);
 	}
+
 }

@@ -15,4 +15,5 @@ public class DeviceGroup {
 	private String name;
 
 	private String parentOd;
+
 }

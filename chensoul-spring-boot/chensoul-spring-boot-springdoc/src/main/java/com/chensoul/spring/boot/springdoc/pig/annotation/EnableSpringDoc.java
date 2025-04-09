@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Import;
 
 import java.lang.annotation.*;
 
-@Target({ElementType.TYPE})
+@Target({ ElementType.TYPE })
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @Inherited
@@ -17,14 +17,12 @@ public @interface EnableSpringDoc {
 
 	/**
 	 * 网关路由前缀
-	 *
 	 * @return String
 	 */
 	String value();
 
 	/**
 	 * 是否是微服务架构
-	 *
 	 * @return true
 	 */
 	boolean isMicro() default true;

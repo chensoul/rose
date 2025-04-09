@@ -20,8 +20,11 @@ import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 public class JobGroupServiceImpl implements JobGroupService {
+
 	private final JobLoginService jobLoginService;
+
 	private final RestTemplate restTemplate;
+
 	private final String host;
 
 	@Override
@@ -37,11 +40,13 @@ public class JobGroupServiceImpl implements JobGroupService {
 
 		HttpEntity<MultiValueMap<String, String>> requestEntity = new HttpEntity<>(map, headers);
 
-		ResponseEntity<XxlJobGroupPage> response = restTemplate.postForEntity(url, requestEntity, XxlJobGroupPage.class);
+		ResponseEntity<XxlJobGroupPage> response = restTemplate.postForEntity(url, requestEntity,
+				XxlJobGroupPage.class);
 		List<XxlJobGroup> jobGroup = response.getBody().getData();
 
 		return jobGroup.stream()
-			.filter(xxlJobGroup -> xxlJobGroup.getAppname().equals(appName)).collect(Collectors.toList());
+			.filter(xxlJobGroup -> xxlJobGroup.getAppname().equals(appName))
+			.collect(Collectors.toList());
 	}
 
 	@Override
@@ -58,7 +63,8 @@ public class JobGroupServiceImpl implements JobGroupService {
 
 		HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(map, headers);
 
-		ResponseEntity<XxlRestResponse> response = restTemplate.postForEntity(url, requestEntity, XxlRestResponse.class);
+		ResponseEntity<XxlRestResponse> response = restTemplate.postForEntity(url, requestEntity,
+				XxlRestResponse.class);
 
 		XxlRestResponse xxlRestResponse = response.getBody();
 		if (xxlRestResponse.getCode() != 200) {

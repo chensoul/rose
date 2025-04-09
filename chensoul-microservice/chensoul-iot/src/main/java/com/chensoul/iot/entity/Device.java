@@ -32,4 +32,5 @@ public class Device {
 	private LocalDateTime lastOnlineTime;
 
 	private LocalDateTime lastOfflineTime;
+
 }

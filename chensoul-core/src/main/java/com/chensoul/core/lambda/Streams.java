@@ -14,17 +14,19 @@ import static java.util.stream.Collectors.toList;
  * @since 0.0.1
  */
 public interface Streams {
+
 	static <T> Stream<T> stream(Iterable<T> iterable) {
 		return StreamSupport.stream(iterable.spliterator(), false);
 	}
 
 	/**
-	 * <p>filterStream.</p>
-	 *
-	 * @param values    a S object
+	 * <p>
+	 * filterStream.
+	 * </p>
+	 * @param values a S object
 	 * @param predicate a {@link Predicate} object
-	 * @param <T>       a T class
-	 * @param <S>       a S class
+	 * @param <T> a T class
+	 * @param <S> a S class
 	 * @return a {@link Stream} object
 	 */
 	static <T, S extends Iterable<T>> Stream<T> filterStream(S values, Predicate<? super T> predicate) {
@@ -32,12 +34,13 @@ public interface Streams {
 	}
 
 	/**
-	 * <p>filterList.</p>
-	 *
-	 * @param values    a S object
+	 * <p>
+	 * filterList.
+	 * </p>
+	 * @param values a S object
 	 * @param predicate a {@link Predicate} object
-	 * @param <T>       a T class
-	 * @param <S>       a S class
+	 * @param <T> a T class
+	 * @param <S> a S class
 	 * @return a {@link List} object
 	 */
 	static <T, S extends Iterable<T>> List<T> filterList(S values, Predicate<? super T> predicate) {
@@ -45,12 +48,13 @@ public interface Streams {
 	}
 
 	/**
-	 * <p>filterSet.</p>
-	 *
-	 * @param values    a S object
+	 * <p>
+	 * filterSet.
+	 * </p>
+	 * @param values a S object
 	 * @param predicate a {@link Predicate} object
-	 * @param <T>       a T class
-	 * @param <S>       a S class
+	 * @param <T> a T class
+	 * @param <S> a S class
 	 * @return a {@link Set} object
 	 */
 	static <T, S extends Iterable<T>> Set<T> filterSet(S values, Predicate<? super T> predicate) {
@@ -59,12 +63,13 @@ public interface Streams {
 	}
 
 	/**
-	 * <p>filter.</p>
-	 *
-	 * @param values    a S object
+	 * <p>
+	 * filter.
+	 * </p>
+	 * @param values a S object
 	 * @param predicate a {@link Predicate} object
-	 * @param <T>       a T class
-	 * @param <S>       a S class
+	 * @param <T> a T class
+	 * @param <S> a S class
 	 * @return a S object
 	 */
 	static <T, S extends Iterable<T>> S filter(S values, Predicate<? super T> predicate) {
@@ -73,12 +78,13 @@ public interface Streams {
 	}
 
 	/**
-	 * <p>filterAll.</p>
-	 *
-	 * @param values     a S object
+	 * <p>
+	 * filterAll.
+	 * </p>
+	 * @param values a S object
 	 * @param predicates a {@link Predicate} object
-	 * @param <T>        a T class
-	 * @param <S>        a S class
+	 * @param <T> a T class
+	 * @param <S> a S class
 	 * @return a S object
 	 */
 	@SafeVarargs
@@ -87,12 +93,13 @@ public interface Streams {
 	}
 
 	/**
-	 * <p>filterAny.</p>
-	 *
-	 * @param values     a S object
+	 * <p>
+	 * filterAny.
+	 * </p>
+	 * @param values a S object
 	 * @param predicates a {@link Predicate} object
-	 * @param <T>        a T class
-	 * @param <S>        a S class
+	 * @param <T> a T class
+	 * @param <S> a S class
 	 * @return a S object
 	 */
 	@SafeVarargs
@@ -101,11 +108,12 @@ public interface Streams {
 	}
 
 	/**
-	 * <p>filterFirst.</p>
-	 *
-	 * @param values     a {@link Iterable} object
+	 * <p>
+	 * filterFirst.
+	 * </p>
+	 * @param values a {@link Iterable} object
 	 * @param predicates a {@link Predicate} object
-	 * @param <T>        a T class
+	 * @param <T> a T class
 	 * @return a T object
 	 */
 	@SafeVarargs
@@ -115,4 +123,5 @@ public interface Streams {
 			.findFirst()
 			.orElse(null);
 	}
+
 }

@@ -4,12 +4,11 @@ import com.chensoul.core.lambda.function.CheckedRunnable;
 import com.chensoul.core.lambda.function.CheckedSupplier;
 
 public class TenantUtils {
+
 	/**
 	 * 使用指定租户，执行对应的逻辑
 	 * <p>
-	 * 注意，如果当前是忽略租户的情况下，会被强制设置成不忽略租户
-	 * 当然，执行完成后，还是会恢复回去
-	 *
+	 * 注意，如果当前是忽略租户的情况下，会被强制设置成不忽略租户 当然，执行完成后，还是会恢复回去
 	 * @param tenantId 租户编号
 	 * @param runnable 逻辑
 	 */
@@ -20,9 +19,11 @@ public class TenantUtils {
 			TenantContextHolder.setTenantId(tenantId);
 			TenantContextHolder.setIgnore(Boolean.FALSE);
 			runnable.run();
-		} catch (Throwable e) {
+		}
+		catch (Throwable e) {
 			throw new RuntimeException(e);
-		} finally {
+		}
+		finally {
 			TenantContextHolder.setTenantId(oldTenantId);
 			TenantContextHolder.setIgnore(oldIgnore);
 		}
@@ -35,9 +36,11 @@ public class TenantUtils {
 			TenantContextHolder.setTenantId(tenantId);
 			TenantContextHolder.setIgnore(Boolean.FALSE);
 			return supplier.get();
-		} catch (Throwable e) {
+		}
+		catch (Throwable e) {
 			throw new RuntimeException(e);
-		} finally {
+		}
+		finally {
 			TenantContextHolder.setTenantId(oldTenantId);
 			TenantContextHolder.setIgnore(oldIgnore);
 		}
@@ -45,7 +48,6 @@ public class TenantUtils {
 
 	/**
 	 * 忽略租户，执行对应的逻辑
-	 *
 	 * @param runnable 逻辑
 	 */
 	public static void executeIgnore(CheckedRunnable runnable) {
@@ -53,9 +55,11 @@ public class TenantUtils {
 		try {
 			TenantContextHolder.setIgnore(Boolean.TRUE);
 			runnable.run();
-		} catch (Throwable e) {
+		}
+		catch (Throwable e) {
 			throw new RuntimeException(e);
-		} finally {
+		}
+		finally {
 			TenantContextHolder.setIgnore(oldIgnore);
 		}
 	}
@@ -65,10 +69,13 @@ public class TenantUtils {
 		try {
 			TenantContextHolder.setIgnore(Boolean.TRUE);
 			return supplier.get();
-		} catch (Throwable e) {
+		}
+		catch (Throwable e) {
 			throw new RuntimeException(e);
-		} finally {
+		}
+		finally {
 			TenantContextHolder.setIgnore(oldIgnore);
 		}
 	}
+
 }

@@ -76,4 +76,5 @@ public class LongListTypeHandler implements TypeHandler<List<Long>> {
 		}
 		return Arrays.stream(value.split(StringPool.COMMA)).map(Long::new).collect(Collectors.toList());
 	}
+
 }

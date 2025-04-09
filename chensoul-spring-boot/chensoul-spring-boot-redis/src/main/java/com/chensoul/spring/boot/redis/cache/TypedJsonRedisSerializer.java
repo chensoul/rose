@@ -36,4 +36,5 @@ public class TypedJsonRedisSerializer<K, V> implements RedisSerializer<K, V> {
 	public V deserialize(K key, byte[] bytes) throws SerializationException {
 		return JacksonUtils.fromBytes(bytes, valueTypeRef);
 	}
+
 }

@@ -10,6 +10,7 @@ import com.chensoul.security.util.TokenPair;
  * @since TODO
  */
 public interface TokenFactory {
+
 	TokenPair createPreVerificationTokenPair(SecurityUser securityUser);
 
 	TokenPair createTokenPair(SecurityUser securityUser);
@@ -17,4 +18,5 @@ public interface TokenFactory {
 	SecurityUser parseAccessToken(String accessToken);
 
 	SecurityUser parseRefreshToken(String refreshToken);
+
 }

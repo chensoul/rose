@@ -19,12 +19,17 @@ import java.util.function.BiConsumer;
  */
 @Slf4j
 public class ReadMergeValidateListener<T extends ReadFailMessageAware> extends ReadValidateListener<T> {
+
 	private final List<T> datas;
+
 	private final List<CellExtra> extraList;
+
 	private final Integer headRowNumber;
+
 	private final int[] mergeColumnIndex;
 
-	public ReadMergeValidateListener(Integer headRowNumber, int[] mergeColumnIndex, BiConsumer<List<T>, List<T>> consumer) {
+	public ReadMergeValidateListener(Integer headRowNumber, int[] mergeColumnIndex,
+			BiConsumer<List<T>, List<T>> consumer) {
 		super(consumer);
 
 		this.headRowNumber = headRowNumber;
@@ -70,4 +75,5 @@ public class ReadMergeValidateListener<T extends ReadFailMessageAware> extends R
 			throw new RuntimeException("单元格合并错误，请检查后重新上传");
 		}
 	}
+
 }

@@ -25,16 +25,20 @@ import java.util.concurrent.Callable;
 @Slf4j
 @RequiredArgsConstructor
 public class LocalCacheService implements CacheFrontend {
+
 	private final LettuceConnectionFactory connectionFactory;
+
 	private final Cache cache;
+
 	private final TaskScheduler taskScheduler;
 
 	private CacheFrontend cacheFrontend;
+
 	private StatefulRedisConnection<String, String> connection;
 
 	@PostConstruct
 	public void init() {
-		//junit 测试不支持异步线程池
+		// junit 测试不支持异步线程池
 		taskScheduler.scheduleAtFixedRate(() -> {
 			check();
 		}, 1000); // 1 second
@@ -47,22 +51,25 @@ public class LocalCacheService implements CacheFrontend {
 
 		try {
 			connection = ((RedisClient) connectionFactory.getNativeClient()).connect();
-			this.cacheFrontend = ClientSideCaching.enable(new CaffeineCacheAccessor(cache), connection, TrackingArgs.Builder.enabled());
+			this.cacheFrontend = ClientSideCaching.enable(new CaffeineCacheAccessor(cache), connection,
+					TrackingArgs.Builder.enabled());
 
 			connection.addListener(message -> {
-					log.info("push message: {}", message);
+				log.info("push message: {}", message);
 
-					List<Object> content = message.getContent(StringCodec.UTF8::decodeKey);
-					if (message.getType().equals("invalidate")) {
-						List<String> keys = (List<String>) content.get(1);
-						log.info("invalidate keys: {}", keys);
-						keys.forEach(key -> cache.invalidate(key));
-					}
+				List<Object> content = message.getContent(StringCodec.UTF8::decodeKey);
+				if (message.getType().equals("invalidate")) {
+					List<String> keys = (List<String>) content.get(1);
+					log.info("invalidate keys: {}", keys);
+					keys.forEach(key -> cache.invalidate(key));
 				}
-			);
-			log.warn("The mq client connection has been reconnected to {}:{}", connectionFactory.getHostName(), connectionFactory.getPort());
-		} catch (Exception e) {
-			log.error("The mq client connection to {}:{} has been closed", connectionFactory.getHostName(), connectionFactory.getPort());
+			});
+			log.warn("The mq client connection has been reconnected to {}:{}", connectionFactory.getHostName(),
+					connectionFactory.getPort());
+		}
+		catch (Exception e) {
+			log.error("The mq client connection to {}:{} has been closed", connectionFactory.getHostName(),
+					connectionFactory.getPort());
 		}
 	}
 
@@ -80,4 +87,5 @@ public class LocalCacheService implements CacheFrontend {
 	public void close() {
 		cacheFrontend.close();
 	}
+
 }

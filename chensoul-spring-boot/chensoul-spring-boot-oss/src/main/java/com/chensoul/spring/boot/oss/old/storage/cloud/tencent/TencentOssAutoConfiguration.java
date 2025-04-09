@@ -42,21 +42,21 @@ import com.chensoul.spring.boot.oss.old.storage.properties.TencentOssProperties;
  * @since 2018-09-18 12:24
  **/
 @Configuration
-@EnableConfigurationProperties({TencentOssProperties.class})
+@EnableConfigurationProperties({ TencentOssProperties.class })
 @ConditionalOnProperty(prefix = OSS_CONFIG_PREFIX_TENCENT, name = "enabled", havingValue = "true")
 public class TencentOssAutoConfiguration {
 
-    @Bean
-    public COSClient cosClient(TencentOssProperties properties) {
-        COSCredentials credentials = new BasicCOSCredentials(properties.getAccessKey(), properties.getSecretKey());
-        // 初始化客户端配置
-        ClientConfig clientConfig = new ClientConfig(new Region(properties.getRegion()));
-        return new COSClient(credentials, clientConfig);
-    }
+	@Bean
+	public COSClient cosClient(TencentOssProperties properties) {
+		COSCredentials credentials = new BasicCOSCredentials(properties.getAccessKey(), properties.getSecretKey());
+		// 初始化客户端配置
+		ClientConfig clientConfig = new ClientConfig(new Region(properties.getRegion()));
+		return new COSClient(credentials, clientConfig);
+	}
 
-    @Bean(TENCENT_OSS_OPERATION)
-    public TencentOssOperation tencentStorageOperation(COSClient cosClient, TencentOssProperties properties) {
-        return new TencentOssOperation(cosClient, properties);
-    }
+	@Bean(TENCENT_OSS_OPERATION)
+	public TencentOssOperation tencentStorageOperation(COSClient cosClient, TencentOssProperties properties) {
+		return new TencentOssOperation(cosClient, properties);
+	}
 
 }

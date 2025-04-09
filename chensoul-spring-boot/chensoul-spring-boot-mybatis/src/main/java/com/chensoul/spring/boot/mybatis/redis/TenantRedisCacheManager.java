@@ -23,9 +23,11 @@ import static com.chensoul.core.util.StringPool.COLON;
  */
 @Slf4j
 public class TenantRedisCacheManager extends TimeoutRedisCacheManager {
+
 	private final Set<String> ignoredCaches;
 
-	public TenantRedisCacheManager(Set<String> ignoredCaches, RedisCacheWriter cacheWriter, RedisCacheConfiguration defaultCacheConfiguration) {
+	public TenantRedisCacheManager(Set<String> ignoredCaches, RedisCacheWriter cacheWriter,
+			RedisCacheConfiguration defaultCacheConfiguration) {
 		super(cacheWriter, defaultCacheConfiguration);
 		this.ignoredCaches = ignoredCaches;
 	}
@@ -33,9 +35,8 @@ public class TenantRedisCacheManager extends TimeoutRedisCacheManager {
 	@Override
 	public Cache getCache(String name) {
 		// 如果开启多租户，则 name 拼接租户后缀
-		if (!TenantContextHolder.isIgnored()
-			&& StringUtils.isNotBlank(TenantContextHolder.getTenantId())
-			&& (CollectionUtils.isEmpty(ignoredCaches) || !ignoredCaches.contains(name))) {
+		if (!TenantContextHolder.isIgnored() && StringUtils.isNotBlank(TenantContextHolder.getTenantId())
+				&& (CollectionUtils.isEmpty(ignoredCaches) || !ignoredCaches.contains(name))) {
 			name = name + COLON + TenantContextHolder.getTenantId();
 		}
 

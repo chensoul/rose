@@ -11,6 +11,7 @@ import java.util.List;
 
 //@Service
 public class UserCachedEntityService extends AbstractCachedEntityService<String, User, UserCacheEvictEvent> {
+
 	public UserCachedEntityService(ApplicationEventPublisher eventPublisher, TransactionalCache<String, User> cache) {
 		super(eventPublisher, cache);
 	}
@@ -25,4 +26,5 @@ public class UserCachedEntityService extends AbstractCachedEntityService<String,
 		}
 		cache.evict(keys);
 	}
+
 }

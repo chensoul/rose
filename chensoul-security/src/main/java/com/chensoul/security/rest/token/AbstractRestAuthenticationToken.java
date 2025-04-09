@@ -8,6 +8,7 @@ public abstract class AbstractRestAuthenticationToken extends AbstractAuthentica
 	private static final long serialVersionUID = -6212297506742428406L;
 
 	private String token;
+
 	private SecurityUser securityUser;
 
 	public AbstractRestAuthenticationToken(String token) {
@@ -27,7 +28,7 @@ public abstract class AbstractRestAuthenticationToken extends AbstractAuthentica
 	public void setAuthenticated(boolean authenticated) {
 		if (authenticated) {
 			throw new IllegalArgumentException(
-				"Cannot set this token to trusted - use constructor which takes a GrantedAuthority list instead");
+					"Cannot set this token to trusted - use constructor which takes a GrantedAuthority list instead");
 		}
 		super.setAuthenticated(false);
 	}
@@ -47,4 +48,5 @@ public abstract class AbstractRestAuthenticationToken extends AbstractAuthentica
 		super.eraseCredentials();
 		this.token = null;
 	}
+
 }

@@ -15,6 +15,7 @@ import java.util.List;
 @RequestMapping("/api/auth/mfa")
 @RequiredArgsConstructor
 public class MfaAuthController {
+
 	private final MfaSettingService mfaSettingService;
 
 	@PostMapping("/verification/send")
@@ -39,10 +40,15 @@ public class MfaAuthController {
 	@AllArgsConstructor
 	@Builder
 	public static class TwoFaProviderInfo {
+
 		private MfaProviderType type;
+
 		private boolean useByDefault;
+
 		private String contact;
+
 		private Integer minVerificationCodeSendPeriod;
+
 	}
 
 }

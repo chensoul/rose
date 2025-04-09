@@ -52,9 +52,13 @@ import java.util.Objects;
 public class QiNiuOssOperation implements OssOperation {
 
 	private final UploadManager uploadManager;
+
 	private final BucketManager bucketManager;
+
 	private final CdnManager cdnManager;
+
 	private final QiNiuOssProperties properties;
+
 	private final QiNiuConnectionFactory connectionFactory;
 
 	@Autowired
@@ -83,14 +87,16 @@ public class QiNiuOssOperation implements OssOperation {
 	@Override
 	public DownloadResponse download(String fileName) {
 		String domainOfBucket = this.connectionFactory.getDomain(properties.getBucket());
-		final String path = StringUtils.defaultIfBlank(this.properties.getTmpDir(), this.getClass().getResource("/").getPath());
+		final String path = StringUtils.defaultIfBlank(this.properties.getTmpDir(),
+				this.getClass().getResource("/").getPath());
 		final File file = new File(path + File.separator + fileName);
 		log.debug("[文件目录] - [{}]", file.getPath());
 		try {
 			DownloadUrl url = new DownloadUrl(domainOfBucket, true, fileName);
 			String urlString = url.buildURL();
 			log.debug(urlString);
-		} catch (QiniuException e) {
+		}
+		catch (QiniuException e) {
 			e.printStackTrace();
 		}
 		return null;
@@ -105,13 +111,13 @@ public class QiNiuOssOperation implements OssOperation {
 	public void download(String bucketName, String fileName, File file) {
 		String domainOfBucket = this.connectionFactory.getDomain(bucketName);
 		log.debug("[文件目录] - [{}]", file.getPath());
-//        try {
-//            DownloadUrl url = new DownloadUrl(domainOfBucket, true, fileName);
-////            FileCopyUtils.copy(url.buildURL(), file);
-//        } catch (QiniuException e) {
-//            log.error("七牛云下载失败", e);
-//            throw downloadError(BaseOssProperties.StorageType.QINIU, e);
-//        }
+		// try {
+		// DownloadUrl url = new DownloadUrl(domainOfBucket, true, fileName);
+		//// FileCopyUtils.copy(url.buildURL(), file);
+		// } catch (QiniuException e) {
+		// log.error("七牛云下载失败", e);
+		// throw downloadError(BaseOssProperties.StorageType.QINIU, e);
+		// }
 	}
 
 	@Override
@@ -145,7 +151,8 @@ public class QiNiuOssOperation implements OssOperation {
 			String upToken = getUploadToken(bucketName, fileName);
 			Response response = uploadManager.put(content, fileName, upToken, null, null);
 			return getStorageResponse(fileName, response);
-		} catch (QiniuException e) {
+		}
+		catch (QiniuException e) {
 			log.error("[文件上传异常]", e);
 			throw uploadError(BaseOssProperties.StorageType.QINIU, e);
 		}
@@ -157,7 +164,8 @@ public class QiNiuOssOperation implements OssOperation {
 			String upToken = getUploadToken(bucketName, fileName);
 			Response response = uploadManager.put(content, fileName, upToken);
 			return getStorageResponse(fileName, response);
-		} catch (QiniuException e) {
+		}
+		catch (QiniuException e) {
 			log.error("[文件上传异常]", e);
 			throw uploadError(BaseOssProperties.StorageType.QINIU, e);
 		}
@@ -175,7 +183,8 @@ public class QiNiuOssOperation implements OssOperation {
 			Response response;
 			if (Objects.nonNull(request.getInputStream())) {
 				response = uploadManager.put(request.getInputStream(), targetName, upToken, null, null);
-			} else {
+			}
+			else {
 				response = uploadManager.put(request.getContent(), targetName, upToken);
 			}
 			log.debug("七牛上传响应结果 - {}", response);
@@ -184,11 +193,16 @@ public class QiNiuOssOperation implements OssOperation {
 			}
 			Map<String, Object> extend = Maps.newLinkedHashMap();
 			extend.put("reqId", response.reqId);
-			return StorageResponse.builder().originName(request.getOriginName())
-				.targetName(targetName).size(response.body().length)
+			return StorageResponse.builder()
+				.originName(request.getOriginName())
+				.targetName(targetName)
+				.size(response.body().length)
 				.mappingPath(properties.getMappingPath())
-				.bucket(bucket).extend(extend).build();
-		} catch (QiniuException e) {
+				.bucket(bucket)
+				.extend(extend)
+				.build();
+		}
+		catch (QiniuException e) {
 			log.error("[文件上传异常]", e);
 			throw uploadError(BaseOssProperties.StorageType.QINIU, e);
 		}
@@ -201,8 +215,13 @@ public class QiNiuOssOperation implements OssOperation {
 		}
 		Map<String, Object> extend = Maps.newLinkedHashMap();
 		extend.put("reqId", response.reqId);
-		return StorageResponse.builder().originName(fileName).targetName(fileName).size(response.body().length)
-			.extend(extend).fullUrl(properties.getMappingPath() + fileName).build();
+		return StorageResponse.builder()
+			.originName(fileName)
+			.targetName(fileName)
+			.size(response.body().length)
+			.extend(extend)
+			.fullUrl(properties.getMappingPath() + fileName)
+			.build();
 	}
 
 	@Override
@@ -215,7 +234,8 @@ public class QiNiuOssOperation implements OssOperation {
 		try {
 			final Response response = bucketManager.delete(bucketName, fileName);
 			log.debug("文件删除成功 - {}", response);
-		} catch (QiniuException e) {
+		}
+		catch (QiniuException e) {
 			log.error("[文件移除异常]", e);
 		}
 	}
@@ -228,4 +248,5 @@ public class QiNiuOssOperation implements OssOperation {
 	private String getUploadToken(String bucket, String key) {
 		return this.connectionFactory.getUploadToken(bucket, key, QiNiuScope.DEFAULT);
 	}
+
 }

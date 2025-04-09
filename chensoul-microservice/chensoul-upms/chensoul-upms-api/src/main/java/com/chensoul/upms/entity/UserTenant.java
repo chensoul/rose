@@ -29,4 +29,5 @@ public class UserTenant extends TenantEntity {
 
 	// 1: Pending 待审核, 2: Active 激活, 3: Suspended 停用, 4: Locked 锁定
 	private Integer status;
+
 }

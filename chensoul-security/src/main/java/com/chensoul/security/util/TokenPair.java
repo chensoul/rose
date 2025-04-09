@@ -12,6 +12,7 @@ import java.util.Collection;
 @AllArgsConstructor
 @NoArgsConstructor
 public class TokenPair {
+
 	@JsonProperty("access_token")
 	private String accessToken;
 
@@ -19,4 +20,5 @@ public class TokenPair {
 	private String refreshToken;
 
 	private Collection<GrantedAuthority> authorities;
+
 }

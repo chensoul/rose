@@ -5,5 +5,7 @@ package com.chensoul.excel;
  * @since 0.0.1
  */
 public interface ReadFailMessageAware {
+
 	void setMessage(String message);
+
 }

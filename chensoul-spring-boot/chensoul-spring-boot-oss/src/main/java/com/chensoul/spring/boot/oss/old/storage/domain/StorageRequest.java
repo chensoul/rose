@@ -65,6 +65,7 @@ public class StorageRequest implements java.io.Serializable {
 	 * content 与 inputStream 二选一
 	 */
 	private byte[] content;
+
 	/**
 	 * inputStream 与 content 二选一
 	 */
@@ -78,7 +79,6 @@ public class StorageRequest implements java.io.Serializable {
 
 	/**
 	 * 获取目标名字
-	 *
 	 * @return 目标名称
 	 * @throws RuntimeException RuntimeException
 	 */
@@ -112,6 +112,7 @@ public class StorageRequest implements java.io.Serializable {
 	}
 
 	public enum PrefixRule {
+
 		/**
 		 * 无规则 默认提取 prefix 否则自动生成前缀
 		 */
@@ -130,5 +131,7 @@ public class StorageRequest implements java.io.Serializable {
 		 * 租户当前日期策略
 		 */
 		tenant_now_date_mouth_day
+
 	}
+
 }

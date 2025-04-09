@@ -41,19 +41,30 @@ import java.util.Base64;
 @Slf4j
 @RequiredArgsConstructor
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
+
 	public static final String USER_CREDENTIAL_ENABLED = "userCredentialEnabled";
+
 	public static final String ACTIVATE_URL_PATTERN = "%s/api/noauth/activate?activateToken=%s";
+
 	public static final String LAST_LOGIN_TIME = "lastLoginTime";
+
 	public static final String FAILED_LOGIN_ATTEMPTS = "failedLoginAttempts";
+
 	public static final String USER_PASSWORD_HISTORY = "userPasswordHistory";
+
 	private static final int DEFAULT_TOKEN_LENGTH = 30;
 
 	private final CredentialMapper credentialMapper;
+
 	private final UserSettingMapper userSettingMapper;
+
 	private final SystemSettingService systemSettingService;
+
 	private final SmsService smsService;
+
 	private final TokenFactory tokenFactory;
-//	private final UserCachedEntityService userCachedEntityService;
+
+	// private final UserCachedEntityService userCachedEntityService;
 
 	@Value("${security.user_token_access_enabled:true}")
 	private boolean userTokenAccessEnabled;
@@ -83,7 +94,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 			String phone = savedUser.getPhone();
 			try {
 				smsService.sendActivationSms(activateUrl, phone);
-			} catch (BusinessException e) {
+			}
+			catch (BusinessException e) {
 				deleteUser(savedUser);
 				throw e;
 			}
@@ -132,7 +144,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
 		if (userCredentialEnabled) {
 			resetFailedLoginAttempts(user);
-		} else {
+		}
+		else {
 			SpringContextHolder.publishEvent(new UserCredentialInvalidationEvent(userId));
 		}
 		return saveUser(user, null);
@@ -144,13 +157,14 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 			oldUser = getById(user.getId());
 		}
 
-		UserCacheEvictEvent evictEvent = new UserCacheEvictEvent(user.getPhone(), oldUser != null ? oldUser.getPhone() : null);
+		UserCacheEvictEvent evictEvent = new UserCacheEvictEvent(user.getPhone(),
+				oldUser != null ? oldUser.getPhone() : null);
 
 		if (user.getId() == null) {
 			user.setExtra(JacksonUtils.newObjectNode().put(USER_CREDENTIAL_ENABLED, false));
 			baseMapper.insert(user);
 
-//			userCachedEntityService.publishEvictEvent(evictEvent);
+			// userCachedEntityService.publishEvictEvent(evictEvent);
 
 			Credential credential = new Credential();
 			credential.setUserId(user.getId());
@@ -160,13 +174,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 			credential.setUserId(user.getId());
 			credential.setExtra(JacksonUtils.newObjectNode());
 			credentialMapper.insert(credential);
-		} else {
+		}
+		else {
 			baseMapper.updateById(user);
 		}
-		SpringContextHolder.publishEvent(SaveEntityEvent.builder()
-			.entity(user)
-			.oldEntity(oldUser)
-			.created(user.getId() == null).build());
+		SpringContextHolder.publishEvent(
+				SaveEntityEvent.builder().entity(user).oldEntity(oldUser).created(user.getId() == null).build());
 		return user;
 	}
 
@@ -176,7 +189,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 			throw new BusinessException("没有权限");
 		}
 		User user = getById(userId);
-		SecurityUser securityUser = new SecurityUser(user.getName(), null, AuthorityUtils.createAuthorityList(user.getAuthority().name()));
+		SecurityUser securityUser = new SecurityUser(user.getName(), null,
+				AuthorityUtils.createAuthorityList(user.getAuthority().name()));
 		return tokenFactory.createTokenPair(securityUser);
 	}
 
@@ -188,8 +202,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 	@Override
 	public User findUserByPhone(String phone) {
 		return baseMapper.selectOne(Wrappers.<User>lambdaQuery().eq(User::getPhone, phone));
-//		return userCachedEntityService.getCache().getAndPutInTransaction(phone,
-//			() -> baseMapper.selectOne(Wrappers.<User>lambdaQuery().eq(User::getPhone, phone)), true);
+		// return userCachedEntityService.getCache().getAndPutInTransaction(phone,
+		// () -> baseMapper.selectOne(Wrappers.<User>lambdaQuery().eq(User::getPhone,
+		// phone)), true);
 	}
 
 	private void resetFailedLoginAttempts(User user) {
@@ -202,6 +217,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 	}
 
 	private String generateSafeToken(int defaultTokenLength) {
-		return Base64.getUrlEncoder().withoutPadding().encodeToString(RandomStringUtils.randomAlphabetic(defaultTokenLength).getBytes(StandardCharsets.UTF_8));
+		return Base64.getUrlEncoder()
+			.withoutPadding()
+			.encodeToString(RandomStringUtils.randomAlphabetic(defaultTokenLength).getBytes(StandardCharsets.UTF_8));
 	}
+
 }

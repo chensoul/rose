@@ -11,6 +11,7 @@ import reactor.core.publisher.Mono;
 import java.util.Objects;
 
 public final class WebfluxUtils {
+
 	public static Mono<Void> writeResponse(ServerHttpResponse response, Object object) {
 		response.setStatusCode(HttpStatus.TOO_MANY_REQUESTS);
 		response.getHeaders().add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
@@ -18,4 +19,5 @@ public final class WebfluxUtils {
 		DataBuffer dataBuffer = response.bufferFactory().wrap(Objects.requireNonNull(JacksonUtils.toBytes(object)));
 		return response.writeWith(Mono.just(dataBuffer));
 	}
+
 }

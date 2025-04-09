@@ -7,7 +7,9 @@ import com.chensoul.mybatis.encrypt.util.Algorithm;
  * @since 0.0.1
  */
 public interface IEncryptor {
+
 	String encrypt(Algorithm algorithm, String password, String plaintext, Object metaObject);
 
 	String decrypt(Algorithm algorithm, String password, String plaintext, Object metaObject);
+
 }

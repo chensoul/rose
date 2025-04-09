@@ -27,35 +27,32 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 import java.io.Serializable;
 
 @Slf4j
-public abstract class VersionedRedisCache<K extends VersionedCacheKey, V extends Serializable & HasVersion> extends RedisTransactionalCache<K, V> implements VersionedCache<K, V> {
+public abstract class VersionedRedisCache<K extends VersionedCacheKey, V extends Serializable & HasVersion>
+		extends RedisTransactionalCache<K, V> implements VersionedCache<K, V> {
 
-	static final byte[] SET_VERSIONED_VALUE_LUA_SCRIPT = StringRedisSerializer.UTF_8.serialize("local key = KEYS[1]\n" +
-		"\t\tlocal newValue = ARGV[1]\n" +
-		"\t\tlocal newVersion = tonumber(ARGV[2])\n" +
-		"\t\tlocal expiration = tonumber(ARGV[3])\n" +
-		"\n" +
-		"\t\tlocal function setNewValue()\n" +
-		"\t\t    local newValueWithVersion = struct.pack(\">I8\", newVersion) .. newValue\n" +
-		"\t\t    mq.call('SET', key, newValueWithVersion, 'EX', expiration)\n" +
-		"\t\tend\n" +
-		"\n" +
-		"\t\t-- Get the current version (first 8 bytes) of the current value\n" +
-		"\t\tlocal currentVersionBytes = mq.call('GETRANGE', key, 0, 7)\n" +
-		"\n" +
-		"\t\tif currentVersionBytes and #currentVersionBytes == 8 then\n" +
-		"\t\t    local currentVersion = struct.unpack(\">I8\", currentVersionBytes)\n" +
-		"\t\t    if newVersion > currentVersion then\n" +
-		"\t\t        setNewValue()\n" +
-		"\t\t    end\n" +
-		"\t\telse\n" +
-		"\t\t    -- If the current value is absent or the current version is not found, set the new value\n" +
-		"\t\t    setNewValue()\n" +
-		"\t\tend");
-	static final byte[] SET_VERSIONED_VALUE_SHA = StringRedisSerializer.UTF_8.serialize("0453cb1814135b706b4198b09a09f43c9f67bbfe");
+	static final byte[] SET_VERSIONED_VALUE_LUA_SCRIPT = StringRedisSerializer.UTF_8.serialize("local key = KEYS[1]\n"
+			+ "\t\tlocal newValue = ARGV[1]\n" + "\t\tlocal newVersion = tonumber(ARGV[2])\n"
+			+ "\t\tlocal expiration = tonumber(ARGV[3])\n" + "\n" + "\t\tlocal function setNewValue()\n"
+			+ "\t\t    local newValueWithVersion = struct.pack(\">I8\", newVersion) .. newValue\n"
+			+ "\t\t    mq.call('SET', key, newValueWithVersion, 'EX', expiration)\n" + "\t\tend\n" + "\n"
+			+ "\t\t-- Get the current version (first 8 bytes) of the current value\n"
+			+ "\t\tlocal currentVersionBytes = mq.call('GETRANGE', key, 0, 7)\n" + "\n"
+			+ "\t\tif currentVersionBytes and #currentVersionBytes == 8 then\n"
+			+ "\t\t    local currentVersion = struct.unpack(\">I8\", currentVersionBytes)\n"
+			+ "\t\t    if newVersion > currentVersion then\n" + "\t\t        setNewValue()\n" + "\t\t    end\n"
+			+ "\t\telse\n"
+			+ "\t\t    -- If the current value is absent or the current version is not found, set the new value\n"
+			+ "\t\t    setNewValue()\n" + "\t\tend");
+	static final byte[] SET_VERSIONED_VALUE_SHA = StringRedisSerializer.UTF_8
+		.serialize("0453cb1814135b706b4198b09a09f43c9f67bbfe");
+
 	private static final int VERSION_SIZE = 8;
+
 	private static final int VALUE_END_OFFSET = -1;
 
-	public VersionedRedisCache(String cacheName, CacheSpecProperties cacheSpecProperties, RedisConnectionFactory connectionFactory, RedisCacheConfiguration configuration, RedisSerializer<K, V> valueSerializer) {
+	public VersionedRedisCache(String cacheName, CacheSpecProperties cacheSpecProperties,
+			RedisConnectionFactory connectionFactory, RedisCacheConfiguration configuration,
+			RedisSerializer<K, V> valueSerializer) {
 		super(cacheName, cacheSpecProperties, connectionFactory, configuration, valueSerializer);
 	}
 
@@ -84,7 +81,8 @@ public abstract class VersionedRedisCache<K extends VersionedCacheKey, V extends
 	@Override
 	public void put(K key, V value, RedisConnection connection) {
 		if (!key.isVersioned()) {
-			super.put(key, value, connection); // because scripting commands are not supported in transaction mode
+			super.put(key, value, connection); // because scripting commands are not
+												// supported in transaction mode
 			return;
 		}
 		Long version = getVersion(value);
@@ -109,8 +107,10 @@ public abstract class VersionedRedisCache<K extends VersionedCacheKey, V extends
 	private void doPut(byte[] rawKey, V value, Long version, Expiration expiration, RedisConnection connection) {
 		byte[] rawValue = getRawValue(value);
 		byte[] rawVersion = StringRedisSerializer.UTF_8.serialize(String.valueOf(version));
-		byte[] rawExpiration = StringRedisSerializer.UTF_8.serialize(String.valueOf(expiration.getExpirationTimeInSeconds()));
-		executeScript(connection, SET_VERSIONED_VALUE_SHA, SET_VERSIONED_VALUE_LUA_SCRIPT, ReturnType.VALUE, 1, rawKey, rawValue, rawVersion, rawExpiration);
+		byte[] rawExpiration = StringRedisSerializer.UTF_8
+			.serialize(String.valueOf(expiration.getExpirationTimeInSeconds()));
+		executeScript(connection, SET_VERSIONED_VALUE_SHA, SET_VERSIONED_VALUE_LUA_SCRIPT, ReturnType.VALUE, 1, rawKey,
+				rawValue, rawVersion, rawExpiration);
 	}
 
 	@Override

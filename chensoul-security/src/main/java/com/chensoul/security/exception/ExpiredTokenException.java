@@ -3,6 +3,7 @@ package com.chensoul.security.exception;
 import org.springframework.security.core.AuthenticationException;
 
 public class ExpiredTokenException extends AuthenticationException {
+
 	private static final long serialVersionUID = -5959543783324224864L;
 
 	private String token;
@@ -19,4 +20,5 @@ public class ExpiredTokenException extends AuthenticationException {
 	public String token() {
 		return this.token;
 	}
+
 }

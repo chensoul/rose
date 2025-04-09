@@ -21,9 +21,10 @@ import org.springframework.data.redis.serializer.RedisSerializer;
 
 @Slf4j
 @Configuration
-@AutoConfigureBefore({RedisConfiguration.class, RedisAutoConfiguration.class})
-@EnableConfigurationProperties({CacheProperties.class})
+@AutoConfigureBefore({ RedisConfiguration.class, RedisAutoConfiguration.class })
+@EnableConfigurationProperties({ CacheProperties.class })
 public class RedisTemplateConfiguration {
+
 	public RedisTemplateConfiguration() {
 		log.info("Initializing RedisTemplateConfiguration");
 	}
@@ -84,18 +85,11 @@ public class RedisTemplateConfiguration {
 	}
 
 	private String redisScriptText() {
-		return "local key = KEYS[1]\n" +
-			"local count = tonumber(ARGV[1])\n" +
-			"local time = tonumber(ARGV[2])\n" +
-			"local current = mq.call('get', key);\n" +
-			"if current and tonumber(current) > count then\n" +
-			"    return tonumber(current);\n" +
-			"end\n" +
-			"current = mq.call('incr', key)\n" +
-			"if tonumber(current) == 1 then\n" +
-			"    mq.call('expire', key, time)\n" +
-			"end\n" +
-			"return tonumber(current);";
+		return "local key = KEYS[1]\n" + "local count = tonumber(ARGV[1])\n" + "local time = tonumber(ARGV[2])\n"
+				+ "local current = mq.call('get', key);\n" + "if current and tonumber(current) > count then\n"
+				+ "    return tonumber(current);\n" + "end\n" + "current = mq.call('incr', key)\n"
+				+ "if tonumber(current) == 1 then\n" + "    mq.call('expire', key, time)\n" + "end\n"
+				+ "return tonumber(current);";
 	}
 
 	@Bean
@@ -107,4 +101,5 @@ public class RedisTemplateConfiguration {
 	public MetricsRedisOperationInterceptor redisOperationMetricsInterceptor() {
 		return new MetricsRedisOperationInterceptor();
 	}
+
 }

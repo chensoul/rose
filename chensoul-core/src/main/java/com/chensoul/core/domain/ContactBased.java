@@ -15,6 +15,7 @@ import java.io.Serializable;
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 public abstract class ContactBased<I extends Serializable> extends BaseDataWithExtra<I> implements HasEmail, HasId<I> {
+
 	private static final long serialVersionUID = 5047448057830660988L;
 
 	protected String phone;
@@ -31,4 +32,5 @@ public abstract class ContactBased<I extends Serializable> extends BaseDataWithE
 	protected String address;
 
 	protected String zip;
+
 }

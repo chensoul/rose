@@ -19,7 +19,9 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class TenantServiceImpl extends ServiceImpl<TenantMapper, Tenant> implements TenantService {
+
 	private final UserService userService;
+
 	private final UserTenantMapper userTenantMapper;
 
 	@Override
@@ -40,11 +42,10 @@ public class TenantServiceImpl extends ServiceImpl<TenantMapper, Tenant> impleme
 		userTenant.setStatus(UserStatus.PENDING.getCode());
 		userTenantMapper.insert(userTenant);
 
-		SpringContextHolder.publishEvent(SaveEntityEvent.builder()
-			.entity(userTenant)
-			.oldEntity(null)
-			.created(true).build());
+		SpringContextHolder
+			.publishEvent(SaveEntityEvent.builder().entity(userTenant).oldEntity(null).created(true).build());
 
 		return userTenant;
 	}
+
 }

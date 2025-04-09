@@ -27,20 +27,24 @@ import lombok.EqualsAndHashCode;
 @TableName("sys_position")
 @EqualsAndHashCode(callSuper = true)
 public class Position extends TenantEntity {
+
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * 岗位编号
 	 */
 	private String code;
+
 	/**
 	 * 岗位名称
 	 */
 	private String name;
+
 	/**
 	 * 岗位排序
 	 */
 	private Integer sort;
+
 	/**
 	 * 岗位描述
 	 */

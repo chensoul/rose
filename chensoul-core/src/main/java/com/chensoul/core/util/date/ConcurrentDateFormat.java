@@ -15,9 +15,13 @@ import java.util.concurrent.ConcurrentLinkedQueue;
  * {@link SimpleDateFormat}的线程安全包装器。 不使用ThreadLocal，创建足够的SimpleDateFormat对象来满足并发性要求。
  */
 public class ConcurrentDateFormat {
+
 	private final Queue<SimpleDateFormat> queue = new ConcurrentLinkedQueue<>();
+
 	private final String format;
+
 	private final Locale locale;
+
 	private final TimeZone timezone;
 
 	private ConcurrentDateFormat(String format, Locale locale, TimeZone timezone) {
@@ -65,4 +69,5 @@ public class ConcurrentDateFormat {
 		sdf.setTimeZone(timezone);
 		return sdf;
 	}
+
 }

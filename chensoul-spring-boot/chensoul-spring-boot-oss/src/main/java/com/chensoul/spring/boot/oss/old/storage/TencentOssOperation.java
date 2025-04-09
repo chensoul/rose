@@ -54,6 +54,7 @@ import com.chensoul.spring.boot.oss.old.storage.properties.TencentOssProperties;
 public class TencentOssOperation implements OssOperation {
 
 	private final COSClient client;
+
 	private final TencentOssProperties properties;
 
 	@Override
@@ -64,12 +65,16 @@ public class TencentOssOperation implements OssOperation {
 	@Override
 	@SneakyThrows
 	public DownloadResponse download(String bucketName, String fileName) {
-		final String path = StringUtils.defaultIfBlank(this.properties.getTmpDir(), this.getClass().getResource("/").getPath());
+		final String path = StringUtils.defaultIfBlank(this.properties.getTmpDir(),
+				this.getClass().getResource("/").getPath());
 		final File file = new File(path + File.separator + fileName);
 		log.debug("[文件目录] - [{}]", file.getPath());
 		download(bucketName, fileName, file);
-		return DownloadResponse.builder().inputStream(new BufferedInputStream(new FileInputStream(file)))
-			.file(file).localFilePath(file.getPath()).build();
+		return DownloadResponse.builder()
+			.inputStream(new BufferedInputStream(new FileInputStream(file)))
+			.file(file)
+			.localFilePath(file.getPath())
+			.build();
 	}
 
 	@Override
@@ -117,9 +122,14 @@ public class TencentOssOperation implements OssOperation {
 			if (StringUtils.isEmpty(result.getETag())) {
 				throw new StorageException(BaseOssProperties.StorageType.TENCENT, "文件上传失败,ETag为空");
 			}
-			return StorageResponse.builder().originName(fileName).targetName(fileName)
-				.size(objectMetadata.getContentLength()).fullUrl(properties.getMappingPath() + fileName).build();
-		} catch (IOException e) {
+			return StorageResponse.builder()
+				.originName(fileName)
+				.targetName(fileName)
+				.size(objectMetadata.getContentLength())
+				.fullUrl(properties.getMappingPath() + fileName)
+				.build();
+		}
+		catch (IOException e) {
 			log.error("[文件上传异常]", e);
 			throw new StorageException(BaseOssProperties.StorageType.TENCENT, "文件上传失败," + e.getLocalizedMessage());
 		}
@@ -135,13 +145,17 @@ public class TencentOssOperation implements OssOperation {
 		// 设置输入流长度为 500
 		objectMetadata.setContentLength(content.length);
 		PutObjectRequest request = new PutObjectRequest(properties.getBucket(), fileName,
-			new ByteArrayInputStream(content), objectMetadata);
+				new ByteArrayInputStream(content), objectMetadata);
 		PutObjectResult result = client.putObject(request);
 		if (StringUtils.isEmpty(result.getETag())) {
 			throw new StorageException(BaseOssProperties.StorageType.TENCENT, "文件上传失败,ETag为空");
 		}
-		return StorageResponse.builder().originName(fileName).targetName(fileName)
-			.size(objectMetadata.getContentLength()).fullUrl(properties.getMappingPath() + fileName).build();
+		return StorageResponse.builder()
+			.originName(fileName)
+			.targetName(fileName)
+			.size(objectMetadata.getContentLength())
+			.fullUrl(properties.getMappingPath() + fileName)
+			.build();
 	}
 
 	@Override
@@ -163,4 +177,5 @@ public class TencentOssOperation implements OssOperation {
 	public void remove(String bucketName, Path path) {
 
 	}
+
 }

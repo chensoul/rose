@@ -30,34 +30,38 @@ import java.util.*;
 
 /**
  * index controller
+ *
  * @author xuxueli 2015-12-19 16:13:16
  */
 @Controller
 @RequestMapping("/jobinfo")
 public class JobInfoController {
+
 	private static Logger logger = LoggerFactory.getLogger(JobInfoController.class);
 
 	@Resource
 	private XxlJobGroupDao xxlJobGroupDao;
+
 	@Resource
 	private XxlJobService xxlJobService;
-	
+
 	@RequestMapping
-	public String index(HttpServletRequest request, Model model, @RequestParam(required = false, defaultValue = "-1") int jobGroup) {
+	public String index(HttpServletRequest request, Model model,
+			@RequestParam(required = false, defaultValue = "-1") int jobGroup) {
 
 		// 枚举-字典
-		model.addAttribute("ExecutorRouteStrategyEnum", ExecutorRouteStrategyEnum.values());	    // 路由策略-列表
-		model.addAttribute("GlueTypeEnum", GlueTypeEnum.values());								// Glue类型-字典
-		model.addAttribute("ExecutorBlockStrategyEnum", ExecutorBlockStrategyEnum.values());	    // 阻塞处理策略-字典
-		model.addAttribute("ScheduleTypeEnum", ScheduleTypeEnum.values());	    				// 调度类型
-		model.addAttribute("MisfireStrategyEnum", MisfireStrategyEnum.values());	    			// 调度过期策略
+		model.addAttribute("ExecutorRouteStrategyEnum", ExecutorRouteStrategyEnum.values()); // 路由策略-列表
+		model.addAttribute("GlueTypeEnum", GlueTypeEnum.values()); // Glue类型-字典
+		model.addAttribute("ExecutorBlockStrategyEnum", ExecutorBlockStrategyEnum.values()); // 阻塞处理策略-字典
+		model.addAttribute("ScheduleTypeEnum", ScheduleTypeEnum.values()); // 调度类型
+		model.addAttribute("MisfireStrategyEnum", MisfireStrategyEnum.values()); // 调度过期策略
 
 		// 执行器列表
-		List<XxlJobGroup> jobGroupList_all =  xxlJobGroupDao.findAll();
+		List<XxlJobGroup> jobGroupList_all = xxlJobGroupDao.findAll();
 
 		// filter group
 		List<XxlJobGroup> jobGroupList = PermissionInterceptor.filterJobGroupByRole(request, jobGroupList_all);
-		if (jobGroupList==null || jobGroupList.size()==0) {
+		if (jobGroupList == null || jobGroupList.size() == 0) {
 			throw new XxlJobException(I18nUtil.getString("jobgroup_empty"));
 		}
 
@@ -69,13 +73,13 @@ public class JobInfoController {
 
 	@RequestMapping("/pageList")
 	@ResponseBody
-	public Map<String, Object> pageList(@RequestParam(required = false, defaultValue = "0") int start,  
-			@RequestParam(required = false, defaultValue = "10") int length,
-			int jobGroup, int triggerStatus, String jobDesc, String executorHandler, String author) {
-		
+	public Map<String, Object> pageList(@RequestParam(required = false, defaultValue = "0") int start,
+			@RequestParam(required = false, defaultValue = "10") int length, int jobGroup, int triggerStatus,
+			String jobDesc, String executorHandler, String author) {
+
 		return xxlJobService.pageList(start, length, jobGroup, triggerStatus, jobDesc, executorHandler, author);
 	}
-	
+
 	@RequestMapping("/add")
 	@ResponseBody
 	public ReturnT<String> add(HttpServletRequest request, XxlJobInfo jobInfo) {
@@ -86,7 +90,7 @@ public class JobInfoController {
 		XxlJobUser loginUser = PermissionInterceptor.getLoginUser(request);
 		return xxlJobService.add(jobInfo, loginUser);
 	}
-	
+
 	@RequestMapping("/update")
 	@ResponseBody
 	public ReturnT<String> update(HttpServletRequest request, XxlJobInfo jobInfo) {
@@ -97,25 +101,25 @@ public class JobInfoController {
 		XxlJobUser loginUser = PermissionInterceptor.getLoginUser(request);
 		return xxlJobService.update(jobInfo, loginUser);
 	}
-	
+
 	@RequestMapping("/remove")
 	@ResponseBody
 	public ReturnT<String> remove(int id) {
 		return xxlJobService.remove(id);
 	}
-	
+
 	@RequestMapping("/stop")
 	@ResponseBody
 	public ReturnT<String> pause(int id) {
 		return xxlJobService.stop(id);
 	}
-	
+
 	@RequestMapping("/start")
 	@ResponseBody
 	public ReturnT<String> start(int id) {
 		return xxlJobService.start(id);
 	}
-	
+
 	@RequestMapping("/trigger")
 	@ResponseBody
 	public ReturnT<String> triggerJob(HttpServletRequest request, int id, String executorParam, String addressList) {
@@ -140,16 +144,19 @@ public class JobInfoController {
 				lastTime = JobScheduleHelper.generateNextValidTime(paramXxlJobInfo, lastTime);
 				if (lastTime != null) {
 					result.add(DateUtil.formatDateTime(lastTime));
-				} else {
+				}
+				else {
 					break;
 				}
 			}
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			logger.error(e.getMessage(), e);
-			return new ReturnT<List<String>>(ReturnT.FAIL_CODE, (I18nUtil.getString("schedule_type")+I18nUtil.getString("system_unvalid")) + e.getMessage());
+			return new ReturnT<List<String>>(ReturnT.FAIL_CODE,
+					(I18nUtil.getString("schedule_type") + I18nUtil.getString("system_unvalid")) + e.getMessage());
 		}
 		return new ReturnT<List<String>>(result);
 
 	}
-	
+
 }

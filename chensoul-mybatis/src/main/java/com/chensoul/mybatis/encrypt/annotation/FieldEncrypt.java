@@ -12,9 +12,11 @@ import java.lang.annotation.*;
 @Documented
 @Inherited
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ElementType.FIELD, ElementType.ANNOTATION_TYPE})
+@Target({ ElementType.FIELD, ElementType.ANNOTATION_TYPE })
 public @interface FieldEncrypt {
+
 	Algorithm algorithm() default Algorithm.BASE64;
 
 	Class<? extends IEncryptor> encryptor() default IEncryptor.class;
+
 }

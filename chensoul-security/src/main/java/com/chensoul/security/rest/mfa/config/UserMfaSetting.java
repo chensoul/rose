@@ -7,5 +7,7 @@ import java.util.LinkedHashMap;
 
 @Data
 public class UserMfaSetting {
+
 	private LinkedHashMap<MfaProviderType, MfaConfig> configs;
+
 }

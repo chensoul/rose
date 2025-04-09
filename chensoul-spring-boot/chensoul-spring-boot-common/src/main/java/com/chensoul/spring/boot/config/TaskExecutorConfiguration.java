@@ -27,6 +27,7 @@ import static org.springframework.aop.interceptor.AsyncExecutionAspectSupport.DE
 @RequiredArgsConstructor
 @Slf4j
 public class TaskExecutorConfiguration implements AsyncConfigurer {
+
 	private final TaskExecutionProperties taskExecutionProperties;
 
 	@Override
@@ -40,7 +41,8 @@ public class TaskExecutorConfiguration implements AsyncConfigurer {
 		executor.setThreadNamePrefix(taskExecutionProperties.getThreadNamePrefix());
 		executor.setAllowCoreThreadTimeOut(taskExecutionProperties.getPool().isAllowCoreThreadTimeout());
 		executor.setWaitForTasksToCompleteOnShutdown(taskExecutionProperties.getShutdown().isAwaitTermination());
-		executor.setAwaitTerminationSeconds((int) taskExecutionProperties.getShutdown().getAwaitTerminationPeriod().getSeconds());
+		executor.setAwaitTerminationSeconds(
+				(int) taskExecutionProperties.getShutdown().getAwaitTerminationPeriod().getSeconds());
 		return new ExceptionHandlingAsyncTaskExecutor(executor);
 	}
 
@@ -54,12 +56,13 @@ public class TaskExecutorConfiguration implements AsyncConfigurer {
 		log.info("Initializing ScheduledExecutorService");
 
 		return new ScheduledThreadPoolExecutor(taskExecutionProperties.getPool().getCoreSize(),
-			new BasicThreadFactory.Builder().namingPattern("schedule-pool-%d").daemon(true).build(),
-			new ThreadPoolExecutor.CallerRunsPolicy()) {
+				new BasicThreadFactory.Builder().namingPattern("schedule-pool-%d").daemon(true).build(),
+				new ThreadPoolExecutor.CallerRunsPolicy()) {
 			@Override
 			protected void afterExecute(Runnable r, Throwable t) {
 				super.afterExecute(r, t);
 			}
 		};
 	}
+
 }

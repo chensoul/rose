@@ -31,17 +31,16 @@ import java.util.concurrent.TimeUnit;
 // 先于 MyBatis Plus 自动配置，避免 @MapperScan 可能扫描不到 Mapper 打印 warn 日志
 @AutoConfiguration(before = MybatisPlusAutoConfiguration.class)
 public class MybatisCoreConfiguration {
+
 	static {
 		// 动态 SQL 智能优化支持本地缓存加速解析，更完善的租户复杂 XML 动态 SQL 支持，静态注入缓存
 		JsqlParserGlobal.setJsqlParseCache(new JdkSerialCaffeineJsqlParseCache(
-			(cache) -> cache.maximumSize(1024)
-				.expireAfterWrite(5, TimeUnit.SECONDS))
-		);
+				(cache) -> cache.maximumSize(1024).expireAfterWrite(5, TimeUnit.SECONDS)));
 	}
 
 	@Bean
 	public IdentifierGenerator idGenerator() {
-		//通过本地 生成 workerId 和 dataCenterId
+		// 通过本地 生成 workerId 和 dataCenterId
 		return new DefaultIdentifierGenerator(NetUtils.getLocalhost());
 	}
 

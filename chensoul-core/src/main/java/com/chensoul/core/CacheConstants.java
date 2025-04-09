@@ -6,6 +6,7 @@ package com.chensoul.core;
  * @author <a href="mailto:ichensoul@gmail.com">chensoul</a>
  */
 public interface CacheConstants {
+
 	/**
 	 * 菜单信息缓存的key
 	 */
@@ -43,4 +44,5 @@ public interface CacheConstants {
 	String CLIENT = "chensoul:client";
 
 	String LOGIN_FAIL_COUNT_CACHE = "chensoul:loginFailCount:";
+
 }

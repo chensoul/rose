@@ -27,6 +27,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @TableName("sys_dept")
 public class Department extends TenantEntity {
+
 	private static final long serialVersionUID = 1L;
 
 	/**

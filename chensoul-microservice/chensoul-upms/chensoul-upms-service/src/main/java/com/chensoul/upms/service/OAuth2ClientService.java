@@ -5,7 +5,7 @@ import com.chensoul.upms.entity.OAuth2Client;
 
 /**
  * <p>
- * 客户端  服务类
+ * 客户端 服务类
  * </p>
  *
  * @author <a href="mailto:ichensoul@gmail.com">chensoul</a>
@@ -20,4 +20,5 @@ public interface OAuth2ClientService extends IService<OAuth2Client> {
 	Boolean updateClientDetailsById(OAuth2Client OAuth2Client);
 
 	boolean saveClientDetails(OAuth2Client OAuth2Client);
+
 }

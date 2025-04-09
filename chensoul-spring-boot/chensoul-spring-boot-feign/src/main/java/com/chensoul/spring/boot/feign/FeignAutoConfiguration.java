@@ -48,7 +48,6 @@ public class FeignAutoConfiguration {
 
 	/**
 	 * set connection close header
-	 *
 	 * @return RequestInterceptor
 	 */
 	@Bean
@@ -58,11 +57,11 @@ public class FeignAutoConfiguration {
 
 	/**
 	 * pig feign 内部请求拦截器
-	 *
 	 * @return {@link RequestInterceptor }
 	 */
 	@Bean
 	public RequestInterceptor feignInnerRequestInterceptor() {
 		return new FeignInnerRequestInterceptor();
 	}
+
 }

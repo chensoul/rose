@@ -4,7 +4,9 @@ import lombok.EqualsAndHashCode;
 
 @EqualsAndHashCode(callSuper = true)
 public class UserCredentialInvalidationEvent extends UserAuthDataChangedEvent {
+
 	private final Long userId;
+
 	private final long ts;
 
 	public UserCredentialInvalidationEvent(Long userId) {
@@ -21,4 +23,5 @@ public class UserCredentialInvalidationEvent extends UserAuthDataChangedEvent {
 	public long getTs() {
 		return ts;
 	}
+
 }

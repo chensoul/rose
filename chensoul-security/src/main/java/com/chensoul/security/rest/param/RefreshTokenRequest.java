@@ -6,6 +6,7 @@ import lombok.Getter;
 
 @Getter
 public class RefreshTokenRequest {
+
 	private final String refreshToken;
 
 	@JsonCreator

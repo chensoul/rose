@@ -14,7 +14,7 @@ import java.lang.annotation.Target;
  * @since 0.0.1
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ElementType.FIELD, ElementType.METHOD})
+@Target({ ElementType.FIELD, ElementType.METHOD })
 @JacksonAnnotationsInside
 @JsonSerialize(using = StringSensitiveSerialize.class)
 public @interface FieldSensitive {
@@ -33,7 +33,6 @@ public @interface FieldSensitive {
 
 	/**
 	 * 用什么打码
-	 *
 	 * @return String
 	 */
 	String mask() default "*";

@@ -21,9 +21,13 @@ import java.util.Objects;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class OAuth2ClientServiceImpl extends ServiceImpl<OAuth2ClientMapper, OAuth2Client> implements OAuth2ClientService {
+public class OAuth2ClientServiceImpl extends ServiceImpl<OAuth2ClientMapper, OAuth2Client>
+		implements OAuth2ClientService {
+
 	private final PasswordEncoder passwordEncoder;
+
 	private final CacheManager cacheManager;
+
 	private final RedisTemplate<String, Object> redisTemplate;
 
 	@Override
@@ -63,8 +67,8 @@ public class OAuth2ClientServiceImpl extends ServiceImpl<OAuth2ClientMapper, OAu
 
 	@Override
 	public boolean saveClientDetails(OAuth2Client oAuth2Client) {
-		OAuth2Client oldOAuth2Client = baseMapper.selectOne(new LambdaQueryWrapper<OAuth2Client>()
-			.eq(OAuth2Client::getClientId, oAuth2Client.getClientId()));
+		OAuth2Client oldOAuth2Client = baseMapper.selectOne(
+				new LambdaQueryWrapper<OAuth2Client>().eq(OAuth2Client::getClientId, oAuth2Client.getClientId()));
 		if (oldOAuth2Client != null) {
 			throw new BusinessException("该Client已存在");
 		}
@@ -76,4 +80,5 @@ public class OAuth2ClientServiceImpl extends ServiceImpl<OAuth2ClientMapper, OAu
 		}
 		return saved;
 	}
+
 }

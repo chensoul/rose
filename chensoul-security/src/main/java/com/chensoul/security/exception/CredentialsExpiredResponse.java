@@ -18,4 +18,5 @@ public class CredentialsExpiredResponse extends AuthenticationServiceException {
 	public String getResetToken() {
 		return resetToken;
 	}
+
 }

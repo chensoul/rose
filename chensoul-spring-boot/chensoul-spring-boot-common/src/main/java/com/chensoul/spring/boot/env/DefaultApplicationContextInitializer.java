@@ -10,13 +10,18 @@ import java.util.List;
 import java.util.ServiceLoader;
 import java.util.stream.Collectors;
 
-public class DefaultApplicationContextInitializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
+public class DefaultApplicationContextInitializer
+		implements ApplicationContextInitializer<ConfigurableApplicationContext> {
+
 	@Override
 	public void initialize(ConfigurableApplicationContext applicationContext) {
 		List<LauncherService> launcherList = new ArrayList<>();
 		ServiceLoader.load(LauncherService.class).forEach(launcherList::add);
 
-		launcherList.stream().sorted(Comparator.comparing(LauncherService::getOrder)).collect(Collectors.toList())
+		launcherList.stream()
+			.sorted(Comparator.comparing(LauncherService::getOrder))
+			.collect(Collectors.toList())
 			.forEach(launcherService -> launcherService.initialize(applicationContext));
 	}
+
 }

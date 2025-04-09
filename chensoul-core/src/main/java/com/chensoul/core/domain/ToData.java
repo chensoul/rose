@@ -10,7 +10,6 @@ public interface ToData<D> {
 
 	/**
 	 * This method convert model model object to data transfer object.
-	 *
 	 * @return the dto object
 	 */
 	D toData();

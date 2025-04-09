@@ -6,7 +6,9 @@ import lombok.Getter;
 
 @Getter
 public class LoginRequest {
+
 	private final String username;
+
 	private final String password;
 
 	@JsonCreator
@@ -14,4 +16,5 @@ public class LoginRequest {
 		this.username = username;
 		this.password = password;
 	}
+
 }

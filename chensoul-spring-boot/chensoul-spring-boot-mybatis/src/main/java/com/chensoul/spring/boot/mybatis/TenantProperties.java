@@ -9,6 +9,7 @@ import java.util.Set;
 @Data
 @ConfigurationProperties(prefix = "mybatis-plus.tenant")
 public class TenantProperties {
+
 	private boolean enabled = true;
 
 	private String tenantIdColumn = "tenant_id";

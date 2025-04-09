@@ -112,17 +112,23 @@ public class SslUtil {
 			while ((object = pemParser.readObject()) != null) {
 				if (object instanceof PEMEncryptedKeyPair) {
 					PEMDecryptorProvider decProv = new JcePEMDecryptorProviderBuilder().build(password);
-					privateKey = keyConverter.getKeyPair(((PEMEncryptedKeyPair) object).decryptKeyPair(decProv)).getPrivate();
+					privateKey = keyConverter.getKeyPair(((PEMEncryptedKeyPair) object).decryptKeyPair(decProv))
+						.getPrivate();
 					break;
-				} else if (object instanceof PKCS8EncryptedPrivateKeyInfo) {
-					InputDecryptorProvider decProv =
-						new JcePKCSPBEInputDecryptorProviderBuilder().setProvider(DEFAULT_PROVIDER).build(password);
-					privateKey = keyConverter.getPrivateKey(((PKCS8EncryptedPrivateKeyInfo) object).decryptPrivateKeyInfo(decProv));
+				}
+				else if (object instanceof PKCS8EncryptedPrivateKeyInfo) {
+					InputDecryptorProvider decProv = new JcePKCSPBEInputDecryptorProviderBuilder()
+						.setProvider(DEFAULT_PROVIDER)
+						.build(password);
+					privateKey = keyConverter
+						.getPrivateKey(((PKCS8EncryptedPrivateKeyInfo) object).decryptPrivateKeyInfo(decProv));
 					break;
-				} else if (object instanceof PEMKeyPair) {
+				}
+				else if (object instanceof PEMKeyPair) {
 					privateKey = keyConverter.getKeyPair((PEMKeyPair) object).getPrivate();
 					break;
-				} else if (object instanceof PrivateKeyInfo) {
+				}
+				else if (object instanceof PrivateKeyInfo) {
 					privateKey = keyConverter.getPrivateKey((PrivateKeyInfo) object);
 				}
 			}

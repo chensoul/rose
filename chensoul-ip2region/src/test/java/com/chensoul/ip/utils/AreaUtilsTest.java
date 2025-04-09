@@ -1,6 +1,5 @@
 package com.chensoul.ip.utils;
 
-
 import com.chensoul.ip.Area;
 import com.chensoul.ip.enums.AreaTypeEnum;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -11,23 +10,23 @@ import org.junit.jupiter.api.Test;
  */
 public class AreaUtilsTest {
 
-    @Test
-    public void testGetArea() {
-        // 调用：北京
-        Area area = AreaUtils.getArea(110100);
-        // 断言
-        assertEquals(area.getId(), 110100);
-        assertEquals(area.getName(), "北京市");
-        assertEquals(area.getType(), AreaTypeEnum.CITY.getCode());
-        assertEquals(area.getParent().getId(), 110000);
-        assertEquals(area.getChildren().size(), 16);
-    }
+	@Test
+	public void testGetArea() {
+		// 调用：北京
+		Area area = AreaUtils.getArea(110100);
+		// 断言
+		assertEquals(area.getId(), 110100);
+		assertEquals(area.getName(), "北京市");
+		assertEquals(area.getType(), AreaTypeEnum.CITY.getCode());
+		assertEquals(area.getParent().getId(), 110000);
+		assertEquals(area.getChildren().size(), 16);
+	}
 
-    @Test
-    public void testFormat() {
-        assertEquals(AreaUtils.format(110105), "北京市 北京市 朝阳区");
-        assertEquals(AreaUtils.format(1), "中国");
-        assertEquals(AreaUtils.format(2), "蒙古");
-    }
+	@Test
+	public void testFormat() {
+		assertEquals(AreaUtils.format(110105), "北京市 北京市 朝阳区");
+		assertEquals(AreaUtils.format(1), "中国");
+		assertEquals(AreaUtils.format(2), "蒙古");
+	}
 
 }

@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.Serializable;
 
 public class IpAuthenticationDetailSource implements
-	AuthenticationDetailsSource<HttpServletRequest, IpAuthenticationDetailSource.RestAuthenticationDetail> {
+		AuthenticationDetailsSource<HttpServletRequest, IpAuthenticationDetailSource.RestAuthenticationDetail> {
 
 	@Override
 	public RestAuthenticationDetail buildDetails(HttpServletRequest request) {
@@ -20,7 +20,11 @@ public class IpAuthenticationDetailSource implements
 	@Data
 	@RequiredArgsConstructor
 	public static class RestAuthenticationDetail implements Serializable {
+
 		private final String serverAddress;
+
 		private final String clientAddress;
+
 	}
+
 }

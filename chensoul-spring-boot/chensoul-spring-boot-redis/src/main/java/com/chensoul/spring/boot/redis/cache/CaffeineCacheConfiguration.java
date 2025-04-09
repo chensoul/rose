@@ -49,23 +49,25 @@ public class CaffeineCacheConfiguration {
 	}
 
 	/**
-	 * Transaction aware CaffeineCache implementation with TransactionAwareCacheManagerProxy
-	 * to synchronize cache put/evict operations with ongoing Spring-managed transactions.
+	 * Transaction aware CaffeineCache implementation with
+	 * TransactionAwareCacheManagerProxy to synchronize cache put/evict operations with
+	 * ongoing Spring-managed transactions.
 	 */
 	@Bean
 	public CacheManager cacheManager() {
 		log.trace("Initializing cache: {} specs {}", Arrays.toString(RemovalCause.values()), configuration.getSpecs());
 		SimpleCacheManager manager = new SimpleCacheManager();
 		if (configuration.getSpecs() != null) {
-			List<CaffeineCache> caches =
-				configuration.getSpecs().entrySet().stream()
-					.map(entry -> buildCache(entry.getKey(),
-						entry.getValue()))
-					.collect(Collectors.toList());
+			List<CaffeineCache> caches = configuration.getSpecs()
+				.entrySet()
+				.stream()
+				.map(entry -> buildCache(entry.getKey(), entry.getValue()))
+				.collect(Collectors.toList());
 			manager.setCaches(caches);
 		}
 
-		//SimpleCacheManager is not a bean (will be wrapped), so call initializeCaches manually
+		// SimpleCacheManager is not a bean (will be wrapped), so call initializeCaches
+		// manually
 		manager.initializeCaches();
 
 		return manager;
@@ -73,8 +75,7 @@ public class CaffeineCacheConfiguration {
 
 	private CaffeineCache buildCache(String name, CacheSpecs cacheSpec) {
 
-		final Caffeine<Object, Object> caffeineBuilder
-			= Caffeine.newBuilder()
+		final Caffeine<Object, Object> caffeineBuilder = Caffeine.newBuilder()
 			.weigher(collectionSafeWeigher())
 			.maximumWeight(cacheSpec.getMaxSize())
 			.ticker(ticker());

@@ -9,13 +9,14 @@ import reactor.core.publisher.Mono;
 
 @Component
 public class InstanceStatusChangeNotifier extends AbstractStatusChangeNotifier {
+
 	public InstanceStatusChangeNotifier(InstanceRepository repository) {
 		super(repository);
 	}
 
 	@Override
 	protected Mono<Void> doNotify(InstanceEvent event,
-								  de.codecentric.boot.admin.server.domain.entities.Instance instance) {
+			de.codecentric.boot.admin.server.domain.entities.Instance instance) {
 		return Mono.fromRunnable(() -> {
 			if (event instanceof InstanceStatusChangedEvent) {
 				String status = ((InstanceStatusChangedEvent) event).getStatusInfo().getStatus();
@@ -42,4 +43,5 @@ public class InstanceStatusChangeNotifier extends AbstractStatusChangeNotifier {
 			}
 		});
 	}
+
 }

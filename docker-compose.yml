@@ -20,12 +20,8 @@ services:
     container_name: chensoul-mysql
     command: [
       'mysqld',
-      '--log-bin=/var/lib/mysql/mysql-bin',
-      '--sync_binlog=1',
-      '--binlog-ignore-db=mysql',
+      '--log-bin=mysql-bin',
       '--binlog_format=ROW',
-      '--character-set-server=utf8mb4',
-      '--collation-server=utf8mb4_unicode_ci',
       '--default-time-zone=+8:00',
       '--lower-case-table-names=1'
     ]
@@ -49,13 +45,13 @@ services:
       - "11111:11111"
     environment:
       - canal.auto.scan=false
-      - canal.instance.mysql.slaveId=222
       - canal.instance.master.address=chensoul-mysql:3306
-      - canal.instance.dbUsername=root
-      - canal.instance.dbPassword=root
+      - canal.instance.dbUsername=canal
+      - canal.instance.dbPassword=canal
       - canal.admin.register.auto=true
       - canal.instance.filter.regex=.*\\..*
       - canal.destinations=test
+      - canal.instance.tsdb.enable=false
       - canal.instance.connectionCharset=UTF-8
 
   chensoul-canal-admin:

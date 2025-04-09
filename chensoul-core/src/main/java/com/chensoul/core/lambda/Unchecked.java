@@ -15,7 +15,6 @@
  */
 package com.chensoul.core.lambda;
 
-
 import com.chensoul.core.lambda.function.*;
 
 import java.io.IOException;
@@ -27,12 +26,13 @@ import java.util.function.*;
 /**
  * Improved interoperability between checked exceptions and Java 8.
  * <p>
- * Checked exceptions are one of Java's biggest flaws. Due to backwards-compatibility, we're inheriting all the checked
- * exception trouble back from JDK 1.0. This becomes even more obvious when using lambda expressions, most of which are
- * not allowed to throw checked exceptions.
+ * Checked exceptions are one of Java's biggest flaws. Due to backwards-compatibility,
+ * we're inheriting all the checked exception trouble back from JDK 1.0. This becomes even
+ * more obvious when using lambda expressions, most of which are not allowed to throw
+ * checked exceptions.
  * <p>
- * This library tries to ease some pain and wraps / unwraps a variety of API elements from the JDK 8 to improve
- * interoperability with checked exceptions.
+ * This library tries to ease some pain and wraps / unwraps a variety of API elements from
+ * the JDK 8 to improve interoperability with checked exceptions.
  *
  * @author Lukas Eder
  */
@@ -75,12 +75,10 @@ public final class Unchecked {
 		throw new RuntimeException(t);
 	}
 
-
 	/**
 	 * Wrap a {@link CheckedRunnable} in a {@link Runnable}.
 	 * <p>
-	 * Example:
-	 * <pre><code>
+	 * Example: <pre><code>
 	 * new Thread(Unchecked.runnable(() -> {
 	 *     throw new Exception("Cannot run this thread");
 	 * })).start();
@@ -91,10 +89,10 @@ public final class Unchecked {
 	}
 
 	/**
-	 * Wrap a {@link CheckedRunnable} in a {@link Runnable} with a custom handler for checked exceptions.
+	 * Wrap a {@link CheckedRunnable} in a {@link Runnable} with a custom handler for
+	 * checked exceptions.
 	 * <p>
-	 * Example:
-	 * <pre><code>
+	 * Example: <pre><code>
 	 * new Thread(Unchecked.runnable(
 	 *     () -> {
 	 *         throw new Exception("Cannot run this thread");
@@ -109,7 +107,8 @@ public final class Unchecked {
 		return () -> {
 			try {
 				runnable.run();
-			} catch (Throwable e) {
+			}
+			catch (Throwable e) {
 				handler.accept(e);
 
 				throw new IllegalStateException("Exception handler must throw a RuntimeException", e);
@@ -120,8 +119,7 @@ public final class Unchecked {
 	/**
 	 * Wrap a {@link CheckedCallable <T>} in a {@link Callable<T>}.
 	 * <p>
-	 * Example:
-	 * <pre><code>
+	 * Example: <pre><code>
 	 * Executors.newFixedThreadPool(1).submit(Unchecked.callable(() -> {
 	 *     throw new Exception("Cannot execute this task");
 	 * })).get();
@@ -132,10 +130,10 @@ public final class Unchecked {
 	}
 
 	/**
-	 * Wrap a {@link CheckedCallable<T>} in a {@link Callable<T>} with a custom handler for checked exceptions.
+	 * Wrap a {@link CheckedCallable<T>} in a {@link Callable<T>} with a custom handler
+	 * for checked exceptions.
 	 * <p>
-	 * Example:
-	 * <pre><code>
+	 * Example: <pre><code>
 	 * Executors.newFixedThreadPool(1).submit(Unchecked.callable(
 	 *     () -> {
 	 *         throw new Exception("Cannot execute this task");
@@ -150,7 +148,8 @@ public final class Unchecked {
 		return () -> {
 			try {
 				return callable.call();
-			} catch (Throwable e) {
+			}
+			catch (Throwable e) {
 				handler.accept(e);
 
 				throw new IllegalStateException("Exception handler must throw a RuntimeException", e);
@@ -166,13 +165,15 @@ public final class Unchecked {
 	}
 
 	/**
-	 * Wrap a {@link CheckedComparator} in a {@link Comparator} with a custom handler for checked exceptions.
+	 * Wrap a {@link CheckedComparator} in a {@link Comparator} with a custom handler for
+	 * checked exceptions.
 	 */
 	public static <T> Comparator<T> comparator(CheckedComparator<T> comparator, Consumer<Throwable> handler) {
 		return (t1, t2) -> {
 			try {
 				return comparator.compare(t1, t2);
-			} catch (Throwable e) {
+			}
+			catch (Throwable e) {
 				handler.accept(e);
 
 				throw new IllegalStateException("Exception handler must throw a RuntimeException", e);
@@ -183,8 +184,7 @@ public final class Unchecked {
 	/**
 	 * Wrap a {@link CheckedBiConsumer} in a {@link BiConsumer}.
 	 * <p>
-	 * Example:
-	 * <pre><code>
+	 * Example: <pre><code>
 	 * map.forEach(Unchecked.biConsumer((k, v) -> {
 	 *     if (k == null || v == null)
 	 *         throw new Exception("No nulls allowed in map");
@@ -196,10 +196,10 @@ public final class Unchecked {
 	}
 
 	/**
-	 * Wrap a {@link CheckedBiConsumer} in a {@link BiConsumer} with a custom handler for checked exceptions.
+	 * Wrap a {@link CheckedBiConsumer} in a {@link BiConsumer} with a custom handler for
+	 * checked exceptions.
 	 * <p>
-	 * Example:
-	 * <pre><code>
+	 * Example: <pre><code>
 	 * map.forEach(Unchecked.biConsumer(
 	 *     (k, v) -> {
 	 *         if (k == null || v == null)
@@ -215,7 +215,8 @@ public final class Unchecked {
 		return (t, u) -> {
 			try {
 				consumer.accept(t, u);
-			} catch (Throwable e) {
+			}
+			catch (Throwable e) {
 				handler.accept(e);
 
 				throw new IllegalStateException("Exception handler must throw a RuntimeException", e);
@@ -226,8 +227,7 @@ public final class Unchecked {
 	/**
 	 * Wrap a {@link CheckedBiFunction} in a {@link BiFunction}.
 	 * <p>
-	 * Example:
-	 * <pre><code>
+	 * Example: <pre><code>
 	 * map.computeIfPresent("key", Unchecked.biFunction((k, v) -> {
 	 *     if (k == null || v == null)
 	 *         throw new Exception("No nulls allowed in map");
@@ -241,10 +241,10 @@ public final class Unchecked {
 	}
 
 	/**
-	 * Wrap a {@link CheckedBiFunction} in a {@link BiFunction} with a custom handler for checked exceptions.
+	 * Wrap a {@link CheckedBiFunction} in a {@link BiFunction} with a custom handler for
+	 * checked exceptions.
 	 * <p>
-	 * Example:
-	 * <pre><code>
+	 * Example: <pre><code>
 	 * map.computeIfPresent("key", Unchecked.biFunction(
 	 *     (k, v) -> {
 	 *         if (k == null || v == null)
@@ -258,11 +258,13 @@ public final class Unchecked {
 	 * ));
 	 * </code></pre>
 	 */
-	public static <T, U, R> BiFunction<T, U, R> biFunction(CheckedBiFunction<T, U, R> function, Consumer<Throwable> handler) {
+	public static <T, U, R> BiFunction<T, U, R> biFunction(CheckedBiFunction<T, U, R> function,
+			Consumer<Throwable> handler) {
 		return (t, u) -> {
 			try {
 				return function.apply(t, u);
-			} catch (Throwable e) {
+			}
+			catch (Throwable e) {
 				handler.accept(e);
 
 				throw new IllegalStateException("Exception handler must throw a RuntimeException", e);
@@ -278,13 +280,16 @@ public final class Unchecked {
 	}
 
 	/**
-	 * Wrap a {@link CheckedBiPredicate} in a {@link BiPredicate} with a custom handler for checked exceptions.
+	 * Wrap a {@link CheckedBiPredicate} in a {@link BiPredicate} with a custom handler
+	 * for checked exceptions.
 	 */
-	public static <T, U> BiPredicate<T, U> biPredicate(CheckedBiPredicate<T, U> predicate, Consumer<Throwable> handler) {
+	public static <T, U> BiPredicate<T, U> biPredicate(CheckedBiPredicate<T, U> predicate,
+			Consumer<Throwable> handler) {
 		return (t, u) -> {
 			try {
 				return predicate.test(t, u);
-			} catch (Throwable e) {
+			}
+			catch (Throwable e) {
 				handler.accept(e);
 
 				throw new IllegalStateException("Exception handler must throw a RuntimeException", e);
@@ -295,8 +300,7 @@ public final class Unchecked {
 	/**
 	 * Wrap a {@link CheckedFunction} in a {@link Function}.
 	 * <p>
-	 * Example:
-	 * <pre><code>
+	 * Example: <pre><code>
 	 * map.computeIfAbsent("key", Unchecked.function(k -> {
 	 *     if (k.length() > 10)
 	 *         throw new Exception("Only short strings allowed");
@@ -310,10 +314,10 @@ public final class Unchecked {
 	}
 
 	/**
-	 * Wrap a {@link CheckedFunction} in a {@link Function} with a custom handler for checked exceptions.
+	 * Wrap a {@link CheckedFunction} in a {@link Function} with a custom handler for
+	 * checked exceptions.
 	 * <p>
-	 * Example:
-	 * <pre><code>
+	 * Example: <pre><code>
 	 * map.forEach(Unchecked.function(
 	 *     k -> {
 	 *         if (k.length() > 10)
@@ -331,7 +335,8 @@ public final class Unchecked {
 		return t -> {
 			try {
 				return function.apply(t);
-			} catch (Throwable e) {
+			}
+			catch (Throwable e) {
 				handler.accept(e);
 
 				throw new IllegalStateException("Exception handler must throw a RuntimeException", e);
@@ -342,8 +347,7 @@ public final class Unchecked {
 	/**
 	 * Wrap a {@link CheckedPredicate} in a {@link Predicate}.
 	 * <p>
-	 * Example:
-	 * <pre><code>
+	 * Example: <pre><code>
 	 * Stream.of("a", "b", "c").filter(Unchecked.predicate(s -> {
 	 *     if (s.length() > 10)
 	 *         throw new Exception("Only short strings allowed");
@@ -357,10 +361,10 @@ public final class Unchecked {
 	}
 
 	/**
-	 * Wrap a {@link CheckedPredicate} in a {@link Predicate} with a custom handler for checked exceptions.
+	 * Wrap a {@link CheckedPredicate} in a {@link Predicate} with a custom handler for
+	 * checked exceptions.
 	 * <p>
-	 * Example:
-	 * <pre><code>
+	 * Example: <pre><code>
 	 * Stream.of("a", "b", "c").filter(Unchecked.predicate(
 	 *     s -> {
 	 *         if (s.length() > 10)
@@ -378,7 +382,8 @@ public final class Unchecked {
 		return t -> {
 			try {
 				return function.test(t);
-			} catch (Throwable e) {
+			}
+			catch (Throwable e) {
 				handler.accept(e);
 
 				throw new IllegalStateException("Exception handler must throw a RuntimeException", e);
@@ -389,8 +394,7 @@ public final class Unchecked {
 	/**
 	 * Wrap a {@link CheckedSupplier} in a {@link Supplier}.
 	 * <p>
-	 * Example:
-	 * <pre><code>
+	 * Example: <pre><code>
 	 * ResultSet rs = statement.executeQuery();
 	 * Stream.generate(Unchecked.supplier(() -> rs.getObject(1)));
 	 * </code></pre>
@@ -400,10 +404,10 @@ public final class Unchecked {
 	}
 
 	/**
-	 * Wrap a {@link CheckedSupplier} in a {@link Supplier} with a custom handler for checked exceptions.
+	 * Wrap a {@link CheckedSupplier} in a {@link Supplier} with a custom handler for
+	 * checked exceptions.
 	 * <p>
-	 * Example:
-	 * <pre><code>
+	 * Example: <pre><code>
 	 * ResultSet rs = statement.executeQuery();
 	 *
 	 * Stream.generate(Unchecked.supplier(
@@ -418,7 +422,8 @@ public final class Unchecked {
 		return () -> {
 			try {
 				return supplier.get();
-			} catch (Throwable e) {
+			}
+			catch (Throwable e) {
 				handler.accept(e);
 
 				throw new IllegalStateException("Exception handler must throw a RuntimeException", e);
@@ -429,8 +434,7 @@ public final class Unchecked {
 	/**
 	 * Wrap a {@link CheckedConsumer} in a {@link Consumer}.
 	 * <p>
-	 * Example:
-	 * <pre><code>
+	 * Example: <pre><code>
 	 * Arrays.asList("a", "b").stream().forEach(Unchecked.consumer(s -> {
 	 *     if (s.length() > 10)
 	 *         throw new Exception("Only short strings allowed");
@@ -442,10 +446,10 @@ public final class Unchecked {
 	}
 
 	/**
-	 * Wrap a {@link CheckedConsumer} in a {@link Consumer} with a custom handler for checked exceptions.
+	 * Wrap a {@link CheckedConsumer} in a {@link Consumer} with a custom handler for
+	 * checked exceptions.
 	 * <p>
-	 * Example:
-	 * <pre><code>
+	 * Example: <pre><code>
 	 * Arrays.asList("a", "b").stream().forEach(Unchecked.consumer(
 	 *     s -> {
 	 *         if (s.length() > 10)
@@ -461,11 +465,13 @@ public final class Unchecked {
 		return t -> {
 			try {
 				consumer.accept(t);
-			} catch (Throwable e) {
+			}
+			catch (Throwable e) {
 				handler.accept(e);
 
 				throw new IllegalStateException("Exception handler must throw a RuntimeException", e);
 			}
 		};
 	}
+
 }

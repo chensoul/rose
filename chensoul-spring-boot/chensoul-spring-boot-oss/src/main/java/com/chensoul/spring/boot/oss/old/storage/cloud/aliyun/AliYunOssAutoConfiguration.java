@@ -46,11 +46,13 @@ public class AliYunOssAutoConfiguration {
 
 	@Bean(destroyMethod = "shutdown")
 	public OSS ossClient(AliYunOssProperties properties) {
-		return new OSSClientBuilder().build(properties.getEndpoint(), properties.getAccessKey(), properties.getSecretKey());
+		return new OSSClientBuilder().build(properties.getEndpoint(), properties.getAccessKey(),
+				properties.getSecretKey());
 	}
 
 	@Bean(ALI_YUN_OSS_OPERATION)
 	public AliYunOssOperation aliYunStorageOperation(OSS ossClient, AliYunOssProperties properties) {
 		return new AliYunOssOperation(ossClient, properties);
 	}
+
 }

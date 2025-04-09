@@ -9,9 +9,10 @@ import org.springframework.core.Ordered;
 import java.lang.reflect.Method;
 
 public class FeignInnerRequestInterceptor implements RequestInterceptor, Ordered {
+
 	/**
-	 * Called for every request. Add data using methods on the supplied {@link RequestTemplate}.
-	 *
+	 * Called for every request. Add data using methods on the supplied
+	 * {@link RequestTemplate}.
 	 * @param template
 	 */
 	@Override
@@ -27,4 +28,5 @@ public class FeignInnerRequestInterceptor implements RequestInterceptor, Ordered
 	public int getOrder() {
 		return Integer.MIN_VALUE;
 	}
+
 }

@@ -41,4 +41,5 @@ public class TimeoutRedisCacheManager extends RedisCacheManager {
 		}
 		return super.createRedisCache(cacheName, cacheConfig);
 	}
+
 }

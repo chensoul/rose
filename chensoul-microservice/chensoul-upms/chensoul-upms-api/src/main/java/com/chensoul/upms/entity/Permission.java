@@ -11,6 +11,7 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 @TableName("sys_permission")
 public class Permission extends BaseEntity {
+
 	private static final long serialVersionUID = 1L;
 
 	private Long appId;

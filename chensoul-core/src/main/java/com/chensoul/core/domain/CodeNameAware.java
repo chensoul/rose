@@ -7,4 +7,5 @@ package com.chensoul.core.domain;
  * @since 0.0.1
  */
 public interface CodeNameAware extends HasCode, HasName {
+
 }

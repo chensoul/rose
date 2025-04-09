@@ -8,6 +8,7 @@ import com.chensoul.mybatis.encrypt.util.AlgorithmUtils;
  * @since 0.0.1
  */
 public class DefaultEncryptor implements IEncryptor {
+
 	public String encrypt(Algorithm algorithm, String password, String plaintext, Object metaObject) {
 		return AlgorithmUtils.resolve(algorithm, password, true, plaintext);
 	}
@@ -15,4 +16,5 @@ public class DefaultEncryptor implements IEncryptor {
 	public String decrypt(Algorithm algorithm, String password, String plaintext, Object metaObject) {
 		return AlgorithmUtils.resolve(algorithm, password, false, plaintext);
 	}
+
 }

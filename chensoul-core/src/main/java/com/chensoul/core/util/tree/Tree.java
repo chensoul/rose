@@ -1,6 +1,5 @@
 package com.chensoul.core.util.tree;
 
-
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
@@ -29,7 +28,6 @@ public class Tree<T> extends LinkedHashMap<String, Object> implements Node<T> {
 
 	/**
 	 * 构造
-	 *
 	 * @param treeNodeConfig TreeNode配置
 	 */
 	public Tree(TreeNodeConfig treeNodeConfig) {
@@ -38,7 +36,6 @@ public class Tree<T> extends LinkedHashMap<String, Object> implements Node<T> {
 
 	/**
 	 * 获取节点配置
-	 *
 	 * @return 节点配置
 	 * @since 5.7.2
 	 */
@@ -48,7 +45,6 @@ public class Tree<T> extends LinkedHashMap<String, Object> implements Node<T> {
 
 	/**
 	 * 获取父节点
-	 *
 	 * @return 父节点
 	 * @since 5.2.4
 	 */
@@ -58,7 +54,6 @@ public class Tree<T> extends LinkedHashMap<String, Object> implements Node<T> {
 
 	/**
 	 * 设置父节点
-	 *
 	 * @param parent 父节点
 	 * @return this
 	 * @since 5.2.4
@@ -74,7 +69,6 @@ public class Tree<T> extends LinkedHashMap<String, Object> implements Node<T> {
 	/**
 	 * 获取ID对应的节点，如果有多个ID相同的节点，只返回第一个。<br>
 	 * 此方法只查找此节点及子节点，采用广度优先遍历。
-	 *
 	 * @param id ID
 	 * @return 节点
 	 * @since 5.2.4
@@ -89,8 +83,7 @@ public class Tree<T> extends LinkedHashMap<String, Object> implements Node<T> {
 	 * <p>
 	 * 比如有个人在研发1部，他上面有研发部，接着上面有技术中心<br>
 	 * 返回结果就是：[研发一部, 研发中心, 技术中心]
-	 *
-	 * @param id                 节点ID
+	 * @param id 节点ID
 	 * @param includeCurrentNode 是否包含当前节点的名称
 	 * @return 所有父节点名称列表
 	 * @since 5.2.4
@@ -105,7 +98,6 @@ public class Tree<T> extends LinkedHashMap<String, Object> implements Node<T> {
 	 * <p>
 	 * 比如有个人在研发1部，他上面有研发部，接着上面有技术中心<br>
 	 * 返回结果就是：[研发一部, 研发中心, 技术中心]
-	 *
 	 * @param includeCurrentNode 是否包含当前节点的名称
 	 * @return 所有父节点名称列表
 	 * @since 5.2.4
@@ -162,7 +154,6 @@ public class Tree<T> extends LinkedHashMap<String, Object> implements Node<T> {
 
 	/**
 	 * 获取所有子节点
-	 *
 	 * @return 所有子节点
 	 */
 	@SuppressWarnings("unchecked")
@@ -172,7 +163,6 @@ public class Tree<T> extends LinkedHashMap<String, Object> implements Node<T> {
 
 	/**
 	 * 设置子节点，设置后会覆盖所有原有子节点
-	 *
 	 * @param children 子节点列表
 	 * @return this
 	 */
@@ -183,7 +173,6 @@ public class Tree<T> extends LinkedHashMap<String, Object> implements Node<T> {
 
 	/**
 	 * 增加子节点，同时关联子节点的父节点为当前节点
-	 *
 	 * @param children 子节点列表
 	 * @return this
 	 * @since 5.6.7
@@ -199,7 +188,7 @@ public class Tree<T> extends LinkedHashMap<String, Object> implements Node<T> {
 				child.setParent(this);
 				childrenList.add(child);
 			}
-			//每次添加一个记录，就排序一下
+			// 每次添加一个记录，就排序一下
 			Collections.sort(childrenList);
 		}
 		return this;
@@ -207,8 +196,7 @@ public class Tree<T> extends LinkedHashMap<String, Object> implements Node<T> {
 
 	/**
 	 * 扩展属性
-	 *
-	 * @param key   键
+	 * @param key 键
 	 * @param value 扩展值
 	 */
 	public void putExtra(String key, Object value) {
@@ -224,8 +212,10 @@ public class Tree<T> extends LinkedHashMap<String, Object> implements Node<T> {
 		if (null != weight) {
 			Comparable weightOther = node.getWeight();
 			return treeNodeConfig.getReversed() ? weightOther.compareTo(weight) : weight.compareTo(weightOther);
-		} else {
+		}
+		else {
 			return 0;
 		}
 	}
+
 }

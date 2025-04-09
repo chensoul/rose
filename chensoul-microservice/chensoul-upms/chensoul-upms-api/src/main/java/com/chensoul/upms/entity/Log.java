@@ -15,6 +15,7 @@ import java.time.LocalDateTime;
 @Accessors(chain = true)
 @TableName("sys_log")
 public class Log implements Serializable {
+
 	private static final long serialVersionUID = 1129753896999673095L;
 
 	private String name;
@@ -49,4 +50,5 @@ public class Log implements Serializable {
 	private String createdBy;
 
 	private LocalDateTime createTime;
+
 }

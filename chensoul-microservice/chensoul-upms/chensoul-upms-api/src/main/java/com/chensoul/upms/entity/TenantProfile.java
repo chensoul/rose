@@ -29,12 +29,9 @@ public class TenantProfile extends TenantEntity {
 	private LocalDateTime expireTime;
 
 	/**
-	 * 套餐限制数量：
-	 * 最大应用数
-	 * 最大资源数
-	 * 最大用户数
-	 * 最大角色数
+	 * 套餐限制数量： 最大应用数 最大资源数 最大用户数 最大角色数
 	 */
 	@TableField(typeHandler = JacksonTypeHandler.class)
 	private JsonNode content;
+
 }

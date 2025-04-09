@@ -19,42 +19,48 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString(exclude = {"parent"}) // 参见 https://gitee.com/yudaocode/yudao-cloud-mini/pulls/2 原因
+@ToString(exclude = { "parent" }) // 参见
+									// https://gitee.com/yudaocode/yudao-cloud-mini/pulls/2
+									// 原因
 public class Area {
 
-    /**
-     * 编号 - 全球，即根目录
-     */
-    public static final Integer ID_GLOBAL = 0;
-    /**
-     * 编号 - 中国
-     */
-    public static final Integer ID_CHINA = 1;
+	/**
+	 * 编号 - 全球，即根目录
+	 */
+	public static final Integer ID_GLOBAL = 0;
 
-    /**
-     * 编号
-     */
-    private Integer id;
-    /**
-     * 名字
-     */
-    private String name;
-    /**
-     * 类型
-     * <p>
-     * 枚举 {@link AreaTypeEnum}
-     */
-    private Integer type;
+	/**
+	 * 编号 - 中国
+	 */
+	public static final Integer ID_CHINA = 1;
 
-    /**
-     * 父节点
-     */
-    @JsonManagedReference
-    private Area parent;
-    /**
-     * 子节点
-     */
-    @JsonBackReference
-    private List<Area> children;
+	/**
+	 * 编号
+	 */
+	private Integer id;
+
+	/**
+	 * 名字
+	 */
+	private String name;
+
+	/**
+	 * 类型
+	 * <p>
+	 * 枚举 {@link AreaTypeEnum}
+	 */
+	private Integer type;
+
+	/**
+	 * 父节点
+	 */
+	@JsonManagedReference
+	private Area parent;
+
+	/**
+	 * 子节点
+	 */
+	@JsonBackReference
+	private List<Area> children;
 
 }

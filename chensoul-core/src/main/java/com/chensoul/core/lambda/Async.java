@@ -6,6 +6,7 @@ import java.util.concurrent.Executor;
 import java.util.function.Supplier;
 
 public final class Async {
+
 	private Async() {
 
 	}
@@ -25,4 +26,5 @@ public final class Async {
 	public static CompletionStage<Void> runAsync(Runnable runnable) {
 		return SameExecutorCompletionStage.of(CompletableFuture.runAsync(runnable), null);
 	}
+
 }

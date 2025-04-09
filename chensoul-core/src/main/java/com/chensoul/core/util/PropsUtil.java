@@ -8,9 +8,8 @@ public class PropsUtil {
 
 	/**
 	 * 设置配置值，已存在则跳过
-	 *
 	 * @param props property
-	 * @param key   key
+	 * @param key key
 	 * @param value value
 	 */
 	public static void setProperty(Properties props, String key, String value) {
@@ -18,4 +17,5 @@ public class PropsUtil {
 			props.setProperty(key, value);
 		}
 	}
+
 }

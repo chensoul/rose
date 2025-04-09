@@ -38,6 +38,7 @@ import org.springframework.aop.support.annotation.AnnotationMatchingPointcut;
 @Getter
 @EqualsAndHashCode(callSuper = true)
 public class DataPermissionAnnotationAdvisor extends AbstractPointcutAdvisor {
+
 	private final Advice advice;
 
 	private final Pointcut pointcut;

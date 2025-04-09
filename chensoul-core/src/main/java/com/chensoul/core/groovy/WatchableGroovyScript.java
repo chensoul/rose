@@ -20,6 +20,7 @@ import org.springframework.core.io.Resource;
 @ToString(of = "resource")
 @Accessors(chain = true)
 public class WatchableGroovyScript implements ExecutableScript {
+
 	private final TryLock lock = new TryLock();
 
 	private final Resource resource;
@@ -35,13 +36,13 @@ public class WatchableGroovyScript implements ExecutableScript {
 		this.resource = script;
 		if (script.exists()) {
 			if (script.isFile() && enableWatcher) {
-				watcherService = CheckedSupplier.unchecked(
-					() -> new FileWatcherService(script.getFile(),
-						CheckedConsumer.unchecked(file -> {
-							log.debug("Reloading script at [{}]", file);
-							compileScriptResource(script);
-							log.info("Reloaded script at [{}]", file);
-						}))).get();
+				watcherService = CheckedSupplier
+					.unchecked(() -> new FileWatcherService(script.getFile(), CheckedConsumer.unchecked(file -> {
+						log.debug("Reloading script at [{}]", file);
+						compileScriptResource(script);
+						log.info("Reloaded script at [{}]", file);
+					})))
+					.get();
 				watcherService.start(script.getFilename());
 			}
 			compileScriptResource(script);
@@ -73,9 +74,9 @@ public class WatchableGroovyScript implements ExecutableScript {
 			try {
 				log.trace("Beginning to execute script [{}]", this);
 				return groovyScript != null
-					? ScriptingUtils.executeGroovyScript(this.groovyScript, args, clazz, failOnError)
-					: null;
-			} finally {
+						? ScriptingUtils.executeGroovyScript(this.groovyScript, args, clazz, failOnError) : null;
+			}
+			finally {
 				log.trace("Completed script execution [{}]", this);
 			}
 		});
@@ -83,23 +84,22 @@ public class WatchableGroovyScript implements ExecutableScript {
 
 	/**
 	 * Execute.
-	 *
-	 * @param <T>         the type parameter
-	 * @param methodName  the method name
-	 * @param clazz       the clazz
+	 * @param <T> the type parameter
+	 * @param methodName the method name
+	 * @param clazz the clazz
 	 * @param failOnError the fail on error
-	 * @param args        the args
+	 * @param args the args
 	 * @return the t
 	 */
-	public <T> T execute(final String methodName, final Class<T> clazz, final boolean failOnError,
-						 final Object... args) throws Throwable {
+	public <T> T execute(final String methodName, final Class<T> clazz, final boolean failOnError, final Object... args)
+			throws Throwable {
 		return lock.tryLock(() -> {
 			try {
 				log.trace("Beginning to execute script [{}]", this);
 				return groovyScript != null
-					? ScriptingUtils.executeGroovyScript(groovyScript, methodName, args, clazz, failOnError)
-					: null;
-			} finally {
+						? ScriptingUtils.executeGroovyScript(groovyScript, methodName, args, clazz, failOnError) : null;
+			}
+			finally {
 				log.trace("Completed script execution [{}]", this);
 			}
 		});
@@ -116,4 +116,5 @@ public class WatchableGroovyScript implements ExecutableScript {
 	private void compileScriptResource(final Resource script) {
 		this.groovyScript = ScriptingUtils.parseGroovyScript(script, failOnError);
 	}
+
 }

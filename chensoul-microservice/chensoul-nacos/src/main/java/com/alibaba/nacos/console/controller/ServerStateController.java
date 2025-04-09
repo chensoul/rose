@@ -38,26 +38,25 @@ import java.util.Map;
 @RequestMapping("/v1/console/server")
 public class ServerStateController {
 
-    private static final String ANNOUNCEMENT_FILE = "conf/announcement.conf";
+	private static final String ANNOUNCEMENT_FILE = "conf/announcement.conf";
 
-    /**
-     * Get server state of current server.
-     *
-     * @return state json.
-     */
-    @GetMapping("/state")
-    public ResponseEntity<Map<String, String>> serverState() {
-        Map<String, String> serverState = new HashMap<>(4);
-        for (ModuleState each : ModuleStateHolder.getInstance().getAllModuleStates()) {
-            each.getStates().forEach((s, o) -> serverState.put(s, null == o ? null : o.toString()));
-        }
-        return ResponseEntity.ok().body(serverState);
-    }
+	/**
+	 * Get server state of current server.
+	 * @return state json.
+	 */
+	@GetMapping("/state")
+	public ResponseEntity<Map<String, String>> serverState() {
+		Map<String, String> serverState = new HashMap<>(4);
+		for (ModuleState each : ModuleStateHolder.getInstance().getAllModuleStates()) {
+			each.getStates().forEach((s, o) -> serverState.put(s, null == o ? null : o.toString()));
+		}
+		return ResponseEntity.ok().body(serverState);
+	}
 
-    @SneakyThrows
-    @GetMapping("/announcement")
-    public RestResult<String> getAnnouncement() {
-        return RestResultUtils.success();
-    }
+	@SneakyThrows
+	@GetMapping("/announcement")
+	public RestResult<String> getAnnouncement() {
+		return RestResultUtils.success();
+	}
 
 }

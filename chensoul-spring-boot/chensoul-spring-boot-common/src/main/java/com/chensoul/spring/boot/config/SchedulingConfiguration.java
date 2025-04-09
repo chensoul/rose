@@ -25,4 +25,5 @@ public class SchedulingConfiguration implements SchedulingConfigurer {
 		threadPoolScheduler.setRemoveOnCancelPolicy(true);
 		return threadPoolScheduler;
 	}
+
 }

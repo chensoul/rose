@@ -14,9 +14,10 @@ import java.io.IOException;
 
 @Slf4j
 public class RestAuthenticationFailureHandler implements AuthenticationFailureHandler {
+
 	@Override
 	public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
-										AuthenticationException e) throws IOException, ServletException {
+			AuthenticationException e) throws IOException, ServletException {
 		if (response.isCommitted()) {
 			return;
 		}
@@ -25,4 +26,5 @@ public class RestAuthenticationFailureHandler implements AuthenticationFailureHa
 
 		WebUtils.renderJson(HttpStatus.INTERNAL_SERVER_ERROR.value(), RestResponse.error(e.getMessage()));
 	}
+
 }

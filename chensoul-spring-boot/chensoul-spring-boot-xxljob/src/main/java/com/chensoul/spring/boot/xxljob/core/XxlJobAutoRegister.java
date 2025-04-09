@@ -28,13 +28,16 @@ import java.util.Optional;
 
 @Slf4j
 @RequiredArgsConstructor
-public class XxlJobAutoRegister implements ApplicationListener<ApplicationReadyEvent>,
-	ApplicationContextAware {
+public class XxlJobAutoRegister implements ApplicationListener<ApplicationReadyEvent>, ApplicationContextAware {
 
 	private final JobGroupService jobGroupService;
+
 	private final JobInfoService jobInfoService;
+
 	private final XxlJobProperties xxlJobProperties;
+
 	private final Environment environment;
+
 	private ApplicationContext applicationContext;
 
 	@Override
@@ -44,7 +47,8 @@ public class XxlJobAutoRegister implements ApplicationListener<ApplicationReadyE
 
 	@Override
 	public void onApplicationEvent(ApplicationReadyEvent event) {
-		String appName = StringUtils.defaultString(xxlJobProperties.getExecutor().getAppName(), environment.getProperty("spring.application.name"));
+		String appName = StringUtils.defaultString(xxlJobProperties.getExecutor().getAppName(),
+				environment.getProperty("spring.application.name"));
 
 		List<XxlJobGroup> jobGroups = jobGroupService.getJobGroup(appName);
 		if (CollectionUtils.isEmpty(jobGroups)) {
@@ -66,7 +70,8 @@ public class XxlJobAutoRegister implements ApplicationListener<ApplicationReadyE
 			Object bean = applicationContext.getBean(beanDefinitionName);
 
 			Map<Method, XxlJob> annotatedMethods = MethodIntrospector.selectMethods(bean.getClass(),
-				(MethodIntrospector.MetadataLookup<XxlJob>) method -> AnnotatedElementUtils.findMergedAnnotation(method, XxlJob.class));
+					(MethodIntrospector.MetadataLookup<XxlJob>) method -> AnnotatedElementUtils
+						.findMergedAnnotation(method, XxlJob.class));
 			for (Map.Entry<Method, XxlJob> methodXxlJobEntry : annotatedMethods.entrySet()) {
 				Method executeMethod = methodXxlJobEntry.getKey();
 				XxlJob xxlJob = methodXxlJobEntry.getValue();
@@ -75,7 +80,7 @@ public class XxlJobAutoRegister implements ApplicationListener<ApplicationReadyE
 					XxlRegister xxlRegister = executeMethod.getAnnotation(XxlRegister.class);
 					List<XxlJobInfo> jobInfo = jobInfoService.listJob(xxlJobGroup.getId(), xxlJob.value());
 					if (!jobInfo.isEmpty()) {
-						//服务端是模糊查询，需要再判断一次
+						// 服务端是模糊查询，需要再判断一次
 						Optional<XxlJobInfo> first = jobInfo.stream()
 							.filter(xxlJobInfo -> xxlJobInfo.getExecutorHandler().equals(xxlJob.value()))
 							.findFirst();
@@ -96,15 +101,17 @@ public class XxlJobAutoRegister implements ApplicationListener<ApplicationReadyE
 		XxlJobInfo xxlJobInfo = new XxlJobInfo();
 		xxlJobInfo.setJobGroup(xxlJobGroup.getId());
 		xxlJobInfo.setJobDesc(StringUtils.defaultIfBlank(xxlRegister.jobDesc(), xxlJob.value() + " 任务"));
-		xxlJobInfo.setAuthor(StringUtils.defaultIfBlank(xxlRegister.author(), xxlJobProperties.getClient().getAuthor()));
-		xxlJobInfo.setAlarmEmail(StringUtils.defaultIfBlank(xxlRegister.alarmEmail(), xxlJobProperties.getClient().getAlarmEmail()));
+		xxlJobInfo
+			.setAuthor(StringUtils.defaultIfBlank(xxlRegister.author(), xxlJobProperties.getClient().getAuthor()));
+		xxlJobInfo.setAlarmEmail(
+				StringUtils.defaultIfBlank(xxlRegister.alarmEmail(), xxlJobProperties.getClient().getAlarmEmail()));
 		xxlJobInfo.setScheduleType(xxlJobProperties.getClient().getScheduleType());
 		xxlJobInfo.setScheduleConf(xxlRegister.cron());
 		xxlJobInfo.setGlueType(xxlJobProperties.getClient().getGlueType());
 		xxlJobInfo.setExecutorHandler(xxlJob.value());
 		xxlJobInfo.setExecutorParam(xxlRegister.executorParam());
 		xxlJobInfo.setExecutorRouteStrategy(StringUtils.defaultIfBlank(xxlRegister.executorRouteStrategy(),
-			xxlJobProperties.getClient().getExecutorRouteStrategy()));
+				xxlJobProperties.getClient().getExecutorRouteStrategy()));
 		xxlJobInfo.setMisfireStrategy(xxlJobProperties.getClient().getMisfireStrategy());
 		xxlJobInfo.setExecutorBlockStrategy(xxlJobProperties.getClient().getExecutorBlockStrategy());
 		xxlJobInfo.setExecutorTimeout(xxlJobProperties.getClient().getExecutorTimeout());
@@ -113,4 +120,5 @@ public class XxlJobAutoRegister implements ApplicationListener<ApplicationReadyE
 
 		return xxlJobInfo;
 	}
+
 }

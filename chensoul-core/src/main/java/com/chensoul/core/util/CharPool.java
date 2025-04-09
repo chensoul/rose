@@ -4,6 +4,7 @@ package com.chensoul.core.util;
  * char 常量池
  */
 public interface CharPool {
+
 	// @formatter:off
 	char UPPER_A          = 'A';
 	char LOWER_A          = 'a';
@@ -51,4 +52,5 @@ public interface CharPool {
 	char ONE              = '1';
 	char ZERO             = '0';
 	// @formatter:on
+
 }

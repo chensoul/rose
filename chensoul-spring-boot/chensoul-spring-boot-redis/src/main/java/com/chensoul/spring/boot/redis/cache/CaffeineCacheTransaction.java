@@ -28,13 +28,19 @@ import java.util.UUID;
 
 @Slf4j
 @RequiredArgsConstructor
-public class CaffeineCacheTransaction<K extends Serializable, V extends Serializable> implements CacheTransaction<K, V> {
+public class CaffeineCacheTransaction<K extends Serializable, V extends Serializable>
+		implements CacheTransaction<K, V> {
+
 	@Getter
 	private final UUID id = UUID.randomUUID();
+
 	private final CaffeineTransactionalCache<K, V> cache;
+
 	@Getter
 	private final List<K> keys;
+
 	private final Map<K, V> pendingPuts = new LinkedHashMap<>();
+
 	@Getter
 	@Setter
 	private boolean failed;
@@ -53,6 +59,5 @@ public class CaffeineCacheTransaction<K extends Serializable, V extends Serializ
 	public void rollback() {
 		cache.rollback(id);
 	}
-
 
 }

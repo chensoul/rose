@@ -17,20 +17,23 @@ import java.io.IOException;
 
 @RequiredArgsConstructor
 public class RestAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
+
 	private final TokenFactory tokenFactory;
 
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
-										Authentication authentication) throws IOException, ServletException {
+			Authentication authentication) throws IOException, ServletException {
 		SecurityUser securityUser = (SecurityUser) authentication.getPrincipal();
 
 		TokenPair tokenPair;
 		if (authentication instanceof MfaAuthenticationToken) {
 			tokenPair = tokenFactory.createPreVerificationTokenPair(securityUser);
-		} else {
+		}
+		else {
 			tokenPair = tokenFactory.createTokenPair(securityUser);
 		}
 
 		WebUtils.renderJson(HttpStatus.OK.value(), tokenPair);
 	}
+
 }

@@ -33,7 +33,6 @@ public class FileUtils {
 
 	/**
 	 * 根据旧的名称生成新的名称
-	 *
 	 * @param originName originName
 	 * @return 生成结果
 	 */

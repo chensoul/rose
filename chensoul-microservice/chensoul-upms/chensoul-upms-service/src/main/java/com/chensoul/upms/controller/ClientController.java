@@ -14,7 +14,7 @@ import java.util.List;
 
 /**
  * <p>
- * 客户端  前端控制器
+ * 客户端 前端控制器
  * </p>
  *
  * @author <a href="mailto:ichensoul@gmail.com">chensoul</a>
@@ -24,6 +24,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/clients")
 public class ClientController {
+
 	private final OAuth2ClientService OAuth2ClientService;
 
 	@GetMapping("/page")
@@ -33,7 +34,8 @@ public class ClientController {
 
 	@GetMapping
 	public RestResponse<List<OAuth2Client>> list(OAuth2Client oAuth2Client) {
-		return RestResponse.ok(OAuth2ClientService.list(Wrappers.<OAuth2Client>lambdaQuery().orderByDesc(OAuth2Client::getStatus)));
+		return RestResponse
+			.ok(OAuth2ClientService.list(Wrappers.<OAuth2Client>lambdaQuery().orderByDesc(OAuth2Client::getStatus)));
 	}
 
 	@GetMapping("/{id}")

@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class RestAccessAuthenticationProvider implements AuthenticationProvider {
+
 	private final TokenFactory tokenFactory;
 
 	@Override
@@ -34,4 +35,5 @@ public class RestAccessAuthenticationProvider implements AuthenticationProvider 
 	public boolean supports(Class<?> authentication) {
 		return (RestAccessAuthenticationToken.class.isAssignableFrom(authentication));
 	}
+
 }

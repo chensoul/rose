@@ -14,8 +14,11 @@ import java.io.Serializable;
  */
 @Getter
 public class BusinessException extends RuntimeException {
+
 	private static final ResultCode DEFAULT = ResultCode.INTERNAL_ERROR;
+
 	private final Integer code;
+
 	private Serializable data;
 
 	public BusinessException() {

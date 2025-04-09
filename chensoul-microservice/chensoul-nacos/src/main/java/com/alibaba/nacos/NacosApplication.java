@@ -32,22 +32,22 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @SpringBootApplication
 public class NacosApplication {
 
-    public static void main(String[] args) {
-        if (initEnv()) {
-            SpringApplication.run(NacosApplication.class, args);
-        }
-    }
+	public static void main(String[] args) {
+		if (initEnv()) {
+			SpringApplication.run(NacosApplication.class, args);
+		}
+	}
 
-    /**
-     * 初始化运行环境
-     */
-    private static boolean initEnv() {
-        System.setProperty(ConfigConstants.STANDALONE_MODE, "true");
-        System.setProperty(ConfigConstants.AUTH_ENABLED, "true");
-        System.setProperty(ConfigConstants.LOG_BASEDIR, "logs");
-        System.setProperty(ConfigConstants.LOG_ENABLED, "false");
-        System.setProperty(ConfigConstants.NACOS_CONTEXT_PATH, "/nacos");
-        return true;
-    }
+	/**
+	 * 初始化运行环境
+	 */
+	private static boolean initEnv() {
+		System.setProperty(ConfigConstants.STANDALONE_MODE, "true");
+		System.setProperty(ConfigConstants.AUTH_ENABLED, "true");
+		System.setProperty(ConfigConstants.LOG_BASEDIR, "logs");
+		System.setProperty(ConfigConstants.LOG_ENABLED, "false");
+		System.setProperty(ConfigConstants.NACOS_CONTEXT_PATH, "/nacos");
+		return true;
+	}
 
 }

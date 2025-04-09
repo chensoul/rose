@@ -19,8 +19,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * 多租户 JobHandler AOP
- * 任务执行时，会按照租户逐个执行 Job 的逻辑
+ * 多租户 JobHandler AOP 任务执行时，会按照租户逐个执行 Job 的逻辑
  * <p>
  * 注意，需要保证 JobHandler 的幂等性。因为 Job 因为某个租户执行失败重试时，之前执行成功的租户也会再次执行。
  *
@@ -30,6 +29,7 @@ import java.util.concurrent.ConcurrentHashMap;
 @RequiredArgsConstructor
 @Slf4j
 public class TenantJobAspect {
+
 	private final TenantService tenantService;
 
 	@Around("@annotation(tenantJob)")
@@ -45,10 +45,11 @@ public class TenantJobAspect {
 			TenantUtils.execute(tenantId, () -> {
 				try {
 					joinPoint.proceed();
-				} catch (Throwable e) {
+				}
+				catch (Throwable e) {
 					results.put(tenantId, ExceptionUtils.getRootCauseMessage(e));
-					XxlJobHelper.log(FormatUtils.format("{}租户执行任务({})，发生异常：{}]",
-						tenantId, joinPoint.getSignature(), ExceptionUtils.getStackTrace(e)));
+					XxlJobHelper.log(FormatUtils.format("{}租户执行任务({})，发生异常：{}]", tenantId, joinPoint.getSignature(),
+							ExceptionUtils.getStackTrace(e)));
 				}
 			});
 		});

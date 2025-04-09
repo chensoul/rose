@@ -17,8 +17,11 @@ import java.util.Map;
 
 @RequiredArgsConstructor
 public class JobLoginServiceImpl implements JobLoginService {
+
 	private final Map<String, String> loginCookie = new HashMap<>();
+
 	private final RestTemplate restTemplate;
+
 	private final XxlJobProperties xxlJobProperties;
 
 	public static String getCookieValue(String cookieStr, String cookieName) {
@@ -63,4 +66,5 @@ public class JobLoginServiceImpl implements JobLoginService {
 		}
 		throw new RuntimeException("xxl-job登录失败，请检查设置");
 	}
+
 }

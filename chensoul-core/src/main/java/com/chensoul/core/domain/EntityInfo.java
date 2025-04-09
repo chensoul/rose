@@ -11,7 +11,9 @@ import java.io.Serializable;
  */
 @Data
 public class EntityInfo implements HasId<Serializable>, HasName {
+
 	private final Serializable id;
+
 	private final String name;
 
 	@JsonCreator
@@ -19,4 +21,5 @@ public class EntityInfo implements HasId<Serializable>, HasName {
 		this.id = id;
 		this.name = name;
 	}
+
 }

@@ -37,47 +37,49 @@ import static com.chensoul.spring.boot.oss.old.storage.OssOperation.OSS_CONFIG_P
 @ConfigurationProperties(prefix = OSS_CONFIG_PREFIX_MINIO)
 public class MinioOssProperties extends BaseOssProperties {
 
-    /**
-     * minio实例的URL。包括端口。如果未提供端口，则采用HTTP端口。
-     */
-    private String endpoint = "https://play.min.io";
+	/**
+	 * minio实例的URL。包括端口。如果未提供端口，则采用HTTP端口。
+	 */
+	private String endpoint = "https://play.min.io";
 
-    private int port = 80;
+	private int port = 80;
 
-    private String region;
-    /**
-     * minio实例上的访问
-     */
-    private String accessKey = "Q3AM3UQ867SPQQA43P2F";
+	private String region;
 
-    /**
-     * minio实例上的密钥（密码）
-     */
-    private String secretKey = "zuf+tfteSlswRu7BJ86wekitnifILbZam1KYY3TG";
+	/**
+	 * minio实例上的访问
+	 */
+	private String accessKey = "Q3AM3UQ867SPQQA43P2F";
 
-    /**
-     * If the scheme is not provided in {@code url} property, define if the connection is done via HTTP or HTTPS.
-     */
-    private Boolean secure = false;
+	/**
+	 * minio实例上的密钥（密码）
+	 */
+	private String secretKey = "zuf+tfteSlswRu7BJ86wekitnifILbZam1KYY3TG";
 
-    /**
-     * 在执行器上注册的度量配置前缀。
-     */
-    private String metricName = "minio.oss";
+	/**
+	 * If the scheme is not provided in {@code url} property, define if the connection is
+	 * done via HTTP or HTTPS.
+	 */
+	private Boolean secure = false;
 
-    /**
-     * 连接超时时间。
-     */
-    private Duration connectTimeout = Duration.ofSeconds(10);
+	/**
+	 * 在执行器上注册的度量配置前缀。
+	 */
+	private String metricName = "minio.oss";
 
-    /**
-     * 写入超时时间
-     */
-    private Duration writeTimeout = Duration.ofSeconds(60);
+	/**
+	 * 连接超时时间。
+	 */
+	private Duration connectTimeout = Duration.ofSeconds(10);
 
-    /**
-     * 读取超时时间
-     */
-    private Duration readTimeout = Duration.ofSeconds(10);
+	/**
+	 * 写入超时时间
+	 */
+	private Duration writeTimeout = Duration.ofSeconds(60);
+
+	/**
+	 * 读取超时时间
+	 */
+	private Duration readTimeout = Duration.ofSeconds(10);
 
 }

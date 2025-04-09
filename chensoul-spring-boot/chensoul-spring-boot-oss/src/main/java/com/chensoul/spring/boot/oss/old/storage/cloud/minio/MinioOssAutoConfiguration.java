@@ -44,17 +44,21 @@ public class MinioOssAutoConfiguration {
 	@SneakyThrows
 	@Bean
 	public MinioClient minioClient(MinioOssProperties properties) {
-		MinioClient minioClient = MinioClient.builder().endpoint(properties.getEndpoint())
-			.credentials(properties.getAccessKey(), properties.getSecretKey()).region(properties.getRegion()).build();
+		MinioClient minioClient = MinioClient.builder()
+			.endpoint(properties.getEndpoint())
+			.credentials(properties.getAccessKey(), properties.getSecretKey())
+			.region(properties.getRegion())
+			.build();
 		minioClient.setTimeout(properties.getConnectTimeout().toMillis(), properties.getWriteTimeout().toMillis(),
-			properties.getReadTimeout().toMillis());
+				properties.getReadTimeout().toMillis());
 		try {
 			log.debug("Checking if bucket {} exists", properties.getBucket());
 			boolean b = minioClient.bucketExists(BucketExistsArgs.builder().bucket(properties.getBucket()).build());
 			if (!b) {
 				throw new RuntimeException(properties.getBucket() + "Bucket does not exists");
 			}
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			log.error("Error while checking bucket", e);
 			throw e;
 		}

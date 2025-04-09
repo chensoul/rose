@@ -6,6 +6,7 @@ import org.springframework.security.authentication.AuthenticationServiceExceptio
 import javax.servlet.http.HttpServletRequest;
 
 public class DefaultTokenExtractor implements TokenExtractor {
+
 	@Override
 	public String extract(HttpServletRequest request) {
 		String header = request.getHeader(AUTHORIZATION);
@@ -14,7 +15,8 @@ public class DefaultTokenExtractor implements TokenExtractor {
 				throw new AuthenticationServiceException("Invalid authorization header size.");
 			}
 			header = header.substring(HEADER_PREFIX.length(), header.length());
-		} else {
+		}
+		else {
 			header = request.getParameter(REQUEST_PREFIX);
 		}
 
@@ -23,4 +25,5 @@ public class DefaultTokenExtractor implements TokenExtractor {
 		}
 		return header;
 	}
+
 }

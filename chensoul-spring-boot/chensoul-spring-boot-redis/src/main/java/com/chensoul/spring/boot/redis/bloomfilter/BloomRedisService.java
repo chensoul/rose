@@ -4,7 +4,9 @@ import com.google.common.base.Preconditions;
 import org.springframework.data.redis.core.RedisTemplate;
 
 public class BloomRedisService {
+
 	private RedisTemplate<String, Object> redisTemplate;
+
 	private BloomFilterHelper bloomFilterHelper;
 
 	public void setBloomFilterHelper(BloomFilterHelper bloomFilterHelper) {
@@ -39,4 +41,5 @@ public class BloomRedisService {
 		}
 		return true;
 	}
+
 }

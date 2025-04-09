@@ -26,7 +26,8 @@ public class BackupCodeMfaConfig extends MfaConfig {
 	public Set<String> getCodesForJson() {
 		if (serializeHiddenFields) {
 			return new TreeSet<>(Arrays.asList(codes.split(",")));
-		} else {
+		}
+		else {
 			return null;
 		}
 	}
@@ -35,7 +36,8 @@ public class BackupCodeMfaConfig extends MfaConfig {
 	private Integer getCodesLeft() {
 		if (codes != null) {
 			return getCodesForJson().size();
-		} else {
+		}
+		else {
 			return null;
 		}
 	}

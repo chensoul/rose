@@ -13,33 +13,36 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Component
 public class EmailMfaProvider extends OtpBasedMfaProvider<EmailMfaProviderConfig, EmailMfaConfig> {
-//    private final MailService mailService;
+
+	// private final MailService mailService;
 
 	protected EmailMfaProvider(CacheManager cacheManager, ObjectMapper objectMapper) {
 		super(cacheManager, objectMapper);
-//        this.mailService = mailService;
+		// this.mailService = mailService;
 	}
 
 	@Override
 	public EmailMfaConfig generateTwoFaConfig(User user, EmailMfaProviderConfig providerConfig) {
 		EmailMfaConfig config = new EmailMfaConfig();
-//        config.setEmail(user.getEmail());
+		// config.setEmail(user.getEmail());
 		return config;
 	}
 
 	@Override
 	public void check(String tenantId) {
-//        try {
-//            mailService.testConnection(tenantId);
-//        } catch (Exception e) {
-//            throw new RuntimeException("Mail util is not set up");
-//        }
+		// try {
+		// mailService.testConnection(tenantId);
+		// } catch (Exception e) {
+		// throw new RuntimeException("Mail util is not set up");
+		// }
 	}
 
 	@Override
-	protected void sendVerificationCode(SecurityUser user, String verificationCode, EmailMfaProviderConfig providerConfig, EmailMfaConfig twoFaConfig) {
+	protected void sendVerificationCode(SecurityUser user, String verificationCode,
+			EmailMfaProviderConfig providerConfig, EmailMfaConfig twoFaConfig) {
 		log.info("send verification code {} to email {}", verificationCode, twoFaConfig.getEmail());
-//        mailService.sendTwoFaVerificationEmail(twoFaConfig.getEmail(), verificationCode, providerConfig.getVerificationCodeLifetime());
+		// mailService.sendTwoFaVerificationEmail(twoFaConfig.getEmail(),
+		// verificationCode, providerConfig.getVerificationCodeLifetime());
 	}
 
 	@Override

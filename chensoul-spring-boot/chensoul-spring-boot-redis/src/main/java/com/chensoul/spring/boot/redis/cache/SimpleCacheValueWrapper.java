@@ -43,4 +43,5 @@ public class SimpleCacheValueWrapper<T> implements CacheValueWrapper<T> {
 	public T get() {
 		return value;
 	}
+
 }
