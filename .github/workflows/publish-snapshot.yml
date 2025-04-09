@@ -18,7 +18,7 @@ jobs:
           java-version: '8'
           distribution: 'temurin'
           cache: 'maven'
-          server-id: central
+          server-id: ossrh
           server-username: MAVEN_USERNAME
           server-password: MAVEN_PASSWORD
           # gpg --list-secret-keys
@@ -32,7 +32,7 @@ jobs:
           node-version: '20'
 
       - name: Generate Java docs
-        run: mvn -Pjavadoc -B javadoc:aggregate
+        run: mvn -ntp -Pjavadoc -B javadoc:aggregate
 
       - name: Build with Maven and deploy to Sonatype snapshot repository
         env:
@@ -40,7 +40,7 @@ jobs:
           MAVEN_PASSWORD: ${{ secrets.OSSRH_TOKEN }}
           MAVEN_GPG_PASSPHRASE: ${{ secrets.SIGNING_PASSPHRASE }}
         run: |
-          mvn -Pjavadoc -Prelease --batch-mode --update-snapshots deploy
+          mvn -ntp --batch-mode --update-snapshots -Pjavadoc -Prelease deploy
 
       - name: Capture project version
         run: echo PROJECT_VERSION=$(mvn help:evaluate -Dexpression=project.version --quiet -DforceStdout) >> $GITHUB_ENV

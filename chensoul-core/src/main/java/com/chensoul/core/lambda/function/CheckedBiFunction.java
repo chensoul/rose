@@ -23,8 +23,6 @@ import java.util.function.Consumer;
 
 /**
  * A {@link BiFunction} that allows for checked exceptions.
- *
- * @author Lukas Eder
  */
 @FunctionalInterface
 public interface CheckedBiFunction<T, U, R> {

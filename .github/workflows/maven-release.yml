@@ -27,14 +27,11 @@ jobs:
           node-version: '20'
 
       - name: Build and Test
-        run: mvn clean verify
+        run: mvn -ntp clean verify
 
       - name: Publish to Maven Central
         run: |
-          mvn --batch-mode \
-            -Prelease \
-            -Pjavadoc \
-            deploy
+          mvn -ntp --batch-mode -Pjavadoc -Prelease deploy
         env:
           MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
           MAVEN_PASSWORD: ${{ secrets.OSSRH_TOKEN }}
