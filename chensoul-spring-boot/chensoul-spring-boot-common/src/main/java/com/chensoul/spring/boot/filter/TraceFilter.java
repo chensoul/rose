@@ -9,22 +9,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static com.chensoul.core.spring.WebUtils.isJsonRequest;
-
 public class TraceFilter extends OncePerRequestFilter {
 
 	public static final String TRACE_ID = "trace-id";
 
 	@Override
-	protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
-		return !isJsonRequest(request);
-	}
-
-	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
-			throws ServletException, IOException {
+		throws ServletException, IOException {
 		response.addHeader(TRACE_ID, TraceContext.traceId());
-
 		filterChain.doFilter(request, response);
 	}
 

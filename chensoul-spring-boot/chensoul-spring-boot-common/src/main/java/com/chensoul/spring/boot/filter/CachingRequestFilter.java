@@ -1,30 +1,65 @@
 package com.chensoul.spring.boot.filter;
 
-import com.chensoul.core.spring.WebUtils;
+import org.springframework.util.StreamUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
-import org.springframework.web.util.ContentCachingRequestWrapper;
 
-import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
+import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpServletResponse;
+import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 
 /**
- * Request Body 缓存 Filter，实现它的可重复读取
+ * @author zhijun.chen
+ * @since 2.16.3
  */
 public class CachingRequestFilter extends OncePerRequestFilter {
-
 	@Override
-	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
-			throws IOException, ServletException {
-		filterChain.doFilter(new ContentCachingRequestWrapper(request), response);
+	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
+		ServletRequest requestWrapper = new ContentCachingRequestWrapper(request);
+		chain.doFilter(requestWrapper, response);
 	}
 
-	@Override
-	protected boolean shouldNotFilter(HttpServletRequest request) {
-		// 只处理 jackson 请求内容
-		return !WebUtils.isJsonRequest(request);
-	}
+	public class ContentCachingRequestWrapper extends HttpServletRequestWrapper {
+		private final byte[] body;
 
+		public ContentCachingRequestWrapper(HttpServletRequest request) throws IOException {
+			super(request);
+			request.setCharacterEncoding("UTF-8");
+			body = StreamUtils.copyToByteArray(request.getInputStream());
+		}
+
+		@Override
+		public BufferedReader getReader() throws IOException {
+			return new BufferedReader(new InputStreamReader(getInputStream()));
+		}
+
+		@Override
+		public ServletInputStream getInputStream() throws IOException {
+			final ByteArrayInputStream bais = new ByteArrayInputStream(body);
+			return new ServletInputStream() {
+				@Override
+				public int read() throws IOException {
+					return bais.read();
+				}
+
+				@Override
+				public boolean isFinished() {
+					return Boolean.FALSE;
+				}
+
+				@Override
+				public boolean isReady() {
+					return Boolean.FALSE;
+				}
+
+				@Override
+				public void setReadListener(ReadListener readListener) {
+				}
+			};
+		}
+	}
 }
