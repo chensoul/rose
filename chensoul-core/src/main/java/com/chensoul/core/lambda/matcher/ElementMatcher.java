@@ -16,6 +16,7 @@ public interface ElementMatcher<T> {
 
 	/**
 	 * Matches a target against this element matcher.
+	 *
 	 * @param target The instance to be matched.
 	 * @return {@code true} if the given element is matched by this matcher or
 	 * {@code false} otherwise.
@@ -33,10 +34,11 @@ public interface ElementMatcher<T> {
 		 * Creates a conjunction where this matcher and the {@code other} matcher must
 		 * both be matched in order to constitute a successful match. The other matcher is
 		 * only invoked if this matcher constitutes a successful match.
+		 *
 		 * @param other The second matcher to consult.
-		 * @param <U> The type of the object that is being matched. Note that Java's type
-		 * inference might not be able to infer the common subtype of this instance and
-		 * the {@code other} matcher such that this type must need to be named explicitly.
+		 * @param <U>   The type of the object that is being matched. Note that Java's type
+		 *              inference might not be able to infer the common subtype of this instance and
+		 *              the {@code other} matcher such that this type must need to be named explicitly.
 		 * @return A conjunction of this matcher and the other matcher.
 		 */
 		<U extends S> Junction<U> and(ElementMatcher<? super U> other);
@@ -45,10 +47,11 @@ public interface ElementMatcher<T> {
 		 * Creates a disjunction where either this matcher or the {@code other} matcher
 		 * must be matched in order to constitute a successful match. The other matcher is
 		 * only invoked if this matcher constitutes an unsuccessful match.
+		 *
 		 * @param other The second matcher to consult.
-		 * @param <U> The type of the object that is being matched. Note that Java's type
-		 * inference might not be able to infer the common subtype of this instance and
-		 * the {@code other} matcher such that this type must need to be named explicitly.
+		 * @param <U>   The type of the object that is being matched. Note that Java's type
+		 *              inference might not be able to infer the common subtype of this instance and
+		 *              the {@code other} matcher such that this type must need to be named explicitly.
 		 * @return A disjunction of this matcher and the other matcher.
 		 */
 		<U extends S> Junction<U> or(ElementMatcher<? super U> other);
@@ -94,6 +97,7 @@ public interface ElementMatcher<T> {
 
 			/**
 			 * Creates a new conjunction matcher.
+			 *
 			 * @param matcher The represented matchers in application order.
 			 */
 			@SuppressWarnings("unchecked") // In absence of @SafeVarargs
@@ -103,6 +107,7 @@ public interface ElementMatcher<T> {
 
 			/**
 			 * Creates a new conjunction matcher.
+			 *
 			 * @param matchers The represented matchers in application order.
 			 */
 			@SuppressWarnings("unchecked")
@@ -111,8 +116,7 @@ public interface ElementMatcher<T> {
 				for (ElementMatcher<? super W> matcher : matchers) {
 					if (matcher instanceof Conjunction<?>) {
 						this.matchers.addAll(((Conjunction<Object>) matcher).matchers);
-					}
-					else {
+					} else {
 						this.matchers.add(matcher);
 					}
 				}
@@ -137,8 +141,7 @@ public interface ElementMatcher<T> {
 				for (ElementMatcher<? super W> matcher : matchers) {
 					if (first) {
 						first = false;
-					}
-					else {
+					} else {
 						stringBuilder.append(" and ");
 					}
 					stringBuilder.append(matcher);
@@ -163,6 +166,7 @@ public interface ElementMatcher<T> {
 
 			/**
 			 * Creates a new disjunction matcher.
+			 *
 			 * @param matcher The represented matchers in application order.
 			 */
 			@SuppressWarnings("unchecked") // In absence of @SafeVarargs
@@ -172,6 +176,7 @@ public interface ElementMatcher<T> {
 
 			/**
 			 * Creates a new disjunction matcher.
+			 *
 			 * @param matchers The represented matchers in application order.
 			 */
 			@SuppressWarnings("unchecked")
@@ -180,8 +185,7 @@ public interface ElementMatcher<T> {
 				for (ElementMatcher<? super W> matcher : matchers) {
 					if (matcher instanceof Disjunction<?>) {
 						this.matchers.addAll(((Disjunction<Object>) matcher).matchers);
-					}
-					else {
+					} else {
 						this.matchers.add(matcher);
 					}
 				}
@@ -206,8 +210,7 @@ public interface ElementMatcher<T> {
 				for (ElementMatcher<? super W> matcher : matchers) {
 					if (first) {
 						first = false;
-					}
-					else {
+					} else {
 						stringBuilder.append(" or ");
 					}
 					stringBuilder.append(matcher);
@@ -233,6 +236,7 @@ public interface ElementMatcher<T> {
 
 			/**
 			 * Matches the supplied value if it was found not to be {@code null}.
+			 *
 			 * @param target The instance to be matched.
 			 * @return {@code true} if the given element is matched by this matcher or
 			 * {@code false} otherwise.

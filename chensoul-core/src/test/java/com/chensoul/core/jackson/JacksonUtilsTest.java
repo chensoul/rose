@@ -19,30 +19,30 @@ public class JacksonUtilsTest {
 	public void allowUnquotedFieldMapperTest() {
 		String data = "{data: 123}";
 		JsonNode actualResult = JacksonUtils.toJsonNode(data, JacksonUtils.ALLOW_UNQUOTED_FIELD_NAMES_MAPPER); // should
-																												// be:
-																												// {"data":
-																												// 123}
+		// be:
+		// {"data":
+		// 123}
 		ObjectNode expectedResult = JacksonUtils.newObjectNode();
 		expectedResult.put("data", 123); // {"data": 123}
 		Assertions.assertEquals(expectedResult, actualResult);
 		Assertions.assertThrows(IllegalArgumentException.class, () -> JacksonUtils.toJsonNode(data)); // syntax
-																										// exception
-																										// due
-																										// to
-																										// missing
-																										// quotes
-																										// in
-																										// the
-																										// field
-																										// name!
+		// exception
+		// due
+		// to
+		// missing
+		// quotes
+		// in
+		// the
+		// field
+		// name!
 	}
 
 	@ParameterizedTest
-	@ValueSource(strings = { "", "false", "\"", "\"\"", "\"This is a string with double quotes\"",
-			"Path: /home/developer/test.txt", "First line\nSecond line\n\nFourth line", "Before\rAfter",
-			"Tab\tSeparated\tValues", "Test\bbackspace", "[]", "[1, 2, 3]", "{\"key\": \"value\"}",
-			"{\n\"temperature\": 25.5,\n\"humidity\": 50.2\n\"}", "Expression: (a + b) * c", "世界", "Україна",
-			"\u1F1FA\u1F1E6", "🇺🇦" })
+	@ValueSource(strings = {"", "false", "\"", "\"\"", "\"This is a string with double quotes\"",
+		"Path: /home/developer/test.txt", "First line\nSecond line\n\nFourth line", "Before\rAfter",
+		"Tab\tSeparated\tValues", "Test\bbackspace", "[]", "[1, 2, 3]", "{\"key\": \"value\"}",
+		"{\n\"temperature\": 25.5,\n\"humidity\": 50.2\n\"}", "Expression: (a + b) * c", "世界", "Україна",
+		"\u1F1FA\u1F1E6", "🇺🇦"})
 	public void toPlainTextTest(String original) {
 		String serialized = JacksonUtils.toString(original);
 		Assertions.assertNotNull(serialized);

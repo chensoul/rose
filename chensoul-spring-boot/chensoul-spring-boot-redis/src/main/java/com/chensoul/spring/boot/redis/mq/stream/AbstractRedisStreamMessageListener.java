@@ -45,7 +45,7 @@ import java.util.List;
  * @author EnjoyIot
  */
 public abstract class AbstractRedisStreamMessageListener<T extends AbstractRedisStreamMessage>
-		implements StreamListener<String, ObjectRecord<String, String>> {
+	implements StreamListener<String, ObjectRecord<String, String>> {
 
 	/**
 	 * 消息类型
@@ -92,20 +92,21 @@ public abstract class AbstractRedisStreamMessageListener<T extends AbstractRedis
 			// 2. 发送日志；以及事务的结合
 			// 3. 消费日志；以及通用的幂等性
 			// 4. 消费失败的重试，https://zhuanlan.zhihu.com/p/60501638
-		}
-		finally {
+		} finally {
 			consumeMessageAfter(messageObj);
 		}
 	}
 
 	/**
 	 * 处理消息
+	 *
 	 * @param message 消息
 	 */
 	public abstract void onMessage(T message);
 
 	/**
 	 * 通过解析类上的泛型，获得消息类型
+	 *
 	 * @return 消息类型
 	 */
 	@SuppressWarnings("unchecked")

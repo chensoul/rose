@@ -45,11 +45,10 @@ public class TenantJobAspect {
 			TenantUtils.execute(tenantId, () -> {
 				try {
 					joinPoint.proceed();
-				}
-				catch (Throwable e) {
+				} catch (Throwable e) {
 					results.put(tenantId, ExceptionUtils.getRootCauseMessage(e));
 					XxlJobHelper.log(FormatUtils.format("{}租户执行任务({})，发生异常：{}]", tenantId, joinPoint.getSignature(),
-							ExceptionUtils.getStackTrace(e)));
+						ExceptionUtils.getStackTrace(e)));
 				}
 			});
 		});

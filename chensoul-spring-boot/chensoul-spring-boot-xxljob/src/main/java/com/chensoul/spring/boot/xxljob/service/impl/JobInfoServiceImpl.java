@@ -101,7 +101,7 @@ public class JobInfoServiceImpl implements JobInfoService {
 
 		HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(params, headers);
 		ResponseEntity<XxlRestResponse> response = restTemplate.postForEntity(url, requestEntity,
-				XxlRestResponse.class);
+			XxlRestResponse.class);
 
 		XxlRestResponse xxlRestResponse = response.getBody();
 		if (xxlRestResponse.getCode() != 200) {

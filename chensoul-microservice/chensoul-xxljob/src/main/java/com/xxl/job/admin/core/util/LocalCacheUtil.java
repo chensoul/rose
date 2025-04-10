@@ -57,6 +57,7 @@ public class LocalCacheUtil {
 
 	/**
 	 * set cache
+	 *
 	 * @param key
 	 * @param val
 	 * @param cacheTime
@@ -85,6 +86,7 @@ public class LocalCacheUtil {
 
 	/**
 	 * remove cache
+	 *
 	 * @param key
 	 * @return
 	 */
@@ -98,6 +100,7 @@ public class LocalCacheUtil {
 
 	/**
 	 * get cache
+	 *
 	 * @param key
 	 * @return
 	 */
@@ -108,8 +111,7 @@ public class LocalCacheUtil {
 		LocalCacheData localCacheData = cacheRepository.get(key);
 		if (localCacheData != null && System.currentTimeMillis() < localCacheData.getTimeoutTime()) {
 			return localCacheData.getVal();
-		}
-		else {
+		} else {
 			remove(key);
 			return null;
 		}
@@ -117,6 +119,7 @@ public class LocalCacheUtil {
 
 	/**
 	 * clean timeout cache
+	 *
 	 * @return
 	 */
 	public static boolean cleanTimeoutCache() {

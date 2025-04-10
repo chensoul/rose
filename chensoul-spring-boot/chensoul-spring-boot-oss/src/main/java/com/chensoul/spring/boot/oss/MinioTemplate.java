@@ -1,12 +1,12 @@
 package com.chensoul.spring.boot.oss;
 
+import com.chensoul.core.util.StringPool;
+import com.chensoul.core.util.date.TimeUtils;
 import com.chensoul.spring.boot.oss.enums.PolicyType;
 import com.chensoul.spring.boot.oss.model.BladeFile;
 import com.chensoul.spring.boot.oss.model.OssFile;
 import com.chensoul.spring.boot.oss.props.OssProperties;
 import com.chensoul.spring.boot.oss.rule.OssRule;
-import com.chensoul.core.util.date.TimeUtils;
-import com.chensoul.core.util.StringPool;
 import io.minio.*;
 import io.minio.http.Method;
 import io.minio.messages.Bucket;
@@ -46,6 +46,7 @@ public class MinioTemplate implements OssTemplate {
 
 	/**
 	 * 获取存储桶策略
+	 *
 	 * @param bucketName 存储桶名称
 	 * @param policyType 策略枚举
 	 * @return String
@@ -307,11 +308,12 @@ public class MinioTemplate implements OssTemplate {
 	public void removeFiles(String bucketName, List<String> fileNames) {
 		Stream<DeleteObject> stream = fileNames.stream().map(DeleteObject::new);
 		client.removeObjects(
-				RemoveObjectsArgs.builder().bucket(getBucketName(bucketName)).objects(stream::iterator).build());
+			RemoveObjectsArgs.builder().bucket(getBucketName(bucketName)).objects(stream::iterator).build());
 	}
 
 	/**
 	 * 根据规则生成存储桶名称规则
+	 *
 	 * @return String
 	 */
 	private String getBucketName() {
@@ -320,6 +322,7 @@ public class MinioTemplate implements OssTemplate {
 
 	/**
 	 * 根据规则生成存储桶名称规则
+	 *
 	 * @param bucketName 存储桶名称
 	 * @return String
 	 */
@@ -329,6 +332,7 @@ public class MinioTemplate implements OssTemplate {
 
 	/**
 	 * 根据规则生成文件名称规则
+	 *
 	 * @param originalFilename 原始文件名
 	 * @return string
 	 */
@@ -338,9 +342,10 @@ public class MinioTemplate implements OssTemplate {
 
 	/**
 	 * 获取文件外链
+	 *
 	 * @param bucketName bucket名称
-	 * @param fileName 文件名称
-	 * @param expires 过期时间
+	 * @param fileName   文件名称
+	 * @param expires    过期时间
 	 * @return url
 	 */
 	@SneakyThrows
@@ -355,6 +360,7 @@ public class MinioTemplate implements OssTemplate {
 
 	/**
 	 * 获取存储桶策略
+	 *
 	 * @param policyType 策略枚举
 	 * @return String
 	 */
@@ -364,6 +370,7 @@ public class MinioTemplate implements OssTemplate {
 
 	/**
 	 * 获取域名
+	 *
 	 * @param bucketName 存储桶名称
 	 * @return String
 	 */
@@ -373,6 +380,7 @@ public class MinioTemplate implements OssTemplate {
 
 	/**
 	 * 获取域名
+	 *
 	 * @return String
 	 */
 	public String getOssHost() {
@@ -381,6 +389,7 @@ public class MinioTemplate implements OssTemplate {
 
 	/**
 	 * 获取服务地址
+	 *
 	 * @return String
 	 */
 	public String getEndpoint() {

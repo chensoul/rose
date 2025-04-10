@@ -23,7 +23,7 @@ import java.util.Optional;
 import java.util.function.Supplier;
 
 public interface VersionedCache<K extends VersionedCacheKey, V extends Serializable & HasVersion>
-		extends TransactionalCache<K, V> {
+	extends TransactionalCache<K, V> {
 
 	CacheValueWrapper<V> get(K key);
 
@@ -52,11 +52,9 @@ public interface VersionedCache<K extends VersionedCacheKey, V extends Serializa
 	default Long getVersion(V value) {
 		if (value == null) {
 			return 0L;
-		}
-		else if (value.getVersion() != null) {
+		} else if (value.getVersion() != null) {
 			return value.getVersion();
-		}
-		else {
+		} else {
 			return null;
 		}
 	}

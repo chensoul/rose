@@ -2,8 +2,9 @@ package com.chensoul.ip.utils;
 
 import com.chensoul.ip.Area;
 import com.chensoul.ip.enums.AreaTypeEnum;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * {@link AreaUtils} 的单元测试

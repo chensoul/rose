@@ -22,7 +22,7 @@ import java.util.Objects;
 @Service
 @RequiredArgsConstructor
 public class OAuth2ClientServiceImpl extends ServiceImpl<OAuth2ClientMapper, OAuth2Client>
-		implements OAuth2ClientService {
+	implements OAuth2ClientService {
 
 	private final PasswordEncoder passwordEncoder;
 
@@ -68,7 +68,7 @@ public class OAuth2ClientServiceImpl extends ServiceImpl<OAuth2ClientMapper, OAu
 	@Override
 	public boolean saveClientDetails(OAuth2Client oAuth2Client) {
 		OAuth2Client oldOAuth2Client = baseMapper.selectOne(
-				new LambdaQueryWrapper<OAuth2Client>().eq(OAuth2Client::getClientId, oAuth2Client.getClientId()));
+			new LambdaQueryWrapper<OAuth2Client>().eq(OAuth2Client::getClientId, oAuth2Client.getClientId()));
 		if (oldOAuth2Client != null) {
 			throw new BusinessException("该Client已存在");
 		}

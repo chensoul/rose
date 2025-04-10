@@ -16,7 +16,7 @@ public class InstanceStatusChangeNotifier extends AbstractStatusChangeNotifier {
 
 	@Override
 	protected Mono<Void> doNotify(InstanceEvent event,
-			de.codecentric.boot.admin.server.domain.entities.Instance instance) {
+								  de.codecentric.boot.admin.server.domain.entities.Instance instance) {
 		return Mono.fromRunnable(() -> {
 			if (event instanceof InstanceStatusChangedEvent) {
 				String status = ((InstanceStatusChangedEvent) event).getStatusInfo().getStatus();

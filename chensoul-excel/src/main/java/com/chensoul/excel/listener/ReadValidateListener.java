@@ -54,13 +54,11 @@ public class ReadValidateListener<T extends ReadFailMessageAware> extends Analys
 		if (!CollectionUtils.isEmpty(constraintViolations)) {
 			data.setMessage(constraintViolations.stream().map(a -> a.getMessage()).collect(Collectors.joining("、")));
 			failData.add(data);
-		}
-		else {
+		} else {
 			String customValidateResult = customValidate(successData, data);
 			if (StringUtils.isEmpty(customValidateResult)) {
 				successData.add(data);
-			}
-			else {
+			} else {
 				data.setMessage(customValidateResult);
 				failData.add(data);
 			}

@@ -112,7 +112,7 @@ public class DatePattern {
 	 * 标准日期格式 {@link FastDateFormat}：yyyy-MM-dd HH:mm
 	 */
 	public static final DateTimeFormatter NORM_DATETIME_MINUTE_FORMATTER = createFormatter(
-			NORM_DATETIME_MINUTE_PATTERN);
+		NORM_DATETIME_MINUTE_PATTERN);
 
 	/**
 	 * 标准日期时间格式，精确到秒：yyyy-MM-dd HH:mm:ss
@@ -262,13 +262,13 @@ public class DatePattern {
 	 * HTTP头中日期时间格式 {@link FastDateFormat}：EEE, dd MMM yyyy HH:mm:ss z
 	 */
 	public static final FastDateFormat HTTP_DATETIME_FORMAT = FastDateFormat.getInstance(HTTP_DATETIME_PATTERN,
-			TimeZone.getTimeZone("GMT"), Locale.US);
+		TimeZone.getTimeZone("GMT"), Locale.US);
 
 	/**
 	 * HTTP头中日期时间格式 {@link FastDateFormat}：EEE, dd MMM yyyy HH:mm:ss z
 	 */
 	public static final FastDateFormat HTTP_DATETIME_FORMAT_Z = FastDateFormat.getInstance(HTTP_DATETIME_PATTERN,
-			Locale.US);
+		Locale.US);
 
 	/**
 	 * JDK中日期时间格式：EEE MMM dd HH:mm:ss zzz yyyy
@@ -279,7 +279,7 @@ public class DatePattern {
 	 * JDK中日期时间格式 {@link FastDateFormat}：EEE MMM dd HH:mm:ss zzz yyyy
 	 */
 	public static final FastDateFormat JDK_DATETIME_FORMAT = FastDateFormat.getInstance(JDK_DATETIME_PATTERN,
-			Locale.US);
+		Locale.US);
 
 	/**
 	 * ISO8601时间：yyyy-MM-dd'T'HH:mm:ss
@@ -310,7 +310,7 @@ public class DatePattern {
 	 * UTC时间{@link FastDateFormat}：yyyy-MM-dd'T'HH:mm:ss'Z'
 	 */
 	public static final FastDateFormat UTC_FORMAT = FastDateFormat.getInstance(UTC_PATTERN,
-			TimeZone.getTimeZone("UTC"));
+		TimeZone.getTimeZone("UTC"));
 
 	/**
 	 * UTC时间：yyyy-MM-dd'T'HH:mm:ssZ
@@ -343,7 +343,7 @@ public class DatePattern {
 	 * UTC时间{@link FastDateFormat}：yyyy-MM-dd'T'HH:mm:ss.SSS'Z'
 	 */
 	public static final FastDateFormat UTC_MS_FORMAT = FastDateFormat.getInstance(UTC_MS_PATTERN,
-			TimeZone.getTimeZone("UTC"));
+		TimeZone.getTimeZone("UTC"));
 
 	/**
 	 * UTC时间：yyyy-MM-dd'T'HH:mm:ssZ
@@ -369,6 +369,7 @@ public class DatePattern {
 
 	/**
 	 * 创建并为 {@link DateTimeFormatter} 赋予默认时区和位置信息，默认值为系统默认值。
+	 *
 	 * @param pattern 日期格式
 	 * @return {@link DateTimeFormatter}
 	 */

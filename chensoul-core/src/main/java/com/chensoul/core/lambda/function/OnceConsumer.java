@@ -34,6 +34,7 @@ public final class OnceConsumer<T> {
 	 * assertThat(lst).hasSize(1).contains("Hello World");
 	 *
 	 * </code></pre>
+	 *
 	 * @param consumer computation run once with input t
 	 */
 	public void applyOnce(final Consumer<T> consumer) {

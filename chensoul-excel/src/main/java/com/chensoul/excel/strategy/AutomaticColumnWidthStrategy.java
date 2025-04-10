@@ -20,11 +20,11 @@ public class AutomaticColumnWidthStrategy extends AbstractColumnWidthStyleStrate
 
 	@Override
 	protected void setColumnWidth(WriteSheetHolder writeSheetHolder, List<WriteCellData<?>> cellDataList, Cell cell,
-			Head head, Integer integer, Boolean isHead) {
+								  Head head, Integer integer, Boolean isHead) {
 		boolean needSetWidth = isHead || !CollectionUtils.isEmpty(cellDataList);
 		if (needSetWidth) {
 			Map<Integer, Integer> maxColumnWidthMap = CACHE.computeIfAbsent(writeSheetHolder.getSheetNo(),
-					k -> new HashMap<>());
+				k -> new HashMap<>());
 
 			Integer columnWidth = this.dataLength(cellDataList, cell, isHead);
 			if (columnWidth >= 0) {
@@ -45,6 +45,7 @@ public class AutomaticColumnWidthStrategy extends AbstractColumnWidthStyleStrate
 
 	/**
 	 * 计算长度
+	 *
 	 * @param cellDataList
 	 * @param cell
 	 * @param isHead
@@ -53,20 +54,18 @@ public class AutomaticColumnWidthStrategy extends AbstractColumnWidthStyleStrate
 	private Integer dataLength(List<WriteCellData<?>> cellDataList, Cell cell, Boolean isHead) {
 		if (isHead) {
 			return cell.getStringCellValue().getBytes().length + 10;
-		}
-		else {
+		} else {
 			CellData<?> cellData = cellDataList.get(0);
 			CellDataTypeEnum type = cellData.getType();
 			if (type == null) {
 				return -1;
-			}
-			else {
+			} else {
 				switch (type) {
 					case STRING:
 						// 换行符（数据需要提前解析好）
 						int index = cellData.getStringValue().indexOf("\n");
 						return index != -1 ? cellData.getStringValue().substring(0, index).getBytes().length + 1
-								: cellData.getStringValue().getBytes().length + 1;
+							: cellData.getStringValue().getBytes().length + 1;
 					case BOOLEAN:
 						return cellData.getBooleanValue().toString().getBytes().length;
 					case NUMBER:

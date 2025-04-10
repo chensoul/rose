@@ -75,13 +75,13 @@ public class JobLogReportHelper {
 								.findLogReport(todayFrom, todayTo);
 							if (triggerCountMap != null && triggerCountMap.size() > 0) {
 								int triggerDayCount = triggerCountMap.containsKey("triggerDayCount")
-										? Integer.valueOf(String.valueOf(triggerCountMap.get("triggerDayCount"))) : 0;
+									? Integer.valueOf(String.valueOf(triggerCountMap.get("triggerDayCount"))) : 0;
 								int triggerDayCountRunning = triggerCountMap.containsKey("triggerDayCountRunning")
-										? Integer.valueOf(String.valueOf(triggerCountMap.get("triggerDayCountRunning")))
-										: 0;
+									? Integer.valueOf(String.valueOf(triggerCountMap.get("triggerDayCountRunning")))
+									: 0;
 								int triggerDayCountSuc = triggerCountMap.containsKey("triggerDayCountSuc")
-										? Integer.valueOf(String.valueOf(triggerCountMap.get("triggerDayCountSuc")))
-										: 0;
+									? Integer.valueOf(String.valueOf(triggerCountMap.get("triggerDayCountSuc")))
+									: 0;
 								int triggerDayCountFail = triggerDayCount - triggerDayCountRunning - triggerDayCountSuc;
 
 								xxlJobLogReport.setRunningCount(triggerDayCountRunning);
@@ -98,8 +98,7 @@ public class JobLogReportHelper {
 							}
 						}
 
-					}
-					catch (Exception e) {
+					} catch (Exception e) {
 						if (!toStop) {
 							logger.error(">>>>>>>>>>> xxl-job, job log report thread error:{}", e);
 						}
@@ -107,12 +106,12 @@ public class JobLogReportHelper {
 
 					// 2、log-clean: switch open & once each day
 					if (XxlJobAdminConfig.getAdminConfig().getLogretentiondays() > 0
-							&& System.currentTimeMillis() - lastCleanLogTime > 24 * 60 * 60 * 1000) {
+						&& System.currentTimeMillis() - lastCleanLogTime > 24 * 60 * 60 * 1000) {
 
 						// expire-time
 						Calendar expiredDay = Calendar.getInstance();
 						expiredDay.add(Calendar.DAY_OF_MONTH,
-								-1 * XxlJobAdminConfig.getAdminConfig().getLogretentiondays());
+							-1 * XxlJobAdminConfig.getAdminConfig().getLogretentiondays());
 						expiredDay.set(Calendar.HOUR_OF_DAY, 0);
 						expiredDay.set(Calendar.MINUTE, 0);
 						expiredDay.set(Calendar.SECOND, 0);
@@ -137,8 +136,7 @@ public class JobLogReportHelper {
 
 					try {
 						TimeUnit.MINUTES.sleep(1);
-					}
-					catch (Exception e) {
+					} catch (Exception e) {
 						if (!toStop) {
 							logger.error(e.getMessage(), e);
 						}
@@ -161,8 +159,7 @@ public class JobLogReportHelper {
 		logrThread.interrupt();
 		try {
 			logrThread.join();
-		}
-		catch (InterruptedException e) {
+		} catch (InterruptedException e) {
 			logger.error(e.getMessage(), e);
 		}
 	}

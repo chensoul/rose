@@ -15,8 +15,7 @@ public class DefaultTokenExtractor implements TokenExtractor {
 				throw new AuthenticationServiceException("Invalid authorization header size.");
 			}
 			header = header.substring(HEADER_PREFIX.length(), header.length());
-		}
-		else {
+		} else {
 			header = request.getParameter(REQUEST_PREFIX);
 		}
 

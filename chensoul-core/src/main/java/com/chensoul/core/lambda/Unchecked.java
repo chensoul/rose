@@ -107,8 +107,7 @@ public final class Unchecked {
 		return () -> {
 			try {
 				runnable.run();
-			}
-			catch (Throwable e) {
+			} catch (Throwable e) {
 				handler.accept(e);
 
 				throw new IllegalStateException("Exception handler must throw a RuntimeException", e);
@@ -148,8 +147,7 @@ public final class Unchecked {
 		return () -> {
 			try {
 				return callable.call();
-			}
-			catch (Throwable e) {
+			} catch (Throwable e) {
 				handler.accept(e);
 
 				throw new IllegalStateException("Exception handler must throw a RuntimeException", e);
@@ -172,8 +170,7 @@ public final class Unchecked {
 		return (t1, t2) -> {
 			try {
 				return comparator.compare(t1, t2);
-			}
-			catch (Throwable e) {
+			} catch (Throwable e) {
 				handler.accept(e);
 
 				throw new IllegalStateException("Exception handler must throw a RuntimeException", e);
@@ -215,8 +212,7 @@ public final class Unchecked {
 		return (t, u) -> {
 			try {
 				consumer.accept(t, u);
-			}
-			catch (Throwable e) {
+			} catch (Throwable e) {
 				handler.accept(e);
 
 				throw new IllegalStateException("Exception handler must throw a RuntimeException", e);
@@ -259,12 +255,11 @@ public final class Unchecked {
 	 * </code></pre>
 	 */
 	public static <T, U, R> BiFunction<T, U, R> biFunction(CheckedBiFunction<T, U, R> function,
-			Consumer<Throwable> handler) {
+														   Consumer<Throwable> handler) {
 		return (t, u) -> {
 			try {
 				return function.apply(t, u);
-			}
-			catch (Throwable e) {
+			} catch (Throwable e) {
 				handler.accept(e);
 
 				throw new IllegalStateException("Exception handler must throw a RuntimeException", e);
@@ -284,12 +279,11 @@ public final class Unchecked {
 	 * for checked exceptions.
 	 */
 	public static <T, U> BiPredicate<T, U> biPredicate(CheckedBiPredicate<T, U> predicate,
-			Consumer<Throwable> handler) {
+													   Consumer<Throwable> handler) {
 		return (t, u) -> {
 			try {
 				return predicate.test(t, u);
-			}
-			catch (Throwable e) {
+			} catch (Throwable e) {
 				handler.accept(e);
 
 				throw new IllegalStateException("Exception handler must throw a RuntimeException", e);
@@ -335,8 +329,7 @@ public final class Unchecked {
 		return t -> {
 			try {
 				return function.apply(t);
-			}
-			catch (Throwable e) {
+			} catch (Throwable e) {
 				handler.accept(e);
 
 				throw new IllegalStateException("Exception handler must throw a RuntimeException", e);
@@ -382,8 +375,7 @@ public final class Unchecked {
 		return t -> {
 			try {
 				return function.test(t);
-			}
-			catch (Throwable e) {
+			} catch (Throwable e) {
 				handler.accept(e);
 
 				throw new IllegalStateException("Exception handler must throw a RuntimeException", e);
@@ -422,8 +414,7 @@ public final class Unchecked {
 		return () -> {
 			try {
 				return supplier.get();
-			}
-			catch (Throwable e) {
+			} catch (Throwable e) {
 				handler.accept(e);
 
 				throw new IllegalStateException("Exception handler must throw a RuntimeException", e);
@@ -465,8 +456,7 @@ public final class Unchecked {
 		return t -> {
 			try {
 				consumer.accept(t);
-			}
-			catch (Throwable e) {
+			} catch (Throwable e) {
 				handler.accept(e);
 
 				throw new IllegalStateException("Exception handler must throw a RuntimeException", e);

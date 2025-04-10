@@ -62,8 +62,7 @@ public class TemporaryFileSystemResource extends FileSystemResource {
 	private void closeThenDeleteFile(final Closeable closeable) throws IOException {
 		try {
 			closeable.close();
-		}
-		finally {
+		} finally {
 			deleteFile();
 		}
 	}
@@ -71,8 +70,7 @@ public class TemporaryFileSystemResource extends FileSystemResource {
 	private void deleteFile() {
 		try {
 			Files.delete(getFile().toPath());
-		}
-		catch (final IOException ex) {
+		} catch (final IOException ex) {
 			val msg = String.format("Failed to delete temporary heap dump file %s", getFile());
 			log.warn(msg, ex);
 		}

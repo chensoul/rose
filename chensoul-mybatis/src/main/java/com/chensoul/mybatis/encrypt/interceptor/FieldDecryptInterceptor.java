@@ -20,7 +20,7 @@ import java.util.Properties;
  * @author <a href="mailto:ichensoul@gmail.com">chensoul</a>
  * @since 0.0.1
  */
-@Intercepts({ @Signature(type = ResultSetHandler.class, method = "handleResultSets", args = { Statement.class }) })
+@Intercepts({@Signature(type = ResultSetHandler.class, method = "handleResultSets", args = {Statement.class})})
 @Slf4j
 @Data
 public class FieldDecryptInterceptor implements Interceptor {
@@ -46,7 +46,7 @@ public class FieldDecryptInterceptor implements Interceptor {
 	}
 
 	public void decrypt(IEncryptor encryptor, IFieldBinder fieldBinder, String password, MetaObject metaObject,
-			FieldSetProperty fieldSetProperty) {
+						FieldSetProperty fieldSetProperty) {
 		String fieldName = fieldSetProperty.getFieldName();
 		Object value = metaObject.getValue(fieldName);
 		if (null != value) {
@@ -57,8 +57,7 @@ public class FieldDecryptInterceptor implements Interceptor {
 						value = InterceptorHelper.getEncryptor(encryptor, fieldEncrypt.encryptor())
 							.decrypt(fieldEncrypt.algorithm(), password, (String) value, null);
 					}
-				}
-				catch (Exception e) {
+				} catch (Exception e) {
 					log.error("field decrypt", e);
 				}
 			}

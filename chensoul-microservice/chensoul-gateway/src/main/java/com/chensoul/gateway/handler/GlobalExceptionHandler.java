@@ -29,13 +29,11 @@ public class GlobalExceptionHandler implements ErrorWebExceptionHandler {
 		String message;
 		if (ex instanceof NotFoundException) {
 			message = "服务未找到";
-		}
-		else if (ex instanceof ResponseStatusException) {
+		} else if (ex instanceof ResponseStatusException) {
 			ResponseStatusException responseStatusException = (ResponseStatusException) ex;
 			response.setStatusCode(responseStatusException.getStatus());
 			message = responseStatusException.getMessage();
-		}
-		else {
+		} else {
 			message = "系统异常";
 		}
 		return WebfluxUtils.writeResponse(exchange.getResponse(), RestResponse.error(message));

@@ -27,7 +27,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @ConditionalOnBean(UndertowServletWebServerFactory.class)
 @ConditionalOnClass(UndertowOptions.class)
-@ConditionalOnProperty({ "server.ssl.ciphers", "server.ssl.key-store" })
+@ConditionalOnProperty({"server.ssl.ciphers", "server.ssl.key-store"})
 public class UndertowSSLConfiguration {
 
 	private final UndertowServletWebServerFactory factory;
@@ -42,7 +42,7 @@ public class UndertowSSLConfiguration {
 	private void configuringUserCipherSuiteOrder() {
 		log.info("Configuring Undertow Setting user cipher suite order to true");
 		factory.addBuilderCustomizers(
-				builder -> builder.setSocketOption(UndertowOptions.SSL_USER_CIPHER_SUITES_ORDER, Boolean.TRUE));
+			builder -> builder.setSocketOption(UndertowOptions.SSL_USER_CIPHER_SUITES_ORDER, Boolean.TRUE));
 	}
 
 }

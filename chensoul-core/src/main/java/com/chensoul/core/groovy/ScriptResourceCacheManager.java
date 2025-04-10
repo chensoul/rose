@@ -14,10 +14,11 @@ import java.util.Set;
  * @author <a href="mailto:ichensoul@gmail.com">chensoul</a>
  */
 public interface ScriptResourceCacheManager<K extends String, V extends ExecutableScript>
-		extends AutoCloseable, DisposableBean {
+	extends AutoCloseable, DisposableBean {
 
 	/**
 	 * Compute key.
+	 *
 	 * @param keys the keys
 	 * @return the key
 	 */
@@ -28,6 +29,7 @@ public interface ScriptResourceCacheManager<K extends String, V extends Executab
 
 	/**
 	 * Get item.
+	 *
 	 * @param key the key
 	 * @return the item
 	 */
@@ -35,6 +37,7 @@ public interface ScriptResourceCacheManager<K extends String, V extends Executab
 
 	/**
 	 * Contains key ?
+	 *
 	 * @param key the key
 	 * @return true/false
 	 */
@@ -42,7 +45,8 @@ public interface ScriptResourceCacheManager<K extends String, V extends Executab
 
 	/**
 	 * Put script resource cache manager.
-	 * @param key the key
+	 *
+	 * @param key   the key
 	 * @param value the value
 	 * @return the script resource cache manager
 	 */
@@ -50,6 +54,7 @@ public interface ScriptResourceCacheManager<K extends String, V extends Executab
 
 	/**
 	 * Remove script resource cache manager.
+	 *
 	 * @param key the key
 	 * @return the script resource cache manager
 	 */
@@ -57,12 +62,14 @@ public interface ScriptResourceCacheManager<K extends String, V extends Executab
 
 	/**
 	 * Gets keys.
+	 *
 	 * @return the keys
 	 */
 	Set<String> getKeys();
 
 	/**
 	 * Clear items.
+	 *
 	 * @return the groovy script resource cache manager
 	 */
 	@CanIgnoreReturnValue
@@ -81,14 +88,16 @@ public interface ScriptResourceCacheManager<K extends String, V extends Executab
 
 	/**
 	 * Is cache empty?
+	 *
 	 * @return true/false
 	 */
 	boolean isEmpty();
 
 	/**
 	 * Resolve scriptable resource executable.
+	 *
 	 * @param scriptResource the script resource
-	 * @param keys the keys
+	 * @param keys           the keys
 	 * @return the executable compiled groovy script
 	 */
 	ExecutableScript resolveScriptableResource(String scriptResource, String... keys);

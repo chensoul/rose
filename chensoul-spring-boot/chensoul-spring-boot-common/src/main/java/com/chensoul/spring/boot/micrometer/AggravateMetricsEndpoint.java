@@ -1,7 +1,7 @@
 package com.chensoul.spring.boot.micrometer;
 
-import io.micrometer.core.instrument.Timer;
 import io.micrometer.core.instrument.*;
+import io.micrometer.core.instrument.Timer;
 import io.micrometer.core.instrument.distribution.ValueAtPercentile;
 import io.micrometer.core.instrument.search.Search;
 import org.slf4j.Logger;
@@ -30,6 +30,7 @@ public class AggravateMetricsEndpoint {
 	 * GET /actuator/aggmetrics
 	 * <p>
 	 * Give metrics displayed on Metrics page
+	 *
 	 * @return a Map with a String defining a category of metrics as Key and another Map
 	 * containing metrics related to this category as Value
 	 */
@@ -198,8 +199,7 @@ public class AggravateMetricsEndpoint {
 					key += "." + counter.getId().getTag("result");
 				}
 				resultsCache.get(name).put(key, counter.count());
-			}
-			else {
+			} else {
 				logger.warn(MISSING_NAME_TAG_MESSAGE, key);
 			}
 		});
@@ -211,8 +211,7 @@ public class AggravateMetricsEndpoint {
 			if (name != null) {
 				resultsCache.putIfAbsent(name, new HashMap<>());
 				resultsCache.get(name).put(key, gauge.value());
-			}
-			else {
+			} else {
 				logger.warn(MISSING_NAME_TAG_MESSAGE, key);
 			}
 		});

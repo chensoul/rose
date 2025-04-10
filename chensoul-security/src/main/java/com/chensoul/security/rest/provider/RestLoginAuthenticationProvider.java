@@ -43,7 +43,7 @@ public class RestLoginAuthenticationProvider implements AuthenticationProvider {
 	}
 
 	private SecurityUser authenticateByUsernameAndPassword(Authentication authentication, String username,
-			String password) {
+														   String password) {
 		UserDetails user = userDetailsService.loadUserByUsername(username);
 		if (user == null) {
 			throw new UsernameNotFoundException("User not found: " + username);

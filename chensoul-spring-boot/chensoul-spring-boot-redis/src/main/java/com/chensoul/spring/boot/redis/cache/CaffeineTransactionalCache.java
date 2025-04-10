@@ -27,7 +27,7 @@ import java.util.concurrent.locks.ReentrantLock;
 
 @RequiredArgsConstructor
 public abstract class CaffeineTransactionalCache<K extends Serializable, V extends Serializable>
-		implements TransactionalCache<K, V> {
+	implements TransactionalCache<K, V> {
 
 	@Getter
 	protected final String cacheName;
@@ -57,8 +57,7 @@ public abstract class CaffeineTransactionalCache<K extends Serializable, V exten
 		try {
 			failAllTransactionsByKey(key);
 			cache.put(key, value);
-		}
-		finally {
+		} finally {
 			lock.unlock();
 		}
 	}
@@ -69,8 +68,7 @@ public abstract class CaffeineTransactionalCache<K extends Serializable, V exten
 		try {
 			failAllTransactionsByKey(key);
 			doPutIfAbsent(key, value);
-		}
-		finally {
+		} finally {
 			lock.unlock();
 		}
 	}
@@ -81,8 +79,7 @@ public abstract class CaffeineTransactionalCache<K extends Serializable, V exten
 		try {
 			failAllTransactionsByKey(key);
 			doEvict(key);
-		}
-		finally {
+		} finally {
 			lock.unlock();
 		}
 	}
@@ -95,8 +92,7 @@ public abstract class CaffeineTransactionalCache<K extends Serializable, V exten
 				failAllTransactionsByKey(key);
 				doEvict(key);
 			});
-		}
-		finally {
+		} finally {
 			lock.unlock();
 		}
 	}
@@ -136,8 +132,7 @@ public abstract class CaffeineTransactionalCache<K extends Serializable, V exten
 			}
 			transactions.put(transactionId, transaction);
 			return transaction;
-		}
-		finally {
+		} finally {
 			lock.unlock();
 		}
 	}
@@ -162,8 +157,7 @@ public abstract class CaffeineTransactionalCache<K extends Serializable, V exten
 			}
 			removeTransaction(trId);
 			return success;
-		}
-		finally {
+		} finally {
 			lock.unlock();
 		}
 	}
@@ -172,8 +166,7 @@ public abstract class CaffeineTransactionalCache<K extends Serializable, V exten
 		lock.lock();
 		try {
 			removeTransaction(id);
-		}
-		finally {
+		} finally {
 			lock.unlock();
 		}
 	}

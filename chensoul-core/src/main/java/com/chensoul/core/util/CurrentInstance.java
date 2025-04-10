@@ -43,7 +43,8 @@ public class CurrentInstance implements Serializable {
 
 	/**
 	 * Gets the current instance of a specific type if available.
-	 * @param <T> the instance type
+	 *
+	 * @param <T>  the instance type
 	 * @param type the class to get an instance of
 	 * @return the current instance or the provided type, or <code>null</code> if there is
 	 * no current instance.
@@ -79,14 +80,13 @@ public class CurrentInstance implements Serializable {
 				return null;
 			}
 			return type.cast(value);
-		}
-		else {
+		} else {
 			return null;
 		}
 	}
 
 	private static void removeStaleInstances(Map<Class<?>, CurrentInstance> map) {
-		for (Iterator<Entry<Class<?>, CurrentInstance>> iterator = map.entrySet().iterator(); iterator.hasNext();) {
+		for (Iterator<Entry<Class<?>, CurrentInstance>> iterator = map.entrySet().iterator(); iterator.hasNext(); ) {
 			Entry<Class<?>, CurrentInstance> entry = iterator.next();
 			Object instance = entry.getValue().instance.get();
 			if (instance == null) {
@@ -98,8 +98,9 @@ public class CurrentInstance implements Serializable {
 
 	/**
 	 * Sets the current instance of the given type.
-	 * @param <T> the instance type
-	 * @param type the class that should be used when getting the current instance back
+	 *
+	 * @param <T>      the instance type
+	 * @param type     the class that should be used when getting the current instance back
 	 * @param instance the actual instance
 	 * @see ThreadLocal
 	 */
@@ -109,7 +110,8 @@ public class CurrentInstance implements Serializable {
 
 	/**
 	 * Sets the current instance of the given type.
-	 * @param type the class that should be used when getting the current instance back
+	 *
+	 * @param type     the class that should be used when getting the current instance back
 	 * @param instance the actual instance
 	 * @return previous CurrentInstance wrapper
 	 * @see ThreadLocal
@@ -126,8 +128,7 @@ public class CurrentInstance implements Serializable {
 					map = null;
 				}
 			}
-		}
-		else {
+		} else {
 			assert type.isInstance(instance) : "Invalid instance type";
 			if (map == null) {
 				map = new HashMap<>();
@@ -152,9 +153,10 @@ public class CurrentInstance implements Serializable {
 	/**
 	 * Restores the given instances to the given values. Note that this should only be
 	 * used internally to restore Vaadin classes.
+	 *
 	 * @param old A Class -&lt; CurrentInstance map to set as current instances
 	 */
-	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@SuppressWarnings({"unchecked", "rawtypes"})
 	public static void restoreInstances(Map<Class<?>, CurrentInstance> old) {
 		boolean removeStale = false;
 		for (Entry<Class<?>, CurrentInstance> entry : old.entrySet()) {
@@ -163,8 +165,7 @@ public class CurrentInstance implements Serializable {
 			Object v = ci.instance.get();
 			if (v == null) {
 				removeStale = true;
-			}
-			else if (v == NULL_OBJECT) {
+			} else if (v == NULL_OBJECT) {
 				/*
 				 * NULL_OBJECT is used to identify objects that are null when
 				 * #setCurrent(UI) or #setCurrent(VaadinSession) are called on a
@@ -192,14 +193,14 @@ public class CurrentInstance implements Serializable {
 	/**
 	 * Gets the currently set instances so that they can later be restored using
 	 * {@link #restoreInstances(Map)}.
+	 *
 	 * @return a map containing the current instances
 	 */
 	public static Map<Class<?>, CurrentInstance> getInstances() {
 		Map<Class<?>, CurrentInstance> map = instances.get();
 		if (map == null) {
 			return Collections.emptyMap();
-		}
-		else {
+		} else {
 			Map<Class<?>, CurrentInstance> copy = new HashMap<>();
 			boolean removeStale = false;
 			for (Entry<Class<?>, CurrentInstance> entry : map.entrySet()) {
@@ -207,8 +208,7 @@ public class CurrentInstance implements Serializable {
 				CurrentInstance ci = entry.getValue();
 				if (ci.instance.get() == null) {
 					removeStale = true;
-				}
-				else {
+				} else {
 					copy.put(c, ci);
 				}
 			}

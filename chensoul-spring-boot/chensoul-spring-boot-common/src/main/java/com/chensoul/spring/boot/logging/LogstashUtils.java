@@ -37,7 +37,8 @@ public final class LogstashUtils {
 	 * <p>
 	 * addJsonConsoleAppender.
 	 * </p>
-	 * @param context a {@link LoggerContext} object.
+	 *
+	 * @param context      a {@link LoggerContext} object.
 	 * @param customFields a {@link String} object.
 	 */
 	public static void addJsonConsoleAppender(LoggerContext context, String customFields) {
@@ -59,12 +60,13 @@ public final class LogstashUtils {
 	 * <p>
 	 * addLogstashTcpSocketAppender.
 	 * </p>
-	 * @param context a {@link LoggerContext} object.
-	 * @param customFields a {@link String} object.
+	 *
+	 * @param context            a {@link LoggerContext} object.
+	 * @param customFields       a {@link String} object.
 	 * @param logstashProperties a {@link Logging.Logstash} object.
 	 */
 	public static void addLogstashTcpSocketAppender(LoggerContext context, String customFields,
-			Logging.Logstash logstashProperties) {
+													Logging.Logstash logstashProperties) {
 		log.info("Add LogstashTcpSocketAppender");
 
 		// More documentation is available at:
@@ -85,9 +87,10 @@ public final class LogstashUtils {
 	 * <p>
 	 * addContextListener.
 	 * </p>
-	 * @param context a {@link LoggerContext} object.
+	 *
+	 * @param context      a {@link LoggerContext} object.
 	 * @param customFields a {@link String} object.
-	 * @param properties a {@link Logging} object.
+	 * @param properties   a {@link Logging} object.
 	 */
 	public static void addContextListener(LoggerContext context, String customFields, Logging properties) {
 		LogbackLoggerContextListener loggerContextListener = new LogbackLoggerContextListener(properties, customFields);

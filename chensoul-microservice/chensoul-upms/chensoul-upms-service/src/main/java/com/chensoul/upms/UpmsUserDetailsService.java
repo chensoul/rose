@@ -37,7 +37,7 @@ public class UpmsUserDetailsService implements UserDetailsService {
 		}
 
 		return new SecurityUser(user.getName(), credential.getPassword(),
-				AuthorityUtils.createAuthorityList(user.getAuthority().name()));
+			AuthorityUtils.createAuthorityList(user.getAuthority().name()));
 	}
 
 }

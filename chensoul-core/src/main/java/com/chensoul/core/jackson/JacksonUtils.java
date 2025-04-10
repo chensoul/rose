@@ -62,123 +62,111 @@ public class JacksonUtils {
 	public static <T> T convertValue(Object fromValue, Class<T> toValueType) {
 		try {
 			return fromValue != null ? OBJECT_MAPPER.convertValue(fromValue, toValueType) : null;
-		}
-		catch (IllegalArgumentException e) {
+		} catch (IllegalArgumentException e) {
 			throw new IllegalArgumentException(
-					"The given object value cannot be converted to " + toValueType + ": " + fromValue, e);
+				"The given object value cannot be converted to " + toValueType + ": " + fromValue, e);
 		}
 	}
 
 	public static <T> T convertValue(Object fromValue, TypeReference<T> toValueTypeRef) {
 		try {
 			return fromValue != null ? OBJECT_MAPPER.convertValue(fromValue, toValueTypeRef) : null;
-		}
-		catch (IllegalArgumentException e) {
+		} catch (IllegalArgumentException e) {
 			throw new IllegalArgumentException(
-					"The given object value cannot be converted to " + toValueTypeRef + ": " + fromValue, e);
+				"The given object value cannot be converted to " + toValueTypeRef + ": " + fromValue, e);
 		}
 	}
 
 	public static <T> T fromString(String string, Class<T> clazz) {
 		try {
 			return string != null ? OBJECT_MAPPER.readValue(string, clazz) : null;
-		}
-		catch (IOException e) {
+		} catch (IOException e) {
 			throw new IllegalArgumentException("The given string value cannot be transformed to Json object: " + string,
-					e);
+				e);
 		}
 	}
 
 	public static <T> T fromString(String string, TypeReference<T> valueTypeRef) {
 		try {
 			return string != null ? OBJECT_MAPPER.readValue(string, valueTypeRef) : null;
-		}
-		catch (IOException e) {
+		} catch (IOException e) {
 			throw new IllegalArgumentException("The given string value cannot be transformed to Json object: " + string,
-					e);
+				e);
 		}
 	}
 
 	public static <T> T fromString(String string, JavaType javaType) {
 		try {
 			return string != null ? OBJECT_MAPPER.readValue(string, javaType) : null;
-		}
-		catch (IOException e) {
+		} catch (IOException e) {
 			throw new IllegalArgumentException("The given String value cannot be transformed to Json object: " + string,
-					e);
+				e);
 		}
 	}
 
 	public static <T> T fromString(String string, Class<T> clazz, boolean ignoreUnknownFields) {
 		try {
 			return string != null ? IGNORE_UNKNOWN_PROPERTIES_JSON_MAPPER.readValue(string, clazz) : null;
-		}
-		catch (IOException e) {
+		} catch (IOException e) {
 			throw new IllegalArgumentException("The given string value cannot be transformed to Json object: " + string,
-					e);
+				e);
 		}
 	}
 
 	public static <T> T fromBytes(byte[] bytes, Class<T> clazz) {
 		try {
 			return bytes != null ? OBJECT_MAPPER.readValue(bytes, clazz) : null;
-		}
-		catch (IOException e) {
+		} catch (IOException e) {
 			throw new IllegalArgumentException(
-					"The given byte[] value cannot be transformed to Json object:" + Arrays.toString(bytes), e);
+				"The given byte[] value cannot be transformed to Json object:" + Arrays.toString(bytes), e);
 		}
 	}
 
 	public static <T> T fromBytes(byte[] bytes, TypeReference<T> valueTypeRef) {
 		try {
 			return bytes != null ? OBJECT_MAPPER.readValue(bytes, valueTypeRef) : null;
-		}
-		catch (IOException e) {
+		} catch (IOException e) {
 			throw new IllegalArgumentException(
-					"The given string value cannot be transformed to Json object: " + Arrays.toString(bytes), e);
+				"The given string value cannot be transformed to Json object: " + Arrays.toString(bytes), e);
 		}
 	}
 
 	public static JsonNode fromBytes(byte[] bytes) {
 		try {
 			return OBJECT_MAPPER.readTree(bytes);
-		}
-		catch (IOException e) {
+		} catch (IOException e) {
 			throw new IllegalArgumentException(
-					"The given byte[] value cannot be transformed to Json object: " + Arrays.toString(bytes), e);
+				"The given byte[] value cannot be transformed to Json object: " + Arrays.toString(bytes), e);
 		}
 	}
 
 	public static byte[] toBytes(Object value) {
 		try {
 			return value != null ? OBJECT_MAPPER.writeValueAsBytes(value) : null;
-		}
-		catch (JsonProcessingException e) {
+		} catch (JsonProcessingException e) {
 			throw new IllegalArgumentException(
-					"The given Json object value cannot be transformed to a String: " + value, e);
+				"The given Json object value cannot be transformed to a String: " + value, e);
 		}
 	}
 
 	public static String toString(Object value) {
 		try {
 			return value != null ? OBJECT_MAPPER.writeValueAsString(value) : null;
-		}
-		catch (JsonProcessingException e) {
+		} catch (JsonProcessingException e) {
 			throw new IllegalArgumentException(
-					"The given Json object value cannot be transformed to a String: " + value, e);
+				"The given Json object value cannot be transformed to a String: " + value, e);
 		}
 	}
 
 	public static String toStringWithView(Object value, Class<Views.Public> serializationView)
-			throws JsonProcessingException {
+		throws JsonProcessingException {
 		return value == null ? "" : OBJECT_MAPPER.writerWithView(serializationView).writeValueAsString(value);
 	}
 
 	public static String toPrettyString(Object o) {
 		try {
 			return PRETTY_SORTED_JSON_MAPPER.writeValueAsString(o);
-		}
-		catch (JsonProcessingException e) {
+		} catch (JsonProcessingException e) {
 			throw new RuntimeException(e);
 		}
 	}
@@ -191,8 +179,7 @@ public class JacksonUtils {
 			final String dataBefore = data;
 			try {
 				data = fromString(data, String.class);
-			}
-			catch (Exception ignored) {
+			} catch (Exception ignored) {
 			}
 			log.trace("Trimming double quotes. Before trim: [{}], after trim: [{}]", dataBefore, data);
 		}
@@ -202,8 +189,7 @@ public class JacksonUtils {
 	public static <T> T treeToValue(JsonNode node, Class<T> clazz) {
 		try {
 			return OBJECT_MAPPER.treeToValue(node, clazz);
-		}
-		catch (IOException e) {
+		} catch (IOException e) {
 			throw new IllegalArgumentException("Can't convert value: " + node.toString(), e);
 		}
 	}
@@ -211,8 +197,7 @@ public class JacksonUtils {
 	public static <T> T readValue(String file, CollectionType clazz) {
 		try {
 			return OBJECT_MAPPER.readValue(file, clazz);
-		}
-		catch (IOException e) {
+		} catch (IOException e) {
 			throw new IllegalArgumentException("Can't read file: " + file, e);
 		}
 	}
@@ -220,8 +205,7 @@ public class JacksonUtils {
 	public static <T> T readValue(String object, TypeReference<T> clazz) {
 		try {
 			return OBJECT_MAPPER.readValue(object, clazz);
-		}
-		catch (IOException e) {
+		} catch (IOException e) {
 			throw new IllegalArgumentException("Can't read object: " + object, e);
 		}
 	}
@@ -229,8 +213,7 @@ public class JacksonUtils {
 	public static <T> T readValue(File file, TypeReference<T> clazz) {
 		try {
 			return OBJECT_MAPPER.readValue(file, clazz);
-		}
-		catch (IOException e) {
+		} catch (IOException e) {
 			throw new IllegalArgumentException("Can't read file: " + file, e);
 		}
 	}
@@ -238,8 +221,7 @@ public class JacksonUtils {
 	public static <T> T readValue(File file, Class<T> clazz) {
 		try {
 			return OBJECT_MAPPER.readValue(file, clazz);
-		}
-		catch (IOException e) {
+		} catch (IOException e) {
 			throw new IllegalArgumentException("Can't read file: " + file, e);
 		}
 	}
@@ -247,8 +229,7 @@ public class JacksonUtils {
 	public static <T> T readValue(Reader reader, Class<T> clazz) {
 		try {
 			return OBJECT_MAPPER.readValue(reader, clazz);
-		}
-		catch (IOException e) {
+		} catch (IOException e) {
 			throw new IllegalArgumentException("Can't read reader: " + reader, e);
 		}
 	}
@@ -263,8 +244,7 @@ public class JacksonUtils {
 		}
 		try {
 			return mapper.readTree(value);
-		}
-		catch (IOException e) {
+		} catch (IOException e) {
 			throw new IllegalArgumentException(e);
 		}
 	}
@@ -272,8 +252,7 @@ public class JacksonUtils {
 	public static JsonNode toJsonNode(Path file) {
 		try {
 			return OBJECT_MAPPER.readTree(Files.readAllBytes(file));
-		}
-		catch (IOException e) {
+		} catch (IOException e) {
 			throw new IllegalArgumentException("Can't read file: " + file, e);
 		}
 	}
@@ -281,20 +260,18 @@ public class JacksonUtils {
 	public static JsonNode toJsonNode(File value) {
 		try {
 			return value != null ? OBJECT_MAPPER.readTree(value) : null;
-		}
-		catch (IOException e) {
+		} catch (IOException e) {
 			throw new IllegalArgumentException(
-					"The given File object value: " + value + " cannot be transformed to a JsonNode", e);
+				"The given File object value: " + value + " cannot be transformed to a JsonNode", e);
 		}
 	}
 
 	public static JsonNode toJsonNode(InputStream value) {
 		try {
 			return value != null ? OBJECT_MAPPER.readTree(value) : null;
-		}
-		catch (IOException e) {
+		} catch (IOException e) {
 			throw new IllegalArgumentException(
-					"The given InputStream value: " + value + " cannot be transformed to a JsonNode", e);
+				"The given InputStream value: " + value + " cannot be transformed to a JsonNode", e);
 		}
 	}
 
@@ -327,10 +304,9 @@ public class JacksonUtils {
 	public static <T> byte[] writeValueAsBytes(T value) {
 		try {
 			return OBJECT_MAPPER.writeValueAsBytes(value);
-		}
-		catch (JsonProcessingException e) {
+		} catch (JsonProcessingException e) {
 			throw new IllegalArgumentException(
-					"The given Json object value cannot be transformed to a String: " + value, e);
+				"The given Json object value cannot be transformed to a String: " + value, e);
 		}
 	}
 
@@ -341,8 +317,7 @@ public class JacksonUtils {
 		for (String p : path) {
 			if (!node.has(p)) {
 				return null;
-			}
-			else {
+			} else {
 				node = node.get(p);
 			}
 		}
@@ -362,8 +337,7 @@ public class JacksonUtils {
 	public static <T> T fromReader(Reader reader, Class<T> clazz) {
 		try {
 			return reader != null ? OBJECT_MAPPER.readValue(reader, clazz) : null;
-		}
-		catch (IOException e) {
+		} catch (IOException e) {
 			throw new IllegalArgumentException("Invalid request payload", e);
 		}
 	}
@@ -371,8 +345,7 @@ public class JacksonUtils {
 	public static <T> void writeValue(Writer writer, T value) {
 		try {
 			OBJECT_MAPPER.writeValue(writer, value);
-		}
-		catch (IOException e) {
+		} catch (IOException e) {
 			throw new IllegalArgumentException("The given writer value: " + writer + "cannot be wrote", e);
 		}
 	}
@@ -389,8 +362,7 @@ public class JacksonUtils {
 				Map.Entry<String, JsonNode> entry = fields.next();
 				toFlatMap(entry.getValue(), currentPath + entry.getKey(), map);
 			}
-		}
-		else if (node.isValueNode()) {
+		} else if (node.isValueNode()) {
 			map.put(currentPath, node.asText());
 		}
 	}
@@ -407,25 +379,22 @@ public class JacksonUtils {
 			String currentPath = StringUtils.isBlank(task.getPath()) ? "" : (task.getPath() + ".");
 			if (node.isObject()) {
 				ObjectNode on = (ObjectNode) node;
-				for (Iterator<String> it = on.fieldNames(); it.hasNext();) {
+				for (Iterator<String> it = on.fieldNames(); it.hasNext(); ) {
 					String childName = it.next();
 					JsonNode childValue = on.get(childName);
 					if (childValue.isTextual()) {
 						on.put(childName, processor.apply(currentPath + childName, childValue.asText()));
-					}
-					else if (childValue.isObject() || childValue.isArray()) {
+					} else if (childValue.isObject() || childValue.isArray()) {
 						tasks.add(new JsonNodeProcessingTask(currentPath + childName, childValue));
 					}
 				}
-			}
-			else if (node.isArray()) {
+			} else if (node.isArray()) {
 				ArrayNode childArray = (ArrayNode) node;
 				for (int i = 0; i < childArray.size(); i++) {
 					JsonNode element = childArray.get(i);
 					if (element.isObject()) {
 						tasks.add(new JsonNodeProcessingTask(currentPath + "." + i, element));
-					}
-					else if (element.isTextual()) {
+					} else if (element.isTextual()) {
 						childArray.set(i, processor.apply(currentPath + "." + i, element.asText()));
 					}
 				}
@@ -434,12 +403,11 @@ public class JacksonUtils {
 	}
 
 	public static void replaceAllByMapping(JsonNode jsonNode, Map<String, String> mapping,
-			Map<String, String> templateParams, BiFunction<String, String, String> processor) {
+										   Map<String, String> templateParams, BiFunction<String, String, String> processor) {
 		replaceByMapping(jsonNode, mapping, templateParams, (name, value) -> {
 			if (value.isTextual()) {
 				return new TextNode(processor.apply(name, value.asText()));
-			}
-			else if (value.isArray()) {
+			} else if (value.isArray()) {
 				ArrayNode array = (ArrayNode) value;
 				for (int i = 0; i < array.size(); i++) {
 					String arrayElementName = name.replace("$index", Integer.toString(i));
@@ -452,7 +420,7 @@ public class JacksonUtils {
 	}
 
 	public static void replaceByMapping(JsonNode jsonNode, Map<String, String> mapping,
-			Map<String, String> templateParams, BiFunction<String, JsonNode, JsonNode> processor) {
+										Map<String, String> templateParams, BiFunction<String, JsonNode, JsonNode> processor) {
 		for (Map.Entry<String, String> entry : mapping.entrySet()) {
 			String expression = entry.getValue();
 			Queue<JsonPathProcessingTask> tasks = new LinkedList<>();
@@ -471,21 +439,18 @@ public class JacksonUtils {
 						for (JsonNode element : childArray) {
 							tasks.add(task.next(element));
 						}
-					}
-					else if (node.isObject()) {
+					} else if (node.isObject()) {
 						ObjectNode on = (ObjectNode) node;
-						for (Iterator<Map.Entry<String, JsonNode>> it = on.fields(); it.hasNext();) {
+						for (Iterator<Map.Entry<String, JsonNode>> it = on.fields(); it.hasNext(); ) {
 							Map.Entry<String, JsonNode> kv = it.next();
 							if (variableName != null) {
 								tasks.add(task.next(kv.getValue(), variableName, kv.getKey()));
-							}
-							else {
+							} else {
 								tasks.add(task.next(kv.getValue()));
 							}
 						}
 					}
-				}
-				else {
+				} else {
 					String variableName = null;
 					String variableValue = null;
 					if (token.contains("[$")) {
@@ -501,15 +466,13 @@ public class JacksonUtils {
 							String name = expression;
 							for (Map.Entry<String, String> replacement : task.getVariables().entrySet()) {
 								name = name.replace("$" + replacement.getKey(),
-										StringUtils.defaultString(replacement.getValue(), StringPool.EMPTY));
+									StringUtils.defaultString(replacement.getValue(), StringPool.EMPTY));
 							}
 							((ObjectNode) node).set(token, processor.apply(name, value));
-						}
-						else {
+						} else {
 							if (StringUtils.isNotEmpty(variableName)) {
 								tasks.add(task.next(value, variableName, variableValue));
-							}
-							else {
+							} else {
 								tasks.add(task.next(value));
 							}
 						}
@@ -569,7 +532,7 @@ public class JacksonUtils {
 		@Override
 		public String toString() {
 			return "JsonPathProcessingTask{" + "tokens=" + Arrays.toString(tokens) + ", variables=" + variables
-					+ ", node=" + node.toString().substring(0, 20) + '}';
+				+ ", node=" + node.toString().substring(0, 20) + '}';
 		}
 
 	}

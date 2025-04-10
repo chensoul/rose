@@ -19,6 +19,8 @@
 
 package com.chensoul.spring.boot.oss.old.storage.cloud.qiniu.connection;
 
+import com.chensoul.spring.boot.oss.old.storage.cloud.qiniu.QiNiuScope;
+import com.chensoul.spring.boot.oss.old.storage.properties.QiNiuOssProperties;
 import com.qiniu.cdn.CdnManager;
 import com.qiniu.storage.BucketManager;
 import com.qiniu.storage.Configuration;
@@ -26,8 +28,6 @@ import com.qiniu.storage.Region;
 import com.qiniu.storage.UploadManager;
 import com.qiniu.util.Auth;
 import com.qiniu.util.StringMap;
-import com.chensoul.spring.boot.oss.old.storage.cloud.qiniu.QiNiuScope;
-import com.chensoul.spring.boot.oss.old.storage.properties.QiNiuOssProperties;
 import lombok.AllArgsConstructor;
 
 import java.util.Map;
@@ -102,24 +102,23 @@ public class QiNiuOssClientConnectionFactory implements QiNiuConnectionFactory {
 	 * <bucket>:<key>，表示只允许用户上传指定 key 的文件。在这种格式下文件默认允许修改，若已存在同名资源则会被覆盖。如果只希望上传指定 // key
 	 * 的文件，并且不允许修改，那么可以将下面的 insertOnly 属性值设为 1。 // <bucket>:<keyPrefix>，表示只允许用户上传指定以
 	 * keyPrefix 为前缀的文件，当且仅当 isPrefixalScope // 字段为 1 时生效，isPrefixalScope 为 1 时无法覆盖上传。
+	 *
 	 * @param strategy handler
-	 * @param scope scope
-	 * @param bucket bucket
-	 * @param key key
-	 * @param policy policy
+	 * @param scope    scope
+	 * @param bucket   bucket
+	 * @param key      key
+	 * @param policy   policy
 	 */
 	private void applyScope(QiNiuOssProperties.QiNiuStrategy strategy, QiNiuScope scope, String bucket, String key,
-			StringMap policy) {
+							StringMap policy) {
 		if (QiNiuScope.REPLACE.equals(scope)) {
 			policy.put("scope", bucket + ":" + key);
 			policy.put("insertOnly", 0);
 			policy.put("isPrefixScope", 0);
-		}
-		else if (QiNiuScope.PREFIXAL.equals(scope)) {
+		} else if (QiNiuScope.PREFIXAL.equals(scope)) {
 			policy.put("scope", bucket + ":" + strategy.getKeyPrefix());
 			policy.put("isPrefixScope", 1);
-		}
-		else {
+		} else {
 			policy.put("scope", bucket);
 		}
 	}

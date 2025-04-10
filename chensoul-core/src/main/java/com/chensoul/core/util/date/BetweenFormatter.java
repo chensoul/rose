@@ -35,8 +35,9 @@ public class BetweenFormatter implements Serializable {
 
 	/**
 	 * 构造
+	 *
 	 * @param betweenMs 日期间隔
-	 * @param level 级别，按照天、小时、分、秒、毫秒分为5个等级，根据传入等级，格式化到相应级别
+	 * @param level     级别，按照天、小时、分、秒、毫秒分为5个等级，根据传入等级，格式化到相应级别
 	 */
 	public BetweenFormatter(long betweenMs, Level level) {
 		this(betweenMs, level, 0);
@@ -44,8 +45,9 @@ public class BetweenFormatter implements Serializable {
 
 	/**
 	 * 构造
-	 * @param betweenMs 日期间隔
-	 * @param level 级别，按照天、小时、分、秒、毫秒分为5个等级，根据传入等级，格式化到相应级别
+	 *
+	 * @param betweenMs     日期间隔
+	 * @param level         级别，按照天、小时、分、秒、毫秒分为5个等级，根据传入等级，格式化到相应级别
 	 * @param levelMaxCount 格式化级别的最大个数，假如级别个数为1，但是级别到秒，那只显示一个级别
 	 */
 	public BetweenFormatter(long betweenMs, Level level, int levelMaxCount) {
@@ -56,6 +58,7 @@ public class BetweenFormatter implements Serializable {
 
 	/**
 	 * 格式化日期间隔输出<br>
+	 *
 	 * @return 格式化后的字符串
 	 */
 	public String format() {
@@ -102,6 +105,7 @@ public class BetweenFormatter implements Serializable {
 
 	/**
 	 * 获得 时长毫秒数
+	 *
 	 * @return 时长毫秒数
 	 */
 	public long getBetweenMs() {
@@ -110,6 +114,7 @@ public class BetweenFormatter implements Serializable {
 
 	/**
 	 * 设置 时长毫秒数
+	 *
 	 * @param betweenMs 时长毫秒数
 	 */
 	public void setBetweenMs(long betweenMs) {
@@ -118,6 +123,7 @@ public class BetweenFormatter implements Serializable {
 
 	/**
 	 * 获得 格式化级别
+	 *
 	 * @return 格式化级别
 	 */
 	public Level getLevel() {
@@ -126,6 +132,7 @@ public class BetweenFormatter implements Serializable {
 
 	/**
 	 * 设置格式化级别
+	 *
 	 * @param level 格式化级别
 	 */
 	public void setLevel(Level level) {
@@ -140,6 +147,7 @@ public class BetweenFormatter implements Serializable {
 	/**
 	 * 等级数量是否有效<br>
 	 * 有效的定义是：levelMaxCount大于0（被设置），当前等级数量没有超过这个最大值
+	 *
 	 * @param levelCount 登记数量
 	 * @return 是否有效
 	 */
@@ -182,6 +190,7 @@ public class BetweenFormatter implements Serializable {
 
 		/**
 		 * 构造
+		 *
 		 * @param name 级别名称
 		 */
 		Level(String name) {
@@ -190,6 +199,7 @@ public class BetweenFormatter implements Serializable {
 
 		/**
 		 * 获取级别名称
+		 *
 		 * @return 级别名称
 		 */
 		public String getName() {
@@ -228,6 +238,7 @@ public class BetweenFormatter implements Serializable {
 
 		/**
 		 * -- GETTER --
+		 *
 		 * @return 单位对应的毫秒数
 		 */
 		private final long millis;
@@ -238,6 +249,7 @@ public class BetweenFormatter implements Serializable {
 
 		/**
 		 * 单位兼容转换，将{@link ChronoUnit}转换为对应的DateUnit
+		 *
 		 * @param unit {@link ChronoUnit}
 		 * @return DateUnit，null表示不支持此单位
 		 * @since 5.4.5
@@ -262,6 +274,7 @@ public class BetweenFormatter implements Serializable {
 
 		/**
 		 * 单位兼容转换，将DateUnit转换为对应的{@link ChronoUnit}
+		 *
 		 * @param unit DateUnit
 		 * @return {@link ChronoUnit}
 		 * @since 5.4.5
@@ -286,6 +299,7 @@ public class BetweenFormatter implements Serializable {
 
 		/**
 		 * 单位兼容转换，将DateUnit转换为对应的{@link ChronoUnit}
+		 *
 		 * @return {@link ChronoUnit}
 		 * @since 5.4.5
 		 */

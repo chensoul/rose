@@ -31,10 +31,10 @@ public class MetricsInterceptor implements RequestInterceptor, MeterBinder {
 			String methodKey = template.methodMetadata().configKey();
 			Counter counter = Counter.builder(FEIGN_REQUEST)
 				.tags("method", StringUtils.substringBefore(methodKey, StringPool.LEFT_BRACKET)) // Feign
-																									// 调用方法（接口
-																									// +
-																									// 方法）
-																									// Tag
+				// 调用方法（接口
+				// +
+				// 方法）
+				// Tag
 				.register(meterRegistry);
 			counter.increment();
 		});

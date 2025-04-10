@@ -18,14 +18,14 @@ public class SecurityUser extends User {
 	private List<String> tenants;
 
 	public SecurityUser(String username, String password, List<String> tenants, boolean enabled,
-			boolean accountNonExpired, boolean credentialsNonExpired, boolean accountNonLocked,
-			Collection<? extends GrantedAuthority> authorities) {
+						boolean accountNonExpired, boolean credentialsNonExpired, boolean accountNonLocked,
+						Collection<? extends GrantedAuthority> authorities) {
 		super(username, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
 		this.tenants = tenants;
 	}
 
 	public SecurityUser(String username, String password, Collection<? extends GrantedAuthority> authorities,
-			List<String> tenants) {
+						List<String> tenants) {
 		super(username, password, authorities);
 		this.tenants = tenants;
 	}

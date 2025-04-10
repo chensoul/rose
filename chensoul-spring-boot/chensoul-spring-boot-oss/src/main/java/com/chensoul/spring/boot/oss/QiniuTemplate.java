@@ -1,5 +1,6 @@
 package com.chensoul.spring.boot.oss;
 
+import com.chensoul.core.util.StringPool;
 import com.chensoul.spring.boot.oss.model.BladeFile;
 import com.chensoul.spring.boot.oss.model.OssFile;
 import com.chensoul.spring.boot.oss.props.OssProperties;
@@ -10,7 +11,6 @@ import com.qiniu.storage.BucketManager;
 import com.qiniu.storage.UploadManager;
 import com.qiniu.storage.model.FileInfo;
 import com.qiniu.util.Auth;
-import com.chensoul.core.util.StringPool;
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
 import org.apache.commons.lang3.ArrayUtils;
@@ -153,8 +153,7 @@ public class QiniuTemplate implements OssTemplate {
 		// 覆盖上传
 		if (cover) {
 			uploadManager.put(stream, key, getUploadToken(bucketName, key), null, null);
-		}
-		else {
+		} else {
 			Response response = uploadManager.put(stream, key, getUploadToken(bucketName), null, null);
 			int retry = 0;
 			int retryCount = 5;
@@ -197,6 +196,7 @@ public class QiniuTemplate implements OssTemplate {
 
 	/**
 	 * 根据规则生成存储桶名称规则
+	 *
 	 * @return String
 	 */
 	private String getBucketName() {
@@ -205,6 +205,7 @@ public class QiniuTemplate implements OssTemplate {
 
 	/**
 	 * 根据规则生成存储桶名称规则
+	 *
 	 * @param bucketName 存储桶名称
 	 * @return String
 	 */
@@ -214,6 +215,7 @@ public class QiniuTemplate implements OssTemplate {
 
 	/**
 	 * 根据规则生成文件名称规则
+	 *
 	 * @param originalFilename 原始文件名
 	 * @return string
 	 */
@@ -223,6 +225,7 @@ public class QiniuTemplate implements OssTemplate {
 
 	/**
 	 * 获取上传凭证，普通上传
+	 *
 	 * @param bucketName 存储桶名称
 	 * @return string
 	 */
@@ -232,8 +235,9 @@ public class QiniuTemplate implements OssTemplate {
 
 	/**
 	 * 获取上传凭证，覆盖上传
+	 *
 	 * @param bucketName 存储桶名称
-	 * @param key key
+	 * @param key        key
 	 * @return string
 	 */
 	private String getUploadToken(String bucketName, String key) {
@@ -242,6 +246,7 @@ public class QiniuTemplate implements OssTemplate {
 
 	/**
 	 * 获取域名
+	 *
 	 * @return String
 	 */
 	public String getOssHost() {
@@ -250,6 +255,7 @@ public class QiniuTemplate implements OssTemplate {
 
 	/**
 	 * 获取服务地址
+	 *
 	 * @return String
 	 */
 	public String getEndpoint() {

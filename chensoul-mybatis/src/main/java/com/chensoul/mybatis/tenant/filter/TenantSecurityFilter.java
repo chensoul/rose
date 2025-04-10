@@ -57,7 +57,7 @@ public class TenantSecurityFilter extends OncePerRequestFilter {
 
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
-			throws ServletException, IOException {
+		throws ServletException, IOException {
 		String tenantId = TenantContextHolder.getTenantId();
 
 		// 如果非允许忽略租户的 URL，则校验租户是否合法
@@ -77,8 +77,7 @@ public class TenantSecurityFilter extends OncePerRequestFilter {
 			// ServletUtils.writeJSON(response, result);
 			// return;
 			// }
-		}
-		else {
+		} else {
 			// 如果是允许忽略租户的 URL，若未传递租户编号，则默认忽略租户编号，避免报错
 			if (tenantId == null) {
 				TenantContextHolder.setIgnore(true);
@@ -93,10 +92,9 @@ public class TenantSecurityFilter extends OncePerRequestFilter {
 				tenantId = user.getTenants().get(0);
 				TenantContextHolder.setTenantId(tenantId);
 				// 如果传递了租户编号，则进行比对租户编号，避免越权问题
-			}
-			else if (!user.getTenants().contains(TenantContextHolder.getTenantId())) {
+			} else if (!user.getTenants().contains(TenantContextHolder.getTenantId())) {
 				log.error("用户{}越权访问租户({}) URL({}/{})]", user.getUsername(), TenantContextHolder.getTenantId(),
-						request.getRequestURI(), request.getMethod());
+					request.getRequestURI(), request.getMethod());
 				WebUtils.renderJson(HttpStatus.FORBIDDEN.value(), RestResponse.error("您无权访问该租户的数据"));
 				return;
 			}

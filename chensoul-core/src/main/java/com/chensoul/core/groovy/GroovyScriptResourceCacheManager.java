@@ -98,15 +98,13 @@ public class GroovyScriptResourceCacheManager implements ScriptResourceCacheMana
 		if (containsKey(cacheKey)) {
 			script = get(cacheKey);
 			log.trace("Located cached groovy script [{}] for key [{}]", script, cacheKey);
-		}
-		else {
+		} else {
 			try {
 				if (ScriptingUtils.isExternalGroovyScript(scriptResource)) {
 					String scriptPath = (String) SpringExpressionResolver.getInstance().resolve(scriptResource);
 					Resource resource = new DefaultResourceLoader().getResource(scriptPath);
 					script = new WatchableGroovyScript(resource);
-				}
-				else {
+				} else {
 					String resourceToUse = scriptResource;
 					if (ScriptingUtils.isInlineGroovyScript(resourceToUse)) {
 						val matcher = ScriptingUtils.getMatcherForInlineGroovyScript(resourceToUse);
@@ -119,8 +117,7 @@ public class GroovyScriptResourceCacheManager implements ScriptResourceCacheMana
 				log.trace("Groovy script [{}] for key [{}] is not cached", scriptResource, cacheKey);
 				put(cacheKey, script);
 				log.trace("Cached groovy script [{}] for key [{}]", script, cacheKey);
-			}
-			catch (final Exception e) {
+			} catch (final Exception e) {
 				log.error("Failed to resolve groovy script [{}] for key [{}]", scriptResource, cacheKey, e);
 			}
 		}

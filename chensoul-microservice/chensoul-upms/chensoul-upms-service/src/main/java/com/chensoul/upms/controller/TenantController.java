@@ -18,7 +18,7 @@ public class TenantController {
 
 	@PostMapping("/{tenantId}/user")
 	public RestResponse<UserTenant> addUserToTenant(@PathVariable String tenantId,
-			@Valid @RequestBody AddUserToTenantRequest request) {
+													@Valid @RequestBody AddUserToTenantRequest request) {
 		return RestResponse.ok(tenantService.addUserToTenant(tenantId, request));
 	}
 

@@ -11,7 +11,7 @@ import java.util.ServiceLoader;
 import java.util.stream.Collectors;
 
 public class DefaultApplicationContextInitializer
-		implements ApplicationContextInitializer<ConfigurableApplicationContext> {
+	implements ApplicationContextInitializer<ConfigurableApplicationContext> {
 
 	@Override
 	public void initialize(ConfigurableApplicationContext applicationContext) {

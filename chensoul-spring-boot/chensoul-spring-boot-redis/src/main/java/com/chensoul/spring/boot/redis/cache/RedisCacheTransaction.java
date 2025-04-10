@@ -41,8 +41,7 @@ public class RedisCacheTransaction<K extends Serializable, V extends Serializabl
 		try {
 			List<Object> execResult = connection.exec();
 			return execResult.stream().anyMatch(Objects::nonNull);
-		}
-		finally {
+		} finally {
 			connection.close();
 		}
 	}
@@ -51,8 +50,7 @@ public class RedisCacheTransaction<K extends Serializable, V extends Serializabl
 	public void rollback() {
 		try {
 			connection.discard();
-		}
-		finally {
+		} finally {
 			connection.close();
 		}
 	}

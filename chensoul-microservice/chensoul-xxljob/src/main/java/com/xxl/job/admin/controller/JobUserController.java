@@ -50,7 +50,7 @@ public class JobUserController {
 	@ResponseBody
 	@PermissionLimit(adminuser = true)
 	public Map<String, Object> pageList(@RequestParam(required = false, defaultValue = "0") int start,
-			@RequestParam(required = false, defaultValue = "10") int length, String username, int role) {
+										@RequestParam(required = false, defaultValue = "10") int length, String username, int role) {
 
 		// page list
 		List<XxlJobUser> list = xxlJobUserDao.pageList(start, length, username, role);
@@ -79,7 +79,7 @@ public class JobUserController {
 		// valid username
 		if (!StringUtils.hasText(xxlJobUser.getUsername())) {
 			return new ReturnT<String>(ReturnT.FAIL_CODE,
-					I18nUtil.getString("system_please_input") + I18nUtil.getString("user_username"));
+				I18nUtil.getString("system_please_input") + I18nUtil.getString("user_username"));
 		}
 		xxlJobUser.setUsername(xxlJobUser.getUsername().trim());
 		if (!(xxlJobUser.getUsername().length() >= 4 && xxlJobUser.getUsername().length() <= 20)) {
@@ -88,7 +88,7 @@ public class JobUserController {
 		// valid password
 		if (!StringUtils.hasText(xxlJobUser.getPassword())) {
 			return new ReturnT<String>(ReturnT.FAIL_CODE,
-					I18nUtil.getString("system_please_input") + I18nUtil.getString("user_password"));
+				I18nUtil.getString("system_please_input") + I18nUtil.getString("user_password"));
 		}
 		xxlJobUser.setPassword(xxlJobUser.getPassword().trim());
 		if (!(xxlJobUser.getPassword().length() >= 4 && xxlJobUser.getPassword().length() <= 20)) {
@@ -127,8 +127,7 @@ public class JobUserController {
 			}
 			// md5 password
 			xxlJobUser.setPassword(DigestUtils.md5DigestAsHex(xxlJobUser.getPassword().getBytes()));
-		}
-		else {
+		} else {
 			xxlJobUser.setPassword(null);
 		}
 
@@ -159,11 +158,11 @@ public class JobUserController {
 		// valid
 		if (oldPassword == null || oldPassword.trim().length() == 0) {
 			return new ReturnT<String>(ReturnT.FAIL.getCode(),
-					I18nUtil.getString("system_please_input") + I18nUtil.getString("change_pwd_field_oldpwd"));
+				I18nUtil.getString("system_please_input") + I18nUtil.getString("change_pwd_field_oldpwd"));
 		}
 		if (password == null || password.trim().length() == 0) {
 			return new ReturnT<String>(ReturnT.FAIL.getCode(),
-					I18nUtil.getString("system_please_input") + I18nUtil.getString("change_pwd_field_oldpwd"));
+				I18nUtil.getString("system_please_input") + I18nUtil.getString("change_pwd_field_oldpwd"));
 		}
 		password = password.trim();
 		if (!(password.length() >= 4 && password.length() <= 20)) {
@@ -179,7 +178,7 @@ public class JobUserController {
 		XxlJobUser existUser = xxlJobUserDao.loadByUserName(loginUser.getUsername());
 		if (!md5OldPassword.equals(existUser.getPassword())) {
 			return new ReturnT<String>(ReturnT.FAIL.getCode(),
-					I18nUtil.getString("change_pwd_field_oldpwd") + I18nUtil.getString("system_unvalid"));
+				I18nUtil.getString("change_pwd_field_oldpwd") + I18nUtil.getString("system_unvalid"));
 		}
 
 		// write new

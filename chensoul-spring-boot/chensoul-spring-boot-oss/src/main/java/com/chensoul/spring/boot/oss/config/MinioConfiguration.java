@@ -21,7 +21,7 @@ import org.springframework.context.annotation.Bean;
  */
 @AllArgsConstructor
 @AutoConfigureAfter(OssConfiguration.class)
-@ConditionalOnClass({ MinioClient.class })
+@ConditionalOnClass({MinioClient.class})
 @EnableConfigurationProperties(OssProperties.class)
 @ConditionalOnProperty(value = "oss.name", havingValue = "minio")
 public class MinioConfiguration {
@@ -41,7 +41,7 @@ public class MinioConfiguration {
 	}
 
 	@Bean
-	@ConditionalOnBean({ MinioClient.class })
+	@ConditionalOnBean({MinioClient.class})
 	@ConditionalOnMissingBean(MinioTemplate.class)
 	public MinioTemplate minioTemplate(MinioClient minioClient) {
 		return new MinioTemplate(minioClient, ossRule, ossProperties);

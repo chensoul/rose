@@ -19,6 +19,8 @@
 
 package com.chensoul.spring.boot.oss.old.storage.cloud.minio;
 
+import com.chensoul.spring.boot.oss.old.storage.MinioOssOperation;
+import com.chensoul.spring.boot.oss.old.storage.properties.MinioOssProperties;
 import io.minio.BucketExistsArgs;
 import io.minio.MinioClient;
 import lombok.SneakyThrows;
@@ -26,12 +28,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
-import com.chensoul.spring.boot.oss.old.storage.MinioOssOperation;
 
 import static com.chensoul.spring.boot.oss.old.storage.OssOperation.MINIO_OSS_OPERATION;
 import static com.chensoul.spring.boot.oss.old.storage.OssOperation.OSS_CONFIG_PREFIX_MINIO;
-
-import com.chensoul.spring.boot.oss.old.storage.properties.MinioOssProperties;
 
 /**
  * @author Levin
@@ -50,15 +49,14 @@ public class MinioOssAutoConfiguration {
 			.region(properties.getRegion())
 			.build();
 		minioClient.setTimeout(properties.getConnectTimeout().toMillis(), properties.getWriteTimeout().toMillis(),
-				properties.getReadTimeout().toMillis());
+			properties.getReadTimeout().toMillis());
 		try {
 			log.debug("Checking if bucket {} exists", properties.getBucket());
 			boolean b = minioClient.bucketExists(BucketExistsArgs.builder().bucket(properties.getBucket()).build());
 			if (!b) {
 				throw new RuntimeException(properties.getBucket() + "Bucket does not exists");
 			}
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			log.error("Error while checking bucket", e);
 			throw e;
 		}

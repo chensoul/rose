@@ -1,12 +1,13 @@
 package com.chensoul.core.util.tree;
 
 import com.chensoul.core.util.tree.parser.NodeParser;
+import org.apache.commons.lang3.ObjectUtils;
+
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.TreeMap;
 import java.util.function.Supplier;
-import org.apache.commons.lang3.ObjectUtils;
 
 /**
  * 树构建器
@@ -23,6 +24,7 @@ public class TreeSupplier<E> implements Supplier<Tree<E>> {
 
 	/**
 	 * 构造
+	 *
 	 * @param rootId 根节点ID
 	 * @param config 配置
 	 */
@@ -34,8 +36,9 @@ public class TreeSupplier<E> implements Supplier<Tree<E>> {
 
 	/**
 	 * 创建Tree构建器
+	 *
 	 * @param rootId 根节点ID
-	 * @param <T> ID类型
+	 * @param <T>    ID类型
 	 * @return {@link TreeSupplier}
 	 */
 	public static <T> TreeSupplier<T> of(T rootId) {
@@ -44,9 +47,10 @@ public class TreeSupplier<E> implements Supplier<Tree<E>> {
 
 	/**
 	 * 创建Tree构建器
+	 *
 	 * @param rootId 根节点ID
 	 * @param config 配置
-	 * @param <T> ID类型
+	 * @param <T>    ID类型
 	 * @return {@link TreeSupplier}
 	 */
 	public static <T> TreeSupplier<T> of(T rootId, TreeNodeConfig config) {
@@ -55,6 +59,7 @@ public class TreeSupplier<E> implements Supplier<Tree<E>> {
 
 	/**
 	 * 增加节点列表，增加的节点是不带子节点的
+	 *
 	 * @param map 节点列表
 	 * @return this
 	 */
@@ -66,6 +71,7 @@ public class TreeSupplier<E> implements Supplier<Tree<E>> {
 
 	/**
 	 * 增加节点列表，增加的节点是不带子节点的
+	 *
 	 * @param trees 节点列表
 	 * @return this
 	 */
@@ -80,8 +86,9 @@ public class TreeSupplier<E> implements Supplier<Tree<E>> {
 
 	/**
 	 * 增加节点列表，增加的节点是不带子节点的
-	 * @param list Bean列表
-	 * @param <T> Bean类型
+	 *
+	 * @param list       Bean列表
+	 * @param <T>        Bean类型
 	 * @param nodeParser 节点转换器，用于定义一个Bean如何转换为Tree节点
 	 * @return this
 	 */
@@ -101,6 +108,7 @@ public class TreeSupplier<E> implements Supplier<Tree<E>> {
 
 	/**
 	 * 重置Builder，实现复用
+	 *
 	 * @return this
 	 */
 	public TreeSupplier<E> reset() {
@@ -134,6 +142,7 @@ public class TreeSupplier<E> implements Supplier<Tree<E>> {
 	 *  -部门管理
 	 *    +部门添加
 	 * </pre>
+	 *
 	 * @return 树列表
 	 */
 	public List<Tree<E>> buildList() {
@@ -153,8 +162,8 @@ public class TreeSupplier<E> implements Supplier<Tree<E>> {
 		}
 
 		final Map<E, Tree<E>> eTreeMap = idTreeMap;// 使用有序map
-													// MapUtils.sortByValue(this.idTreeMap,
-													// false);
+		// MapUtils.sortByValue(this.idTreeMap,
+		// false);
 		E parentId;
 		for (Tree<E> node : eTreeMap.values()) {
 			if (null == node) {
@@ -187,9 +196,10 @@ public class TreeSupplier<E> implements Supplier<Tree<E>> {
 
 	/**
 	 * 树剪枝叶
-	 * @param tree 节点
+	 *
+	 * @param tree        节点
 	 * @param currentDepp 当前层级
-	 * @param maxDeep 最大层级
+	 * @param maxDeep     最大层级
 	 */
 	private void cutTree(Tree<E> tree, int currentDepp, int maxDeep) {
 		if (null == tree) {

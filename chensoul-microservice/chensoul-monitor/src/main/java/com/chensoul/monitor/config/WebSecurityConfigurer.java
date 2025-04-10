@@ -30,7 +30,7 @@ public class WebSecurityConfigurer {
 			.and()
 			.authorizeRequests()
 			.antMatchers(adminContextPath + "/assets/**", adminContextPath + "/login",
-					adminContextPath + "/instances/**", adminContextPath + "/actuator/**")
+				adminContextPath + "/instances/**", adminContextPath + "/actuator/**")
 			.permitAll()
 			.anyRequest()
 			.authenticated()

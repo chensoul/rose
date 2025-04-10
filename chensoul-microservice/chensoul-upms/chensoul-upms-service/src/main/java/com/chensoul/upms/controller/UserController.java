@@ -24,6 +24,7 @@ public class UserController {
 
 	/**
 	 * 注册用户
+	 *
 	 * @param userRegisterRequest 用户
 	 * @return 添加的用户
 	 */
@@ -42,7 +43,7 @@ public class UserController {
 
 	@PostMapping("/{userId}/userCredential/enabled")
 	public RestResponse<User> setUserCredentialEnabled(@PathVariable(USER_ID) Long userId,
-			@RequestParam(required = false, defaultValue = "true") boolean userCredentialEnabled) throws Exception {
+													   @RequestParam(required = false, defaultValue = "true") boolean userCredentialEnabled) throws Exception {
 		return RestResponse.ok(userService.setUserCredentialEnabled(userId, userCredentialEnabled));
 	}
 

@@ -44,7 +44,7 @@ public class EnjoyRedisMQProducerAutoConfiguration {
 
 	@Bean
 	public RedisMQTemplate redisMQTemplate(StringRedisTemplate redisTemplate,
-			List<RedisMessageInterceptor> interceptors) {
+										   List<RedisMessageInterceptor> interceptors) {
 		RedisMQTemplate redisMQTemplate = new RedisMQTemplate(redisTemplate);
 		// 添加拦截器
 		interceptors.forEach(redisMQTemplate::addInterceptor);

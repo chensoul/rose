@@ -26,7 +26,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 /**
  * index controller
@@ -47,7 +50,7 @@ public class JobInfoController {
 
 	@RequestMapping
 	public String index(HttpServletRequest request, Model model,
-			@RequestParam(required = false, defaultValue = "-1") int jobGroup) {
+						@RequestParam(required = false, defaultValue = "-1") int jobGroup) {
 
 		// 枚举-字典
 		model.addAttribute("ExecutorRouteStrategyEnum", ExecutorRouteStrategyEnum.values()); // 路由策略-列表
@@ -74,8 +77,8 @@ public class JobInfoController {
 	@RequestMapping("/pageList")
 	@ResponseBody
 	public Map<String, Object> pageList(@RequestParam(required = false, defaultValue = "0") int start,
-			@RequestParam(required = false, defaultValue = "10") int length, int jobGroup, int triggerStatus,
-			String jobDesc, String executorHandler, String author) {
+										@RequestParam(required = false, defaultValue = "10") int length, int jobGroup, int triggerStatus,
+										String jobDesc, String executorHandler, String author) {
 
 		return xxlJobService.pageList(start, length, jobGroup, triggerStatus, jobDesc, executorHandler, author);
 	}
@@ -144,16 +147,14 @@ public class JobInfoController {
 				lastTime = JobScheduleHelper.generateNextValidTime(paramXxlJobInfo, lastTime);
 				if (lastTime != null) {
 					result.add(DateUtil.formatDateTime(lastTime));
-				}
-				else {
+				} else {
 					break;
 				}
 			}
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			return new ReturnT<List<String>>(ReturnT.FAIL_CODE,
-					(I18nUtil.getString("schedule_type") + I18nUtil.getString("system_unvalid")) + e.getMessage());
+				(I18nUtil.getString("schedule_type") + I18nUtil.getString("system_unvalid")) + e.getMessage());
 		}
 		return new ReturnT<List<String>>(result);
 

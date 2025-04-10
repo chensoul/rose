@@ -10,7 +10,7 @@ import java.lang.annotation.*;
  *
  * @author <a href="mailto:ichensoul@gmail.com">chensoul</a>
  */
-@Target({ ElementType.METHOD })
+@Target({ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
 @Inherited
 public @interface TenantIgnore {

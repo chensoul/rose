@@ -13,6 +13,7 @@ public interface LauncherService extends Ordered, Comparable<LauncherService> {
 
 	/**
 	 * 获取排列顺序
+	 *
 	 * @return order
 	 */
 	@Override
@@ -22,6 +23,7 @@ public interface LauncherService extends Ordered, Comparable<LauncherService> {
 
 	/**
 	 * 对比排序
+	 *
 	 * @param o LauncherService
 	 * @return compare
 	 */

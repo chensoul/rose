@@ -120,7 +120,7 @@ public class WebSecurityConfig {
 	@Bean
 	protected RestLoginProcessingFilter restLoginProcessingFilter() throws Exception {
 		RestLoginProcessingFilter filter = new RestLoginProcessingFilter(securityProperties.getLoginUrl(),
-				restAuthenticationSuccessHandler, restAuthenticationFailureHandler);
+			restAuthenticationSuccessHandler, restAuthenticationFailureHandler);
 		filter.setAuthenticationManager(authenticationManager);
 		filter.setAuthenticationDetailsSource(new IpAuthenticationDetailSource());
 		return filter;
@@ -129,7 +129,7 @@ public class WebSecurityConfig {
 	@Bean
 	protected RestAccessProcessingFilter restAccessTokenProcessingFilter() throws Exception {
 		SkipPathRequestMatcher matcher = new SkipPathRequestMatcher(securityProperties.getPathsToSkip(),
-				securityProperties.getBaseUrl());
+			securityProperties.getBaseUrl());
 		RestAccessProcessingFilter filter = new RestAccessProcessingFilter(matcher, restAuthenticationFailureHandler);
 		filter.setAuthenticationManager(this.authenticationManager);
 		filter.setAuthenticationDetailsSource(new IpAuthenticationDetailSource());
@@ -138,7 +138,7 @@ public class WebSecurityConfig {
 
 	protected RestRefreshProcessingFilter restRefreshProcessingFilter() throws Exception {
 		RestRefreshProcessingFilter filter = new RestRefreshProcessingFilter(securityProperties.getTokenRefreshUrl(),
-				restAuthenticationSuccessHandler, restAuthenticationFailureHandler);
+			restAuthenticationSuccessHandler, restAuthenticationFailureHandler);
 		filter.setAuthenticationManager(authenticationManager);
 		return filter;
 	}

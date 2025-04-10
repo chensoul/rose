@@ -19,8 +19,9 @@ public abstract class FormatUtils {
 	 * <p>
 	 * formatVariables.
 	 * </p>
+	 *
 	 * @param template a {@link String} object
-	 * @param map a {@link Map} object
+	 * @param map      a {@link Map} object
 	 * @return a {@link String} object
 	 */
 	public static String formatVariables(final String template, final Map<String, ?> map) {
@@ -31,14 +32,15 @@ public abstract class FormatUtils {
 	 * <p>
 	 * formatVariables.
 	 * </p>
+	 *
 	 * @param template a {@link String} object
-	 * @param prefix a {@link String} object
-	 * @param suffix a {@link String} object
-	 * @param map a {@link Map} object
+	 * @param prefix   a {@link String} object
+	 * @param suffix   a {@link String} object
+	 * @param map      a {@link Map} object
 	 * @return a {@link String} object
 	 */
 	public static String formatVariables(final String template, String prefix, String suffix,
-			final Map<String, ?> map) {
+										 final Map<String, ?> map) {
 		if (null == template) {
 			return null;
 		}
@@ -64,8 +66,9 @@ public abstract class FormatUtils {
 	 * <p>
 	 * format.
 	 * </p>
+	 *
 	 * @param template a {@link String} object
-	 * @param args a {@link Object} object
+	 * @param args     a {@link Object} object
 	 * @return a {@link String} object
 	 */
 	public static String format(final String template, final Object... args) {
@@ -76,9 +79,10 @@ public abstract class FormatUtils {
 	 * <p>
 	 * formatWithPlaceholder.
 	 * </p>
-	 * @param template a {@link String} object
+	 *
+	 * @param template    a {@link String} object
 	 * @param placeholder a {@link String} object
-	 * @param args a {@link Object} object
+	 * @param args        a {@link Object} object
 	 * @return a {@link String} object
 	 */
 	public static String formatWithPlaceholder(final String template, final String placeholder, final Object... args) {

@@ -83,7 +83,7 @@ public class NamespaceForm implements Serializable {
 		}
 		NamespaceForm that = (NamespaceForm) o;
 		return Objects.equals(namespaceId, that.namespaceId) && Objects.equals(namespaceName, that.namespaceName)
-				&& Objects.equals(namespaceDesc, that.namespaceDesc);
+			&& Objects.equals(namespaceDesc, that.namespaceDesc);
 	}
 
 	@Override
@@ -94,21 +94,22 @@ public class NamespaceForm implements Serializable {
 	@Override
 	public String toString() {
 		return "NamespaceVo{" + "namespaceId='" + namespaceId + '\'' + ", namespaceName='" + namespaceName + '\''
-				+ ", namespaceDesc='" + namespaceDesc + '\'' + '}';
+			+ ", namespaceDesc='" + namespaceDesc + '\'' + '}';
 	}
 
 	/**
 	 * check required param.
+	 *
 	 * @throws NacosException NacosException
 	 */
 	public void validate() throws NacosException {
 		if (null == namespaceId) {
 			throw new NacosApiException(HttpStatus.BAD_REQUEST.value(), ErrorCode.PARAMETER_MISSING,
-					"required parameter 'namespaceId' is missing");
+				"required parameter 'namespaceId' is missing");
 		}
 		if (null == namespaceName) {
 			throw new NacosApiException(HttpStatus.BAD_REQUEST.value(), ErrorCode.PARAMETER_MISSING,
-					"required parameter 'namespaceName' is missing");
+				"required parameter 'namespaceName' is missing");
 		}
 	}
 

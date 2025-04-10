@@ -21,8 +21,7 @@ public class EnumCheckValidator implements ConstraintValidator<InEnum, Integer> 
 		Enum<?>[] values = annotation.value().getEnumConstants();
 		if (values.length == 0) {
 			this.values = Collections.emptyList();
-		}
-		else {
+		} else {
 			this.values = Arrays.asList(values[0]);
 		}
 	}
@@ -40,7 +39,7 @@ public class EnumCheckValidator implements ConstraintValidator<InEnum, Integer> 
 		context.disableDefaultConstraintViolation(); // 禁用默认的 message 的值
 		context
 			.buildConstraintViolationWithTemplate(
-					context.getDefaultConstraintMessageTemplate().replaceAll("\\{value}", values.toString()))
+				context.getDefaultConstraintMessageTemplate().replaceAll("\\{value}", values.toString()))
 			.addConstraintViolation(); // 重新添加错误提示语句
 		return false;
 	}

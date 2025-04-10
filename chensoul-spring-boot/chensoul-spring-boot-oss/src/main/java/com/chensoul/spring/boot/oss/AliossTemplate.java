@@ -152,8 +152,7 @@ public class AliossTemplate implements OssTemplate {
 		// 覆盖上传
 		if (cover) {
 			ossClient.putObject(getBucketName(bucketName), key, stream);
-		}
-		else {
+		} else {
 			PutObjectResult response = ossClient.putObject(getBucketName(bucketName), key, stream);
 			int retry = 0;
 			int retryCount = 5;
@@ -196,6 +195,7 @@ public class AliossTemplate implements OssTemplate {
 
 	/**
 	 * 根据规则生成存储桶名称规则
+	 *
 	 * @return String
 	 */
 	private String getBucketName() {
@@ -204,6 +204,7 @@ public class AliossTemplate implements OssTemplate {
 
 	/**
 	 * 根据规则生成存储桶名称规则
+	 *
 	 * @param bucketName 存储桶名称
 	 * @return String
 	 */
@@ -213,6 +214,7 @@ public class AliossTemplate implements OssTemplate {
 
 	/**
 	 * 根据规则生成文件名称规则
+	 *
 	 * @param originalFilename 原始文件名
 	 * @return string
 	 */
@@ -243,7 +245,7 @@ public class AliossTemplate implements OssTemplate {
 		PolicyConditions policyConds = new PolicyConditions();
 		// 默认大小限制10M
 		policyConds.addConditionItem(PolicyConditions.COND_CONTENT_LENGTH_RANGE, 0,
-				(Long) ossProperties.getArgs().getOrDefault("contentLengthRange", 10485760L));
+			(Long) ossProperties.getArgs().getOrDefault("contentLengthRange", 10485760L));
 		policyConds.addConditionItem(MatchMode.StartWith, PolicyConditions.COND_KEY, baseDir);
 
 		String postPolicy = ossClient.generatePostPolicy(expiration, policyConds);
@@ -263,17 +265,19 @@ public class AliossTemplate implements OssTemplate {
 
 	/**
 	 * 获取域名
+	 *
 	 * @param bucketName 存储桶名称
 	 * @return String
 	 */
 	public String getOssHost(String bucketName) {
 		String prefix = getEndpoint().contains("https://") ? "https://" : "http://";
 		return prefix + getBucketName(bucketName) + StringPool.DOT
-				+ getEndpoint().replaceFirst(prefix, StringPool.EMPTY);
+			+ getEndpoint().replaceFirst(prefix, StringPool.EMPTY);
 	}
 
 	/**
 	 * 获取域名
+	 *
 	 * @return String
 	 */
 	public String getOssHost() {
@@ -282,6 +286,7 @@ public class AliossTemplate implements OssTemplate {
 
 	/**
 	 * 获取服务地址
+	 *
 	 * @return String
 	 */
 	public String getEndpoint() {

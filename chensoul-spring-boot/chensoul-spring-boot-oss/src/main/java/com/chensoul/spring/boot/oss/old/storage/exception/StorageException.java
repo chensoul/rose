@@ -19,9 +19,9 @@
 
 package com.chensoul.spring.boot.oss.old.storage.exception;
 
+import com.chensoul.spring.boot.oss.old.storage.properties.BaseOssProperties;
 import lombok.Getter;
 import lombok.Setter;
-import com.chensoul.spring.boot.oss.old.storage.properties.BaseOssProperties;
 
 /**
  * @author Levin

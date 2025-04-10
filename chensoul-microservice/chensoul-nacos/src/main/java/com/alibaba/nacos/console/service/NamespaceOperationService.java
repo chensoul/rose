@@ -62,7 +62,7 @@ public class NamespaceOperationService {
 	private static final String DEFAULT_KP = "1";
 
 	public NamespaceOperationService(ConfigInfoPersistService configInfoPersistService,
-			CommonPersistService commonPersistService) {
+									 CommonPersistService commonPersistService) {
 		this.configInfoPersistService = configInfoPersistService;
 		this.commonPersistService = commonPersistService;
 	}
@@ -72,14 +72,14 @@ public class NamespaceOperationService {
 		List<TenantInfo> tenantInfos = commonPersistService.findTenantByKp(DEFAULT_KP);
 
 		Namespace namespace0 = new Namespace(NamespaceUtil.getNamespaceDefaultId(), DEFAULT_NAMESPACE, DEFAULT_QUOTA,
-				configInfoPersistService.configInfoCount(DEFAULT_TENANT), NamespaceTypeEnum.GLOBAL.getType());
+			configInfoPersistService.configInfoCount(DEFAULT_TENANT), NamespaceTypeEnum.GLOBAL.getType());
 		List<Namespace> namespaceList = new ArrayList<>();
 		namespaceList.add(namespace0);
 
 		for (TenantInfo tenantInfo : tenantInfos) {
 			int configCount = configInfoPersistService.configInfoCount(tenantInfo.getTenantId());
 			Namespace namespaceTmp = new Namespace(tenantInfo.getTenantId(), tenantInfo.getTenantName(),
-					tenantInfo.getTenantDesc(), DEFAULT_QUOTA, configCount, NamespaceTypeEnum.CUSTOM.getType());
+				tenantInfo.getTenantDesc(), DEFAULT_QUOTA, configCount, NamespaceTypeEnum.CUSTOM.getType());
 			namespaceList.add(namespaceTmp);
 		}
 		return namespaceList;
@@ -87,6 +87,7 @@ public class NamespaceOperationService {
 
 	/**
 	 * query namespace by namespace id.
+	 *
 	 * @param namespaceId namespace Id.
 	 * @return NamespaceAllInfo.
 	 */
@@ -94,38 +95,38 @@ public class NamespaceOperationService {
 		// TODO 获取用kp
 		if (StringUtils.isBlank(namespaceId) || namespaceId.equals(NamespaceUtil.getNamespaceDefaultId())) {
 			return new NamespaceAllInfo(namespaceId, DEFAULT_NAMESPACE_SHOW_NAME, DEFAULT_QUOTA,
-					configInfoPersistService.configInfoCount(DEFAULT_TENANT), NamespaceTypeEnum.GLOBAL.getType(),
-					DEFAULT_NAMESPACE_DESCRIPTION);
-		}
-		else {
+				configInfoPersistService.configInfoCount(DEFAULT_TENANT), NamespaceTypeEnum.GLOBAL.getType(),
+				DEFAULT_NAMESPACE_DESCRIPTION);
+		} else {
 			TenantInfo tenantInfo = commonPersistService.findTenantByKp(DEFAULT_KP, namespaceId);
 			if (null == tenantInfo) {
 				throw new NacosApiException(HttpStatus.NOT_FOUND.value(), ErrorCode.NAMESPACE_NOT_EXIST,
-						"namespaceId [ " + namespaceId + " ] not exist");
+					"namespaceId [ " + namespaceId + " ] not exist");
 			}
 			int configCount = configInfoPersistService.configInfoCount(namespaceId);
 			return new NamespaceAllInfo(namespaceId, tenantInfo.getTenantName(), DEFAULT_QUOTA, configCount,
-					NamespaceTypeEnum.CUSTOM.getType(), tenantInfo.getTenantDesc());
+				NamespaceTypeEnum.CUSTOM.getType(), tenantInfo.getTenantDesc());
 		}
 	}
 
 	/**
 	 * create namespace.
-	 * @param namespaceId namespace ID
+	 *
+	 * @param namespaceId   namespace ID
 	 * @param namespaceName namespace Name
 	 * @param namespaceDesc namespace Desc
 	 * @return whether create ok
 	 */
 	public Boolean createNamespace(String namespaceId, String namespaceName, String namespaceDesc)
-			throws NacosException {
+		throws NacosException {
 		// TODO 获取用kp
 		if (commonPersistService.tenantInfoCountByTenantId(namespaceId) > 0) {
 			throw new NacosApiException(HttpStatus.INTERNAL_SERVER_ERROR.value(), ErrorCode.NAMESPACE_ALREADY_EXIST,
-					"namespaceId [" + namespaceId + "] already exist");
+				"namespaceId [" + namespaceId + "] already exist");
 		}
 
 		commonPersistService.insertTenantInfoAtomic(DEFAULT_KP, namespaceId, namespaceName, namespaceDesc,
-				DEFAULT_CREATE_SOURCE, System.currentTimeMillis());
+			DEFAULT_CREATE_SOURCE, System.currentTimeMillis());
 		return true;
 	}
 

@@ -29,7 +29,7 @@ public class PermissionInterceptor implements AsyncHandlerInterceptor {
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
-			throws Exception {
+		throws Exception {
 
 		if (!(handler instanceof HandlerMethod)) {
 			return true; // proceed with the next interceptor
@@ -56,9 +56,9 @@ public class PermissionInterceptor implements AsyncHandlerInterceptor {
 				throw new RuntimeException(I18nUtil.getString("system_permission_limit"));
 			}
 			request.setAttribute(LoginService.LOGIN_IDENTITY_KEY, loginUser); // set
-																				// loginUser,
-																				// with
-																				// request
+			// loginUser,
+			// with
+			// request
 		}
 
 		return true; // proceed with the next interceptor
@@ -68,19 +68,21 @@ public class PermissionInterceptor implements AsyncHandlerInterceptor {
 
 	/**
 	 * get loginUser
+	 *
 	 * @param request
 	 * @return
 	 */
 	public static XxlJobUser getLoginUser(HttpServletRequest request) {
 		XxlJobUser loginUser = (XxlJobUser) request.getAttribute(LoginService.LOGIN_IDENTITY_KEY); // get
-																									// loginUser,
-																									// with
-																									// request
+		// loginUser,
+		// with
+		// request
 		return loginUser;
 	}
 
 	/**
 	 * valid permission by JobGroup
+	 *
 	 * @param request
 	 * @param jobGroup
 	 */
@@ -88,25 +90,25 @@ public class PermissionInterceptor implements AsyncHandlerInterceptor {
 		XxlJobUser loginUser = getLoginUser(request);
 		if (!loginUser.validPermission(jobGroup)) {
 			throw new RuntimeException(
-					I18nUtil.getString("system_permission_limit") + "[username=" + loginUser.getUsername() + "]");
+				I18nUtil.getString("system_permission_limit") + "[username=" + loginUser.getUsername() + "]");
 		}
 	}
 
 	/**
 	 * filter XxlJobGroup by role
+	 *
 	 * @param request
 	 * @param jobGroupList_all
 	 * @return
 	 */
 	public static List<XxlJobGroup> filterJobGroupByRole(HttpServletRequest request,
-			List<XxlJobGroup> jobGroupList_all) {
+														 List<XxlJobGroup> jobGroupList_all) {
 		List<XxlJobGroup> jobGroupList = new ArrayList<>();
 		if (jobGroupList_all != null && jobGroupList_all.size() > 0) {
 			XxlJobUser loginUser = PermissionInterceptor.getLoginUser(request);
 			if (loginUser.getRole() == 1) {
 				jobGroupList = jobGroupList_all;
-			}
-			else {
+			} else {
 				List<String> groupIdStrs = new ArrayList<>();
 				if (loginUser.getPermission() != null && loginUser.getPermission().trim().length() > 0) {
 					groupIdStrs = Arrays.asList(loginUser.getPermission().trim().split(","));

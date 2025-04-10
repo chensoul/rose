@@ -25,7 +25,8 @@ public class TryLock {
 	 * Acquires the lock if it is not held by another thread within the given waiting time
 	 * and the current thread has not been {@linkplain Thread#interrupt interrupted}.
 	 * Then, execute the given supplier.
-	 * @param <T> the type parameter
+	 *
+	 * @param <T>      the type parameter
 	 * @param supplier the supplier
 	 * @return the result of the supplier
 	 */
@@ -33,11 +34,9 @@ public class TryLock {
 		if (tryLock()) {
 			try {
 				return supplier.get();
-			}
-			catch (final Throwable e) {
+			} catch (final Throwable e) {
 				throw new RuntimeException(e);
-			}
-			finally {
+			} finally {
 				unlock();
 			}
 		}
@@ -48,18 +47,17 @@ public class TryLock {
 	 * Acquires the lock if it is not held by another thread within the given waiting time
 	 * and the current thread has not been {@linkplain Thread#interrupt interrupted}.
 	 * Then, execute the given consumer.
-	 * @param <T> the type parameter
+	 *
+	 * @param <T>      the type parameter
 	 * @param consumer the consumer
 	 */
 	public <T> void tryLock(final CheckedConsumer<T> consumer) {
 		if (tryLock()) {
 			try {
 				consumer.accept(null);
-			}
-			catch (final Throwable e) {
+			} catch (final Throwable e) {
 				throw new RuntimeException(e);
-			}
-			finally {
+			} finally {
 				unlock();
 			}
 		}

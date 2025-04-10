@@ -28,7 +28,7 @@ import java.util.Map;
  * feign 自动配置功能 from mica
  */
 public class AutoFeignClientsRegistrar
-		implements ImportBeanDefinitionRegistrar, BeanClassLoaderAware, EnvironmentAware {
+	implements ImportBeanDefinitionRegistrar, BeanClassLoaderAware, EnvironmentAware {
 
 	private final static String BASE_URL = "http://127.0.0.1:${server.port}${server.servlet.context-path}";
 
@@ -51,7 +51,7 @@ public class AutoFeignClientsRegistrar
 	private void registerFeignClients(BeanDefinitionRegistry registry) {
 
 		List<String> feignClients = new ArrayList<>(
-				SpringFactoriesLoader.loadFactoryNames(getSpringFactoriesLoaderFactoryClass(), getBeanClassLoader()));
+			SpringFactoriesLoader.loadFactoryNames(getSpringFactoriesLoaderFactoryClass(), getBeanClassLoader()));
 
 		// 支持 springboot 2.7 + 最新版本的配置方式
 		ImportCandidates.load(FeignClient.class, getBeanClassLoader()).forEach(feignClients::add);
@@ -63,7 +63,7 @@ public class AutoFeignClientsRegistrar
 			try {
 				Class<?> clazz = beanClassLoader.loadClass(className);
 				AnnotationAttributes attributes = AnnotatedElementUtils.getMergedAnnotationAttributes(clazz,
-						FeignClient.class);
+					FeignClient.class);
 				if (attributes == null) {
 					continue;
 				}
@@ -91,8 +91,7 @@ public class AutoFeignClientsRegistrar
 					String contextId = getContextId(attributes);
 					aliasBuilder.append(contextId);
 					definition.addPropertyValue("contextId", contextId);
-				}
-				else {
+				} else {
 					aliasBuilder.append(name);
 				}
 
@@ -118,11 +117,10 @@ public class AutoFeignClientsRegistrar
 				}
 
 				BeanDefinitionHolder holder = new BeanDefinitionHolder(beanDefinition, className,
-						new String[] { alias });
+					new String[]{alias});
 				BeanDefinitionReaderUtils.registerBeanDefinition(holder, registry);
 
-			}
-			catch (ClassNotFoundException e) {
+			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
 			}
 		}
@@ -131,6 +129,7 @@ public class AutoFeignClientsRegistrar
 	/**
 	 * Return the class used by {@link SpringFactoriesLoader} to load configuration
 	 * candidates.
+	 *
 	 * @return the factory class
 	 */
 	private Class<?> getSpringFactoriesLoaderFactoryClass() {
@@ -224,7 +223,7 @@ public class AutoFeignClientsRegistrar
 		}
 
 		throw new IllegalStateException(
-				"Either 'name' or 'value' must be provided in @" + FeignClient.class.getSimpleName());
+			"Either 'name' or 'value' must be provided in @" + FeignClient.class.getSimpleName());
 	}
 
 	private void registerClientConfiguration(BeanDefinitionRegistry registry, Object name, Object configuration) {
@@ -232,7 +231,7 @@ public class AutoFeignClientsRegistrar
 		builder.addConstructorArgValue(name);
 		builder.addConstructorArgValue(configuration);
 		registry.registerBeanDefinition(name + "." + FeignClientSpecification.class.getSimpleName(),
-				builder.getBeanDefinition());
+			builder.getBeanDefinition());
 	}
 
 	@Override

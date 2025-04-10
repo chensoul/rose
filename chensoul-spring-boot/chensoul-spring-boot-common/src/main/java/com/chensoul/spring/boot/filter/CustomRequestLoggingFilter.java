@@ -30,16 +30,15 @@ public class CustomRequestLoggingFilter extends CommonsRequestLoggingFilter {
 	private final int maxResponseTimeToLogInMs;
 
 	private List<String> ignoreHeaders = Arrays.asList("password", "authorization", "token", "accessToken",
-			"access_token", "refreshToken");
+		"access_token", "refreshToken");
 
 	@PostConstruct
 	public void init() {
 		Predicate<String> headerPredicate = headerName -> ObjectUtils.isEmpty(ignoreHeaders)
-				|| !ignoreHeaders.contains(headerName);
+			|| !ignoreHeaders.contains(headerName);
 		if (getHeaderPredicate() == null) {
 			setHeaderPredicate(headerPredicate);
-		}
-		else {
+		} else {
 			setHeaderPredicate(getHeaderPredicate().or(headerPredicate));
 		}
 	}
@@ -63,7 +62,7 @@ public class CustomRequestLoggingFilter extends CommonsRequestLoggingFilter {
 
 			if (cost >= this.maxResponseTimeToLogInMs) {
 				String execTime = TimeUtils.format(TimeUtils.fromMilliseconds(startTime),
-						DatePattern.NORM_DATETIME_MS_PATTERN);
+					DatePattern.NORM_DATETIME_MS_PATTERN);
 				log.warn("[SLOW_REQUEST] {} {} {} {}", execTime, request.getMethod(), request.getRequestURI(), cost);
 			}
 		}

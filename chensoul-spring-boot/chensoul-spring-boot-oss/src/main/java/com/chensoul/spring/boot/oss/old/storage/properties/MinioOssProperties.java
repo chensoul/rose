@@ -19,11 +19,11 @@
 
 package com.chensoul.spring.boot.oss.old.storage.properties;
 
-import java.time.Duration;
-
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+
+import java.time.Duration;
 
 import static com.chensoul.spring.boot.oss.old.storage.OssOperation.OSS_CONFIG_PREFIX_MINIO;
 

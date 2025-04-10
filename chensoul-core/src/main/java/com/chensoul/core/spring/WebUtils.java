@@ -40,7 +40,7 @@ public class WebUtils extends org.springframework.web.util.WebUtils {
 	public static final String XMLHTTP_REQUEST = "XMLHttpRequest";
 
 	private static final List<String> CLIENT_IP_HEADER_NAMES = Arrays.asList("X-Forwarded-For", "X-Real-IP",
-			"Proxy-Client-IP", "WL-Proxy-Client-IP", "HTTP_CLIENT_IP", "HTTP_X_FORWARDED_FOR");
+		"Proxy-Client-IP", "WL-Proxy-Client-IP", "HTTP_CLIENT_IP", "HTTP_X_FORWARDED_FOR");
 
 	public static String getUsername() {
 		HttpServletRequest request = WebUtils.ofRequest().get();
@@ -121,7 +121,7 @@ public class WebUtils extends org.springframework.web.util.WebUtils {
 			return null;
 		}
 		return StringUtils.defaultString(request.getQueryParams().getFirst(headerName),
-				request.getHeaders().getFirst(headerName));
+			request.getHeaders().getFirst(headerName));
 	}
 
 	public static boolean isJsonRequest(ServletRequest request) {
@@ -130,7 +130,7 @@ public class WebUtils extends org.springframework.web.util.WebUtils {
 
 	public static String constructUrl(HttpServletRequest request) {
 		return String.format("%s://%s:%d%s", getScheme(request), getDomainName(request), getPort(request),
-				request.getRequestURI());
+			request.getRequestURI());
 	}
 
 	public static String getScheme(HttpServletRequest request) {
@@ -169,11 +169,9 @@ public class WebUtils extends org.springframework.web.util.WebUtils {
 		if (request.getHeader("x-forwarded-port") != null) {
 			try {
 				serverPort = request.getIntHeader("x-forwarded-port");
+			} catch (NumberFormatException e) {
 			}
-			catch (NumberFormatException e) {
-			}
-		}
-		else if (forwardedProto != null) {
+		} else if (forwardedProto != null) {
 			switch (forwardedProto) {
 				case "http":
 					serverPort = 80;

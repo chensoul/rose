@@ -22,14 +22,13 @@ public class RestAuthenticationSuccessHandler implements AuthenticationSuccessHa
 
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
-			Authentication authentication) throws IOException, ServletException {
+										Authentication authentication) throws IOException, ServletException {
 		SecurityUser securityUser = (SecurityUser) authentication.getPrincipal();
 
 		TokenPair tokenPair;
 		if (authentication instanceof MfaAuthenticationToken) {
 			tokenPair = tokenFactory.createPreVerificationTokenPair(securityUser);
-		}
-		else {
+		} else {
 			tokenPair = tokenFactory.createTokenPair(securityUser);
 		}
 

@@ -51,7 +51,7 @@ public class DataPermissionRuleFactoryImpl implements DataPermissionRuleFactory 
 	}
 
 	@Override // mappedStatementId 参数，暂时没有用。以后，可以基于 mappedStatementId + DataPermission
-				// 进行缓存
+	// 进行缓存
 	public List<DataPermissionRule> getDataPermissionRule(String mappedStatementId) {
 		// 1. 无数据权限
 		if (CollectionUtils.isEmpty(rules)) {

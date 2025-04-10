@@ -98,7 +98,7 @@ public class RestResponse<T> implements Serializable {
 	}
 
 	public <Ex extends Exception> RestResponse<T> assertCode(int expect,
-			Function<? super RestResponse<T>, ? extends Ex> func) throws Ex {
+															 Function<? super RestResponse<T>, ? extends Ex> func) throws Ex {
 		if (codeNotEquals(expect)) {
 			throw func.apply(this);
 		}
@@ -106,12 +106,12 @@ public class RestResponse<T> implements Serializable {
 	}
 
 	public <Ex extends Exception> RestResponse<T> assertSuccess(Function<? super RestResponse<T>, ? extends Ex> func)
-			throws Ex {
+		throws Ex {
 		return assertCode(ResultCode.SUCCESS.getCode(), func);
 	}
 
 	public <Ex extends Exception> RestResponse<T> assertDataNotNull(
-			Function<? super RestResponse<T>, ? extends Ex> func) throws Ex {
+		Function<? super RestResponse<T>, ? extends Ex> func) throws Ex {
 		if (Objects.isNull(this.getData())) {
 			throw func.apply(this);
 		}
@@ -119,7 +119,7 @@ public class RestResponse<T> implements Serializable {
 	}
 
 	public <Ex extends Exception> RestResponse<T> assertDataNotEmpty(
-			Function<? super RestResponse<T>, ? extends Ex> func) throws Ex {
+		Function<? super RestResponse<T>, ? extends Ex> func) throws Ex {
 		if (ObjectUtils.isEmpty(this.getData())) {
 			throw func.apply(this);
 		}

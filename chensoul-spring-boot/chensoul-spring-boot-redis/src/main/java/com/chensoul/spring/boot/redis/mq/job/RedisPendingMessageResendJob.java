@@ -73,11 +73,9 @@ public class RedisPendingMessageResendJob {
 		if (lock.tryLock()) {
 			try {
 				execute();
-			}
-			catch (Exception ex) {
+			} catch (Exception ex) {
 				log.error("[messageResend][执行异常]", ex);
-			}
-			finally {
+			} finally {
 				lock.unlock();
 			}
 		}
@@ -99,7 +97,7 @@ public class RedisPendingMessageResendJob {
 				log.info("[processPendingMessage][消费者({}) 消息数量({})]", consumerName, pendingMessageCount);
 				// 每个消费者的 pending消息的详情信息
 				PendingMessages pendingMessages = ops.pending(listener.getStreamKey(),
-						Consumer.from(groupName, consumerName), Range.unbounded(), pendingMessageCount);
+					Consumer.from(groupName, consumerName), Range.unbounded(), pendingMessageCount);
 				if (pendingMessages.isEmpty()) {
 					return;
 				}
@@ -111,8 +109,8 @@ public class RedisPendingMessageResendJob {
 					}
 					// 获取指定 id 的消息体
 					List<MapRecord<String, Object, Object>> records = ops.range(listener.getStreamKey(),
-							Range.of(Range.Bound.inclusive(pendingMessage.getIdAsString()),
-									Range.Bound.inclusive(pendingMessage.getIdAsString())));
+						Range.of(Range.Bound.inclusive(pendingMessage.getIdAsString()),
+							Range.Bound.inclusive(pendingMessage.getIdAsString())));
 					if (CollectionUtils.isEmpty(records)) {
 						return;
 					}

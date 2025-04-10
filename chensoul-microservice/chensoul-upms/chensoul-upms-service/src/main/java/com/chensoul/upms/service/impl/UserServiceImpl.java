@@ -94,8 +94,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 			String phone = savedUser.getPhone();
 			try {
 				smsService.sendActivationSms(activateUrl, phone);
-			}
-			catch (BusinessException e) {
+			} catch (BusinessException e) {
 				deleteUser(savedUser);
 				throw e;
 			}
@@ -144,8 +143,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
 		if (userCredentialEnabled) {
 			resetFailedLoginAttempts(user);
-		}
-		else {
+		} else {
 			SpringContextHolder.publishEvent(new UserCredentialInvalidationEvent(userId));
 		}
 		return saveUser(user, null);
@@ -158,7 +156,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 		}
 
 		UserCacheEvictEvent evictEvent = new UserCacheEvictEvent(user.getPhone(),
-				oldUser != null ? oldUser.getPhone() : null);
+			oldUser != null ? oldUser.getPhone() : null);
 
 		if (user.getId() == null) {
 			user.setExtra(JacksonUtils.newObjectNode().put(USER_CREDENTIAL_ENABLED, false));
@@ -174,12 +172,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 			credential.setUserId(user.getId());
 			credential.setExtra(JacksonUtils.newObjectNode());
 			credentialMapper.insert(credential);
-		}
-		else {
+		} else {
 			baseMapper.updateById(user);
 		}
 		SpringContextHolder.publishEvent(
-				SaveEntityEvent.builder().entity(user).oldEntity(oldUser).created(user.getId() == null).build());
+			SaveEntityEvent.builder().entity(user).oldEntity(oldUser).created(user.getId() == null).build());
 		return user;
 	}
 
@@ -190,7 +187,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 		}
 		User user = getById(userId);
 		SecurityUser securityUser = new SecurityUser(user.getName(), null,
-				AuthorityUtils.createAuthorityList(user.getAuthority().name()));
+			AuthorityUtils.createAuthorityList(user.getAuthority().name()));
 		return tokenFactory.createTokenPair(securityUser);
 	}
 

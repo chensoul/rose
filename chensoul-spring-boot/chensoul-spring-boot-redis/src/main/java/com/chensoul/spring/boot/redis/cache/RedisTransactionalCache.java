@@ -43,13 +43,13 @@ import java.util.function.Supplier;
 
 @Slf4j
 public abstract class RedisTransactionalCache<K extends Serializable, V extends Serializable>
-		implements TransactionalCache<K, V> {
+	implements TransactionalCache<K, V> {
 
 	static final byte[] BINARY_NULL_VALUE = org.springframework.data.redis.serializer.RedisSerializer.java()
 		.serialize(NullValue.INSTANCE);
 	static final JedisPool MOCK_POOL = new JedisPool(); // non-null pool required for
-														// JedisConnection to trigger
-														// closing jedis connection
+	// JedisConnection to trigger
+	// closing jedis connection
 
 	protected final Expiration evictExpiration;
 
@@ -68,8 +68,8 @@ public abstract class RedisTransactionalCache<K extends Serializable, V extends 
 	private final RedisSerializer<K, V> valueSerializer;
 
 	public RedisTransactionalCache(String cacheName, CacheSpecProperties cacheSpecProperties,
-			RedisConnectionFactory connectionFactory, RedisCacheConfiguration configuration,
-			RedisSerializer<K, V> valueSerializer) {
+								   RedisConnectionFactory connectionFactory, RedisCacheConfiguration configuration,
+								   RedisSerializer<K, V> valueSerializer) {
 		this.cacheName = cacheName;
 		this.connectionFactory = (JedisConnectionFactory) connectionFactory;
 		this.valueSerializer = valueSerializer;
@@ -98,11 +98,9 @@ public abstract class RedisTransactionalCache<K extends Serializable, V extends 
 			byte[] rawValue = doGet(key, connection);
 			if (rawValue == null || rawValue.length == 0) {
 				return null;
-			}
-			else if (Arrays.equals(rawValue, BINARY_NULL_VALUE)) {
+			} else if (Arrays.equals(rawValue, BINARY_NULL_VALUE)) {
 				return SimpleCacheValueWrapper.empty();
-			}
-			else {
+			} else {
 				V value = valueSerializer.deserialize(key, rawValue);
 				return SimpleCacheValueWrapper.wrap(value);
 			}
@@ -182,7 +180,7 @@ public abstract class RedisTransactionalCache<K extends Serializable, V extends 
 
 	@Override
 	public CacheTransaction<K, V> newTransactionForKey(K key) {
-		byte[][] rawKey = new byte[][] { getRawKey(key) };
+		byte[][] rawKey = new byte[][]{getRawKey(key)};
 		RedisConnection connection = watch(rawKey);
 		return new RedisCacheTransaction<>(this, connection);
 	}
@@ -195,12 +193,12 @@ public abstract class RedisTransactionalCache<K extends Serializable, V extends 
 
 	@Override
 	public <R> R getAndPutInTransaction(K key, Supplier<R> dbCall, Function<V, R> cacheValueToResult,
-			Function<R, V> dbValueToCacheValue, boolean cacheNullValue) {
+										Function<R, V> dbValueToCacheValue, boolean cacheNullValue) {
 		if (!cacheEnabled) {
 			return dbCall.get();
 		}
 		return TransactionalCache.super.getAndPutInTransaction(key, dbCall, cacheValueToResult, dbValueToCacheValue,
-				cacheNullValue);
+			cacheNullValue);
 	}
 
 	protected RedisConnection getConnection(byte[] rawKey) {
@@ -224,8 +222,7 @@ public abstract class RedisTransactionalCache<K extends Serializable, V extends 
 		try {
 			connection.watch(rawKeysList);
 			connection.multi();
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			connection.close();
 			throw e;
 		}
@@ -237,8 +234,7 @@ public abstract class RedisTransactionalCache<K extends Serializable, V extends 
 		byte[] rawKey;
 		try {
 			rawKey = keySerializer.serialize(keyString);
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			log.warn("Failed to serialize the cache key: {}", key, e);
 			throw new RuntimeException(e);
 		}
@@ -252,14 +248,12 @@ public abstract class RedisTransactionalCache<K extends Serializable, V extends 
 	protected byte[] getRawValue(V value) {
 		if (value == null) {
 			return BINARY_NULL_VALUE;
-		}
-		else {
+		} else {
 			try {
 				long startTime = System.nanoTime();
 				byte[] bytes = valueSerializer.serialize(value);
 				return bytes;
-			}
-			catch (Exception e) {
+			} catch (Exception e) {
 				log.warn("Failed to serialize the cache value: {}", value, e);
 				throw new RuntimeException(e);
 			}
@@ -280,24 +274,22 @@ public abstract class RedisTransactionalCache<K extends Serializable, V extends 
 	}
 
 	protected void executeScript(RedisConnection connection, byte[] scriptSha, byte[] luaScript, ReturnType returnType,
-			int numKeys, byte[]... keysAndArgs) {
+								 int numKeys, byte[]... keysAndArgs) {
 		try {
 			connection.scriptingCommands().evalSha(scriptSha, returnType, numKeys, keysAndArgs);
-		}
-		catch (InvalidDataAccessApiUsageException ignored) {
+		} catch (InvalidDataAccessApiUsageException ignored) {
 			log.debug("Loading LUA with expected SHA [{}], connection [{}]", new String(scriptSha),
-					connection.getNativeConnection());
+				connection.getNativeConnection());
 			String actualSha = connection.scriptingCommands().scriptLoad(luaScript);
 			if (!Arrays.equals(scriptSha, StringRedisSerializer.UTF_8.serialize(actualSha))) {
 				String message = String.format(
-						"SHA for LUA script wrong! Expected [%s], but actual [%s], connection [%s]",
-						new String(scriptSha), actualSha, connection.getNativeConnection());
+					"SHA for LUA script wrong! Expected [%s], but actual [%s], connection [%s]",
+					new String(scriptSha), actualSha, connection.getNativeConnection());
 				throw new IllegalStateException(message);
 			}
 			try {
 				connection.scriptingCommands().evalSha(scriptSha, returnType, numKeys, keysAndArgs);
-			}
-			catch (InvalidDataAccessApiUsageException exception) {
+			} catch (InvalidDataAccessApiUsageException exception) {
 				log.warn("Slowly executing eval instead of fast evalSha", exception);
 				connection.scriptingCommands().eval(luaScript, returnType, numKeys, keysAndArgs);
 			}

@@ -19,16 +19,16 @@
 
 package com.chensoul.spring.boot.oss.old.storage.domain;
 
-import java.io.InputStream;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-
+import com.chensoul.spring.boot.oss.old.storage.FileUtils;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
-import com.chensoul.spring.boot.oss.old.storage.FileUtils;
+
+import java.io.InputStream;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  * 请求参数
@@ -79,6 +79,7 @@ public class StorageRequest implements java.io.Serializable {
 
 	/**
 	 * 获取目标名字
+	 *
 	 * @return 目标名称
 	 * @throws RuntimeException RuntimeException
 	 */

@@ -93,8 +93,7 @@ public final class Blocking {
 						return result != NULL;
 					}
 				});
-			}
-			catch (InterruptedException e) {
+			} catch (InterruptedException e) {
 				throw new RuntimeException(e);
 			}
 

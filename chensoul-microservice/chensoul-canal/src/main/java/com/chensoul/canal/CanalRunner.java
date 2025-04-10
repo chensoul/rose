@@ -26,27 +26,25 @@ public class CanalRunner {
 		for (CanalEntry.Entry entry : entrys) {
 			// 开启/关闭事务的实体类型，跳过
 			if (entry.getEntryType() == CanalEntry.EntryType.TRANSACTIONBEGIN
-					|| entry.getEntryType() == CanalEntry.EntryType.TRANSACTIONEND) {
+				|| entry.getEntryType() == CanalEntry.EntryType.TRANSACTIONEND) {
 				continue;
 			}
 			CanalEntry.RowChange rowChage;
 			try {
 				rowChage = CanalEntry.RowChange.parseFrom(entry.getStoreValue());
-			}
-			catch (Exception e) {
+			} catch (Exception e) {
 				throw new RuntimeException("ERROR ## parser of eromanga-event has an error , data:" + entry.toString(),
-						e);
+					e);
 			}
 			CanalEntry.EventType eventType = rowChage.getEventType();
 			if (rowChage.getIsDdl()) {
 				log.info("binlog: {}:{}, table: {}.{}, eventType: {}, ddlSql: {}", entry.getHeader().getLogfileName(),
-						entry.getHeader().getLogfileOffset(), entry.getHeader().getSchemaName(),
-						entry.getHeader().getTableName(), eventType, rowChage.getSql());
-			}
-			else {
+					entry.getHeader().getLogfileOffset(), entry.getHeader().getSchemaName(),
+					entry.getHeader().getTableName(), eventType, rowChage.getSql());
+			} else {
 				log.info("binlog: {}:{}, table: {}.{}, eventType: {}", entry.getHeader().getLogfileName(),
-						entry.getHeader().getLogfileOffset(), entry.getHeader().getSchemaName(),
-						entry.getHeader().getTableName(), eventType);
+					entry.getHeader().getLogfileOffset(), entry.getHeader().getSchemaName(),
+					entry.getHeader().getTableName(), eventType);
 			}
 
 			// 获取RowChange对象里的每一行数据，打印出来
@@ -55,11 +53,9 @@ public class CanalRunner {
 
 				if (eventType == CanalEntry.EventType.DELETE) {
 					printColumn(rowData.getAfterColumnsList());
-				}
-				else if (eventType == CanalEntry.EventType.INSERT) {
+				} else if (eventType == CanalEntry.EventType.INSERT) {
 					printColumn(rowData.getAfterColumnsList());
-				}
-				else {
+				} else {
 					printColumn(rowData.getBeforeColumnsList());
 					printColumn(rowData.getAfterColumnsList());
 				}
@@ -82,21 +78,19 @@ public class CanalRunner {
 
 	@Async
 	@Scheduled(initialDelayString = "${canal.scheduled.initialDelay:2000}",
-			fixedDelayString = "${canal.scheduled.fixedDelay:2000}")
+		fixedDelayString = "${canal.scheduled.fixedDelay:2000}")
 	public void processData() {
 		try {
 			if (!connector.checkValid()) {
 				log.warn("与Canal服务器的连接失效！！！重连，下个周期再检查数据变更");
 				this.connect();
-			}
-			else {
+			} else {
 				Message message = connector.getWithoutAck(BATCH_SIZE);
 				long batchId = message.getId();
 				int size = message.getEntries().size();
 				if (batchId == -1 || size == 0) {
 					log.info("本次[{}]没有检测到数据更新。", batchId);
-				}
-				else {
+				} else {
 					log.info("本次[{}]数据共有[{}]次更新需要处理", batchId, size);
 					printEntry(message.getEntries());
 
@@ -104,8 +98,7 @@ public class CanalRunner {
 					log.info("本次[{}]处理Canal同步数据完成", batchId);
 				}
 			}
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			log.error("处理Canal同步数据失效，请检查：", e);
 		}
 	}

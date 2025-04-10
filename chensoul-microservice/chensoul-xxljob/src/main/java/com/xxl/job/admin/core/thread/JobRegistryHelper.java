@@ -38,20 +38,20 @@ public class JobRegistryHelper {
 
 		// for registry or remove
 		registryOrRemoveThreadPool = new ThreadPoolExecutor(2, 10, 30L, TimeUnit.SECONDS,
-				new LinkedBlockingQueue<Runnable>(2000), new ThreadFactory() {
-					@Override
-					public Thread newThread(Runnable r) {
-						return new Thread(r,
-								"xxl-job, admin JobRegistryMonitorHelper-registryOrRemoveThreadPool-" + r.hashCode());
-					}
-				}, new RejectedExecutionHandler() {
-					@Override
-					public void rejectedExecution(Runnable r, ThreadPoolExecutor executor) {
-						r.run();
-						logger.warn(
-								">>>>>>>>>>> xxl-job, registry or remove too fast, match threadpool rejected handler(run now).");
-					}
-				});
+			new LinkedBlockingQueue<Runnable>(2000), new ThreadFactory() {
+			@Override
+			public Thread newThread(Runnable r) {
+				return new Thread(r,
+					"xxl-job, admin JobRegistryMonitorHelper-registryOrRemoveThreadPool-" + r.hashCode());
+			}
+		}, new RejectedExecutionHandler() {
+			@Override
+			public void rejectedExecution(Runnable r, ThreadPoolExecutor executor) {
+				r.run();
+				logger.warn(
+					">>>>>>>>>>> xxl-job, registry or remove too fast, match threadpool rejected handler(run now).");
+			}
+		});
 
 		// for monitor
 		registryMonitorThread = new Thread(new Runnable() {
@@ -114,16 +114,14 @@ public class JobRegistryHelper {
 								XxlJobAdminConfig.getAdminConfig().getXxlJobGroupDao().update(group);
 							}
 						}
-					}
-					catch (Exception e) {
+					} catch (Exception e) {
 						if (!toStop) {
 							logger.error(">>>>>>>>>>> xxl-job, job registry monitor thread error:{}", e);
 						}
 					}
 					try {
 						TimeUnit.SECONDS.sleep(RegistryConfig.BEAT_TIMEOUT);
-					}
-					catch (InterruptedException e) {
+					} catch (InterruptedException e) {
 						if (!toStop) {
 							logger.error(">>>>>>>>>>> xxl-job, job registry monitor thread error:{}", e);
 						}
@@ -147,8 +145,7 @@ public class JobRegistryHelper {
 		registryMonitorThread.interrupt();
 		try {
 			registryMonitorThread.join();
-		}
-		catch (InterruptedException e) {
+		} catch (InterruptedException e) {
 			logger.error(e.getMessage(), e);
 		}
 	}
@@ -159,8 +156,8 @@ public class JobRegistryHelper {
 
 		// valid
 		if (!StringUtils.hasText(registryParam.getRegistryGroup())
-				|| !StringUtils.hasText(registryParam.getRegistryKey())
-				|| !StringUtils.hasText(registryParam.getRegistryValue())) {
+			|| !StringUtils.hasText(registryParam.getRegistryKey())
+			|| !StringUtils.hasText(registryParam.getRegistryValue())) {
 			return new ReturnT<String>(ReturnT.FAIL_CODE, "Illegal Argument.");
 		}
 
@@ -171,12 +168,12 @@ public class JobRegistryHelper {
 				int ret = XxlJobAdminConfig.getAdminConfig()
 					.getXxlJobRegistryDao()
 					.registryUpdate(registryParam.getRegistryGroup(), registryParam.getRegistryKey(),
-							registryParam.getRegistryValue(), new Date());
+						registryParam.getRegistryValue(), new Date());
 				if (ret < 1) {
 					XxlJobAdminConfig.getAdminConfig()
 						.getXxlJobRegistryDao()
 						.registrySave(registryParam.getRegistryGroup(), registryParam.getRegistryKey(),
-								registryParam.getRegistryValue(), new Date());
+							registryParam.getRegistryValue(), new Date());
 
 					// fresh
 					freshGroupRegistryInfo(registryParam);
@@ -191,8 +188,8 @@ public class JobRegistryHelper {
 
 		// valid
 		if (!StringUtils.hasText(registryParam.getRegistryGroup())
-				|| !StringUtils.hasText(registryParam.getRegistryKey())
-				|| !StringUtils.hasText(registryParam.getRegistryValue())) {
+			|| !StringUtils.hasText(registryParam.getRegistryKey())
+			|| !StringUtils.hasText(registryParam.getRegistryValue())) {
 			return new ReturnT<String>(ReturnT.FAIL_CODE, "Illegal Argument.");
 		}
 
@@ -203,7 +200,7 @@ public class JobRegistryHelper {
 				int ret = XxlJobAdminConfig.getAdminConfig()
 					.getXxlJobRegistryDao()
 					.registryDelete(registryParam.getRegistryGroup(), registryParam.getRegistryKey(),
-							registryParam.getRegistryValue());
+						registryParam.getRegistryValue());
 				if (ret > 0) {
 					// fresh
 					freshGroupRegistryInfo(registryParam);

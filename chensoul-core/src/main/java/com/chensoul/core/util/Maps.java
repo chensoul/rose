@@ -1,10 +1,11 @@
 package com.chensoul.core.util;
 
-import static java.util.Collections.singletonMap;
-import static java.util.Collections.unmodifiableMap;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Map;
+
+import static java.util.Collections.singletonMap;
+import static java.util.Collections.unmodifiableMap;
 
 /**
  * The utilities class for Java {@link Map}
@@ -23,10 +24,11 @@ public abstract class Maps {
 	 * <p>
 	 * of.
 	 * </p>
-	 * @param key a K object
+	 *
+	 * @param key   a K object
 	 * @param value a V object
-	 * @param <K> a K class
-	 * @param <V> a V class
+	 * @param <K>   a K class
+	 * @param <V>   a V class
 	 * @return {@link Map}<{@link K}, {@link V}>
 	 */
 	public static <K, V> Map<K, V> of(K key, V value) {
@@ -37,12 +39,13 @@ public abstract class Maps {
 	 * <p>
 	 * of.
 	 * </p>
-	 * @param key1 a K object
+	 *
+	 * @param key1   a K object
 	 * @param value1 a V object
-	 * @param key2 a K object
+	 * @param key2   a K object
 	 * @param value2 a V object
-	 * @param <K> a K class
-	 * @param <V> a V class
+	 * @param <K>    a K class
+	 * @param <V>    a V class
 	 * @return {@link Map}<{@link K}, {@link V}>
 	 */
 	public static <K, V> Map<K, V> of(K key1, V value1, K key2, V value2) {
@@ -53,14 +56,15 @@ public abstract class Maps {
 	 * <p>
 	 * of.
 	 * </p>
-	 * @param key1 a K object
+	 *
+	 * @param key1   a K object
 	 * @param value1 a V object
-	 * @param key2 a K object
+	 * @param key2   a K object
 	 * @param value2 a V object
-	 * @param key3 a K object
+	 * @param key3   a K object
 	 * @param value3 a V object
-	 * @param <K> a K class
-	 * @param <V> a V class
+	 * @param <K>    a K class
+	 * @param <V>    a V class
 	 * @return {@link Map}<{@link K}, {@link V}>
 	 */
 	public static <K, V> Map<K, V> of(K key1, V value1, K key2, V value2, K key3, V value3) {
@@ -71,16 +75,17 @@ public abstract class Maps {
 	 * <p>
 	 * of.
 	 * </p>
-	 * @param key1 a K object
+	 *
+	 * @param key1   a K object
 	 * @param value1 a V object
-	 * @param key2 a K object
+	 * @param key2   a K object
 	 * @param value2 a V object
-	 * @param key3 a K object
+	 * @param key3   a K object
 	 * @param value3 a V object
-	 * @param key4 a K object
+	 * @param key4   a K object
 	 * @param value4 a V object
-	 * @param <K> a K class
-	 * @param <V> a V class
+	 * @param <K>    a K class
+	 * @param <V>    a V class
 	 * @return {@link Map}<{@link K}, {@link V}>
 	 */
 	public static <K, V> Map<K, V> of(K key1, V value1, K key2, V value2, K key3, V value3, K key4, V value4) {
@@ -91,22 +96,23 @@ public abstract class Maps {
 	 * <p>
 	 * of.
 	 * </p>
-	 * @param key1 a K object
+	 *
+	 * @param key1   a K object
 	 * @param value1 a V object
-	 * @param key2 a K object
+	 * @param key2   a K object
 	 * @param value2 a V object
-	 * @param key3 a K object
+	 * @param key3   a K object
 	 * @param value3 a V object
-	 * @param key4 a K object
+	 * @param key4   a K object
 	 * @param value4 a V object
-	 * @param key5 a K object
+	 * @param key5   a K object
 	 * @param value5 a V object
-	 * @param <K> a K class
-	 * @param <V> a V class
+	 * @param <K>    a K class
+	 * @param <V>    a V class
 	 * @return {@link Map}<{@link K}, {@link V}>
 	 */
 	public static <K, V> Map<K, V> of(K key1, V value1, K key2, V value2, K key3, V value3, K key4, V value4, K key5,
-			V value5) {
+									  V value5) {
 		return ofMap(key1, value1, key2, value2, key3, value3, key4, value4, key5, value5);
 	}
 
@@ -114,6 +120,7 @@ public abstract class Maps {
 	 * <p>
 	 * of.
 	 * </p>
+	 *
 	 * @param values a {@link Object} object
 	 * @return {@link Map}
 	 */
@@ -125,13 +132,14 @@ public abstract class Maps {
 	 * <p>
 	 * ofMap.
 	 * </p>
+	 *
 	 * @param keyValuePairs a {@link Object} object
 	 * @return {@link Map}
 	 */
 	public static Map ofMap(Object... keyValuePairs) {
 		int length = keyValuePairs.length;
 		Map map = new HashMap(length / 2, MIN_LOAD_FACTOR);
-		for (int i = 0; i < length;) {
+		for (int i = 0; i < length; ) {
 			map.put(keyValuePairs[i++], keyValuePairs[i++]);
 		}
 		return unmodifiableMap(map);

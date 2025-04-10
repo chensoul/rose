@@ -19,25 +19,6 @@
 
 package com.chensoul.spring.boot.oss.old.storage;
 
-import com.qcloud.cos.COSClient;
-import com.qcloud.cos.model.GetObjectRequest;
-import com.qcloud.cos.model.ObjectMetadata;
-import com.qcloud.cos.model.PutObjectRequest;
-import com.qcloud.cos.model.PutObjectResult;
-
-import java.io.BufferedInputStream;
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Path;
-import java.util.List;
-
-import lombok.AllArgsConstructor;
-import lombok.SneakyThrows;
-import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import com.chensoul.spring.boot.oss.old.storage.domain.DownloadResponse;
 import com.chensoul.spring.boot.oss.old.storage.domain.StorageItem;
 import com.chensoul.spring.boot.oss.old.storage.domain.StorageRequest;
@@ -45,6 +26,19 @@ import com.chensoul.spring.boot.oss.old.storage.domain.StorageResponse;
 import com.chensoul.spring.boot.oss.old.storage.exception.StorageException;
 import com.chensoul.spring.boot.oss.old.storage.properties.BaseOssProperties;
 import com.chensoul.spring.boot.oss.old.storage.properties.TencentOssProperties;
+import com.qcloud.cos.COSClient;
+import com.qcloud.cos.model.GetObjectRequest;
+import com.qcloud.cos.model.ObjectMetadata;
+import com.qcloud.cos.model.PutObjectRequest;
+import com.qcloud.cos.model.PutObjectResult;
+import lombok.AllArgsConstructor;
+import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
+
+import java.io.*;
+import java.nio.file.Path;
+import java.util.List;
 
 /**
  * @author Levin
@@ -66,7 +60,7 @@ public class TencentOssOperation implements OssOperation {
 	@SneakyThrows
 	public DownloadResponse download(String bucketName, String fileName) {
 		final String path = StringUtils.defaultIfBlank(this.properties.getTmpDir(),
-				this.getClass().getResource("/").getPath());
+			this.getClass().getResource("/").getPath());
 		final File file = new File(path + File.separator + fileName);
 		log.debug("[文件目录] - [{}]", file.getPath());
 		download(bucketName, fileName, file);
@@ -128,8 +122,7 @@ public class TencentOssOperation implements OssOperation {
 				.size(objectMetadata.getContentLength())
 				.fullUrl(properties.getMappingPath() + fileName)
 				.build();
-		}
-		catch (IOException e) {
+		} catch (IOException e) {
 			log.error("[文件上传异常]", e);
 			throw new StorageException(BaseOssProperties.StorageType.TENCENT, "文件上传失败," + e.getLocalizedMessage());
 		}
@@ -145,7 +138,7 @@ public class TencentOssOperation implements OssOperation {
 		// 设置输入流长度为 500
 		objectMetadata.setContentLength(content.length);
 		PutObjectRequest request = new PutObjectRequest(properties.getBucket(), fileName,
-				new ByteArrayInputStream(content), objectMetadata);
+			new ByteArrayInputStream(content), objectMetadata);
 		PutObjectResult result = client.putObject(request);
 		if (StringUtils.isEmpty(result.getETag())) {
 			throw new StorageException(BaseOssProperties.StorageType.TENCENT, "文件上传失败,ETag为空");

@@ -30,7 +30,7 @@ import java.lang.annotation.*;
 /**
  * 数据权限注解 可声明在类或者方法上，标识使用的数据权限规则
  */
-@Target({ ElementType.TYPE, ElementType.METHOD })
+@Target({ElementType.TYPE, ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 public @interface DataPermission {

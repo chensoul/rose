@@ -1,31 +1,28 @@
 package com.chensoul.spring.boot.redis;
 
-import com.chensoul.spring.boot.redis.support.TimeoutRedisCacheManager;
+import com.chensoul.spring.boot.redis.support.TtlRedisCacheManager;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.cache.CacheManagerCustomizers;
 import org.springframework.boot.autoconfigure.cache.CacheProperties;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
+import org.springframework.data.redis.cache.CacheStatisticsCollector;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
 import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.cache.RedisCacheWriter;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.RedisSerializationContext;
 import org.springframework.data.redis.serializer.RedisSerializer;
-import org.springframework.util.StringUtils;
-
-import java.util.Objects;
-
-import static com.chensoul.core.util.StringPool.COLON;
 
 @Slf4j
 @EnableCaching
 @RequiredArgsConstructor
-@Configuration(proxyBeanMethods = false)
+@Configuration
+@EnableConfigurationProperties(CacheProperties.class)
 public class RedisCacheAutoConfiguration {
 
 	private final RedisSerializer<Object> redisSerializer;
@@ -35,13 +32,15 @@ public class RedisCacheAutoConfiguration {
 	private final CacheManagerCustomizers cacheManagerCustomizers;
 
 	@Bean
-	public RedisCacheManager redisCacheManager(RedisTemplate<String, Object> redisTemplate,
-			RedisCacheConfiguration redisCacheConfiguration) {
-		// 创建 RedisCacheWriter 对象
-		RedisConnectionFactory connectionFactory = Objects.requireNonNull(redisTemplate.getConnectionFactory());
-		RedisCacheWriter cacheWriter = RedisCacheWriter.nonLockingRedisCacheWriter(connectionFactory);
-		// 创建 TenantRedisCacheManager 对象
-		TimeoutRedisCacheManager cacheManager = new TimeoutRedisCacheManager(cacheWriter, redisCacheConfiguration);
+	public RedisCacheManager redisCacheManager(RedisConnectionFactory connectionFactory) {
+		RedisCacheWriter redisCacheWriter = RedisCacheWriter.nonLockingRedisCacheWriter(connectionFactory)
+			.withStatisticsCollector(CacheStatisticsCollector.create());
+		RedisCacheConfiguration cacheConfiguration = redisCacheConfiguration()
+			.serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(redisSerializer));
+
+		TtlRedisCacheManager cacheManager = new TtlRedisCacheManager(redisCacheWriter, cacheConfiguration,
+			this.cacheProperties.getCacheNames().toArray(new String[]{}));
+		cacheManager.setTransactionAware(false);
 		return this.cacheManagerCustomizers.customize(cacheManager);
 	}
 
@@ -50,20 +49,10 @@ public class RedisCacheAutoConfiguration {
 	public RedisCacheConfiguration redisCacheConfiguration() {
 		log.info("Initializing RedisCacheConfiguration");
 
-		RedisCacheConfiguration config = RedisCacheConfiguration.defaultCacheConfig();
-		// 设置使用 : 单冒号，而不是双 :: 冒号，避免 Redis Desktop Manager 多余空格
-		config = config.computePrefixWith(cacheName -> {
-			String keyPrefix = cacheProperties.getRedis().getKeyPrefix();
-			if (StringUtils.hasText(keyPrefix)) {
-				keyPrefix = keyPrefix.lastIndexOf(COLON) == -1 ? keyPrefix + COLON : keyPrefix;
-				return keyPrefix + cacheName + COLON;
-			}
-			return cacheName + COLON;
-		});
+		RedisCacheConfiguration config = RedisCacheConfiguration.defaultCacheConfig()
+			.serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(redisSerializer));
 
 		CacheProperties.Redis redisProperties = this.cacheProperties.getRedis();
-		config = config
-			.serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(redisSerializer));
 		if (redisProperties.getTimeToLive() != null) {
 			config = config.entryTtl(redisProperties.getTimeToLive());
 		}
@@ -79,7 +68,6 @@ public class RedisCacheAutoConfiguration {
 		if (!redisProperties.isUseKeyPrefix()) {
 			config = config.disableKeyPrefix();
 		}
-
 		return config;
 	}
 

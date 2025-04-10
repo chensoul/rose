@@ -12,12 +12,12 @@ import java.util.regex.Pattern;
 public class Validators {
 
 	public static final Pattern PROPERTY_PATTERN = Pattern.compile("^[\\p{L}0-9_-]+$"); // Unicode
-																						// letters,
-																						// numbers,
-																						// '_'
-																						// and
-																						// '-'
-																						// allowed
+	// letters,
+	// numbers,
+	// '_'
+	// and
+	// '-'
+	// allowed
 
 	public static void checkNotBlank(String val, String errorMessage) {
 		if (StringUtils.isBlank(val)) {
@@ -55,8 +55,7 @@ public class Validators {
 	public <T> T checkNotNull(Optional<T> reference, String notFoundMessage) {
 		if (reference.isPresent()) {
 			return reference.get();
-		}
-		else {
+		} else {
 			throw new BusinessException(notFoundMessage);
 		}
 	}

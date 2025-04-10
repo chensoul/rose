@@ -22,9 +22,9 @@ public class LogController {
 	@GetMapping
 	public RestResponse<IPage<Log>> page(Page<Log> page, LogParam logParam) {
 		return RestResponse.ok(logService.page(page,
-				Wrappers.<Log>lambdaQuery()
-					.ge(Objects.nonNull(logParam.getBeginTime()), Log::getCreateTime, logParam.getBeginTime())
-					.le(Objects.nonNull(logParam.getEndTime()), Log::getCreateTime, logParam.getEndTime())));
+			Wrappers.<Log>lambdaQuery()
+				.ge(Objects.nonNull(logParam.getBeginTime()), Log::getCreateTime, logParam.getBeginTime())
+				.le(Objects.nonNull(logParam.getEndTime()), Log::getCreateTime, logParam.getEndTime())));
 	}
 
 	@PostMapping

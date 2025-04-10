@@ -42,6 +42,7 @@ public interface TransactionalCache<K extends Serializable, V extends Serializab
 	/**
 	 * Note that all keys should be in the same cache slot for mq. You may control the
 	 * cache slot using '{}' bracers. See CLUSTER KEYSLOT command for more details.
+	 *
 	 * @param keys - list of keys to use
 	 * @return transaction object
 	 */
@@ -50,8 +51,7 @@ public interface TransactionalCache<K extends Serializable, V extends Serializab
 	default V getOrFetchFromDB(K key, Supplier<V> dbCall, boolean cacheNullValue, boolean putToCache) {
 		if (putToCache) {
 			return getAndPutInTransaction(key, dbCall, cacheNullValue);
-		}
-		else {
+		} else {
 			CacheValueWrapper<V> cacheValueWrapper = get(key);
 			if (cacheValueWrapper != null) {
 				return cacheValueWrapper.get();
@@ -65,7 +65,7 @@ public interface TransactionalCache<K extends Serializable, V extends Serializab
 	}
 
 	default <R> R getAndPutInTransaction(K key, Supplier<R> dbCall, Function<V, R> cacheValueToResult,
-			Function<R, V> dbValueToCacheValue, boolean cacheNullValue) {
+										 Function<R, V> dbValueToCacheValue, boolean cacheNullValue) {
 		CacheValueWrapper<V> cacheValueWrapper = get(key);
 		if (cacheValueWrapper != null) {
 			V cacheValue = cacheValueWrapper.get();
@@ -78,24 +78,21 @@ public interface TransactionalCache<K extends Serializable, V extends Serializab
 				cacheTransaction.put(key, dbValueToCacheValue.apply(dbValue));
 				cacheTransaction.commit();
 				return dbValue;
-			}
-			else {
+			} else {
 				cacheTransaction.rollback();
 				return null;
 			}
-		}
-		catch (Throwable e) {
+		} catch (Throwable e) {
 			cacheTransaction.rollback();
 			throw e;
 		}
 	}
 
 	default <R> R getOrFetchFromDB(K key, Supplier<R> dbCall, Function<V, R> cacheValueToResult,
-			Function<R, V> dbValueToCacheValue, boolean cacheNullValue, boolean putToCache) {
+								   Function<R, V> dbValueToCacheValue, boolean cacheNullValue, boolean putToCache) {
 		if (putToCache) {
 			return getAndPutInTransaction(key, dbCall, cacheValueToResult, dbValueToCacheValue, cacheNullValue);
-		}
-		else {
+		} else {
 			CacheValueWrapper<V> cacheValueWrapper = get(key);
 			if (cacheValueWrapper != null) {
 				V cacheValue = cacheValueWrapper.get();

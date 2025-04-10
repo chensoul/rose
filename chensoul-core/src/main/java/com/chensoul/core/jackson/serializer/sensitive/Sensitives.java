@@ -37,6 +37,7 @@ public class Sensitives {
 
 	/**
 	 * 【中文姓名】只显示最后一个汉字，其他隐藏为星号，比如：**梦
+	 *
 	 * @param fullName 姓名
 	 * @return 结果
 	 */
@@ -46,6 +47,7 @@ public class Sensitives {
 
 	/**
 	 * 【身份证号】显示前六位, 四位，其他隐藏。共计18位或者15位，比如：340304*******1234
+	 *
 	 * @param id 身份证号码
 	 * @return 结果
 	 */
@@ -55,6 +57,7 @@ public class Sensitives {
 
 	/**
 	 * 【固定电话】后四位，其他隐藏，比如 ****1234
+	 *
 	 * @param num 固定电话
 	 * @return 结果
 	 */
@@ -64,6 +67,7 @@ public class Sensitives {
 
 	/**
 	 * 【手机号码】前三位，后四位，其他隐藏，比如135****6810
+	 *
 	 * @param num 手机号码
 	 * @return 结果
 	 */
@@ -73,6 +77,7 @@ public class Sensitives {
 
 	/**
 	 * 【地址】只显示到地区，不显示详细地址，比如：北京市海淀区****
+	 *
 	 * @param address 地址
 	 * @return 结果
 	 */
@@ -82,6 +87,7 @@ public class Sensitives {
 
 	/**
 	 * 【电子邮箱 邮箱前缀仅显示第一个字母，前缀其他隐藏，用星号代替，@及后面的地址显示，比如：d**@126.com
+	 *
 	 * @param email 电子邮箱
 	 * @return 结果
 	 */
@@ -100,6 +106,7 @@ public class Sensitives {
 
 	/**
 	 * 【银行卡号】前六位，后四位，其他用星号隐藏每位1个星号，比如：622260**********1234
+	 *
 	 * @param cardNum 银行卡号
 	 * @return 结果
 	 */
@@ -113,6 +120,7 @@ public class Sensitives {
 
 	/**
 	 * 【密码】密码的全部字符都用*代替，比如：******
+	 *
 	 * @param secret 密码
 	 * @return 结果
 	 */

@@ -18,7 +18,7 @@ public class RedisCacheManagerConfiguration {
 
 	@Bean
 	public CacheManagerCustomizers cacheManagerCustomizers(
-			ObjectProvider<List<CacheManagerCustomizer<?>>> customizers) {
+		ObjectProvider<List<CacheManagerCustomizer<?>>> customizers) {
 		return new CacheManagerCustomizers(customizers.getIfAvailable());
 	}
 

@@ -38,8 +38,7 @@ public class ZkLockImpl implements ZkLock, InitializingBean {
 				.forPath(keyPath);
 			result = true;
 			log.info("success to acquire mutex lock for path:{}", keyPath);
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			log.info("Thread:{};failed to acquire mutex lock for path:{}", Thread.currentThread().getName(), keyPath);
 			if (!concurrentMap.containsKey(lockpath)) {
 				try {
@@ -51,8 +50,7 @@ public class ZkLockImpl implements ZkLock, InitializingBean {
 					if (!concurrentMap.containsKey(lockpath)) {
 						concurrentMap.put(lockpath, new CountDownLatch(1));
 					}
-				}
-				finally {
+				} finally {
 					lock.unlock();
 				}
 			}
@@ -62,8 +60,7 @@ public class ZkLockImpl implements ZkLock, InitializingBean {
 				if (countDownLatch != null) {
 					countDownLatch.await();
 				}
-			}
-			catch (InterruptedException e1) {
+			} catch (InterruptedException e1) {
 				log.info("InterruptedException message:{}", e1.getMessage());
 			}
 		}
@@ -77,8 +74,7 @@ public class ZkLockImpl implements ZkLock, InitializingBean {
 			if (curatorFramework.checkExists().forPath(keyPath) != null) {
 				curatorFramework.delete().forPath(keyPath);
 			}
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			log.error("failed to release mutex lock");
 			return false;
 		}
@@ -87,14 +83,14 @@ public class ZkLockImpl implements ZkLock, InitializingBean {
 
 	/**
 	 * 监听节点事件
+	 *
 	 * @param lockPath 加锁的路径
 	 */
 	private void addWatcher(String lockPath) throws Exception {
 		String keyPath;
 		if (LOCK_ROOT_PATH.equals(lockPath)) {
 			keyPath = lockPath;
-		}
-		else {
+		} else {
 			keyPath = LOCK_ROOT_PATH + lockPath;
 		}
 
@@ -131,8 +127,7 @@ public class ZkLockImpl implements ZkLock, InitializingBean {
 			}
 			// 启动监听器
 			addWatcher(LOCK_ROOT_PATH);
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			log.error("connect zookeeper failed:{}", e.getMessage(), e);
 		}
 	}

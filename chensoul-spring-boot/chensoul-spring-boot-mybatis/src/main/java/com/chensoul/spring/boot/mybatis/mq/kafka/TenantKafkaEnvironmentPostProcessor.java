@@ -46,13 +46,11 @@ public class TenantKafkaEnvironmentPostProcessor implements EnvironmentPostProce
 			String value = environment.getProperty(PROPERTY_KEY_INTERCEPTOR_CLASSES);
 			if (StringUtils.isEmpty(value)) {
 				value = TenantKafkaProducerInterceptor.class.getName();
-			}
-			else {
+			} else {
 				value += "," + TenantKafkaProducerInterceptor.class.getName();
 			}
 			environment.getSystemProperties().put(PROPERTY_KEY_INTERCEPTOR_CLASSES, value);
-		}
-		catch (NoClassDefFoundError ignore) {
+		} catch (NoClassDefFoundError ignore) {
 			// 如果触发 NoClassDefFoundError 异常，说明 TenantKafkaProducerInterceptor 类不存在，即没引入
 			// kafka-spring 依赖
 		}

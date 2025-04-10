@@ -8,7 +8,7 @@ import java.lang.annotation.Target;
 /**
  * 重试注解，作用在 @FeignClient 注解之上
  */
-@Target({ ElementType.METHOD, ElementType.TYPE })
+@Target({ElementType.METHOD, ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface FeignRetry {
 

@@ -74,9 +74,8 @@ public class WatchableGroovyScript implements ExecutableScript {
 			try {
 				log.trace("Beginning to execute script [{}]", this);
 				return groovyScript != null
-						? ScriptingUtils.executeGroovyScript(this.groovyScript, args, clazz, failOnError) : null;
-			}
-			finally {
+					? ScriptingUtils.executeGroovyScript(this.groovyScript, args, clazz, failOnError) : null;
+			} finally {
 				log.trace("Completed script execution [{}]", this);
 			}
 		});
@@ -84,22 +83,22 @@ public class WatchableGroovyScript implements ExecutableScript {
 
 	/**
 	 * Execute.
-	 * @param <T> the type parameter
-	 * @param methodName the method name
-	 * @param clazz the clazz
+	 *
+	 * @param <T>         the type parameter
+	 * @param methodName  the method name
+	 * @param clazz       the clazz
 	 * @param failOnError the fail on error
-	 * @param args the args
+	 * @param args        the args
 	 * @return the t
 	 */
 	public <T> T execute(final String methodName, final Class<T> clazz, final boolean failOnError, final Object... args)
-			throws Throwable {
+		throws Throwable {
 		return lock.tryLock(() -> {
 			try {
 				log.trace("Beginning to execute script [{}]", this);
 				return groovyScript != null
-						? ScriptingUtils.executeGroovyScript(groovyScript, methodName, args, clazz, failOnError) : null;
-			}
-			finally {
+					? ScriptingUtils.executeGroovyScript(groovyScript, methodName, args, clazz, failOnError) : null;
+			} finally {
 				log.trace("Completed script execution [{}]", this);
 			}
 		});

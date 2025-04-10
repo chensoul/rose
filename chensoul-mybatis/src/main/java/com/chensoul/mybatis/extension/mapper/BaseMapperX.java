@@ -62,7 +62,7 @@ public interface BaseMapperX<T> extends MPJBaseMapper<T> {
 	}
 
 	default T selectOne(SFunction<T, ?> field1, Object value1, SFunction<T, ?> field2, Object value2,
-			SFunction<T, ?> field3, Object value3) {
+						SFunction<T, ?> field3, Object value3) {
 		return selectOne(new LambdaQueryWrapper<T>().eq(field1, value1).eq(field2, value2).eq(field3, value3));
 	}
 
@@ -110,6 +110,7 @@ public interface BaseMapperX<T> extends MPJBaseMapper<T> {
 
 	/**
 	 * 批量插入，适合大量数据插入
+	 *
 	 * @param entities 实体们
 	 */
 	default Boolean insertBatch(Collection<T> entities) {
@@ -124,8 +125,9 @@ public interface BaseMapperX<T> extends MPJBaseMapper<T> {
 
 	/**
 	 * 批量插入，适合大量数据插入
+	 *
 	 * @param entities 实体们
-	 * @param size 插入数量 Db.saveBatch 默认为 1000
+	 * @param size     插入数量 Db.saveBatch 默认为 1000
 	 */
 	default Boolean insertBatch(Collection<T> entities, int size) {
 		// 特殊：SQL Server 批量插入后，获取 id 会报错，因此通过循环处理

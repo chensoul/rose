@@ -28,13 +28,7 @@ import com.alibaba.nacos.console.service.NamespaceOperationService;
 import com.alibaba.nacos.plugin.auth.constant.ActionTypes;
 import com.alibaba.nacos.plugin.auth.impl.constant.AuthConstants;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.UUID;
@@ -61,6 +55,7 @@ public class NamespaceController {
 
 	/**
 	 * Get namespace list.
+	 *
 	 * @return namespace list
 	 */
 	@GetMapping
@@ -70,6 +65,7 @@ public class NamespaceController {
 
 	/**
 	 * get namespace all info by namespace id.
+	 *
 	 * @param namespaceId namespaceId
 	 * @return namespace all info
 	 */
@@ -80,6 +76,7 @@ public class NamespaceController {
 
 	/**
 	 * create namespace.
+	 *
 	 * @param namespaceName namespace Name
 	 * @param namespaceDesc namespace Desc
 	 * @return whether create ok
@@ -87,12 +84,11 @@ public class NamespaceController {
 	@PostMapping
 	@Secured(resource = AuthConstants.CONSOLE_RESOURCE_NAME_PREFIX + "namespaces", action = ActionTypes.WRITE)
 	public Boolean createNamespace(@RequestParam("customNamespaceId") String namespaceId,
-			@RequestParam("namespaceName") String namespaceName,
-			@RequestParam(value = "namespaceDesc", required = false) String namespaceDesc) {
+								   @RequestParam("namespaceName") String namespaceName,
+								   @RequestParam(value = "namespaceDesc", required = false) String namespaceDesc) {
 		if (StringUtils.isBlank(namespaceId)) {
 			namespaceId = UUID.randomUUID().toString();
-		}
-		else {
+		} else {
 			namespaceId = namespaceId.trim();
 			if (!namespaceIdCheckPattern.matcher(namespaceId).matches()) {
 				return false;
@@ -103,14 +99,14 @@ public class NamespaceController {
 		}
 		try {
 			return namespaceOperationService.createNamespace(namespaceId, namespaceName, namespaceDesc);
-		}
-		catch (NacosException e) {
+		} catch (NacosException e) {
 			return false;
 		}
 	}
 
 	/**
 	 * check namespaceId exist.
+	 *
 	 * @param namespaceId namespace id
 	 * @return true if exist, otherwise false
 	 */
@@ -124,21 +120,23 @@ public class NamespaceController {
 
 	/**
 	 * edit namespace.
-	 * @param namespace namespace
+	 *
+	 * @param namespace         namespace
 	 * @param namespaceShowName namespace ShowName
-	 * @param namespaceDesc namespace Desc
+	 * @param namespaceDesc     namespace Desc
 	 * @return whether edit ok
 	 */
 	@PutMapping
 	@Secured(resource = AuthConstants.CONSOLE_RESOURCE_NAME_PREFIX + "namespaces", action = ActionTypes.WRITE)
 	public Boolean editNamespace(@RequestParam("namespace") String namespace,
-			@RequestParam("namespaceShowName") String namespaceShowName,
-			@RequestParam(value = "namespaceDesc", required = false) String namespaceDesc) {
+								 @RequestParam("namespaceShowName") String namespaceShowName,
+								 @RequestParam(value = "namespaceDesc", required = false) String namespaceDesc) {
 		return namespaceOperationService.editNamespace(namespace, namespaceShowName, namespaceDesc);
 	}
 
 	/**
 	 * del namespace by id.
+	 *
 	 * @param namespaceId namespace Id
 	 * @return whether del ok
 	 */

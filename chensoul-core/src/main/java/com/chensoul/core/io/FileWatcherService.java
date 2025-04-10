@@ -13,9 +13,9 @@ import java.util.function.Consumer;
 public class FileWatcherService extends PathWatcherService {
 
 	public FileWatcherService(final File watchableFile, final Consumer<File> onCreate, final Consumer<File> onModify,
-			final Consumer<File> onDelete) {
+							  final Consumer<File> onDelete) {
 		super(watchableFile.getParentFile().toPath(), getWatchedFileConsumer(watchableFile, onCreate),
-				getWatchedFileConsumer(watchableFile, onModify), getWatchedFileConsumer(watchableFile, onDelete));
+			getWatchedFileConsumer(watchableFile, onModify), getWatchedFileConsumer(watchableFile, onDelete));
 	}
 
 	public FileWatcherService(final File watchableFile, final Consumer<File> onModify) {

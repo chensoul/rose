@@ -43,7 +43,7 @@ import java.util.List;
  * @author EnjoyIot
  */
 public abstract class AbstractRedisChannelMessageListener<T extends AbstractRedisChannelMessage>
-		implements MessageListener {
+	implements MessageListener {
 
 	/**
 	 * 消息类型
@@ -69,6 +69,7 @@ public abstract class AbstractRedisChannelMessageListener<T extends AbstractRedi
 
 	/**
 	 * 获得 Sub 订阅的 Redis Channel 通道
+	 *
 	 * @return channel
 	 */
 	public final String getChannel() {
@@ -82,20 +83,21 @@ public abstract class AbstractRedisChannelMessageListener<T extends AbstractRedi
 			consumeMessageBefore(messageObj);
 			// 消费消息
 			this.onMessage(messageObj);
-		}
-		finally {
+		} finally {
 			consumeMessageAfter(messageObj);
 		}
 	}
 
 	/**
 	 * 处理消息
+	 *
 	 * @param message 消息
 	 */
 	public abstract void onMessage(T message);
 
 	/**
 	 * 通过解析类上的泛型，获得消息类型
+	 *
 	 * @return 消息类型
 	 */
 	@SuppressWarnings("unchecked")

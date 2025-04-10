@@ -27,7 +27,7 @@ public class CustomLoopMergeStrategy extends AbstractMergeStrategy {
 		this.eachRow = new LinkedList<>(eachRow);
 		this.columnIndex = columnIndex;
 		this.maxColumn = maxColumn;
-		final int[] acc = { 0 };
+		final int[] acc = {0};
 		this.totalRows = eachRow.stream().map(item -> {
 			int result = item + acc[0], item1 = item + acc[0];
 
@@ -57,9 +57,9 @@ public class CustomLoopMergeStrategy extends AbstractMergeStrategy {
 		}
 
 		if (head.getColumnIndex() == columnIndex && !totalRows.isEmpty() && !eachRow.isEmpty()
-				&& relativeRowIndex == totalRows.getFirst() - eachRow.getFirst()) {
+			&& relativeRowIndex == totalRows.getFirst() - eachRow.getFirst()) {
 			CellRangeAddress cellRangeAddress = new CellRangeAddress(cell.getRowIndex(),
-					cell.getRowIndex() + eachRow.getFirst() - 1, cell.getColumnIndex(), cell.getColumnIndex());
+				cell.getRowIndex() + eachRow.getFirst() - 1, cell.getColumnIndex(), cell.getColumnIndex());
 			sheet.addMergedRegion(cellRangeAddress);
 		}
 	}

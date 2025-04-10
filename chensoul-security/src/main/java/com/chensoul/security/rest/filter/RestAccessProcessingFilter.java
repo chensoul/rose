@@ -34,9 +34,9 @@ public class RestAccessProcessingFilter extends AbstractAuthenticationProcessing
 
 	@Override
 	public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
-			throws AuthenticationException, IOException, ServletException {
+		throws AuthenticationException, IOException, ServletException {
 		RestAccessAuthenticationToken authenticationToken = new RestAccessAuthenticationToken(
-				tokenExtractor.extract(request));
+			tokenExtractor.extract(request));
 		authenticationToken.setDetails(authenticationDetailsSource.buildDetails(request));
 
 		return getAuthenticationManager().authenticate(authenticationToken);
@@ -44,7 +44,7 @@ public class RestAccessProcessingFilter extends AbstractAuthenticationProcessing
 
 	@Override
 	protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
-			Authentication authResult) throws IOException, ServletException {
+											Authentication authResult) throws IOException, ServletException {
 		SecurityContext context = SecurityContextHolder.createEmptyContext();
 		context.setAuthentication(authResult);
 		SecurityContextHolder.setContext(context);
@@ -56,7 +56,7 @@ public class RestAccessProcessingFilter extends AbstractAuthenticationProcessing
 
 	@Override
 	protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response,
-			AuthenticationException failed) throws IOException, ServletException {
+											  AuthenticationException failed) throws IOException, ServletException {
 		SecurityContextHolder.clearContext();
 		failureHandler.onAuthenticationFailure(request, response, failed);
 	}

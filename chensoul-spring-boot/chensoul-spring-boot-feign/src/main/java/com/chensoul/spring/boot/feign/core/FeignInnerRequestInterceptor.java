@@ -13,6 +13,7 @@ public class FeignInnerRequestInterceptor implements RequestInterceptor, Ordered
 	/**
 	 * Called for every request. Add data using methods on the supplied
 	 * {@link RequestTemplate}.
+	 *
 	 * @param template
 	 */
 	@Override

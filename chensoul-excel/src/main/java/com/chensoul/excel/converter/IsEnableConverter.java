@@ -26,13 +26,13 @@ public class IsEnableConverter implements Converter<Boolean> {
 
 	@Override
 	public Boolean convertToJavaData(ReadCellData<?> cellData, ExcelContentProperty excelContentProperty,
-			GlobalConfiguration globalConfiguration) throws Exception {
+									 GlobalConfiguration globalConfiguration) throws Exception {
 		return !StringUtils.isBlank(cellData.getStringValue()) && !cellData.getStringValue().equals("禁用");
 	}
 
 	@Override
 	public WriteCellData<?> convertToExcelData(Boolean value, ExcelContentProperty excelContentProperty,
-			GlobalConfiguration globalConfiguration) throws Exception {
+											   GlobalConfiguration globalConfiguration) throws Exception {
 		return new WriteCellData<>(value ? "启用" : "禁用");
 	}
 

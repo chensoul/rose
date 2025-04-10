@@ -42,10 +42,10 @@ public class JwtTokenFactory implements TokenFactory {
 
 		redisTemplate.opsForValue()
 			.set(USER_TOKEN_PREFIX + accessToken, securityProperties.getAccessTokenExpireTime(),
-					securityProperties.getAccessTokenExpireTime());
+				securityProperties.getAccessTokenExpireTime());
 		redisTemplate.opsForValue()
 			.set(USER_REFRESH_TOKEN_PREFIX + refreshToken, securityProperties.getRefreshTokenExpireTime(),
-					securityProperties.getRefreshTokenExpireTime());
+				securityProperties.getRefreshTokenExpireTime());
 
 		return new TokenPair(accessToken, refreshToken, securityUser.getAuthorities());
 	}
@@ -66,7 +66,7 @@ public class JwtTokenFactory implements TokenFactory {
 		}
 
 		return new SecurityUser(subject, accessToken,
-				AuthorityUtils.createAuthorityList(scopes.toArray(new String[0])));
+			AuthorityUtils.createAuthorityList(scopes.toArray(new String[0])));
 	}
 
 	@Override
@@ -88,16 +88,16 @@ public class JwtTokenFactory implements TokenFactory {
 			throw new IllegalArgumentException("Invalid Refresh Token scope");
 		}
 		return new SecurityUser(subject, refreshToken,
-				AuthorityUtils.createAuthorityList(scopes.toArray(new String[0])));
+			AuthorityUtils.createAuthorityList(scopes.toArray(new String[0])));
 	}
 
 	@Override
 	public TokenPair createPreVerificationTokenPair(SecurityUser user) {
 		JwtBuilder jwtBuilder = setUpToken(user, Collections.singletonList(Authority.PRE_VERIFICATION_TOKEN.name()),
-				securityProperties.getAccessTokenExpireTime());
+			securityProperties.getAccessTokenExpireTime());
 		String accessToken = jwtBuilder.compact();
 		return new TokenPair(accessToken, null,
-				AuthorityUtils.createAuthorityList(Authority.PRE_VERIFICATION_TOKEN.name()));
+			AuthorityUtils.createAuthorityList(Authority.PRE_VERIFICATION_TOKEN.name()));
 	}
 
 	private Jws<Claims> parseTokenClaims(String token) {
@@ -106,19 +106,17 @@ public class JwtTokenFactory implements TokenFactory {
 				.setSigningKey(securityProperties.getJwt().getTokenSigningKey())
 				.build()
 				.parseClaimsJws(token);
-		}
-		catch (UnsupportedJwtException | MalformedJwtException | IllegalArgumentException ex) {
+		} catch (UnsupportedJwtException | MalformedJwtException | IllegalArgumentException ex) {
 			throw new BadCredentialsException("Token is Invalid", ex);
-		}
-		catch (SignatureException | ExpiredJwtException expiredEx) {
+		} catch (SignatureException | ExpiredJwtException expiredEx) {
 			throw new ExpiredTokenException(token, "Token has expired", expiredEx);
 		}
 	}
 
 	private String createAccessToken(SecurityUser securityUser, Long accessTokenExpireTime) {
 		JwtBuilder jwtBuilder = setUpToken(securityUser,
-				securityUser.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()),
-				accessTokenExpireTime);
+			securityUser.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()),
+			accessTokenExpireTime);
 		jwtBuilder.claim(ENABLED, securityUser.isEnabled());
 
 		return jwtBuilder.compact();
@@ -126,7 +124,7 @@ public class JwtTokenFactory implements TokenFactory {
 
 	private String createRefreshToken(SecurityUser securityUser, Long refreshTokenExpireTime) {
 		return setUpToken(securityUser, Collections.singletonList(Authority.REFRESH_TOKEN.name()),
-				refreshTokenExpireTime)
+			refreshTokenExpireTime)
 			.id(UUID.randomUUID().toString())
 			.compact();
 	}

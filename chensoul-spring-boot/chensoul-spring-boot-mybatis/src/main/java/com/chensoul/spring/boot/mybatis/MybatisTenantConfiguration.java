@@ -42,8 +42,8 @@ import static com.chensoul.core.CommonConstants.TENANT_SECURITY_FILTER;
  */
 @Slf4j
 @Configuration
-@AutoConfigureBefore({ MybatisCoreConfiguration.class })
-@EnableConfigurationProperties({ TenantProperties.class })
+@AutoConfigureBefore({MybatisCoreConfiguration.class})
+@EnableConfigurationProperties({TenantProperties.class})
 @ConditionalOnProperty(name = "mybatis-plus.tenant.enabled", havingValue = "true", matchIfMissing = true)
 public class MybatisTenantConfiguration {
 
@@ -70,9 +70,9 @@ public class MybatisTenantConfiguration {
 
 	@Bean
 	public TenantLineInnerInterceptor tenantLineInnerInterceptor(MybatisPlusInterceptor interceptor,
-			TenantProperties tenantProperties) {
+																 TenantProperties tenantProperties) {
 		DefaultTenantLineHandler defaultTenantLineHandler = new DefaultTenantLineHandler(
-				tenantProperties.getIgnoredTables());
+			tenantProperties.getIgnoredTables());
 		TenantLineInnerInterceptor tenantInterceptor = new TenantLineInnerInterceptor(defaultTenantLineHandler);
 		MyBatisUtils.addInterceptor(interceptor, tenantInterceptor, 0);
 		return tenantInterceptor;
@@ -86,7 +86,7 @@ public class MybatisTenantConfiguration {
 	@Bean
 	public FilterRegistrationBean<TenantSecurityFilter> tenantSecurityFilter(TenantProperties tenantProperties) {
 		return WebUtils.createFilterBean(new TenantSecurityFilter(tenantProperties.getIgnoreUrls()),
-				TENANT_SECURITY_FILTER);
+			TENANT_SECURITY_FILTER);
 	}
 
 	@Bean
@@ -98,7 +98,7 @@ public class MybatisTenantConfiguration {
 	@Primary
 	@ConditionalOnClass(RedisCacheManager.class)
 	public RedisCacheManager redisCacheManager(RedisTemplate<String, Object> redisTemplate,
-			RedisCacheConfiguration redisCacheConfiguration, TenantProperties tenantProperties) {
+											   RedisCacheConfiguration redisCacheConfiguration, TenantProperties tenantProperties) {
 		RedisConnectionFactory connectionFactory = Objects.requireNonNull(redisTemplate.getConnectionFactory());
 		RedisCacheWriter cacheWriter = RedisCacheWriter.nonLockingRedisCacheWriter(connectionFactory);
 		return new TenantRedisCacheManager(tenantProperties.getIgnoredCaches(), cacheWriter, redisCacheConfiguration);

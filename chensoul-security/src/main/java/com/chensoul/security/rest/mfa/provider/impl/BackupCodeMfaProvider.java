@@ -33,11 +33,10 @@ public class BackupCodeMfaProvider implements MfaProvider<BackupCodeMfaProviderC
 
 	@Override
 	public boolean checkVerificationCode(SecurityUser user, String code, BackupCodeMfaProviderConfig providerConfig,
-			BackupCodeMfaConfig accountConfig) {
+										 BackupCodeMfaConfig accountConfig) {
 		if (CollectionUtils.contains(accountConfig.getCodesForJson().iterator(), code)) {
 			return true;
-		}
-		else {
+		} else {
 			return false;
 		}
 	}

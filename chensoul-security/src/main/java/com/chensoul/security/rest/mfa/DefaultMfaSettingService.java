@@ -26,13 +26,13 @@ import static org.apache.commons.lang3.StringUtils.repeat;
 public class DefaultMfaSettingService implements MfaSettingService {
 
 	private static final RuntimeException PROVIDER_NOT_CONFIGURED_ERROR = new RuntimeException(
-			"mfa provider is not configured");
+		"mfa provider is not configured");
 
 	private static final RuntimeException PROVIDER_NOT_AVAILABLE_ERROR = new RuntimeException(
-			"mfa provider is not available");
+		"mfa provider is not available");
 
 	private final Map<MfaProviderType, MfaProvider<MfaProviderConfig, MfaConfig>> providers = new EnumMap<>(
-			MfaProviderType.class);
+		MfaProviderType.class);
 
 	private final TokenFactory tokenFactory;
 
@@ -41,15 +41,14 @@ public class DefaultMfaSettingService implements MfaSettingService {
 	private final SecurityProperties securityProperties;
 
 	private static String obfuscate(String input, int seenMargin, char obfuscationChar, int startIndexInclusive,
-			int endIndexExclusive) {
+									int endIndexExclusive) {
 		String part = input.substring(startIndexInclusive, endIndexExclusive);
 		String obfuscatedPart;
 		if (part.length() <= seenMargin * 2) {
 			obfuscatedPart = repeat(obfuscationChar, part.length());
-		}
-		else {
+		} else {
 			obfuscatedPart = part.substring(0, seenMargin) + repeat(obfuscationChar, part.length() - seenMargin * 2)
-					+ part.substring(part.length() - seenMargin);
+				+ part.substring(part.length() - seenMargin);
 		}
 		return input.substring(0, startIndexInclusive) + obfuscatedPart + input.substring(endIndexExclusive);
 	}
@@ -67,7 +66,7 @@ public class DefaultMfaSettingService implements MfaSettingService {
 		MfaProviderConfig providerConfig = mfaProperties.getProviderConfig(mfaConfig.getProviderType())
 			.orElseThrow(() -> PROVIDER_NOT_CONFIGURED_ERROR);
 		getTwoFaProvider(mfaConfig.getProviderType()).prepareVerificationCode(SecurityUtils.getCurrentUser(),
-				providerConfig, mfaConfig);
+			providerConfig, mfaConfig);
 	}
 
 	@Override
@@ -81,14 +80,13 @@ public class DefaultMfaSettingService implements MfaSettingService {
 		if (StringUtils.isNotBlank(verificationCode)) {
 			if (StringUtils.isNumeric(verificationCode) || mfaConfig.getProviderType() == MfaProviderType.BACKUP_CODE) {
 				verificationSuccess = getTwoFaProvider(mfaConfig.getProviderType()).checkVerificationCode(user,
-						verificationCode, providerConfig, mfaConfig);
+					verificationCode, providerConfig, mfaConfig);
 			}
 		}
 
 		if (verificationSuccess) {
 			return tokenFactory.createTokenPair(user);
-		}
-		else {
+		} else {
 			throw new RuntimeException("Verification code is incorrect");
 		}
 	}

@@ -19,17 +19,16 @@
 
 package com.chensoul.spring.boot.oss.old.storage.properties;
 
-import java.time.Duration;
-import java.util.HashMap;
-import java.util.Map;
-
+import com.chensoul.spring.boot.oss.old.storage.cloud.qiniu.QiNiuRegion;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
-import static com.chensoul.spring.boot.oss.old.storage.OssOperation.OSS_CONFIG_PREFIX_QINIU;
+import java.time.Duration;
+import java.util.HashMap;
+import java.util.Map;
 
-import com.chensoul.spring.boot.oss.old.storage.cloud.qiniu.QiNiuRegion;
+import static com.chensoul.spring.boot.oss.old.storage.OssOperation.OSS_CONFIG_PREFIX_QINIU;
 
 /**
  * <a href="https://developer.qiniu.com/kodo/manual/1206/put-policy">上传策略配置</a>

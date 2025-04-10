@@ -22,8 +22,7 @@ public class SysLogListener {
 	public void saveLog(SysLogEvent sysLogEvent) {
 		try {
 			consumer.accept(sysLogEvent.getSource());
-		}
-		catch (Throwable e) {
+		} catch (Throwable e) {
 			log.error("保存日志失败", e);
 		}
 	}

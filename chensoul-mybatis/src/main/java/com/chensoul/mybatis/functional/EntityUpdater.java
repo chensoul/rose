@@ -47,8 +47,7 @@ public class EntityUpdater<T> extends BaseEntityOperation implements Loader<T>, 
 		T t = baseMapper.selectById(id);
 		if (Objects.isNull(t)) {
 			throw new BusinessException("entity not found");
-		}
-		else {
+		} else {
 			this.entity = t;
 		}
 		return this;

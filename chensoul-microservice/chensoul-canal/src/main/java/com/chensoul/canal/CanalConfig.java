@@ -33,7 +33,7 @@ public class CanalConfig {
 	@Bean("promotionConnector")
 	public CanalConnector newSingleConnector() {
 		return CanalConnectors.newSingleConnector(new InetSocketAddress(canalServerIp, canalServerPort), destinations,
-				username, password);
+			username, password);
 	}
 
 }

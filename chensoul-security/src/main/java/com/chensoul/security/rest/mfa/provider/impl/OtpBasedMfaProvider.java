@@ -20,7 +20,7 @@ import static com.chensoul.security.CacheConstants.TWO_FA_VERIFICATION_CODE_CACH
 @Component
 @RequiredArgsConstructor
 public abstract class OtpBasedMfaProvider<C extends OtpBasedMfaProviderConfig, A extends OtpBasedMfaConfig>
-		implements MfaProvider<C, A> {
+	implements MfaProvider<C, A> {
 
 	private final CacheManager cacheManager;
 
@@ -33,11 +33,11 @@ public abstract class OtpBasedMfaProvider<C extends OtpBasedMfaProviderConfig, A
 		sendVerificationCode(user, verificationCode, providerConfig, twoFaConfig);
 		cacheManager.getCache(TWO_FA_VERIFICATION_CODE_CACHE)
 			.put(TWO_FA_VERIFICATION_CODE_CACHE + ":" + user.getUsername(),
-					objectMapper.writeValueAsBytes(new Otp(System.currentTimeMillis(), verificationCode, twoFaConfig)));
+				objectMapper.writeValueAsBytes(new Otp(System.currentTimeMillis(), verificationCode, twoFaConfig)));
 	}
 
 	protected abstract void sendVerificationCode(SecurityUser user, String verificationCode, C providerConfig,
-			A accountConfig);
+												 A accountConfig);
 
 	@Override
 	@SneakyThrows

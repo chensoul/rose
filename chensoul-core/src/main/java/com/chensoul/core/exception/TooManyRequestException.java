@@ -14,8 +14,9 @@ public class TooManyRequestException extends RuntimeException {
 	 * <p>
 	 * Constructor for RequestNotPermittedException.
 	 * </p>
+	 *
 	 * @param message a {@link String} object
-	 * @param cause a {@link Throwable} object
+	 * @param cause   a {@link Throwable} object
 	 */
 	public TooManyRequestException(final String message, final Throwable cause) {
 		super(message, cause);

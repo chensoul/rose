@@ -23,7 +23,7 @@ import org.springframework.context.annotation.Bean;
  */
 @AllArgsConstructor
 @AutoConfigureAfter(OssConfiguration.class)
-@ConditionalOnClass({ Auth.class, UploadManager.class, BucketManager.class })
+@ConditionalOnClass({Auth.class, UploadManager.class, BucketManager.class})
 @EnableConfigurationProperties(OssProperties.class)
 @ConditionalOnProperty(value = "oss.name", havingValue = "qiniu")
 public class QiniuConfiguration {
@@ -57,7 +57,7 @@ public class QiniuConfiguration {
 	}
 
 	@Bean
-	@ConditionalOnBean({ Auth.class, UploadManager.class, BucketManager.class })
+	@ConditionalOnBean({Auth.class, UploadManager.class, BucketManager.class})
 	@ConditionalOnMissingBean(QiniuTemplate.class)
 	public QiniuTemplate qiniuTemplate(Auth auth, UploadManager uploadManager, BucketManager bucketManager) {
 		return new QiniuTemplate(auth, uploadManager, bucketManager, ossProperties, ossRule);

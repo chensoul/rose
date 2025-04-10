@@ -19,12 +19,12 @@
 
 package com.chensoul.spring.boot.oss.old.storage.domain;
 
-import java.util.Map;
-
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
+
+import java.util.Map;
 
 /**
  * 响应结果
@@ -68,7 +68,7 @@ public class StorageResponse implements java.io.Serializable {
 
 	@Builder
 	public StorageResponse(String fileId, String etag, String originName, String targetName, String mappingPath,
-			String bucket, long size, String md5, String fullUrl, Map<String, Object> extend) {
+						   String bucket, long size, String md5, String fullUrl, Map<String, Object> extend) {
 		this.fileId = fileId;
 		this.etag = etag;
 		this.originName = originName;
@@ -80,8 +80,7 @@ public class StorageResponse implements java.io.Serializable {
 		this.mappingPath = mappingPath;
 		if (StringUtils.isBlank(fullUrl)) {
 			this.fullUrl = buildFullUrl(mappingPath, targetName);
-		}
-		else {
+		} else {
 			this.fullUrl = fullUrl;
 		}
 	}

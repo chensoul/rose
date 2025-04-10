@@ -25,8 +25,7 @@ public interface Node<T> extends Comparable<Node<T>>, Serializable {
 		if (null != weight) {
 			Comparable weightOther = node.getWeight();
 			return weight.compareTo(weightOther);
-		}
-		else {
+		} else {
 			return 0;
 		}
 	}

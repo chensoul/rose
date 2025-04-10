@@ -71,7 +71,7 @@ public class Namespace {
 	}
 
 	public Namespace(String namespace, String namespaceShowName, String namespaceDesc, int quota, int configCount,
-			int type) {
+					 int type) {
 		this.namespace = namespace;
 		this.namespaceShowName = namespaceShowName;
 		this.quota = quota;

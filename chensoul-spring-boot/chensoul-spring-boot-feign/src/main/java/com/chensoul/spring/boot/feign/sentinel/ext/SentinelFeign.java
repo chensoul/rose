@@ -73,12 +73,12 @@ public final class SentinelFeign {
 					if (void.class != fallback) {
 						fallbackInstance = getFromContext(beanName, "fallback", fallback, target.type());
 						return new SentinelInvocationHandler(target, dispatch,
-								new FallbackFactory.Default(fallbackInstance));
+							new FallbackFactory.Default(fallbackInstance));
 					}
 
 					if (void.class != fallbackFactory) {
 						fallbackFactoryInstance = (FallbackFactory<?>) getFromContext(beanName, "fallbackFactory",
-								fallbackFactory, FallbackFactory.class);
+							fallbackFactory, FallbackFactory.class);
 						return new SentinelInvocationHandler(target, dispatch, fallbackFactoryInstance);
 					}
 					return new SentinelInvocationHandler(target, dispatch);
@@ -93,8 +93,8 @@ public final class SentinelFeign {
 
 					if (!targetType.isAssignableFrom(fallbackType)) {
 						throw new IllegalStateException(String.format(
-								"Incompatible %s instance. Fallback/fallbackFactory of type %s is not assignable to %s for feign client %s",
-								type, fallbackType, targetType, name));
+							"Incompatible %s instance. Fallback/fallbackFactory of type %s is not assignable to %s for feign client %s",
+							type, fallbackType, targetType, name));
 					}
 					return fallbackInstance;
 				}
@@ -109,8 +109,7 @@ public final class SentinelFeign {
 			field.setAccessible(true);
 			try {
 				return field.get(instance);
-			}
-			catch (IllegalAccessException e) {
+			} catch (IllegalAccessException e) {
 				// ignore
 			}
 			return null;

@@ -35,7 +35,7 @@ public class RestTokenFactory implements TokenFactory {
 		redisTemplate.opsForValue()
 			.set(USER_TOKEN_PREFIX + accessToken, securityUser, securityProperties.getAccessTokenExpireTime());
 		return new TokenPair(accessToken, null,
-				AuthorityUtils.createAuthorityList(Authority.PRE_VERIFICATION_TOKEN.name()));
+			AuthorityUtils.createAuthorityList(Authority.PRE_VERIFICATION_TOKEN.name()));
 	}
 
 	@Override

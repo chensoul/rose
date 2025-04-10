@@ -29,7 +29,7 @@ public class ReadMergeValidateListener<T extends ReadFailMessageAware> extends R
 	private final int[] mergeColumnIndex;
 
 	public ReadMergeValidateListener(Integer headRowNumber, int[] mergeColumnIndex,
-			BiConsumer<List<T>, List<T>> consumer) {
+									 BiConsumer<List<T>, List<T>> consumer) {
 		super(consumer);
 
 		this.headRowNumber = headRowNumber;

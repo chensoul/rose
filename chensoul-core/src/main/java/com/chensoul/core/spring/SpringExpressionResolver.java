@@ -44,7 +44,7 @@ public class SpringExpressionResolver implements Function<Object, Object> {
 	private static final ParameterNameDiscoverer PARAMETER_NAME_DISCOVERER = new DefaultParameterNameDiscoverer();
 
 	private static final SpelExpressionParser EXPRESSION_PARSER = new SpelExpressionParser(
-			new SpelParserConfiguration(SpelCompilerMode.IMMEDIATE, SpringExpressionResolver.class.getClassLoader()));
+		new SpelParserConfiguration(SpelCompilerMode.IMMEDIATE, SpringExpressionResolver.class.getClassLoader()));
 
 	private static SpringExpressionResolver INSTANCE;
 
@@ -69,6 +69,7 @@ public class SpringExpressionResolver implements Function<Object, Object> {
 
 	/**
 	 * Gets instance of the resolver as a singleton.
+	 *
 	 * @return the instance
 	 */
 	public static SpringExpressionResolver getInstance() {
@@ -81,7 +82,8 @@ public class SpringExpressionResolver implements Function<Object, Object> {
 
 	/**
 	 * 从切面中，单个解析 EL 表达式的结果
-	 * @param joinPoint 切面点
+	 *
+	 * @param joinPoint        切面点
 	 * @param expressionString EL 表达式数组
 	 * @return 执行界面
 	 */
@@ -92,7 +94,8 @@ public class SpringExpressionResolver implements Function<Object, Object> {
 
 	/**
 	 * 从切面中，批量解析 EL 表达式的结果
-	 * @param joinPoint 切面点
+	 *
+	 * @param joinPoint         切面点
 	 * @param expressionStrings EL 表达式数组
 	 * @return 结果，key 为表达式，value 为对应值
 	 */
@@ -125,6 +128,7 @@ public class SpringExpressionResolver implements Function<Object, Object> {
 
 	/**
 	 * Resolve string.
+	 *
 	 * @param value the value
 	 * @return the string
 	 */
@@ -166,7 +170,7 @@ public class SpringExpressionResolver implements Function<Object, Object> {
 		val localStartDay = LocalDate.now(ZoneId.systemDefault()).atStartOfDay();
 		evaluationContext.setVariable("localStartDay", localStartDay.toString());
 		evaluationContext.setVariable("localEndDay",
-				localStartDay.plusHours(HOUR_23).plusMinutes(MINUTE_59).plusSeconds(SECOND_59).toString());
+			localStartDay.plusHours(HOUR_23).plusMinutes(MINUTE_59).plusSeconds(SECOND_59).toString());
 
 		evaluationContext.setVariable("localDate", LocalDate.now(ZoneId.systemDefault()).toString());
 		evaluationContext.setVariable("localDateUtc", LocalDate.now(Clock.systemUTC()).toString());

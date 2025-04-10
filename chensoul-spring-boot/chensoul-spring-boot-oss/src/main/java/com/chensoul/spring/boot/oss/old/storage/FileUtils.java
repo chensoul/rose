@@ -19,10 +19,10 @@
 
 package com.chensoul.spring.boot.oss.old.storage;
 
-import java.util.UUID;
-
 import org.apache.commons.compress.utils.FileNameUtils;
 import org.apache.commons.lang3.StringUtils;
+
+import java.util.UUID;
 
 /**
  * @author Levin
@@ -33,6 +33,7 @@ public class FileUtils {
 
 	/**
 	 * 根据旧的名称生成新的名称
+	 *
 	 * @param originName originName
 	 * @return 生成结果
 	 */

@@ -19,14 +19,14 @@
 
 package com.chensoul.spring.boot.oss.old.storage.domain;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.InputStream;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.InputStream;
 
 /**
  * 响应结果

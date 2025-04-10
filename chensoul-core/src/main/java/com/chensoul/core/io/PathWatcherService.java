@@ -27,7 +27,7 @@ public class PathWatcherService implements WatcherService, Runnable, DisposableB
 
 	private static final String PROPERTY_DISABLE_WATCHER = PathWatcherService.class.getName();
 
-	private static final WatchEvent.Kind[] KINDS = { ENTRY_CREATE, ENTRY_DELETE, ENTRY_MODIFY };
+	private static final WatchEvent.Kind[] KINDS = {ENTRY_CREATE, ENTRY_DELETE, ENTRY_MODIFY};
 
 	private final Consumer<File> onCreate;
 
@@ -46,7 +46,7 @@ public class PathWatcherService implements WatcherService, Runnable, DisposableB
 	}
 
 	public PathWatcherService(final Path watchablePath, final Consumer<File> onCreate, final Consumer<File> onModify,
-			final Consumer<File> onDelete) {
+							  final Consumer<File> onDelete) {
 		log.info("Watching directory path at [{}]", watchablePath);
 		this.onCreate = onCreate;
 		this.onModify = onModify;
@@ -68,8 +68,7 @@ public class PathWatcherService implements WatcherService, Runnable, DisposableB
 						log.info("Directory key is no longer valid. Quitting watcher util");
 					}
 				}
-			}
-			catch (final InterruptedException | ClosedWatchServiceException e) {
+			} catch (final InterruptedException | ClosedWatchServiceException e) {
 				log.trace(e.getMessage(), e);
 				Thread.currentThread().interrupt();
 			}
@@ -82,8 +81,7 @@ public class PathWatcherService implements WatcherService, Runnable, DisposableB
 		if (watchService != null) {
 			try {
 				watchService.close();
-			}
-			catch (IOException ignored) {
+			} catch (IOException ignored) {
 
 			}
 		}
@@ -121,11 +119,9 @@ public class PathWatcherService implements WatcherService, Runnable, DisposableB
 			log.trace("Detected event [{}] on file [{}]", eventName, file);
 			if (eventName.equals(ENTRY_CREATE.name()) && file.exists()) {
 				onCreate.accept(file);
-			}
-			else if (eventName.equals(ENTRY_DELETE.name())) {
+			} else if (eventName.equals(ENTRY_DELETE.name())) {
 				onDelete.accept(file);
-			}
-			else if (eventName.equals(ENTRY_MODIFY.name()) && file.exists()) {
+			} else if (eventName.equals(ENTRY_MODIFY.name()) && file.exists()) {
 				onModify.accept(file);
 			}
 		}));
@@ -133,14 +129,14 @@ public class PathWatcherService implements WatcherService, Runnable, DisposableB
 
 	protected boolean shouldEnableWatchService() {
 		String watchServiceEnabled = StringUtils.defaultIfBlank(System.getenv(PROPERTY_DISABLE_WATCHER),
-				System.getProperty(PROPERTY_DISABLE_WATCHER));
+			System.getProperty(PROPERTY_DISABLE_WATCHER));
 		return StringUtils.isBlank(watchServiceEnabled) || BooleanUtils.toBoolean(watchServiceEnabled);
 	}
 
 	protected void initializeWatchService(final Path watchablePath) {
 		this.watchService = CheckedSupplier.unchecked(() -> watchablePath.getFileSystem().newWatchService()).get();
 		log.debug("Created watcher for events of type [{}]",
-				Arrays.stream(KINDS).map(WatchEvent.Kind::name).collect(Collectors.joining(",")));
+			Arrays.stream(KINDS).map(WatchEvent.Kind::name).collect(Collectors.joining(",")));
 		CheckedConsumer.unchecked(__ -> watchablePath.register(Objects.requireNonNull(this.watchService), KINDS));
 	}
 

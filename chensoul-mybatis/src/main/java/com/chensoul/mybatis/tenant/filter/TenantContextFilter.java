@@ -18,7 +18,7 @@ public class TenantContextFilter extends OncePerRequestFilter {
 
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
-			throws ServletException, IOException {
+		throws ServletException, IOException {
 		String tenantId = WebUtils.getValue(request, HEADER_TENANT_ID);
 		if (tenantId != null) {
 			log.info("Visit {} with tenantId {}", request.getRequestURI(), tenantId);
@@ -26,8 +26,7 @@ public class TenantContextFilter extends OncePerRequestFilter {
 		}
 		try {
 			filterChain.doFilter(request, response);
-		}
-		finally {
+		} finally {
 			TenantContextHolder.clear();
 		}
 	}

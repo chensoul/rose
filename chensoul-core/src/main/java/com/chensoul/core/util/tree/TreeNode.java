@@ -49,10 +49,11 @@ public class TreeNode<T> implements Node<T> {
 
 	/**
 	 * 构造
-	 * @param id ID
+	 *
+	 * @param id       ID
 	 * @param parentId 父节点ID
-	 * @param name 名称
-	 * @param weight 权重
+	 * @param name     名称
+	 * @param weight   权重
 	 */
 	public TreeNode(T id, T parentId, String name, Comparable<?> weight) {
 		this.id = id;
@@ -110,6 +111,7 @@ public class TreeNode<T> implements Node<T> {
 
 	/**
 	 * 获取扩展字段
+	 *
 	 * @return 扩展字段Map
 	 * @since 5.2.5
 	 */
@@ -119,6 +121,7 @@ public class TreeNode<T> implements Node<T> {
 
 	/**
 	 * 设置扩展字段
+	 *
 	 * @param extra 扩展字段
 	 * @return this
 	 * @since 5.2.5

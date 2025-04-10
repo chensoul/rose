@@ -19,7 +19,7 @@ public class RestAccessDeniedHandler implements AccessDeniedHandler {
 
 	@Override
 	public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException e)
-			throws IOException, ServletException {
+		throws IOException, ServletException {
 		if (response.isCommitted()) {
 			return;
 		}

@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 @Service
 @RequiredArgsConstructor
 public class SystemSettingServiceImpl extends ServiceImpl<SystemSettingMapper, SystemSetting>
-		implements SystemSettingService {
+	implements SystemSettingService {
 
 	private final HttpServletRequest request;
 

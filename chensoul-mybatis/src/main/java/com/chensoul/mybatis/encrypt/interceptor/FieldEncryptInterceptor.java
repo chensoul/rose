@@ -17,12 +17,12 @@ import org.apache.ibatis.session.RowBounds;
  * @author <a href="mailto:ichensoul@gmail.com">chensoul</a>
  * @since 0.0.1
  */
-@Intercepts({ @Signature(type = Executor.class, method = "update", args = { MappedStatement.class, Object.class }),
-		@Signature(type = Executor.class, method = "query",
-				args = { MappedStatement.class, Object.class, RowBounds.class, ResultHandler.class }),
-		@Signature(type = Executor.class, method = "query",
-				args = { MappedStatement.class, Object.class, RowBounds.class, ResultHandler.class, CacheKey.class,
-						BoundSql.class }), })
+@Intercepts({@Signature(type = Executor.class, method = "update", args = {MappedStatement.class, Object.class}),
+	@Signature(type = Executor.class, method = "query",
+		args = {MappedStatement.class, Object.class, RowBounds.class, ResultHandler.class}),
+	@Signature(type = Executor.class, method = "query",
+		args = {MappedStatement.class, Object.class, RowBounds.class, ResultHandler.class, CacheKey.class,
+			BoundSql.class}),})
 @Slf4j
 @Data
 @AllArgsConstructor

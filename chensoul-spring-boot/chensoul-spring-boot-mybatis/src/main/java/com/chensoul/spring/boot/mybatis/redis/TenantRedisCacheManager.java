@@ -2,7 +2,7 @@ package com.chensoul.spring.boot.mybatis.redis;
 
 import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.chensoul.mybatis.tenant.util.TenantContextHolder;
-import com.chensoul.spring.boot.redis.support.TimeoutRedisCacheManager;
+import com.chensoul.spring.boot.redis.support.TtlRedisCacheManager;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.cache.Cache;
@@ -22,12 +22,12 @@ import static com.chensoul.core.util.StringPool.COLON;
  * @author <a href="mailto:ichensoul@gmail.com">chensoul</a>
  */
 @Slf4j
-public class TenantRedisCacheManager extends TimeoutRedisCacheManager {
+public class TenantRedisCacheManager extends TtlRedisCacheManager {
 
 	private final Set<String> ignoredCaches;
 
 	public TenantRedisCacheManager(Set<String> ignoredCaches, RedisCacheWriter cacheWriter,
-			RedisCacheConfiguration defaultCacheConfiguration) {
+								   RedisCacheConfiguration defaultCacheConfiguration) {
 		super(cacheWriter, defaultCacheConfiguration);
 		this.ignoredCaches = ignoredCaches;
 	}
@@ -36,7 +36,7 @@ public class TenantRedisCacheManager extends TimeoutRedisCacheManager {
 	public Cache getCache(String name) {
 		// 如果开启多租户，则 name 拼接租户后缀
 		if (!TenantContextHolder.isIgnored() && StringUtils.isNotBlank(TenantContextHolder.getTenantId())
-				&& (CollectionUtils.isEmpty(ignoredCaches) || !ignoredCaches.contains(name))) {
+			&& (CollectionUtils.isEmpty(ignoredCaches) || !ignoredCaches.contains(name))) {
 			name = name + COLON + TenantContextHolder.getTenantId();
 		}
 

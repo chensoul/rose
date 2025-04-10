@@ -31,13 +31,7 @@ import com.alibaba.nacos.plugin.auth.constant.ActionTypes;
 import com.alibaba.nacos.plugin.auth.constant.SignType;
 import com.alibaba.nacos.plugin.auth.impl.constant.AuthConstants;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.UUID;
@@ -66,6 +60,7 @@ public class NamespaceControllerV2 {
 
 	/**
 	 * Get namespace list.
+	 *
 	 * @return namespace list
 	 */
 	@GetMapping("/list")
@@ -75,25 +70,27 @@ public class NamespaceControllerV2 {
 
 	/**
 	 * get namespace all info by namespace id.
+	 *
 	 * @param namespaceId namespaceId
 	 * @return namespace all info
 	 */
 	@GetMapping()
 	@Secured(resource = AuthConstants.CONSOLE_RESOURCE_NAME_PREFIX + "namespaces", action = ActionTypes.READ,
-			signType = SignType.CONSOLE)
+		signType = SignType.CONSOLE)
 	public Result<NamespaceAllInfo> getNamespace(@RequestParam("namespaceId") String namespaceId)
-			throws NacosException {
+		throws NacosException {
 		return Result.success(namespaceOperationService.getNamespace(namespaceId));
 	}
 
 	/**
 	 * create namespace.
+	 *
 	 * @param namespaceForm namespaceForm.
 	 * @return whether create ok
 	 */
 	@PostMapping
 	@Secured(resource = AuthConstants.CONSOLE_RESOURCE_NAME_PREFIX + "namespaces", action = ActionTypes.WRITE,
-			signType = SignType.CONSOLE)
+		signType = SignType.CONSOLE)
 	public Result<Boolean> createNamespace(NamespaceForm namespaceForm) throws NacosException {
 
 		namespaceForm.validate();
@@ -104,16 +101,15 @@ public class NamespaceControllerV2 {
 
 		if (StringUtils.isBlank(namespaceId)) {
 			namespaceId = UUID.randomUUID().toString();
-		}
-		else {
+		} else {
 			namespaceId = namespaceId.trim();
 			if (!namespaceIdCheckPattern.matcher(namespaceId).matches()) {
 				throw new NacosApiException(HttpStatus.BAD_REQUEST.value(), ErrorCode.ILLEGAL_NAMESPACE,
-						"namespaceId [" + namespaceId + "] mismatch the pattern");
+					"namespaceId [" + namespaceId + "] mismatch the pattern");
 			}
 			if (namespaceId.length() > NAMESPACE_ID_MAX_LENGTH) {
 				throw new NacosApiException(HttpStatus.BAD_REQUEST.value(), ErrorCode.ILLEGAL_NAMESPACE,
-						"too long namespaceId, over " + NAMESPACE_ID_MAX_LENGTH);
+					"too long namespaceId, over " + NAMESPACE_ID_MAX_LENGTH);
 			}
 		}
 		return Result.success(namespaceOperationService.createNamespace(namespaceId, namespaceName, namespaceDesc));
@@ -121,26 +117,28 @@ public class NamespaceControllerV2 {
 
 	/**
 	 * edit namespace.
+	 *
 	 * @param namespaceForm namespace params
 	 * @return whether edit ok
 	 */
 	@PutMapping
 	@Secured(resource = AuthConstants.CONSOLE_RESOURCE_NAME_PREFIX + "namespaces", action = ActionTypes.WRITE,
-			signType = SignType.CONSOLE)
+		signType = SignType.CONSOLE)
 	public Result<Boolean> editNamespace(NamespaceForm namespaceForm) throws NacosException {
 		namespaceForm.validate();
 		return Result.success(namespaceOperationService.editNamespace(namespaceForm.getNamespaceId(),
-				namespaceForm.getNamespaceName(), namespaceForm.getNamespaceDesc()));
+			namespaceForm.getNamespaceName(), namespaceForm.getNamespaceDesc()));
 	}
 
 	/**
 	 * delete namespace by id.
+	 *
 	 * @param namespaceId namespace ID
 	 * @return whether delete ok
 	 */
 	@DeleteMapping
 	@Secured(resource = AuthConstants.CONSOLE_RESOURCE_NAME_PREFIX + "namespaces", action = ActionTypes.WRITE,
-			signType = SignType.CONSOLE)
+		signType = SignType.CONSOLE)
 	public Result<Boolean> deleteNamespace(@RequestParam("namespaceId") String namespaceId) {
 		return Result.success(namespaceOperationService.removeNamespace(namespaceId));
 	}

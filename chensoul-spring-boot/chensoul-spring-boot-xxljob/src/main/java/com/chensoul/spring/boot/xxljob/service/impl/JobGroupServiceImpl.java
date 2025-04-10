@@ -41,7 +41,7 @@ public class JobGroupServiceImpl implements JobGroupService {
 		HttpEntity<MultiValueMap<String, String>> requestEntity = new HttpEntity<>(map, headers);
 
 		ResponseEntity<XxlJobGroupPage> response = restTemplate.postForEntity(url, requestEntity,
-				XxlJobGroupPage.class);
+			XxlJobGroupPage.class);
 		List<XxlJobGroup> jobGroup = response.getBody().getData();
 
 		return jobGroup.stream()
@@ -64,7 +64,7 @@ public class JobGroupServiceImpl implements JobGroupService {
 		HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(map, headers);
 
 		ResponseEntity<XxlRestResponse> response = restTemplate.postForEntity(url, requestEntity,
-				XxlRestResponse.class);
+			XxlRestResponse.class);
 
 		XxlRestResponse xxlRestResponse = response.getBody();
 		if (xxlRestResponse.getCode() != 200) {

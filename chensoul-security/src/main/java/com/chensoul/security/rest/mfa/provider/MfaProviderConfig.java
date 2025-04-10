@@ -8,10 +8,10 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "providerType")
-@JsonSubTypes({ @Type(name = "TOTP", value = TotpMfaProviderConfig.class),
-		@Type(name = "SMS", value = SmsMfaProviderConfig.class),
-		@Type(name = "EMAIL", value = EmailMfaProviderConfig.class),
-		@Type(name = "BACKUP_CODE", value = BackupCodeMfaProviderConfig.class) })
+@JsonSubTypes({@Type(name = "TOTP", value = TotpMfaProviderConfig.class),
+	@Type(name = "SMS", value = SmsMfaProviderConfig.class),
+	@Type(name = "EMAIL", value = EmailMfaProviderConfig.class),
+	@Type(name = "BACKUP_CODE", value = BackupCodeMfaProviderConfig.class)})
 public interface MfaProviderConfig {
 
 	@JsonIgnore

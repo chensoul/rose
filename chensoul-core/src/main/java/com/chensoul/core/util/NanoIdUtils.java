@@ -50,6 +50,7 @@ public final class NanoIdUtils {
 	 * <p>
 	 * The NanoId String is generated using a cryptographically strong pseudo random
 	 * number generator.
+	 *
 	 * @return A randomly generated NanoId String.
 	 */
 	public static String randomNanoId() {
@@ -64,9 +65,10 @@ public final class NanoIdUtils {
 	 * Static factory to retrieve a NanoId String.
 	 * <p>
 	 * The string is generated using the given random number generator.
-	 * @param random The random number generator.
+	 *
+	 * @param random   The random number generator.
 	 * @param alphabet The symbols used in the NanoId String.
-	 * @param size The number of symbols in the NanoId String.
+	 * @param size     The number of symbols in the NanoId String.
 	 * @return A randomly generated NanoId String.
 	 */
 	public static String randomNanoId(final Random random, final char[] alphabet, final int size) {

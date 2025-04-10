@@ -29,7 +29,7 @@ import java.util.UUID;
 @Slf4j
 @RequiredArgsConstructor
 public class CaffeineCacheTransaction<K extends Serializable, V extends Serializable>
-		implements CacheTransaction<K, V> {
+	implements CacheTransaction<K, V> {
 
 	@Getter
 	private final UUID id = UUID.randomUUID();

@@ -27,8 +27,8 @@ public interface EndpointConstant {
 
 	String TOKEN_CONFIRM_ACCESS = "/token/confirm_access";
 
-	String[] NON_TOKEN_BASED_AUTH_ENTRY_POINTS = new String[] { "/v2/api-docs", "/swagger-resources/**",
-			"/configuration/ui", "/configuration/security", "/swagger-ui.html", "/favicon.ico", ACTUATOR_ALL, "/error",
-			CODE_URL, "/api/noauth/**", "/user/load" };
+	String[] NON_TOKEN_BASED_AUTH_ENTRY_POINTS = new String[]{"/v2/api-docs", "/swagger-resources/**",
+		"/configuration/ui", "/configuration/security", "/swagger-ui.html", "/favicon.ico", ACTUATOR_ALL, "/error",
+		CODE_URL, "/api/noauth/**", "/user/load"};
 
 }

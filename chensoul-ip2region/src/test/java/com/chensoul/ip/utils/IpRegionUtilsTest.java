@@ -1,9 +1,10 @@
 package com.chensoul.ip.utils;
 
 import com.chensoul.ip.Area;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 import org.lionsoul.ip2region.xdb.Searcher;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * {@link IpRegionUtils} 的单元测试

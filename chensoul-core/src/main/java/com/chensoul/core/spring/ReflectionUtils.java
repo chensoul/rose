@@ -34,7 +34,8 @@ public class ReflectionUtils extends org.springframework.util.ReflectionUtils {
 	 *     List      -> ArrayList
 	 *     Set       -> HashSet
 	 * </pre>
-	 * @param <T> 对象类型
+	 *
+	 * @param <T>  对象类型
 	 * @param type 被构造的类
 	 * @return 构造后的对象，构造失败返回{@code null}
 	 */
@@ -55,8 +56,7 @@ public class ReflectionUtils extends org.springframework.util.ReflectionUtils {
 
 		try {
 			return newInstance(type);
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			// ignore
 			// 默认构造不存在的情况下查找其它构造
 		}
@@ -86,8 +86,7 @@ public class ReflectionUtils extends org.springframework.util.ReflectionUtils {
 			}
 			try {
 				return constructor.newInstance(getDefaultValues(parameterTypes));
-			}
-			catch (Exception ignore) {
+			} catch (Exception ignore) {
 				// 构造出错时继续尝试下一种构造方式
 			}
 		}
@@ -106,8 +105,7 @@ public class ReflectionUtils extends org.springframework.util.ReflectionUtils {
 	public static Type[] getTypeArguments(Type type) {
 		if (null == type) {
 			return null;
-		}
-		else {
+		} else {
 			ParameterizedType parameterizedType = toParameterizedType(type);
 			return null == parameterizedType ? null : parameterizedType.getActualTypeArguments();
 		}
@@ -120,8 +118,7 @@ public class ReflectionUtils extends org.springframework.util.ReflectionUtils {
 	public static ParameterizedType toParameterizedType(Type type, int interfaceIndex) {
 		if (type instanceof ParameterizedType) {
 			return (ParameterizedType) type;
-		}
-		else {
+		} else {
 			if (type instanceof Class) {
 				ParameterizedType[] generics = getGenerics((Class) type);
 				if (generics.length > interfaceIndex) {

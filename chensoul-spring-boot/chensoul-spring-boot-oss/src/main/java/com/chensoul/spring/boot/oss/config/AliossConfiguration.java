@@ -24,7 +24,7 @@ import org.springframework.context.annotation.Bean;
 @AllArgsConstructor
 @AutoConfigureAfter(OssConfiguration.class)
 @EnableConfigurationProperties(OssProperties.class)
-@ConditionalOnClass({ OSSClient.class })
+@ConditionalOnClass({OSSClient.class})
 @ConditionalOnProperty(value = "oss.name", havingValue = "alioss")
 public class AliossConfiguration {
 
@@ -50,12 +50,12 @@ public class AliossConfiguration {
 		// 设置失败请求重试次数，默认为3次。
 		conf.setMaxErrorRetry(5);
 		CredentialsProvider credentialsProvider = new DefaultCredentialProvider(ossProperties.getAccessKey(),
-				ossProperties.getSecretKey());
+			ossProperties.getSecretKey());
 		return new OSSClient(ossProperties.getEndpoint(), credentialsProvider, conf);
 	}
 
 	@Bean
-	@ConditionalOnBean({ OSSClient.class })
+	@ConditionalOnBean({OSSClient.class})
 	@ConditionalOnMissingBean(AliossTemplate.class)
 	public AliossTemplate aliossTemplate(OSSClient ossClient) {
 		return new AliossTemplate(ossClient, ossProperties, ossRule);

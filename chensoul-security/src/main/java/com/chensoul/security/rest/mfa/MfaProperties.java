@@ -55,7 +55,7 @@ public class MfaProperties {
 		return Optional.ofNullable(providers)
 			.flatMap(providersConfigs -> providersConfigs.stream()
 				.map(providerConfig -> JacksonUtils.fromString(JacksonUtils.toString(providerConfig),
-						MfaProviderConfig.class))
+					MfaProviderConfig.class))
 				.filter(providerConfig -> providerConfig.getProviderType().equals(providerType))
 				.findFirst());
 	}

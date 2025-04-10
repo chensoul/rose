@@ -30,8 +30,7 @@ public class PayloadSizeFilter extends OncePerRequestFilter {
 				String urlPathPattern = limit.split("=")[0];
 				long maxPayloadSize = Long.parseLong(limit.split("=")[1]);
 				limits.put(urlPathPattern, maxPayloadSize);
-			}
-			catch (Exception e) {
+			} catch (Exception e) {
 				throw new IllegalArgumentException("Failed to parse size limits configuration: " + limitsConfiguration);
 			}
 		}
@@ -40,7 +39,7 @@ public class PayloadSizeFilter extends OncePerRequestFilter {
 
 	@Override
 	public void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
-			throws IOException, ServletException {
+		throws IOException, ServletException {
 		for (String url : limits.keySet()) {
 			if (pathMatcher.match(url, request.getRequestURI())) {
 				if (checkMaxPayloadSizeExceeded(request, response, limits.get(url))) {
@@ -53,10 +52,10 @@ public class PayloadSizeFilter extends OncePerRequestFilter {
 	}
 
 	private boolean checkMaxPayloadSizeExceeded(HttpServletRequest request, HttpServletResponse response,
-			long maxPayloadSize) throws IOException {
+												long maxPayloadSize) throws IOException {
 		if (request.getContentLength() > maxPayloadSize) {
 			log.info("[{}] [{}] Payload size {} exceeds the limit of {} bytes", request.getRemoteAddr(),
-					request.getRequestURL(), request.getContentLength(), maxPayloadSize);
+				request.getRequestURL(), request.getContentLength(), maxPayloadSize);
 			handleMaxPayloadSizeExceededException(response, new MaxPayloadSizeExceededException(maxPayloadSize));
 			return true;
 		}
@@ -74,7 +73,7 @@ public class PayloadSizeFilter extends OncePerRequestFilter {
 	}
 
 	private void handleMaxPayloadSizeExceededException(HttpServletResponse response,
-			MaxPayloadSizeExceededException exception) throws IOException {
+													   MaxPayloadSizeExceededException exception) throws IOException {
 		response.setStatus(HttpStatus.PAYLOAD_TOO_LARGE.value());
 		JacksonUtils.writeValue(response.getWriter(), exception.getMessage());
 	}

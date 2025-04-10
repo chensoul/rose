@@ -88,15 +88,14 @@ public class QiNiuOssOperation implements OssOperation {
 	public DownloadResponse download(String fileName) {
 		String domainOfBucket = this.connectionFactory.getDomain(properties.getBucket());
 		final String path = StringUtils.defaultIfBlank(this.properties.getTmpDir(),
-				this.getClass().getResource("/").getPath());
+			this.getClass().getResource("/").getPath());
 		final File file = new File(path + File.separator + fileName);
 		log.debug("[文件目录] - [{}]", file.getPath());
 		try {
 			DownloadUrl url = new DownloadUrl(domainOfBucket, true, fileName);
 			String urlString = url.buildURL();
 			log.debug(urlString);
-		}
-		catch (QiniuException e) {
+		} catch (QiniuException e) {
 			e.printStackTrace();
 		}
 		return null;
@@ -151,8 +150,7 @@ public class QiNiuOssOperation implements OssOperation {
 			String upToken = getUploadToken(bucketName, fileName);
 			Response response = uploadManager.put(content, fileName, upToken, null, null);
 			return getStorageResponse(fileName, response);
-		}
-		catch (QiniuException e) {
+		} catch (QiniuException e) {
 			log.error("[文件上传异常]", e);
 			throw uploadError(BaseOssProperties.StorageType.QINIU, e);
 		}
@@ -164,8 +162,7 @@ public class QiNiuOssOperation implements OssOperation {
 			String upToken = getUploadToken(bucketName, fileName);
 			Response response = uploadManager.put(content, fileName, upToken);
 			return getStorageResponse(fileName, response);
-		}
-		catch (QiniuException e) {
+		} catch (QiniuException e) {
 			log.error("[文件上传异常]", e);
 			throw uploadError(BaseOssProperties.StorageType.QINIU, e);
 		}
@@ -183,8 +180,7 @@ public class QiNiuOssOperation implements OssOperation {
 			Response response;
 			if (Objects.nonNull(request.getInputStream())) {
 				response = uploadManager.put(request.getInputStream(), targetName, upToken, null, null);
-			}
-			else {
+			} else {
 				response = uploadManager.put(request.getContent(), targetName, upToken);
 			}
 			log.debug("七牛上传响应结果 - {}", response);
@@ -201,8 +197,7 @@ public class QiNiuOssOperation implements OssOperation {
 				.bucket(bucket)
 				.extend(extend)
 				.build();
-		}
-		catch (QiniuException e) {
+		} catch (QiniuException e) {
 			log.error("[文件上传异常]", e);
 			throw uploadError(BaseOssProperties.StorageType.QINIU, e);
 		}
@@ -234,8 +229,7 @@ public class QiNiuOssOperation implements OssOperation {
 		try {
 			final Response response = bucketManager.delete(bucketName, fileName);
 			log.debug("文件删除成功 - {}", response);
-		}
-		catch (QiniuException e) {
+		} catch (QiniuException e) {
 			log.error("[文件移除异常]", e);
 		}
 	}

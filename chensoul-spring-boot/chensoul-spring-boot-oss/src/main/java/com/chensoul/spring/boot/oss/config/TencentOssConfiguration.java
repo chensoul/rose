@@ -16,7 +16,7 @@ import org.springframework.context.annotation.Bean;
 
 @AllArgsConstructor
 @AutoConfigureAfter(OssConfiguration.class)
-@ConditionalOnClass({ MinioClient.class })
+@ConditionalOnClass({MinioClient.class})
 @EnableConfigurationProperties(OssProperties.class)
 @ConditionalOnProperty(value = "oss.name", havingValue = "tencent")
 public class TencentOssConfiguration {
@@ -26,7 +26,7 @@ public class TencentOssConfiguration {
 	@Bean
 	public COSClient cosClient() {
 		COSCredentials credentials = new BasicCOSCredentials(ossProperties.getAccessKey(),
-				ossProperties.getSecretKey());
+			ossProperties.getSecretKey());
 		// 初始化客户端配置
 		ClientConfig clientConfig = new ClientConfig(new Region((String) ossProperties.getArgs().get("region")));
 		return new COSClient(credentials, clientConfig);

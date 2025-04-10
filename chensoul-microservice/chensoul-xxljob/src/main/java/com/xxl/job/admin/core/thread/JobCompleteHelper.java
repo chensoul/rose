@@ -41,19 +41,19 @@ public class JobCompleteHelper {
 
 		// for callback
 		callbackThreadPool = new ThreadPoolExecutor(2, 20, 30L, TimeUnit.SECONDS,
-				new LinkedBlockingQueue<Runnable>(3000), new ThreadFactory() {
-					@Override
-					public Thread newThread(Runnable r) {
-						return new Thread(r, "xxl-job, admin JobLosedMonitorHelper-callbackThreadPool-" + r.hashCode());
-					}
-				}, new RejectedExecutionHandler() {
-					@Override
-					public void rejectedExecution(Runnable r, ThreadPoolExecutor executor) {
-						r.run();
-						logger.warn(
-								">>>>>>>>>>> xxl-job, callback too fast, match threadpool rejected handler(run now).");
-					}
-				});
+			new LinkedBlockingQueue<Runnable>(3000), new ThreadFactory() {
+			@Override
+			public Thread newThread(Runnable r) {
+				return new Thread(r, "xxl-job, admin JobLosedMonitorHelper-callbackThreadPool-" + r.hashCode());
+			}
+		}, new RejectedExecutionHandler() {
+			@Override
+			public void rejectedExecution(Runnable r, ThreadPoolExecutor executor) {
+				r.run();
+				logger.warn(
+					">>>>>>>>>>> xxl-job, callback too fast, match threadpool rejected handler(run now).");
+			}
+		});
 
 		// for monitor
 		monitorThread = new Thread(new Runnable() {
@@ -64,8 +64,7 @@ public class JobCompleteHelper {
 				// wait for JobTriggerPoolHelper-init
 				try {
 					TimeUnit.MILLISECONDS.sleep(50);
-				}
-				catch (InterruptedException e) {
+				} catch (InterruptedException e) {
 					if (!toStop) {
 						logger.error(e.getMessage(), e);
 					}
@@ -94,8 +93,7 @@ public class JobCompleteHelper {
 							}
 
 						}
-					}
-					catch (Exception e) {
+					} catch (Exception e) {
 						if (!toStop) {
 							logger.error(">>>>>>>>>>> xxl-job, job fail monitor thread error:{}", e);
 						}
@@ -103,8 +101,7 @@ public class JobCompleteHelper {
 
 					try {
 						TimeUnit.SECONDS.sleep(60);
-					}
-					catch (Exception e) {
+					} catch (Exception e) {
 						if (!toStop) {
 							logger.error(e.getMessage(), e);
 						}
@@ -131,8 +128,7 @@ public class JobCompleteHelper {
 		monitorThread.interrupt();
 		try {
 			monitorThread.join();
-		}
-		catch (InterruptedException e) {
+		} catch (InterruptedException e) {
 			logger.error(e.getMessage(), e);
 		}
 	}
@@ -147,8 +143,8 @@ public class JobCompleteHelper {
 				for (HandleCallbackParam handleCallbackParam : callbackParamList) {
 					ReturnT<String> callbackResult = callback(handleCallbackParam);
 					logger.debug(">>>>>>>>> JobApiController.callback {}, handleCallbackParam={}, callbackResult={}",
-							(callbackResult.getCode() == ReturnT.SUCCESS_CODE ? "success" : "fail"),
-							handleCallbackParam, callbackResult);
+						(callbackResult.getCode() == ReturnT.SUCCESS_CODE ? "success" : "fail"),
+						handleCallbackParam, callbackResult);
 				}
 			}
 		});
@@ -164,12 +160,12 @@ public class JobCompleteHelper {
 		}
 		if (log.getHandleCode() > 0) {
 			return new ReturnT<String>(ReturnT.FAIL_CODE, "log repeate callback."); // avoid
-																					// repeat
-																					// callback,
-																					// trigger
-																					// child
-																					// job
-																					// etc
+			// repeat
+			// callback,
+			// trigger
+			// child
+			// job
+			// etc
 		}
 
 		// handle msg

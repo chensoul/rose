@@ -1,7 +1,7 @@
 package com.xxl.job.admin.core.route.strategy;
 
-import com.xxl.job.admin.core.scheduler.XxlJobScheduler;
 import com.xxl.job.admin.core.route.ExecutorRouter;
+import com.xxl.job.admin.core.scheduler.XxlJobScheduler;
 import com.xxl.job.admin.core.util.I18nUtil;
 import com.xxl.job.core.biz.ExecutorBiz;
 import com.xxl.job.core.biz.model.ReturnT;
@@ -24,8 +24,7 @@ public class ExecutorRouteFailover extends ExecutorRouter {
 			try {
 				ExecutorBiz executorBiz = XxlJobScheduler.getExecutorBiz(address);
 				beatResult = executorBiz.beat();
-			}
-			catch (Exception e) {
+			} catch (Exception e) {
 				logger.error(e.getMessage(), e);
 				beatResult = new ReturnT<String>(ReturnT.FAIL_CODE, "" + e);
 			}

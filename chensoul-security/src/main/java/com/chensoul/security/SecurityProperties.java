@@ -22,8 +22,8 @@ public class SecurityProperties {
 
 	public static final String TOKEN_BASED_AUTH_ENTRY_POINT = "/api/**";
 
-	public static final String[] DEFAULT_PATH_TO_SKIP = new String[] { TOKEN_REFRESH_ENTRY_POINT,
-			FORM_BASED_LOGIN_ENTRY_POINT, "/api/noauth/**", "/error", "/actuator/**", "/api/upms/mail/oauth2/code" };
+	public static final String[] DEFAULT_PATH_TO_SKIP = new String[]{TOKEN_REFRESH_ENTRY_POINT,
+		FORM_BASED_LOGIN_ENTRY_POINT, "/api/noauth/**", "/error", "/actuator/**", "/api/upms/mail/oauth2/code"};
 
 	private String baseUrl = TOKEN_BASED_AUTH_ENTRY_POINT;
 

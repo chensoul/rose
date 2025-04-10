@@ -69,12 +69,12 @@ public enum DbTypeEnum {
 	 * SQL Server
 	 */
 	SQL_SERVER(DbType.SQL_SERVER, "Microsoft SQL Server",
-			"CHARINDEX(',' + #{value} + ',', ',' + #{column} + ',') <> 0"),
+		"CHARINDEX(',' + #{value} + ',', ',' + #{column} + ',') <> 0"),
 	/**
 	 * SQL Server 2005
 	 */
 	SQL_SERVER2005(DbType.SQL_SERVER2005, "Microsoft SQL Server 2005",
-			"CHARINDEX(',' + #{value} + ',', ',' + #{column} + ',') <> 0"),
+		"CHARINDEX(',' + #{value} + ',', ',' + #{column} + ',') <> 0"),
 
 	/**
 	 * 达梦
@@ -84,7 +84,8 @@ public enum DbTypeEnum {
 	/**
 	 * 人大金仓
 	 */
-	KINGBASE_ES(DbType.KINGBASE_ES, "KingbaseES", "POSITION('#{value}' IN #{column}) <> 0"),;
+	KINGBASE_ES(DbType.KINGBASE_ES, "KingbaseES", "POSITION('#{value}' IN #{column}) <> 0"),
+	;
 
 	public static final Map<String, DbTypeEnum> MAP_BY_NAME = Arrays.stream(values())
 		.collect(Collectors.toMap(DbTypeEnum::getProductName, Function.identity()));

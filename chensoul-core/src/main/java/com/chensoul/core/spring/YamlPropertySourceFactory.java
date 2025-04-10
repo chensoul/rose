@@ -29,8 +29,7 @@ public class YamlPropertySourceFactory implements PropertySourceFactory {
 			factory.setResources(resource.getResource());
 			factory.afterPropertiesSet();
 			return factory.getObject();
-		}
-		catch (IllegalStateException e) {
+		} catch (IllegalStateException e) {
 			Throwable cause = e.getCause();
 			if (cause instanceof FileNotFoundException) {
 				throw (FileNotFoundException) e.getCause();

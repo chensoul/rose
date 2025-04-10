@@ -46,7 +46,7 @@ public class CurrentInstanceTest {
 
 	@SuppressWarnings("unchecked")
 	private ThreadLocal<Map<Class<?>, CurrentInstance>> getInternalCurrentInstanceVariable()
-			throws SecurityException, NoSuchFieldException, IllegalAccessException {
+		throws SecurityException, NoSuchFieldException, IllegalAccessException {
 		Field f = CurrentInstance.class.getDeclaredField("instances");
 		f.setAccessible(true);
 		return (ThreadLocal<Map<Class<?>, CurrentInstance>>) f.get(null);

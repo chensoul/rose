@@ -2,8 +2,9 @@ package com.chensoul.core.util.tree.parser;
 
 import com.chensoul.core.util.tree.Tree;
 import com.chensoul.core.util.tree.TreeNode;
-import java.util.Map;
 import org.apache.commons.lang3.ObjectUtils;
+
+import java.util.Map;
 
 /**
  * 默认的简单转换器

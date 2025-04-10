@@ -17,7 +17,7 @@ public class RestAuthenticationFailureHandler implements AuthenticationFailureHa
 
 	@Override
 	public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
-			AuthenticationException e) throws IOException, ServletException {
+										AuthenticationException e) throws IOException, ServletException {
 		if (response.isCommitted()) {
 			return;
 		}

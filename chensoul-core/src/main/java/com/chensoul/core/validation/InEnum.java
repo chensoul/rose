@@ -15,10 +15,10 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
  * @author <a href="mailto:ichensoul@gmail.com">chensoul</a>
  * @since 0.0.1
  */
-@Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER, TYPE_USE })
+@Target({METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER, TYPE_USE})
 @Retention(RUNTIME)
 @Documented
-@Constraint(validatedBy = { EnumCheckValidator.class })
+@Constraint(validatedBy = {EnumCheckValidator.class})
 public @interface InEnum {
 
 	String message() default "必须在指定范围 {value}";
@@ -34,7 +34,7 @@ public @interface InEnum {
 	/**
 	 * 同一个元素上指定多个该注解时使用
 	 */
-	@Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER, TYPE_USE })
+	@Target({METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER, TYPE_USE})
 	@Retention(RUNTIME)
 	@Documented
 	public @interface List {

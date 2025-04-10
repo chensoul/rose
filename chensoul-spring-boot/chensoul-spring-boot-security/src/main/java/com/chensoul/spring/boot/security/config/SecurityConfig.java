@@ -41,7 +41,7 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 @AutoConfiguration
 @EnableWebSecurity
 @RequiredArgsConstructor
-@EnableConfigurationProperties({ SecurityProperties.class, MfaProperties.class })
+@EnableConfigurationProperties({SecurityProperties.class, MfaProperties.class})
 @Import(SecurityConfig.TokenFactoryConfig.class)
 @Order(org.springframework.boot.autoconfigure.security.SecurityProperties.BASIC_AUTH_ORDER)
 public class SecurityConfig {
@@ -60,7 +60,7 @@ public class SecurityConfig {
 		auth.authenticationEventPublisher(eventPublisher);
 
 		auth.authenticationProvider(
-				new RestLoginAuthenticationProvider(userDetailsService, passwordEncoder(), mfaProperties));
+			new RestLoginAuthenticationProvider(userDetailsService, passwordEncoder(), mfaProperties));
 		auth.authenticationProvider(new RestAccessAuthenticationProvider(tokenFactory));
 		auth.authenticationProvider(new RestRefreshAuthenticationProvider(userDetailsService, tokenFactory));
 		return auth.build();

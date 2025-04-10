@@ -41,24 +41,24 @@ public class ExcelHelper {
 	}
 
 	public static void writeExcel(HttpServletResponse response, String filename, Class head, Collection data,
-			MergeByPrimaryKeyStrategy mergeByPrimaryKeyStrategy) {
+								  MergeByPrimaryKeyStrategy mergeByPrimaryKeyStrategy) {
 		writeExcel(response, filename, head, data, (SheetWriteHandler) null, mergeByPrimaryKeyStrategy);
 	}
 
 	public static void writeExcel(HttpServletResponse response, String filename, Class head, Collection data,
-			Map<Integer, List<String>> explicitListConstraintMap, MergeByPrimaryKeyStrategy mergeByPrimaryKeyStrategy) {
+								  Map<Integer, List<String>> explicitListConstraintMap, MergeByPrimaryKeyStrategy mergeByPrimaryKeyStrategy) {
 		CustomSheetWriteHandler customSheetWriteHandler = new CustomSheetWriteHandler(explicitListConstraintMap,
-				data.size());
+			data.size());
 		writeExcel(response, filename, head, data, customSheetWriteHandler, mergeByPrimaryKeyStrategy);
 	}
 
 	public static void writeExcel(HttpServletResponse response, String filename, Class head, Collection data,
-			Map<Integer, List<String>> explicitListConstraintMap) {
+								  Map<Integer, List<String>> explicitListConstraintMap) {
 		writeExcel(response, filename, head, data, explicitListConstraintMap, null);
 	}
 
 	public static void writeExcel(HttpServletResponse response, String filename, Class head, Collection data,
-			SheetWriteHandler sheetWriteHandler, MergeByPrimaryKeyStrategy mergeByPrimaryKeyStrategy) {
+								  SheetWriteHandler sheetWriteHandler, MergeByPrimaryKeyStrategy mergeByPrimaryKeyStrategy) {
 		try {
 			response.setContentType("application/vnd.ms-excel");
 			response.setCharacterEncoding("utf-8");
@@ -85,8 +85,7 @@ public class ExcelHelper {
 			excelWriterBuilder.registerWriteHandler(customHorizontalCellStyleStrategy());
 
 			excelWriterBuilder.autoCloseStream(Boolean.FALSE).sheet(filename).doWrite(data);
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			throw new RuntimeException("导出文件失败", e);
 		}
 	}
@@ -96,17 +95,17 @@ public class ExcelHelper {
 	}
 
 	public static File writeExcelToFile(String fileName, String sheetName, Class<?> clazz, Collection<?> data,
-			MergeByPrimaryKeyStrategy mergeByPrimaryKeyStrategy) {
+										MergeByPrimaryKeyStrategy mergeByPrimaryKeyStrategy) {
 		return writeExcelToFile(fileName, sheetName, clazz, data, null, mergeByPrimaryKeyStrategy);
 	}
 
 	public static File writeExcelToFile(String fileName, String sheetName, Class<?> clazz, Collection<?> data,
-			Map<Integer, List<String>> explicitListConstraintMap) {
+										Map<Integer, List<String>> explicitListConstraintMap) {
 		return writeExcelToFile(fileName, sheetName, clazz, data, explicitListConstraintMap, null);
 	}
 
 	public static File writeExcelToFile(String fileName, String sheetName, Class<?> clazz, Collection<?> data,
-			Map<Integer, List<String>> explicitListConstraintMap, MergeByPrimaryKeyStrategy mergeByPrimaryKeyStrategy) {
+										Map<Integer, List<String>> explicitListConstraintMap, MergeByPrimaryKeyStrategy mergeByPrimaryKeyStrategy) {
 		if (CollectionUtils.isEmpty(data)) {
 			return null;
 		}
@@ -142,8 +141,7 @@ public class ExcelHelper {
 			excelWriterBuilder.registerWriteHandler(customHorizontalCellStyleStrategy());
 
 			excelWriterBuilder.autoCloseStream(Boolean.FALSE).sheet(sheetName).doWrite(data);
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			throw new RuntimeException("导出文件失败", e);
 		}
 		return tempFile;
@@ -171,7 +169,7 @@ public class ExcelHelper {
 
 	@SneakyThrows
 	public static File importAndSaveFail(InputStream inputStream, String filename, String sheetName, Class<?> clazz,
-			ReadValidateListener readValidateListener) {
+										 ReadValidateListener readValidateListener) {
 		EasyExcel.read(inputStream, clazz, readValidateListener).sheet().doRead();
 
 		return writeExcelToFile(filename, sheetName, clazz, readValidateListener.getFailData());
@@ -179,16 +177,16 @@ public class ExcelHelper {
 
 	@SneakyThrows
 	public static File mergeImportAndSaveFail(InputStream inputStream, String filename, String sheetName,
-			Integer headRowNumber, Class<?> clazz, ReadMergeValidateListener readValidateListener,
-			MergeByPrimaryKeyStrategy mergeByPrimaryKeyStrategy) {
+											  Integer headRowNumber, Class<?> clazz, ReadMergeValidateListener readValidateListener,
+											  MergeByPrimaryKeyStrategy mergeByPrimaryKeyStrategy) {
 		return mergeImportAndSaveFail(inputStream, sheetName, filename, 0, headRowNumber, clazz, readValidateListener,
-				mergeByPrimaryKeyStrategy);
+			mergeByPrimaryKeyStrategy);
 	}
 
 	@SneakyThrows
 	public static File mergeImportAndSaveFail(InputStream inputStream, String filename, String sheetName,
-			Integer sheetNo, Integer headRowNumber, Class<?> clazz, ReadMergeValidateListener readValidateListener,
-			MergeByPrimaryKeyStrategy mergeByPrimaryKeyStrategy) {
+											  Integer sheetNo, Integer headRowNumber, Class<?> clazz, ReadMergeValidateListener readValidateListener,
+											  MergeByPrimaryKeyStrategy mergeByPrimaryKeyStrategy) {
 		EasyExcel.read(inputStream, clazz, readValidateListener)
 			.extraRead(CellExtraTypeEnum.MERGE)
 			.sheet(sheetNo)
@@ -196,7 +194,7 @@ public class ExcelHelper {
 			.doRead();
 
 		return writeExcelToFile(filename, sheetName, clazz, readValidateListener.getFailData(),
-				mergeByPrimaryKeyStrategy);
+			mergeByPrimaryKeyStrategy);
 	}
 
 }

@@ -47,7 +47,7 @@ public class NetUtils {
 		 */
 		InetAddress localAddress = null;
 		final LinkedHashSet<InetAddress> localAddressList = localAddressList(address -> address.isSiteLocalAddress()
-				&& !address.isLoopbackAddress() && !address.getHostAddress().contains(":"));
+			&& !address.isLoopbackAddress() && !address.getHostAddress().contains(":"));
 
 		if (localAddressList != null && localAddressList.size() > 0) {
 			localAddress = localAddressList.iterator().next();
@@ -55,8 +55,7 @@ public class NetUtils {
 		if (localAddress == null) {
 			try {
 				localAddress = InetAddress.getLocalHost();
-			}
-			catch (UnknownHostException e) {
+			} catch (UnknownHostException e) {
 				// ignore
 			}
 		}
@@ -124,6 +123,7 @@ public class NetUtils {
 
 	/**
 	 * 将IPv4地址转换成字节
+	 *
 	 * @param text IPv4地址
 	 * @return byte 字节
 	 */
@@ -183,8 +183,7 @@ public class NetUtils {
 				default:
 					return null;
 			}
-		}
-		catch (NumberFormatException e) {
+		} catch (NumberFormatException e) {
 			return null;
 		}
 		return bytes;
@@ -199,13 +198,11 @@ public class NetUtils {
 
 			if (hostname == null || hostname.equalsIgnoreCase(LOCAL_HOST)) {
 				netAddress = InetAddress.getLocalHost();
-			}
-			else {
+			} else {
 				netAddress = Inet4Address.getByName(hostname);
 			}
 			return netAddress.getHostAddress();
-		}
-		catch (final UnknownHostException ignore) {
+		} catch (final UnknownHostException ignore) {
 			return null;
 		}
 	}
@@ -243,6 +240,7 @@ public class NetUtils {
 
 	/**
 	 * Checks given string against IP address v4 format.
+	 *
 	 * @param input an ip address - may be null
 	 * @return <tt>true</tt> if param has a valid ip v4 format <tt>false</tt> otherwise
 	 * @see <a href="https://en.wikipedia.org/wiki/IP_address#IPv4_addresses">ip address
@@ -255,6 +253,7 @@ public class NetUtils {
 
 	/**
 	 * 获取所有满足过滤条件的本地IP地址对象
+	 *
 	 * @param addressFilter 过滤器，null表示不过滤，获取所有地址
 	 * @return 过滤后的地址对象列表
 	 * @since 4.5.17
@@ -263,8 +262,7 @@ public class NetUtils {
 		Enumeration<NetworkInterface> networkInterfaces;
 		try {
 			networkInterfaces = NetworkInterface.getNetworkInterfaces();
-		}
-		catch (SocketException e) {
+		} catch (SocketException e) {
 			throw new RuntimeException(e);
 		}
 
@@ -293,6 +291,7 @@ public class NetUtils {
 	 * 此方法不会抛出异常，获取失败将返回<code>null</code><br>
 	 * <p>
 	 * 参考：http://stackoverflow.com/questions/9481865/getting-the-ip-address-of-the-current-machine-using-java
+	 *
 	 * @return 本机网卡IP地址，获取失败返回<code>null</code>
 	 * @since 3.0.7
 	 */
@@ -310,6 +309,7 @@ public class NetUtils {
 
 	/**
 	 * 获得本机MAC地址
+	 *
 	 * @return 本机MAC地址
 	 */
 	public static String getLocalMacAddress() {
@@ -318,6 +318,7 @@ public class NetUtils {
 
 	/**
 	 * 获得指定地址信息中的MAC地址，使用分隔符“-”
+	 *
 	 * @param inetAddress {@link InetAddress}
 	 * @return MAC地址，用-分隔
 	 */
@@ -327,8 +328,9 @@ public class NetUtils {
 
 	/**
 	 * 获得指定地址信息中的MAC地址
+	 *
 	 * @param inetAddress {@link InetAddress}
-	 * @param separator 分隔符，推荐使用“-”或者“:”
+	 * @param separator   分隔符，推荐使用“-”或者“:”
 	 * @return MAC地址，用-分隔
 	 */
 	public static String getMacAddress(InetAddress inetAddress, String separator) {
@@ -342,8 +344,7 @@ public class NetUtils {
 			if (null != networkInterface) {
 				mac = networkInterface.getHardwareAddress();
 			}
-		}
-		catch (SocketException e) {
+		} catch (SocketException e) {
 			throw new RuntimeException("获取MAC地址失败", e);
 		}
 		if (null != mac) {

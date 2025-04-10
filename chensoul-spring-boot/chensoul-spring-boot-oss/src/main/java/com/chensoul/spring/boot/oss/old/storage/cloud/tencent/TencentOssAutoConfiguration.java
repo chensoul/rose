@@ -19,6 +19,8 @@
 
 package com.chensoul.spring.boot.oss.old.storage.cloud.tencent;
 
+import com.chensoul.spring.boot.oss.old.storage.TencentOssOperation;
+import com.chensoul.spring.boot.oss.old.storage.properties.TencentOssProperties;
 import com.qcloud.cos.COSClient;
 import com.qcloud.cos.ClientConfig;
 import com.qcloud.cos.auth.BasicCOSCredentials;
@@ -32,9 +34,6 @@ import org.springframework.context.annotation.Configuration;
 import static com.chensoul.spring.boot.oss.old.storage.OssOperation.OSS_CONFIG_PREFIX_TENCENT;
 import static com.chensoul.spring.boot.oss.old.storage.OssOperation.TENCENT_OSS_OPERATION;
 
-import com.chensoul.spring.boot.oss.old.storage.TencentOssOperation;
-import com.chensoul.spring.boot.oss.old.storage.properties.TencentOssProperties;
-
 /**
  * OSS自动配置
  *
@@ -42,7 +41,7 @@ import com.chensoul.spring.boot.oss.old.storage.properties.TencentOssProperties;
  * @since 2018-09-18 12:24
  **/
 @Configuration
-@EnableConfigurationProperties({ TencentOssProperties.class })
+@EnableConfigurationProperties({TencentOssProperties.class})
 @ConditionalOnProperty(prefix = OSS_CONFIG_PREFIX_TENCENT, name = "enabled", havingValue = "true")
 public class TencentOssAutoConfiguration {
 

@@ -46,7 +46,7 @@ public class IntegerListTypeHandler implements TypeHandler<List<Integer>> {
 
 	@Override
 	public void setParameter(PreparedStatement ps, int i, List<Integer> strings, JdbcType jdbcType)
-			throws SQLException {
+		throws SQLException {
 		ps.setString(i, strings.stream().map(String::valueOf).collect(Collectors.joining(StringPool.COMMA)));
 	}
 

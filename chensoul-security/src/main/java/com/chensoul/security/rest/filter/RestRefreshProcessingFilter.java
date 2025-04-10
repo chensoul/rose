@@ -29,7 +29,7 @@ public class RestRefreshProcessingFilter extends AbstractAuthenticationProcessin
 	private final AuthenticationFailureHandler failureHandler;
 
 	public RestRefreshProcessingFilter(String defaultProcessUrl, AuthenticationSuccessHandler successHandler,
-			AuthenticationFailureHandler failureHandler) {
+									   AuthenticationFailureHandler failureHandler) {
 		super(defaultProcessUrl);
 		this.successHandler = successHandler;
 		this.failureHandler = failureHandler;
@@ -37,7 +37,7 @@ public class RestRefreshProcessingFilter extends AbstractAuthenticationProcessin
 
 	@Override
 	public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
-			throws AuthenticationException {
+		throws AuthenticationException {
 		if (!HttpMethod.POST.name().equals(request.getMethod())) {
 			if (log.isDebugEnabled()) {
 				log.debug("Authentication method not supported. Request method: " + request.getMethod());
@@ -48,8 +48,7 @@ public class RestRefreshProcessingFilter extends AbstractAuthenticationProcessin
 		RefreshTokenRequest refreshTokenRequest;
 		try {
 			refreshTokenRequest = JacksonUtils.readValue(request.getReader(), RefreshTokenRequest.class);
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			throw new AuthenticationServiceException("Invalid refresh token request payload");
 		}
 
@@ -57,7 +56,7 @@ public class RestRefreshProcessingFilter extends AbstractAuthenticationProcessin
 			throw new AuthenticationServiceException("Refresh token is not provided");
 		}
 		RestRefreshAuthenticationToken authenticationToken = new RestRefreshAuthenticationToken(
-				refreshTokenRequest.getRefreshToken());
+			refreshTokenRequest.getRefreshToken());
 		authenticationToken.setDetails(authenticationDetailsSource.buildDetails(request));
 
 		return this.getAuthenticationManager().authenticate(authenticationToken);
@@ -65,13 +64,13 @@ public class RestRefreshProcessingFilter extends AbstractAuthenticationProcessin
 
 	@Override
 	protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
-			Authentication authResult) throws IOException, ServletException {
+											Authentication authResult) throws IOException, ServletException {
 		successHandler.onAuthenticationSuccess(request, response, authResult);
 	}
 
 	@Override
 	protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response,
-			AuthenticationException failed) throws IOException, ServletException {
+											  AuthenticationException failed) throws IOException, ServletException {
 		failureHandler.onAuthenticationFailure(request, response, failed);
 		SecurityContextHolder.clearContext();
 	}

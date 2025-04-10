@@ -23,7 +23,7 @@ import org.springframework.cache.CacheManager;
 import java.io.Serializable;
 
 public abstract class VersionedCaffeineCache<K extends VersionedCacheKey, V extends Serializable & HasVersion>
-		extends CaffeineTransactionalCache<K, V> implements VersionedCache<K, V> {
+	extends CaffeineTransactionalCache<K, V> implements VersionedCache<K, V> {
 
 	public VersionedCaffeineCache(CacheManager cacheManager, String cacheName) {
 		super(cacheManager, cacheName);
@@ -55,8 +55,7 @@ public abstract class VersionedCaffeineCache<K extends VersionedCacheKey, V exte
 				failAllTransactionsByKey(key);
 				cache.put(key, wrapValue(value, version));
 			}
-		}
-		finally {
+		} finally {
 			lock.unlock();
 		}
 	}
@@ -72,8 +71,7 @@ public abstract class VersionedCaffeineCache<K extends VersionedCacheKey, V exte
 		try {
 			failAllTransactionsByKey(key);
 			cache.evict(key);
-		}
-		finally {
+		} finally {
 			lock.unlock();
 		}
 	}

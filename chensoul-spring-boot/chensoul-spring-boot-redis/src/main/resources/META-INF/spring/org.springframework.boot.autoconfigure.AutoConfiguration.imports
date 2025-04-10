@@ -1,4 +1,3 @@
 com.chensoul.spring.boot.redis.RedisTemplateConfiguration
 com.chensoul.spring.boot.redis.RedisCacheAutoConfiguration
 com.chensoul.spring.boot.redis.RedisCacheManagerConfiguration
-com.chensoul.spring.boot.redis.RedisSecondCacheConfiguration

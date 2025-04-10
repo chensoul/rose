@@ -50,8 +50,7 @@ public class FieldSetPropertyHelper {
 
 		if (clazz.isAssignableFrom(HashMap.class)) {
 			excludeClazzSet.add(clazz);
-		}
-		else {
+		} else {
 			List<FieldSetProperty> finalFieldSetPropertyList = new ArrayList<>();
 
 			for (Field field : FieldUtils.getAllFields(clazz)) {
@@ -76,8 +75,7 @@ public class FieldSetPropertyHelper {
 
 			if (fieldSetPropertyList.isEmpty()) {
 				excludeClazzSet.add(clazz);
-			}
-			else {
+			} else {
 				clazzMap.put(clazz, fieldSetPropertyList);
 			}
 		}
@@ -86,7 +84,7 @@ public class FieldSetPropertyHelper {
 	}
 
 	public static boolean foreachValue(Configuration configuration, Object value,
-			BiConsumer<MetaObject, FieldSetProperty> consumer) {
+									   BiConsumer<MetaObject, FieldSetProperty> consumer) {
 		if (value == null) {
 			return Boolean.FALSE;
 		}
@@ -96,8 +94,7 @@ public class FieldSetPropertyHelper {
 			fieldSetPropertyList.parallelStream()
 				.forEach(fieldSetProperty -> consumer.accept(metaObject, fieldSetProperty));
 			return Boolean.TRUE;
-		}
-		else {
+		} else {
 			return Boolean.FALSE;
 		}
 	}

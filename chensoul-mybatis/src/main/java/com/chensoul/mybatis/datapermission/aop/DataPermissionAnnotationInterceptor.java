@@ -60,8 +60,7 @@ public class DataPermissionAnnotationInterceptor implements MethodInterceptor {
 		try {
 			// 执行逻辑
 			return methodInvocation.proceed();
-		}
-		finally {
+		} finally {
 			// 出栈
 			if (dataPermission != null) {
 				DataPermissionContextHolder.remove();

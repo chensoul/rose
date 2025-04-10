@@ -15,13 +15,14 @@ public class DefaultMetaObjectHandler implements MetaObjectHandler {
 
 	/**
 	 * 填充值，先判断是否有手动设置，优先手动设置的值，例如：job必须手动设置
-	 * @param fieldName 属性名
-	 * @param fieldVal 属性值
+	 *
+	 * @param fieldName  属性名
+	 * @param fieldVal   属性值
 	 * @param metaObject MetaObject
-	 * @param isCover 是否覆盖原有值,避免更新操作手动入参
+	 * @param isCover    是否覆盖原有值,避免更新操作手动入参
 	 */
 	protected static void fillValIfNullByName(String fieldName, Object fieldVal, MetaObject metaObject,
-			boolean isCover) {
+											  boolean isCover) {
 		// 1. 没有 set 方法
 		if (!metaObject.hasSetter(fieldName)) {
 			return;

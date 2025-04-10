@@ -25,18 +25,6 @@ import com.aliyun.oss.model.GetObjectRequest;
 import com.aliyun.oss.model.OSSObject;
 import com.aliyun.oss.model.PutObjectRequest;
 import com.aliyun.oss.model.PutObjectResult;
-
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Path;
-import java.util.List;
-
-import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.DisposableBean;
 import com.chensoul.spring.boot.oss.old.storage.domain.DownloadResponse;
 import com.chensoul.spring.boot.oss.old.storage.domain.StorageItem;
 import com.chensoul.spring.boot.oss.old.storage.domain.StorageRequest;
@@ -44,6 +32,17 @@ import com.chensoul.spring.boot.oss.old.storage.domain.StorageResponse;
 import com.chensoul.spring.boot.oss.old.storage.exception.StorageException;
 import com.chensoul.spring.boot.oss.old.storage.properties.AliYunOssProperties;
 import com.chensoul.spring.boot.oss.old.storage.properties.BaseOssProperties;
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.DisposableBean;
+
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Path;
+import java.util.List;
 
 /**
  * @author Levin
@@ -94,8 +93,7 @@ public class AliYunOssOperation implements OssOperation, DisposableBean {
 		boolean keyExists = true;
 		try {
 			ossClient.getObjectMetadata(bucketName, oldName);
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			keyExists = false;
 		}
 		if (keyExists) {
@@ -113,8 +111,7 @@ public class AliYunOssOperation implements OssOperation, DisposableBean {
 		try {
 			byte[] bytes = new byte[content.available()];
 			return upload(properties.getBucket(), fileName, bytes);
-		}
-		catch (IOException ex) {
+		} catch (IOException ex) {
 			log.error("[异常信息]", ex);
 			throw uploadError(BaseOssProperties.StorageType.ALIYUN, ex);
 		}
@@ -122,9 +119,10 @@ public class AliYunOssOperation implements OssOperation, DisposableBean {
 
 	/**
 	 * 上传文件到指定的 bucket
+	 *
 	 * @param bucketName 存储桶名称
-	 * @param fileName 文件名字
-	 * @param content 文件内容
+	 * @param fileName   文件名字
+	 * @param content    文件内容
 	 */
 
 	@Override
@@ -142,8 +140,7 @@ public class AliYunOssOperation implements OssOperation, DisposableBean {
 				.size(response.getContentLength())
 				.fullUrl(response.getUri())
 				.build();
-		}
-		catch (Exception ex) {
+		} catch (Exception ex) {
 			ossClient.putObject(bucketName, fileName, bis);
 			log.error("[异常信息]", ex);
 			throw uploadError(BaseOssProperties.StorageType.ALIYUN, ex);
@@ -163,8 +160,7 @@ public class AliYunOssOperation implements OssOperation, DisposableBean {
 				.targetName(fileName)
 				.fullUrl(properties.getMappingPath() + fileName)
 				.build();
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			log.error("[文件上传失败]", e);
 			throw new StorageException(BaseOssProperties.StorageType.ALIYUN, "文件上传失败," + e.getLocalizedMessage());
 		}
