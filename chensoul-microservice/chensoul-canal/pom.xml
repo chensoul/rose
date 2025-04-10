@@ -31,7 +31,6 @@
             <artifactId>canal.protocol</artifactId>
             <version>1.1.8</version>
         </dependency>
-
     </dependencies>
 
     <build>

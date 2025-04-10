@@ -2,7 +2,6 @@
 
 ## TODO
 
-- [ ] 升级 nacos 版本到 2.5.1
 - [ ] 使用 Redis + Lua 基于令牌桶实现限流
 - [ ] 通过分布式事务 Seata 保证告警、整改和任务的状态一致性
 - [ ] 使用 Spring Security OAuth2 实现用户认证和授权
@@ -22,6 +21,7 @@
 | Spring Boot Admin    | 2.7.16     | <img src="https://img.shields.io/maven-metadata/v?label=&color=blue&versionPrefix=2&metadataUrl=https://repo1.maven.org/maven2/de/codecentric/spring-boot-admin-dependencies/maven-metadata.xml">                            |       |
 | MyBatis Plus	        | 3.5.11     | <img src="https://img.shields.io/maven-metadata/v?label=&color=blue&versionPrefix=3&metadataUrl=https://repo1.maven.org/maven2/com/baomidou/mybatis-plus-bom/maven-metadata.xml">                                            |       |
 | SpringDoc OpenAPI    | 1.8.0      | <img src="https://img.shields.io/maven-metadata/v?label=&color=blue&versionPrefix=1&metadataUrl=https://repo1.maven.org/maven2/org/springdoc/springdoc-openapi/maven-metadata.xml">                                          
+| Nacos                | 2.5.1      | <img src="https://img.shields.io/maven-metadata/v?label=&color=blue&versionPrefix=2&metadataUrl=https://repo1.maven.org/maven2/com/alibaba/nacos/nacos-all/maven-metadata.xml">                                              
 
 ## Integrations
 

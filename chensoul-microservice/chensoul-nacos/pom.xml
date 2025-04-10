@@ -24,32 +24,32 @@
     <artifactId>chensoul-nacos</artifactId>
 
     <properties>
-        <nacos.version>2.2.4-x86</nacos.version>
+        <nacos.version>2.5.1-cs</nacos.version>
     </properties>
 
     <dependencies>
         <dependency>
-            <groupId>io.springboot.nacos</groupId>
+            <groupId>com.alibaba.nacos</groupId>
             <artifactId>nacos-config</artifactId>
             <version>${nacos.version}</version>
         </dependency>
         <dependency>
-            <groupId>io.springboot.nacos</groupId>
+            <groupId>com.alibaba.nacos</groupId>
             <artifactId>nacos-naming</artifactId>
             <version>${nacos.version}</version>
         </dependency>
         <dependency>
-            <groupId>io.springboot.nacos</groupId>
+            <groupId>com.alibaba.nacos</groupId>
             <artifactId>nacos-istio</artifactId>
             <version>${nacos.version}</version>
         </dependency>
         <dependency>
-            <groupId>io.springboot.nacos</groupId>
-            <artifactId>nacos-plugin-default-impl</artifactId>
+            <groupId>com.alibaba.nacos</groupId>
+            <artifactId>nacos-default-plugin-all</artifactId>
             <version>${nacos.version}</version>
         </dependency>
         <dependency>
-            <groupId>io.springboot.nacos</groupId>
+            <groupId>com.alibaba.nacos</groupId>
             <artifactId>nacos-prometheus</artifactId>
             <version>${nacos.version}</version>
         </dependency>
