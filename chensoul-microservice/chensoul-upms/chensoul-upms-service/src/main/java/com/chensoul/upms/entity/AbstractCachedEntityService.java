@@ -1,11 +1,10 @@
 package com.chensoul.upms.entity;
 
 import com.chensoul.spring.boot.redis.cache.TransactionalCache;
+import java.io.Serializable;
 import lombok.Getter;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.transaction.support.TransactionSynchronizationManager;
-
-import java.io.Serializable;
 
 @Getter
 public abstract class AbstractCachedEntityService<K extends Serializable, V extends Serializable, E>
