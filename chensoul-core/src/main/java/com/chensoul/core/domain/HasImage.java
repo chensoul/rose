@@ -5,8 +5,7 @@ package com.chensoul.core.domain;
  */
 public interface HasImage extends HasName {
 
-	String getImage();
+    String getImage();
 
-	void setImage(String image);
-
+    void setImage(String image);
 }

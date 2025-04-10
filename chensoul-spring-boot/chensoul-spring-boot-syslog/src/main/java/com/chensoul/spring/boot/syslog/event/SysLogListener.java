@@ -14,17 +14,16 @@ import org.springframework.scheduling.annotation.Async;
 @RequiredArgsConstructor
 public class SysLogListener {
 
-	private final CheckedConsumer<SysLogInfo> consumer;
+    private final CheckedConsumer<SysLogInfo> consumer;
 
-	@Async
-	@Order
-	@EventListener(SysLogEvent.class)
-	public void saveLog(SysLogEvent sysLogEvent) {
-		try {
-			consumer.accept(sysLogEvent.getSource());
-		} catch (Throwable e) {
-			log.error("保存日志失败", e);
-		}
-	}
-
+    @Async
+    @Order
+    @EventListener(SysLogEvent.class)
+    public void saveLog(SysLogEvent sysLogEvent) {
+        try {
+            consumer.accept(sysLogEvent.getSource());
+        } catch (Throwable e) {
+            log.error("保存日志失败", e);
+        }
+    }
 }

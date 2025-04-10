@@ -11,12 +11,13 @@ import lombok.Getter;
 @AllArgsConstructor
 @Getter
 public enum AreaTypeEnum {
+    COUNTRY(1, "国家"),
+    PROVINCE(2, "省份"),
+    CITY(3, "城市"),
+    DISTRICT(4, "地区"), // 县、镇、区等
+    ;
 
-	COUNTRY(1, "国家"), PROVINCE(2, "省份"), CITY(3, "城市"), DISTRICT(4, "地区"), // 县、镇、区等
-	;
+    private final int code;
 
-	private final int code;
-
-	private final String message;
-
+    private final String message;
 }

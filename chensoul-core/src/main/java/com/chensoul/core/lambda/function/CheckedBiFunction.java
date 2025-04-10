@@ -17,7 +17,6 @@ package com.chensoul.core.lambda.function;
 
 import com.chensoul.core.lambda.Sneaky;
 import com.chensoul.core.lambda.Unchecked;
-
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
 
@@ -27,34 +26,33 @@ import java.util.function.Consumer;
 @FunctionalInterface
 public interface CheckedBiFunction<T, U, R> {
 
-	/**
-	 * @see {@link Sneaky#biFunction(CheckedBiFunction)}
-	 */
-	static <T, U, R> BiFunction<T, U, R> sneaky(CheckedBiFunction<T, U, R> function) {
-		return Sneaky.biFunction(function);
-	}
+    /**
+     * @see {@link Sneaky#biFunction(CheckedBiFunction)}
+     */
+    static <T, U, R> BiFunction<T, U, R> sneaky(CheckedBiFunction<T, U, R> function) {
+        return Sneaky.biFunction(function);
+    }
 
-	/**
-	 * @see {@link Unchecked#biFunction(CheckedBiFunction)}
-	 */
-	static <T, U, R> BiFunction<T, U, R> unchecked(CheckedBiFunction<T, U, R> function) {
-		return Unchecked.biFunction(function);
-	}
+    /**
+     * @see {@link Unchecked#biFunction(CheckedBiFunction)}
+     */
+    static <T, U, R> BiFunction<T, U, R> unchecked(CheckedBiFunction<T, U, R> function) {
+        return Unchecked.biFunction(function);
+    }
 
-	/**
-	 * @see {@link Unchecked#biFunction(CheckedBiFunction, Consumer)}
-	 */
-	static <T, U, R> BiFunction<T, U, R> unchecked(CheckedBiFunction<T, U, R> function, Consumer<Throwable> handler) {
-		return Unchecked.biFunction(function, handler);
-	}
+    /**
+     * @see {@link Unchecked#biFunction(CheckedBiFunction, Consumer)}
+     */
+    static <T, U, R> BiFunction<T, U, R> unchecked(CheckedBiFunction<T, U, R> function, Consumer<Throwable> handler) {
+        return Unchecked.biFunction(function, handler);
+    }
 
-	/**
-	 * Applies this function to the given arguments.
-	 *
-	 * @param t the first function argument
-	 * @param u the second function argument
-	 * @return the function result
-	 */
-	R apply(T t, U u) throws Throwable;
-
+    /**
+     * Applies this function to the given arguments.
+     *
+     * @param t the first function argument
+     * @param u the second function argument
+     * @return the function result
+     */
+    R apply(T t, U u) throws Throwable;
 }

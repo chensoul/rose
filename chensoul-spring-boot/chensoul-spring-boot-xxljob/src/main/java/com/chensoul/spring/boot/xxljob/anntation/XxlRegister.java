@@ -9,18 +9,17 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface XxlRegister {
 
-	String cron();
+    String cron();
 
-	String jobDesc() default "";
+    String jobDesc() default "";
 
-	String author() default "";
+    String author() default "";
 
-	String alarmEmail() default "";
+    String alarmEmail() default "";
 
-	String executorRouteStrategy() default "ROUND";
+    String executorRouteStrategy() default "ROUND";
 
-	boolean autoStart() default false;
+    boolean autoStart() default false;
 
-	String executorParam() default "";
-
+    String executorParam() default "";
 }

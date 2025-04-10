@@ -1,5 +1,8 @@
 package com.chensoul.spring.boot.config;
 
+import static com.chensoul.core.CommonConstants.*;
+import static org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication.Type.SERVLET;
+
 import com.chensoul.core.CommonConstants;
 import com.chensoul.core.jackson.Java8TimeModule;
 import com.chensoul.core.spring.WebUtils;
@@ -25,9 +28,6 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import static com.chensoul.core.CommonConstants.*;
-import static org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication.Type.SERVLET;
-
 @Slf4j
 @Configuration
 @Order(Ordered.HIGHEST_PRECEDENCE)
@@ -36,86 +36,89 @@ import static org.springframework.boot.autoconfigure.condition.ConditionalOnWebA
 @EnableConfigurationProperties({XssProperties.class})
 public class WebMvcConfiguration implements WebMvcConfigurer {
 
-	private final XssProperties xssProperties;
+    private final XssProperties xssProperties;
 
-	@Value("${server.http.max-response-time-to-log-in-ms:2000}")
-	private int maxResponseTimeToLogInMs;
+    @Value("${server.http.max-response-time-to-log-in-ms:2000}")
+    private int maxResponseTimeToLogInMs;
 
-	@Value("${server.http.max_payload_size:/api/image*/**=52428800;/api/resource/**=52428800;/api/**=16777216}")
-	private String maxPayloadSizeConfig;
+    @Value("${server.http.max_payload_size:/api/image*/**=52428800;/api/resource/**=52428800;/api/**=16777216}")
+    private String maxPayloadSizeConfig;
 
-	/**
-	 * 增加GET请求参数中时间类型转换 {@link Java8TimeModule}
-	 * <ul>
-	 * <li>HH:mm:ss -> LocalTime</li>
-	 * <li>yyyy-MM-dd -> LocalDate</li>
-	 * <li>yyyy-MM-dd HH:mm:ss -> LocalDateTime</li>
-	 * </ul>
-	 *
-	 * @param registry
-	 */
-	@Override
-	public void addFormatters(FormatterRegistry registry) {
-		DateTimeFormatterRegistrar registrar = new DateTimeFormatterRegistrar();
-		registrar.setTimeFormatter(DatePattern.NORM_TIME_FORMATTER);
-		registrar.setDateFormatter(DatePattern.NORM_DATE_FORMATTER);
-		registrar.setDateTimeFormatter(DatePattern.NORM_DATETIME_FORMATTER);
-		registrar.registerFormatters(registry);
-	}
+    /**
+     * 增加GET请求参数中时间类型转换 {@link Java8TimeModule}
+     * <ul>
+     * <li>HH:mm:ss -> LocalTime</li>
+     * <li>yyyy-MM-dd -> LocalDate</li>
+     * <li>yyyy-MM-dd HH:mm:ss -> LocalDateTime</li>
+     * </ul>
+     *
+     * @param registry
+     */
+    @Override
+    public void addFormatters(FormatterRegistry registry) {
+        DateTimeFormatterRegistrar registrar = new DateTimeFormatterRegistrar();
+        registrar.setTimeFormatter(DatePattern.NORM_TIME_FORMATTER);
+        registrar.setDateFormatter(DatePattern.NORM_DATE_FORMATTER);
+        registrar.setDateTimeFormatter(DatePattern.NORM_DATETIME_FORMATTER);
+        registrar.registerFormatters(registry);
+    }
 
-	/**
-	 * 系统国际化文件配置
-	 *
-	 * @return MessageSource
-	 */
-	@Bean
-	public MessageSource messageSource() {
-		ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
-		messageSource.setBasename("classpath:i18n/messages");
-		return messageSource;
-	}
+    /**
+     * 系统国际化文件配置
+     *
+     * @return MessageSource
+     */
+    @Bean
+    public MessageSource messageSource() {
+        ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
+        messageSource.setBasename("classpath:i18n/messages");
+        return messageSource;
+    }
 
-	@Override
-	public void addResourceHandlers(ResourceHandlerRegistry registry) {
-		registry.addResourceHandler("/static/**").addResourceLocations("classpath:/static/");
-		registry.addResourceHandler("/templates/**").addResourceLocations("classpath:/templates/");
-	}
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/static/**").addResourceLocations("classpath:/static/");
+        registry.addResourceHandler("/templates/**").addResourceLocations("classpath:/templates/");
+    }
 
-	@Override
-	public void addCorsMappings(final CorsRegistry registry) {
-		registry.addMapping("/**").allowedOrigins("**").allowedHeaders("*").allowedMethods("*").maxAge(86400);
-	}
+    @Override
+    public void addCorsMappings(final CorsRegistry registry) {
+        registry.addMapping("/**")
+                .allowedOrigins("**")
+                .allowedHeaders("*")
+                .allowedMethods("*")
+                .maxAge(86400);
+    }
 
-	@Bean
-	public CommonsRequestLoggingFilter commonsRequestLoggingFilter() {
-		final CommonsRequestLoggingFilter filter = new CustomRequestLoggingFilter(maxResponseTimeToLogInMs);
-		filter.setIncludeQueryString(true);
-		filter.setIncludePayload(true);
-		filter.setMaxPayloadLength(1000);
-		filter.setIncludeHeaders(true);
-		filter.setIncludeClientInfo(true);
-		return filter;
-	}
+    @Bean
+    public CommonsRequestLoggingFilter commonsRequestLoggingFilter() {
+        final CommonsRequestLoggingFilter filter = new CustomRequestLoggingFilter(maxResponseTimeToLogInMs);
+        filter.setIncludeQueryString(true);
+        filter.setIncludePayload(true);
+        filter.setMaxPayloadLength(1000);
+        filter.setIncludeHeaders(true);
+        filter.setIncludeClientInfo(true);
+        return filter;
+    }
 
-	@Bean
-	public FilterRegistrationBean<TraceFilter> traceFilter() {
-		return WebUtils.createFilterBean(new TraceFilter(), TRACE_FILTER);
-	}
+    @Bean
+    public FilterRegistrationBean<TraceFilter> traceFilter() {
+        return WebUtils.createFilterBean(new TraceFilter(), TRACE_FILTER);
+    }
 
-	@Bean
-	public FilterRegistrationBean<CachingRequestFilter> cachingRequestFilter() {
-		return WebUtils.createFilterBean(new CachingRequestFilter(), CACHING_REQUEST_FILTER);
-	}
+    @Bean
+    public FilterRegistrationBean<CachingRequestFilter> cachingRequestFilter() {
+        return WebUtils.createFilterBean(new CachingRequestFilter(), CACHING_REQUEST_FILTER);
+    }
 
-	@Bean
-	@ConditionalOnProperty(value = CommonConstants.PROJECT_NAME + ".xss.enabled", havingValue = "true")
-	public FilterRegistrationBean<XssFilter> xxsFilter() {
-		return WebUtils.createFilterBean(new XssFilter(xssProperties.getExcludeUrls()), XSS_FILTER);
-	}
+    @Bean
+    @ConditionalOnProperty(value = CommonConstants.PROJECT_NAME + ".xss.enabled", havingValue = "true")
+    public FilterRegistrationBean<XssFilter> xxsFilter() {
+        return WebUtils.createFilterBean(new XssFilter(xssProperties.getExcludeUrls()), XSS_FILTER);
+    }
 
-	@Bean
-	protected PayloadSizeFilter payloadSizeFilter() {
-		return new PayloadSizeFilter(maxPayloadSizeConfig);
-	}
-
+    @Bean
+    protected PayloadSizeFilter payloadSizeFilter() {
+        return new PayloadSizeFilter(maxPayloadSizeConfig);
+    }
 }

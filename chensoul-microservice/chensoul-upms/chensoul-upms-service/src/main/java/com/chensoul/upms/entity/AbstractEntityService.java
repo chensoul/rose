@@ -8,6 +8,5 @@ import org.springframework.context.ApplicationEventPublisher;
 @RequiredArgsConstructor
 public abstract class AbstractEntityService {
 
-	protected final ApplicationEventPublisher eventPublisher;
-
+    protected final ApplicationEventPublisher eventPublisher;
 }

@@ -5,6 +5,5 @@ package com.chensoul.core.domain;
  */
 public interface HasPhone extends HasName {
 
-	String getPhone();
-
+    String getPhone();
 }

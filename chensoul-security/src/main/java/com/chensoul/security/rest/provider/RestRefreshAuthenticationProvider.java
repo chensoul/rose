@@ -17,31 +17,30 @@ import org.springframework.util.Assert;
 @RequiredArgsConstructor
 public class RestRefreshAuthenticationProvider implements AuthenticationProvider {
 
-	private final UserDetailsService userDetailsService;
+    private final UserDetailsService userDetailsService;
 
-	private final TokenFactory tokenFactory;
+    private final TokenFactory tokenFactory;
 
-	@Override
-	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-		Assert.notNull(authentication, "No authentication data provided");
-		String jwtToken = (String) authentication.getCredentials();
-		SecurityUser unsafeUser = tokenFactory.parseRefreshToken(jwtToken);
-		SecurityUser securityUser = authenticateByUserId(unsafeUser.getUsername());
-		return new RestRefreshAuthenticationToken(securityUser);
-	}
+    @Override
+    public Authentication authenticate(Authentication authentication) throws AuthenticationException {
+        Assert.notNull(authentication, "No authentication data provided");
+        String jwtToken = (String) authentication.getCredentials();
+        SecurityUser unsafeUser = tokenFactory.parseRefreshToken(jwtToken);
+        SecurityUser securityUser = authenticateByUserId(unsafeUser.getUsername());
+        return new RestRefreshAuthenticationToken(securityUser);
+    }
 
-	private SecurityUser authenticateByUserId(String username) {
-		UserDetails user = userDetailsService.loadUserByUsername(username);
-		if (user == null) {
-			throw new UsernameNotFoundException("User not found by refresh token");
-		}
+    private SecurityUser authenticateByUserId(String username) {
+        UserDetails user = userDetailsService.loadUserByUsername(username);
+        if (user == null) {
+            throw new UsernameNotFoundException("User not found by refresh token");
+        }
 
-		return new SecurityUser(user.getUsername(), user.getPassword(), user.getAuthorities());
-	}
+        return new SecurityUser(user.getUsername(), user.getPassword(), user.getAuthorities());
+    }
 
-	@Override
-	public boolean supports(Class<?> authentication) {
-		return (RestRefreshAuthenticationToken.class.isAssignableFrom(authentication));
-	}
-
+    @Override
+    public boolean supports(Class<?> authentication) {
+        return (RestRefreshAuthenticationToken.class.isAssignableFrom(authentication));
+    }
 }

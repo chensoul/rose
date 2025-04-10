@@ -5,6 +5,5 @@ package com.chensoul.upms;
  */
 public interface ServiceNameConstants {
 
-	String SYSTEM_SERVICE = "chensoul-upms-service";
-
+    String SYSTEM_SERVICE = "chensoul-upms-service";
 }

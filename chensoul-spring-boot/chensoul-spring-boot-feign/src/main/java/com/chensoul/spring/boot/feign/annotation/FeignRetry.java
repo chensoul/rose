@@ -12,10 +12,9 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface FeignRetry {
 
-	Backoff backoff() default @Backoff();
+    Backoff backoff() default @Backoff();
 
-	int maxAttempt() default 3;
+    int maxAttempt() default 3;
 
-	Class<? extends Throwable>[] include() default {};
-
+    Class<? extends Throwable>[] include() default {};
 }

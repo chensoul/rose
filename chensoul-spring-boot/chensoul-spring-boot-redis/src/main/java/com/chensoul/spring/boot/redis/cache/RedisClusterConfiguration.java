@@ -29,39 +29,39 @@ import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 @ConditionalOnProperty(prefix = "redis.connection", value = "type", havingValue = "cluster")
 public class RedisClusterConfiguration extends RedisCacheConfiguration {
 
-	@Value("${mq.cluster.nodes:}")
-	private String clusterNodes;
+    @Value("${mq.cluster.nodes:}")
+    private String clusterNodes;
 
-	@Value("${mq.cluster.max-redirects:12}")
-	private Integer maxRedirects;
+    @Value("${mq.cluster.max-redirects:12}")
+    private Integer maxRedirects;
 
-	@Value("${mq.cluster.useDefaultPoolConfig:true}")
-	private boolean useDefaultPoolConfig;
+    @Value("${mq.cluster.useDefaultPoolConfig:true}")
+    private boolean useDefaultPoolConfig;
 
-	@Value("${mq.password:}")
-	private String password;
+    @Value("${mq.password:}")
+    private String password;
 
-	@Value("${mq.ssl.enabled:false}")
-	private boolean useSsl;
+    @Value("${mq.ssl.enabled:false}")
+    private boolean useSsl;
 
-	public JedisConnectionFactory loadFactory() {
-		org.springframework.data.redis.connection.RedisClusterConfiguration clusterConfiguration = new org.springframework.data.redis.connection.RedisClusterConfiguration();
-		clusterConfiguration.setClusterNodes(getNodes(clusterNodes));
-		clusterConfiguration.setMaxRedirects(maxRedirects);
-		clusterConfiguration.setPassword(password);
-		return new JedisConnectionFactory(clusterConfiguration, buildClientConfig());
-	}
+    public JedisConnectionFactory loadFactory() {
+        org.springframework.data.redis.connection.RedisClusterConfiguration clusterConfiguration =
+                new org.springframework.data.redis.connection.RedisClusterConfiguration();
+        clusterConfiguration.setClusterNodes(getNodes(clusterNodes));
+        clusterConfiguration.setMaxRedirects(maxRedirects);
+        clusterConfiguration.setPassword(password);
+        return new JedisConnectionFactory(clusterConfiguration, buildClientConfig());
+    }
 
-	private JedisClientConfiguration buildClientConfig() {
-		JedisClientConfiguration.JedisClientConfigurationBuilder jedisClientConfigurationBuilder = JedisClientConfiguration
-			.builder();
-		if (!useDefaultPoolConfig) {
-			jedisClientConfigurationBuilder.usePooling().poolConfig(buildPoolConfig());
-		}
-		if (useSsl) {
-			jedisClientConfigurationBuilder.useSsl().sslSocketFactory(createSslSocketFactory());
-		}
-		return jedisClientConfigurationBuilder.build();
-	}
-
+    private JedisClientConfiguration buildClientConfig() {
+        JedisClientConfiguration.JedisClientConfigurationBuilder jedisClientConfigurationBuilder =
+                JedisClientConfiguration.builder();
+        if (!useDefaultPoolConfig) {
+            jedisClientConfigurationBuilder.usePooling().poolConfig(buildPoolConfig());
+        }
+        if (useSsl) {
+            jedisClientConfigurationBuilder.useSsl().sslSocketFactory(createSslSocketFactory());
+        }
+        return jedisClientConfigurationBuilder.build();
+    }
 }

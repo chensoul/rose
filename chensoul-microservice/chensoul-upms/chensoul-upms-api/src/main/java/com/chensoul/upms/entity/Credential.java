@@ -11,18 +11,17 @@ import lombok.EqualsAndHashCode;
 @TableName("sys_credential")
 public class Credential extends BaseEntity {
 
-	private static final long serialVersionUID = -2108436378880529163L;
+    private static final long serialVersionUID = -2108436378880529163L;
 
-	private Long userId;
+    private Long userId;
 
-	private boolean enabled;
+    private boolean enabled;
 
-	private String password;
+    private String password;
 
-	private String activateToken;
+    private String activateToken;
 
-	private String resetToken;
+    private String resetToken;
 
-	private JsonNode extra;
-
+    private JsonNode extra;
 }

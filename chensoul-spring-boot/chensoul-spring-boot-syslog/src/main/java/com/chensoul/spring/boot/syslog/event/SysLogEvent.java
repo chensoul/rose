@@ -7,12 +7,11 @@ import org.springframework.context.ApplicationEvent;
  */
 public class SysLogEvent extends ApplicationEvent {
 
-	public SysLogEvent(SysLogInfo sysLogInfo) {
-		super(sysLogInfo);
-	}
+    public SysLogEvent(SysLogInfo sysLogInfo) {
+        super(sysLogInfo);
+    }
 
-	public SysLogInfo getSource() {
-		return (SysLogInfo) super.getSource();
-	}
-
+    public SysLogInfo getSource() {
+        return (SysLogInfo) super.getSource();
+    }
 }

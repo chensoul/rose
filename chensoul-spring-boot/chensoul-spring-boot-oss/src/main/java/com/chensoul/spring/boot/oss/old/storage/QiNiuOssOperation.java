@@ -34,16 +34,15 @@ import com.qiniu.http.Response;
 import com.qiniu.storage.BucketManager;
 import com.qiniu.storage.DownloadUrl;
 import com.qiniu.storage.UploadManager;
-import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-
 import java.io.File;
 import java.io.InputStream;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * @author Levin
@@ -51,196 +50,192 @@ import java.util.Objects;
 @Slf4j
 public class QiNiuOssOperation implements OssOperation {
 
-	private final UploadManager uploadManager;
+    private final UploadManager uploadManager;
 
-	private final BucketManager bucketManager;
+    private final BucketManager bucketManager;
 
-	private final CdnManager cdnManager;
+    private final CdnManager cdnManager;
 
-	private final QiNiuOssProperties properties;
+    private final QiNiuOssProperties properties;
 
-	private final QiNiuConnectionFactory connectionFactory;
+    private final QiNiuConnectionFactory connectionFactory;
 
-	@Autowired
-	public QiNiuOssOperation(QiNiuOssProperties properties, QiNiuConnectionFactory connectionFactory) {
-		this.properties = properties;
-		this.connectionFactory = connectionFactory;
-		this.uploadManager = this.connectionFactory.getUploadManager();
-		this.bucketManager = this.connectionFactory.getBucketManager();
-		this.cdnManager = this.connectionFactory.getCdnManager();
-	}
+    @Autowired
+    public QiNiuOssOperation(QiNiuOssProperties properties, QiNiuConnectionFactory connectionFactory) {
+        this.properties = properties;
+        this.connectionFactory = connectionFactory;
+        this.uploadManager = this.connectionFactory.getUploadManager();
+        this.bucketManager = this.connectionFactory.getBucketManager();
+        this.cdnManager = this.connectionFactory.getCdnManager();
+    }
 
-	@Override
-	public String token(String originName, boolean random) {
-		return token(properties.getBucket(), originName, random);
-	}
+    @Override
+    public String token(String originName, boolean random) {
+        return token(properties.getBucket(), originName, random);
+    }
 
-	@Override
-	public String token(String bucket, String originName, boolean random) {
-		String targetName = null;
-		if (random && StringUtils.isNoneBlank(originName)) {
-			targetName = getTargetName(StorageRequest.builder().originName(originName).build());
-		}
-		return getUploadToken(StringUtils.defaultIfBlank(bucket, properties.getBucket()), targetName);
-	}
+    @Override
+    public String token(String bucket, String originName, boolean random) {
+        String targetName = null;
+        if (random && StringUtils.isNoneBlank(originName)) {
+            targetName = getTargetName(
+                    StorageRequest.builder().originName(originName).build());
+        }
+        return getUploadToken(StringUtils.defaultIfBlank(bucket, properties.getBucket()), targetName);
+    }
 
-	@Override
-	public DownloadResponse download(String fileName) {
-		String domainOfBucket = this.connectionFactory.getDomain(properties.getBucket());
-		final String path = StringUtils.defaultIfBlank(this.properties.getTmpDir(),
-			this.getClass().getResource("/").getPath());
-		final File file = new File(path + File.separator + fileName);
-		log.debug("[文件目录] - [{}]", file.getPath());
-		try {
-			DownloadUrl url = new DownloadUrl(domainOfBucket, true, fileName);
-			String urlString = url.buildURL();
-			log.debug(urlString);
-		} catch (QiniuException e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
+    @Override
+    public DownloadResponse download(String fileName) {
+        String domainOfBucket = this.connectionFactory.getDomain(properties.getBucket());
+        final String path = StringUtils.defaultIfBlank(
+                this.properties.getTmpDir(), this.getClass().getResource("/").getPath());
+        final File file = new File(path + File.separator + fileName);
+        log.debug("[文件目录] - [{}]", file.getPath());
+        try {
+            DownloadUrl url = new DownloadUrl(domainOfBucket, true, fileName);
+            String urlString = url.buildURL();
+            log.debug(urlString);
+        } catch (QiniuException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
-	@Override
-	public DownloadResponse download(String bucketName, String fileName) {
-		return null;
-	}
+    @Override
+    public DownloadResponse download(String bucketName, String fileName) {
+        return null;
+    }
 
-	@Override
-	public void download(String bucketName, String fileName, File file) {
-		String domainOfBucket = this.connectionFactory.getDomain(bucketName);
-		log.debug("[文件目录] - [{}]", file.getPath());
-		// try {
-		// DownloadUrl url = new DownloadUrl(domainOfBucket, true, fileName);
-		//// FileCopyUtils.copy(url.buildURL(), file);
-		// } catch (QiniuException e) {
-		// log.error("七牛云下载失败", e);
-		// throw downloadError(BaseOssProperties.StorageType.QINIU, e);
-		// }
-	}
+    @Override
+    public void download(String bucketName, String fileName, File file) {
+        String domainOfBucket = this.connectionFactory.getDomain(bucketName);
+        log.debug("[文件目录] - [{}]", file.getPath());
+        // try {
+        // DownloadUrl url = new DownloadUrl(domainOfBucket, true, fileName);
+        //// FileCopyUtils.copy(url.buildURL(), file);
+        // } catch (QiniuException e) {
+        // log.error("七牛云下载失败", e);
+        // throw downloadError(BaseOssProperties.StorageType.QINIU, e);
+        // }
+    }
 
-	@Override
-	public void download(String fileName, File file) {
-		download(properties.getBucket(), fileName, file);
-	}
+    @Override
+    public void download(String fileName, File file) {
+        download(properties.getBucket(), fileName, file);
+    }
 
-	@Override
-	public List<StorageItem> list() {
-		return null;
-	}
+    @Override
+    public List<StorageItem> list() {
+        return null;
+    }
 
-	@Override
-	public void rename(String oldName, String newName) {
+    @Override
+    public void rename(String oldName, String newName) {}
 
-	}
+    @Override
+    public void rename(String bucketName, String oldName, String newName) {}
 
-	@Override
-	public void rename(String bucketName, String oldName, String newName) {
+    @Override
+    public StorageResponse upload(String fileName, byte[] content) {
+        return upload(properties.getBucket(), fileName, content);
+    }
 
-	}
+    @Override
+    public StorageResponse upload(String bucketName, String fileName, InputStream content) {
+        try {
+            String upToken = getUploadToken(bucketName, fileName);
+            Response response = uploadManager.put(content, fileName, upToken, null, null);
+            return getStorageResponse(fileName, response);
+        } catch (QiniuException e) {
+            log.error("[文件上传异常]", e);
+            throw uploadError(BaseOssProperties.StorageType.QINIU, e);
+        }
+    }
 
-	@Override
-	public StorageResponse upload(String fileName, byte[] content) {
-		return upload(properties.getBucket(), fileName, content);
-	}
+    @Override
+    public StorageResponse upload(String bucketName, String fileName, byte[] content) {
+        try {
+            String upToken = getUploadToken(bucketName, fileName);
+            Response response = uploadManager.put(content, fileName, upToken);
+            return getStorageResponse(fileName, response);
+        } catch (QiniuException e) {
+            log.error("[文件上传异常]", e);
+            throw uploadError(BaseOssProperties.StorageType.QINIU, e);
+        }
+    }
 
-	@Override
-	public StorageResponse upload(String bucketName, String fileName, InputStream content) {
-		try {
-			String upToken = getUploadToken(bucketName, fileName);
-			Response response = uploadManager.put(content, fileName, upToken, null, null);
-			return getStorageResponse(fileName, response);
-		} catch (QiniuException e) {
-			log.error("[文件上传异常]", e);
-			throw uploadError(BaseOssProperties.StorageType.QINIU, e);
-		}
-	}
+    @Override
+    public StorageResponse upload(StorageRequest request) {
+        if (request.getInputStream() == null && request.getContent() == null) {
+            throw uploadError(BaseOssProperties.StorageType.QINIU, "文件上传失败,InputStream 与 Content 不能全部为空");
+        }
+        try {
+            final String bucket = StringUtils.defaultIfBlank(request.getBucket(), properties.getBucket());
+            final String targetName = getTargetName(request);
+            String upToken = getUploadToken(bucket, targetName);
+            Response response;
+            if (Objects.nonNull(request.getInputStream())) {
+                response = uploadManager.put(request.getInputStream(), targetName, upToken, null, null);
+            } else {
+                response = uploadManager.put(request.getContent(), targetName, upToken);
+            }
+            log.debug("七牛上传响应结果 - {}", response);
+            if (!response.isOK()) {
+                throw uploadError(BaseOssProperties.StorageType.QINIU, response.error);
+            }
+            Map<String, Object> extend = Maps.newLinkedHashMap();
+            extend.put("reqId", response.reqId);
+            return StorageResponse.builder()
+                    .originName(request.getOriginName())
+                    .targetName(targetName)
+                    .size(response.body().length)
+                    .mappingPath(properties.getMappingPath())
+                    .bucket(bucket)
+                    .extend(extend)
+                    .build();
+        } catch (QiniuException e) {
+            log.error("[文件上传异常]", e);
+            throw uploadError(BaseOssProperties.StorageType.QINIU, e);
+        }
+    }
 
-	@Override
-	public StorageResponse upload(String bucketName, String fileName, byte[] content) {
-		try {
-			String upToken = getUploadToken(bucketName, fileName);
-			Response response = uploadManager.put(content, fileName, upToken);
-			return getStorageResponse(fileName, response);
-		} catch (QiniuException e) {
-			log.error("[文件上传异常]", e);
-			throw uploadError(BaseOssProperties.StorageType.QINIU, e);
-		}
-	}
+    private StorageResponse getStorageResponse(String fileName, Response response) throws QiniuException {
+        log.debug("七牛上传响应结果 - {}", response);
+        if (!response.isOK()) {
+            throw uploadError(BaseOssProperties.StorageType.QINIU, response.error);
+        }
+        Map<String, Object> extend = Maps.newLinkedHashMap();
+        extend.put("reqId", response.reqId);
+        return StorageResponse.builder()
+                .originName(fileName)
+                .targetName(fileName)
+                .size(response.body().length)
+                .extend(extend)
+                .fullUrl(properties.getMappingPath() + fileName)
+                .build();
+    }
 
-	@Override
-	public StorageResponse upload(StorageRequest request) {
-		if (request.getInputStream() == null && request.getContent() == null) {
-			throw uploadError(BaseOssProperties.StorageType.QINIU, "文件上传失败,InputStream 与 Content 不能全部为空");
-		}
-		try {
-			final String bucket = StringUtils.defaultIfBlank(request.getBucket(), properties.getBucket());
-			final String targetName = getTargetName(request);
-			String upToken = getUploadToken(bucket, targetName);
-			Response response;
-			if (Objects.nonNull(request.getInputStream())) {
-				response = uploadManager.put(request.getInputStream(), targetName, upToken, null, null);
-			} else {
-				response = uploadManager.put(request.getContent(), targetName, upToken);
-			}
-			log.debug("七牛上传响应结果 - {}", response);
-			if (!response.isOK()) {
-				throw uploadError(BaseOssProperties.StorageType.QINIU, response.error);
-			}
-			Map<String, Object> extend = Maps.newLinkedHashMap();
-			extend.put("reqId", response.reqId);
-			return StorageResponse.builder()
-				.originName(request.getOriginName())
-				.targetName(targetName)
-				.size(response.body().length)
-				.mappingPath(properties.getMappingPath())
-				.bucket(bucket)
-				.extend(extend)
-				.build();
-		} catch (QiniuException e) {
-			log.error("[文件上传异常]", e);
-			throw uploadError(BaseOssProperties.StorageType.QINIU, e);
-		}
-	}
+    @Override
+    public void remove(String fileName) {
+        remove(properties.getBucket(), fileName);
+    }
 
-	private StorageResponse getStorageResponse(String fileName, Response response) throws QiniuException {
-		log.debug("七牛上传响应结果 - {}", response);
-		if (!response.isOK()) {
-			throw uploadError(BaseOssProperties.StorageType.QINIU, response.error);
-		}
-		Map<String, Object> extend = Maps.newLinkedHashMap();
-		extend.put("reqId", response.reqId);
-		return StorageResponse.builder()
-			.originName(fileName)
-			.targetName(fileName)
-			.size(response.body().length)
-			.extend(extend)
-			.fullUrl(properties.getMappingPath() + fileName)
-			.build();
-	}
+    @Override
+    public void remove(String bucketName, String fileName) {
+        try {
+            final Response response = bucketManager.delete(bucketName, fileName);
+            log.debug("文件删除成功 - {}", response);
+        } catch (QiniuException e) {
+            log.error("[文件移除异常]", e);
+        }
+    }
 
-	@Override
-	public void remove(String fileName) {
-		remove(properties.getBucket(), fileName);
-	}
+    @Override
+    public void remove(String bucketName, Path path) {
+        remove(bucketName, path.toString());
+    }
 
-	@Override
-	public void remove(String bucketName, String fileName) {
-		try {
-			final Response response = bucketManager.delete(bucketName, fileName);
-			log.debug("文件删除成功 - {}", response);
-		} catch (QiniuException e) {
-			log.error("[文件移除异常]", e);
-		}
-	}
-
-	@Override
-	public void remove(String bucketName, Path path) {
-		remove(bucketName, path.toString());
-	}
-
-	private String getUploadToken(String bucket, String key) {
-		return this.connectionFactory.getUploadToken(bucket, key, QiNiuScope.DEFAULT);
-	}
-
+    private String getUploadToken(String bucket, String key) {
+        return this.connectionFactory.getUploadToken(bucket, key, QiNiuScope.DEFAULT);
+    }
 }

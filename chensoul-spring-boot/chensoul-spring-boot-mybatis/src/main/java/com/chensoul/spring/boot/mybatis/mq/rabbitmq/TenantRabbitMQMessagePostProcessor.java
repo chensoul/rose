@@ -1,4 +1,3 @@
-
 /*
  *
  *  * | Licensed 未经许可不能去掉「Enjoy-iot」相关版权
@@ -23,14 +22,14 @@
  */
 package com.chensoul.spring.boot.mybatis.mq.rabbitmq;
 
+import static com.chensoul.core.CommonConstants.HEADER_TENANT_ID;
+
 import com.chensoul.mybatis.tenant.util.TenantContextHolder;
 import org.apache.kafka.clients.producer.ProducerInterceptor;
 import org.springframework.amqp.AmqpException;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.core.MessagePostProcessor;
 import org.springframework.messaging.handler.invocation.InvocableHandlerMethod;
-
-import static com.chensoul.core.CommonConstants.HEADER_TENANT_ID;
 
 /**
  * RabbitMQ 消息队列的多租户 {@link ProducerInterceptor} 实现类
@@ -41,13 +40,12 @@ import static com.chensoul.core.CommonConstants.HEADER_TENANT_ID;
  */
 public class TenantRabbitMQMessagePostProcessor implements MessagePostProcessor {
 
-	@Override
-	public Message postProcessMessage(Message message) throws AmqpException {
-		String tenantId = TenantContextHolder.getTenantId();
-		if (tenantId != null) {
-			message.getMessageProperties().getHeaders().put(HEADER_TENANT_ID, tenantId);
-		}
-		return message;
-	}
-
+    @Override
+    public Message postProcessMessage(Message message) throws AmqpException {
+        String tenantId = TenantContextHolder.getTenantId();
+        if (tenantId != null) {
+            message.getMessageProperties().getHeaders().put(HEADER_TENANT_ID, tenantId);
+        }
+        return message;
+    }
 }

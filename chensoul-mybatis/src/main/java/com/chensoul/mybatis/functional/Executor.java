@@ -9,10 +9,9 @@ import java.util.function.Consumer;
  */
 public interface Executor<T> {
 
-	Optional<T> execute();
+    Optional<T> execute();
 
-	Executor<T> onSuccess(Consumer<T> consumer);
+    Executor<T> onSuccess(Consumer<T> consumer);
 
-	Executor<T> onError(Consumer<? super Throwable> consumer);
-
+    Executor<T> onError(Consumer<? super Throwable> consumer);
 }

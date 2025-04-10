@@ -24,24 +24,23 @@ import org.springframework.cache.Cache;
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class SimpleCacheValueWrapper<T> implements CacheValueWrapper<T> {
 
-	private final T value;
+    private final T value;
 
-	public static <T> SimpleCacheValueWrapper<T> empty() {
-		return new SimpleCacheValueWrapper<>(null);
-	}
+    public static <T> SimpleCacheValueWrapper<T> empty() {
+        return new SimpleCacheValueWrapper<>(null);
+    }
 
-	public static <T> SimpleCacheValueWrapper<T> wrap(T value) {
-		return new SimpleCacheValueWrapper<>(value);
-	}
+    public static <T> SimpleCacheValueWrapper<T> wrap(T value) {
+        return new SimpleCacheValueWrapper<>(value);
+    }
 
-	@SuppressWarnings("unchecked")
-	public static <T> SimpleCacheValueWrapper<T> wrap(Cache.ValueWrapper source) {
-		return source == null ? null : new SimpleCacheValueWrapper<>((T) source.get());
-	}
+    @SuppressWarnings("unchecked")
+    public static <T> SimpleCacheValueWrapper<T> wrap(Cache.ValueWrapper source) {
+        return source == null ? null : new SimpleCacheValueWrapper<>((T) source.get());
+    }
 
-	@Override
-	public T get() {
-		return value;
-	}
-
+    @Override
+    public T get() {
+        return value;
+    }
 }

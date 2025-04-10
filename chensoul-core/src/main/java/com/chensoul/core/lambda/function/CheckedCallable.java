@@ -17,7 +17,6 @@ package com.chensoul.core.lambda.function;
 
 import com.chensoul.core.lambda.Sneaky;
 import com.chensoul.core.lambda.Unchecked;
-
 import java.util.concurrent.Callable;
 import java.util.function.Consumer;
 
@@ -29,30 +28,29 @@ import java.util.function.Consumer;
 @FunctionalInterface
 public interface CheckedCallable<T> {
 
-	/**
-	 * @see {@link Sneaky#callable(CheckedCallable)}
-	 */
-	static <T> Callable<T> sneaky(CheckedCallable<T> callable) {
-		return Sneaky.callable(callable);
-	}
+    /**
+     * @see {@link Sneaky#callable(CheckedCallable)}
+     */
+    static <T> Callable<T> sneaky(CheckedCallable<T> callable) {
+        return Sneaky.callable(callable);
+    }
 
-	/**
-	 * @see {@link Unchecked#callable(CheckedCallable)}
-	 */
-	static <T> Callable<T> unchecked(CheckedCallable<T> callable) {
-		return Unchecked.callable(callable);
-	}
+    /**
+     * @see {@link Unchecked#callable(CheckedCallable)}
+     */
+    static <T> Callable<T> unchecked(CheckedCallable<T> callable) {
+        return Unchecked.callable(callable);
+    }
 
-	/**
-	 * @see {@link Unchecked#callable(CheckedCallable, Consumer)}
-	 */
-	static <T> Callable<T> unchecked(CheckedCallable<T> callable, Consumer<Throwable> handler) {
-		return Unchecked.callable(callable, handler);
-	}
+    /**
+     * @see {@link Unchecked#callable(CheckedCallable, Consumer)}
+     */
+    static <T> Callable<T> unchecked(CheckedCallable<T> callable, Consumer<Throwable> handler) {
+        return Unchecked.callable(callable, handler);
+    }
 
-	/**
-	 * Run this callable.
-	 */
-	T call() throws Throwable;
-
+    /**
+     * Run this callable.
+     */
+    T call() throws Throwable;
 }

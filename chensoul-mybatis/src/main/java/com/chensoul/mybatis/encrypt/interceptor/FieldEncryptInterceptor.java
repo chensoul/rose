@@ -17,27 +17,41 @@ import org.apache.ibatis.session.RowBounds;
  * @author <a href="mailto:ichensoul@gmail.com">chensoul</a>
  * @since 0.0.1
  */
-@Intercepts({@Signature(type = Executor.class, method = "update", args = {MappedStatement.class, Object.class}),
-	@Signature(type = Executor.class, method = "query",
-		args = {MappedStatement.class, Object.class, RowBounds.class, ResultHandler.class}),
-	@Signature(type = Executor.class, method = "query",
-		args = {MappedStatement.class, Object.class, RowBounds.class, ResultHandler.class, CacheKey.class,
-			BoundSql.class}),})
+@Intercepts({
+    @Signature(
+            type = Executor.class,
+            method = "update",
+            args = {MappedStatement.class, Object.class}),
+    @Signature(
+            type = Executor.class,
+            method = "query",
+            args = {MappedStatement.class, Object.class, RowBounds.class, ResultHandler.class}),
+    @Signature(
+            type = Executor.class,
+            method = "query",
+            args = {
+                MappedStatement.class,
+                Object.class,
+                RowBounds.class,
+                ResultHandler.class,
+                CacheKey.class,
+                BoundSql.class
+            }),
+})
 @Slf4j
 @Data
 @AllArgsConstructor
 public class FieldEncryptInterceptor implements Interceptor {
 
-	private IEncryptor encryptor;
+    private IEncryptor encryptor;
 
-	private String password;
+    private String password;
 
-	public Object intercept(Invocation invocation) throws Throwable {
-		return InterceptorHelper.encrypt(invocation, encryptor, password);
-	}
+    public Object intercept(Invocation invocation) throws Throwable {
+        return InterceptorHelper.encrypt(invocation, encryptor, password);
+    }
 
-	public Object plugin(Object var1) {
-		return var1 instanceof Executor ? Plugin.wrap(var1, this) : var1;
-	}
-
+    public Object plugin(Object var1) {
+        return var1 instanceof Executor ? Plugin.wrap(var1, this) : var1;
+    }
 }

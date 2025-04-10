@@ -17,7 +17,6 @@ package com.chensoul.core.lambda.function;
 
 import com.chensoul.core.lambda.Sneaky;
 import com.chensoul.core.lambda.Unchecked;
-
 import java.util.function.Consumer;
 import java.util.function.Function;
 
@@ -29,33 +28,32 @@ import java.util.function.Function;
 @FunctionalInterface
 public interface CheckedFunction<T, R> {
 
-	/**
-	 * @see {@link Sneaky#function(CheckedFunction)}
-	 */
-	static <T, R> Function<T, R> sneaky(CheckedFunction<T, R> function) {
-		return Sneaky.function(function);
-	}
+    /**
+     * @see {@link Sneaky#function(CheckedFunction)}
+     */
+    static <T, R> Function<T, R> sneaky(CheckedFunction<T, R> function) {
+        return Sneaky.function(function);
+    }
 
-	/**
-	 * @see {@link Unchecked#function(CheckedFunction)}
-	 */
-	static <T, R> Function<T, R> unchecked(CheckedFunction<T, R> function) {
-		return Unchecked.function(function);
-	}
+    /**
+     * @see {@link Unchecked#function(CheckedFunction)}
+     */
+    static <T, R> Function<T, R> unchecked(CheckedFunction<T, R> function) {
+        return Unchecked.function(function);
+    }
 
-	/**
-	 * @see {@link Unchecked#function(CheckedFunction, Consumer)}
-	 */
-	static <T, R> Function<T, R> unchecked(CheckedFunction<T, R> function, Consumer<Throwable> handler) {
-		return Unchecked.function(function, handler);
-	}
+    /**
+     * @see {@link Unchecked#function(CheckedFunction, Consumer)}
+     */
+    static <T, R> Function<T, R> unchecked(CheckedFunction<T, R> function, Consumer<Throwable> handler) {
+        return Unchecked.function(function, handler);
+    }
 
-	/**
-	 * Applies this function to the given argument.
-	 *
-	 * @param t the function argument
-	 * @return the function result
-	 */
-	R apply(T t) throws Throwable;
-
+    /**
+     * Applies this function to the given argument.
+     *
+     * @param t the function argument
+     * @return the function result
+     */
+    R apply(T t) throws Throwable;
 }

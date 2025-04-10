@@ -6,20 +6,19 @@ package com.chensoul.core.exception;
  */
 public class TooManyRequestException extends RuntimeException {
 
-	public TooManyRequestException(final String message) {
-		super(message);
-	}
+    public TooManyRequestException(final String message) {
+        super(message);
+    }
 
-	/**
-	 * <p>
-	 * Constructor for RequestNotPermittedException.
-	 * </p>
-	 *
-	 * @param message a {@link String} object
-	 * @param cause   a {@link Throwable} object
-	 */
-	public TooManyRequestException(final String message, final Throwable cause) {
-		super(message, cause);
-	}
-
+    /**
+     * <p>
+     * Constructor for RequestNotPermittedException.
+     * </p>
+     *
+     * @param message a {@link String} object
+     * @param cause   a {@link Throwable} object
+     */
+    public TooManyRequestException(final String message, final Throwable cause) {
+        super(message, cause);
+    }
 }

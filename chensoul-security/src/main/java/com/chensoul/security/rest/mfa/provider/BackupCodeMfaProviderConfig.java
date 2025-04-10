@@ -1,18 +1,16 @@
 package com.chensoul.security.rest.mfa.provider;
 
-import lombok.Data;
-
 import javax.validation.constraints.Min;
+import lombok.Data;
 
 @Data
 public class BackupCodeMfaProviderConfig implements MfaProviderConfig {
 
-	@Min(value = 1, message = "must be greater than 0")
-	private int codesQuantity;
+    @Min(value = 1, message = "must be greater than 0")
+    private int codesQuantity;
 
-	@Override
-	public MfaProviderType getProviderType() {
-		return MfaProviderType.BACKUP_CODE;
-	}
-
+    @Override
+    public MfaProviderType getProviderType() {
+        return MfaProviderType.BACKUP_CODE;
+    }
 }

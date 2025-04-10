@@ -4,8 +4,7 @@ import java.io.Serializable;
 
 public abstract class UserDataChangedEvent implements Serializable {
 
-	public abstract String getId();
+    public abstract String getId();
 
-	public abstract long getTs();
-
+    public abstract long getTs();
 }

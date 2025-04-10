@@ -13,49 +13,48 @@ import org.springframework.util.LinkedCaseInsensitiveMap;
 @ConfigurationProperties(prefix = "oss")
 public class OssProperties {
 
-	/**
-	 * 是否启用
-	 */
-	private Boolean enabled;
+    /**
+     * 是否启用
+     */
+    private Boolean enabled;
 
-	/**
-	 * 对象存储名称
-	 */
-	private String name;
+    /**
+     * 对象存储名称
+     */
+    private String name;
 
-	/**
-	 * 是否开启租户模式
-	 */
-	private Boolean tenantMode;
+    /**
+     * 是否开启租户模式
+     */
+    private Boolean tenantMode;
 
-	/**
-	 * 对象存储服务的URL
-	 */
-	private String endpoint;
+    /**
+     * 对象存储服务的URL
+     */
+    private String endpoint;
 
-	/**
-	 * 转换外网地址的URL
-	 */
-	private String transformEndpoint;
+    /**
+     * 转换外网地址的URL
+     */
+    private String transformEndpoint;
 
-	/**
-	 * Access key就像用户ID，可以唯一标识你的账户
-	 */
-	private String accessKey;
+    /**
+     * Access key就像用户ID，可以唯一标识你的账户
+     */
+    private String accessKey;
 
-	/**
-	 * Secret key是你账户的密码
-	 */
-	private String secretKey;
+    /**
+     * Secret key是你账户的密码
+     */
+    private String secretKey;
 
-	/**
-	 * 默认的存储桶名称
-	 */
-	private String bucketName = "chensoul";
+    /**
+     * 默认的存储桶名称
+     */
+    private String bucketName = "chensoul";
 
-	/**
-	 * 自定义属性
-	 */
-	private LinkedCaseInsensitiveMap<Object> args;
-
+    /**
+     * 自定义属性
+     */
+    private LinkedCaseInsensitiveMap<Object> args;
 }

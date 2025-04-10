@@ -26,25 +26,24 @@ import org.springframework.context.annotation.Bean;
 @ConditionalOnProperty(value = "oss.name", havingValue = "minio")
 public class MinioConfiguration {
 
-	private final OssProperties ossProperties;
+    private final OssProperties ossProperties;
 
-	private final OssRule ossRule;
+    private final OssRule ossRule;
 
-	@Bean
-	@SneakyThrows
-	@ConditionalOnMissingBean(MinioClient.class)
-	public MinioClient minioClient() {
-		return MinioClient.builder()
-			.endpoint(ossProperties.getEndpoint())
-			.credentials(ossProperties.getAccessKey(), ossProperties.getSecretKey())
-			.build();
-	}
+    @Bean
+    @SneakyThrows
+    @ConditionalOnMissingBean(MinioClient.class)
+    public MinioClient minioClient() {
+        return MinioClient.builder()
+                .endpoint(ossProperties.getEndpoint())
+                .credentials(ossProperties.getAccessKey(), ossProperties.getSecretKey())
+                .build();
+    }
 
-	@Bean
-	@ConditionalOnBean({MinioClient.class})
-	@ConditionalOnMissingBean(MinioTemplate.class)
-	public MinioTemplate minioTemplate(MinioClient minioClient) {
-		return new MinioTemplate(minioClient, ossRule, ossProperties);
-	}
-
+    @Bean
+    @ConditionalOnBean({MinioClient.class})
+    @ConditionalOnMissingBean(MinioTemplate.class)
+    public MinioTemplate minioTemplate(MinioClient minioClient) {
+        return new MinioTemplate(minioClient, ossRule, ossProperties);
+    }
 }

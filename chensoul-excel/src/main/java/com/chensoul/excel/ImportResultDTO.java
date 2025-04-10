@@ -11,10 +11,9 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class ImportResultDTO {
 
-	private Integer success;
+    private Integer success;
 
-	private Integer fail;
+    private Integer fail;
 
-	private String failUrl;
-
+    private String failUrl;
 }

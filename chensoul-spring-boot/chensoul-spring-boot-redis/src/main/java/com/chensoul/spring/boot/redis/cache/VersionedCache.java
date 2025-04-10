@@ -16,47 +16,45 @@
 package com.chensoul.spring.boot.redis.cache;
 
 import com.chensoul.core.domain.HasVersion;
-
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Optional;
 import java.util.function.Supplier;
 
 public interface VersionedCache<K extends VersionedCacheKey, V extends Serializable & HasVersion>
-	extends TransactionalCache<K, V> {
+        extends TransactionalCache<K, V> {
 
-	CacheValueWrapper<V> get(K key);
+    CacheValueWrapper<V> get(K key);
 
-	default V get(K key, Supplier<V> supplier) {
-		return get(key, supplier, true);
-	}
+    default V get(K key, Supplier<V> supplier) {
+        return get(key, supplier, true);
+    }
 
-	default V get(K key, Supplier<V> supplier, boolean putToCache) {
-		return Optional.ofNullable(get(key)).map(CacheValueWrapper::get).orElseGet(() -> {
-			V value = supplier.get();
-			if (putToCache) {
-				put(key, value);
-			}
-			return value;
-		});
-	}
+    default V get(K key, Supplier<V> supplier, boolean putToCache) {
+        return Optional.ofNullable(get(key)).map(CacheValueWrapper::get).orElseGet(() -> {
+            V value = supplier.get();
+            if (putToCache) {
+                put(key, value);
+            }
+            return value;
+        });
+    }
 
-	void put(K key, V value);
+    void put(K key, V value);
 
-	void evict(K key);
+    void evict(K key);
 
-	void evict(Collection<K> keys);
+    void evict(Collection<K> keys);
 
-	void evict(K key, Long version);
+    void evict(K key, Long version);
 
-	default Long getVersion(V value) {
-		if (value == null) {
-			return 0L;
-		} else if (value.getVersion() != null) {
-			return value.getVersion();
-		} else {
-			return null;
-		}
-	}
-
+    default Long getVersion(V value) {
+        if (value == null) {
+            return 0L;
+        } else if (value.getVersion() != null) {
+            return value.getVersion();
+        } else {
+            return null;
+        }
+    }
 }

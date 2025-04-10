@@ -1,4 +1,3 @@
-
 /*
  *
  *  * | Licensed 未经许可不能去掉「Enjoy-iot」相关版权
@@ -31,10 +30,9 @@ import com.chensoul.mybatis.datapermission.rule.DataPermissionRule;
 import com.chensoul.mybatis.datapermission.rule.DataPermissionRuleFactory;
 import com.chensoul.mybatis.datapermission.rule.DataPermissionRuleFactoryImpl;
 import com.chensoul.mybatis.util.MyBatisUtils;
+import java.util.List;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.context.annotation.Bean;
-
-import java.util.List;
 
 /**
  * 数据权限的自动配置类
@@ -42,25 +40,24 @@ import java.util.List;
 @AutoConfiguration
 public class MybatisDataPermissionConfiguration {
 
-	@Bean
-	public DataPermissionRuleFactory dataPermissionRuleFactory(List<DataPermissionRule> rules) {
-		return new DataPermissionRuleFactoryImpl(rules);
-	}
+    @Bean
+    public DataPermissionRuleFactory dataPermissionRuleFactory(List<DataPermissionRule> rules) {
+        return new DataPermissionRuleFactoryImpl(rules);
+    }
 
-	@Bean
-	public DataPermissionRuleHandler dataPermissionRuleHandler(MybatisPlusInterceptor interceptor,
-															   DataPermissionRuleFactory ruleFactory) {
-		// 创建 DataPermissionInterceptor 拦截器
-		DataPermissionRuleHandler handler = new DataPermissionRuleHandler(ruleFactory);
-		DataPermissionInterceptor inner = new DataPermissionInterceptor(handler);
-		// 需要加在首个，主要是为了在分页插件前面。这个是 MyBatis Plus 的规定
-		MyBatisUtils.addInterceptor(interceptor, inner, 0);
-		return handler;
-	}
+    @Bean
+    public DataPermissionRuleHandler dataPermissionRuleHandler(
+            MybatisPlusInterceptor interceptor, DataPermissionRuleFactory ruleFactory) {
+        // 创建 DataPermissionInterceptor 拦截器
+        DataPermissionRuleHandler handler = new DataPermissionRuleHandler(ruleFactory);
+        DataPermissionInterceptor inner = new DataPermissionInterceptor(handler);
+        // 需要加在首个，主要是为了在分页插件前面。这个是 MyBatis Plus 的规定
+        MyBatisUtils.addInterceptor(interceptor, inner, 0);
+        return handler;
+    }
 
-	@Bean
-	public DataPermissionAnnotationAdvisor dataPermissionAnnotationAdvisor() {
-		return new DataPermissionAnnotationAdvisor();
-	}
-
+    @Bean
+    public DataPermissionAnnotationAdvisor dataPermissionAnnotationAdvisor() {
+        return new DataPermissionAnnotationAdvisor();
+    }
 }

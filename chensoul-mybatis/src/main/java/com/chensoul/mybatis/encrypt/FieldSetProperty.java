@@ -13,10 +13,9 @@ import lombok.Data;
 @AllArgsConstructor
 public class FieldSetProperty {
 
-	private String fieldName;
+    private String fieldName;
 
-	private FieldEncrypt fieldEncrypt;
+    private FieldEncrypt fieldEncrypt;
 
-	private FieldBind fieldBind;
-
+    private FieldBind fieldBind;
 }

@@ -1,4 +1,3 @@
-
 /*
  *
  *  * | Licensed 未经许可不能去掉「Enjoy-iot」相关版权
@@ -39,19 +38,18 @@ import org.springframework.aop.support.annotation.AnnotationMatchingPointcut;
 @EqualsAndHashCode(callSuper = true)
 public class DataPermissionAnnotationAdvisor extends AbstractPointcutAdvisor {
 
-	private final Advice advice;
+    private final Advice advice;
 
-	private final Pointcut pointcut;
+    private final Pointcut pointcut;
 
-	public DataPermissionAnnotationAdvisor() {
-		this.advice = new DataPermissionAnnotationInterceptor();
-		this.pointcut = this.buildPointcut();
-	}
+    public DataPermissionAnnotationAdvisor() {
+        this.advice = new DataPermissionAnnotationInterceptor();
+        this.pointcut = this.buildPointcut();
+    }
 
-	protected Pointcut buildPointcut() {
-		Pointcut classPointcut = new AnnotationMatchingPointcut(DataPermission.class, true);
-		Pointcut methodPointcut = new AnnotationMatchingPointcut(null, DataPermission.class, true);
-		return new ComposablePointcut(classPointcut).union(methodPointcut);
-	}
-
+    protected Pointcut buildPointcut() {
+        Pointcut classPointcut = new AnnotationMatchingPointcut(DataPermission.class, true);
+        Pointcut methodPointcut = new AnnotationMatchingPointcut(null, DataPermission.class, true);
+        return new ComposablePointcut(classPointcut).union(methodPointcut);
+    }
 }

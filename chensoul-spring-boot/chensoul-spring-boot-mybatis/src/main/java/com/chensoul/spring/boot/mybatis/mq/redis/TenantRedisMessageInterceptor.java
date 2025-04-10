@@ -1,4 +1,3 @@
-
 /*
  *
  *  * | Licensed 未经许可不能去掉「Enjoy-iot」相关版权
@@ -23,12 +22,12 @@
  */
 package com.chensoul.spring.boot.mybatis.mq.redis;
 
+import static com.chensoul.core.CommonConstants.HEADER_TENANT_ID;
+
 import com.chensoul.mybatis.tenant.util.TenantContextHolder;
 import com.chensoul.spring.boot.redis.mq.interceptor.RedisMessageInterceptor;
 import com.chensoul.spring.boot.redis.mq.message.AbstractRedisMessage;
 import org.apache.commons.lang3.StringUtils;
-
-import static com.chensoul.core.CommonConstants.HEADER_TENANT_ID;
 
 /**
  * 多租户拦截器
@@ -40,26 +39,25 @@ import static com.chensoul.core.CommonConstants.HEADER_TENANT_ID;
  */
 public class TenantRedisMessageInterceptor implements RedisMessageInterceptor {
 
-	@Override
-	public void sendMessageBefore(AbstractRedisMessage message) {
-		String tenantId = TenantContextHolder.getTenantId();
-		if (tenantId != null) {
-			message.addHeader(HEADER_TENANT_ID, tenantId);
-		}
-	}
+    @Override
+    public void sendMessageBefore(AbstractRedisMessage message) {
+        String tenantId = TenantContextHolder.getTenantId();
+        if (tenantId != null) {
+            message.addHeader(HEADER_TENANT_ID, tenantId);
+        }
+    }
 
-	@Override
-	public void consumeMessageBefore(AbstractRedisMessage message) {
-		String tenantIdStr = message.getHeader(HEADER_TENANT_ID);
-		if (StringUtils.isNotEmpty(tenantIdStr)) {
-			TenantContextHolder.setTenantId(tenantIdStr);
-		}
-	}
+    @Override
+    public void consumeMessageBefore(AbstractRedisMessage message) {
+        String tenantIdStr = message.getHeader(HEADER_TENANT_ID);
+        if (StringUtils.isNotEmpty(tenantIdStr)) {
+            TenantContextHolder.setTenantId(tenantIdStr);
+        }
+    }
 
-	@Override
-	public void consumeMessageAfter(AbstractRedisMessage message) {
-		// 注意，Consumer 是一个逻辑的入口，所以不考虑原本上下文就存在租户编号的情况
-		TenantContextHolder.clear();
-	}
-
+    @Override
+    public void consumeMessageAfter(AbstractRedisMessage message) {
+        // 注意，Consumer 是一个逻辑的入口，所以不考虑原本上下文就存在租户编号的情况
+        TenantContextHolder.clear();
+    }
 }

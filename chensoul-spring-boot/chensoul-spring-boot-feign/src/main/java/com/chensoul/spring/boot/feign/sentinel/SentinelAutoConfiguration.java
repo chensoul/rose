@@ -20,24 +20,23 @@ import org.springframework.context.annotation.Scope;
 @Configuration(proxyBeanMethods = false)
 public class SentinelAutoConfiguration {
 
-	@Bean
-	@Scope("prototype")
-	@ConditionalOnMissingBean
-	@ConditionalOnProperty(name = "feign.sentinel.enabled")
-	public Feign.Builder feignSentinelBuilder() {
-		return SentinelFeign.builder();
-	}
+    @Bean
+    @Scope("prototype")
+    @ConditionalOnMissingBean
+    @ConditionalOnProperty(name = "feign.sentinel.enabled")
+    public Feign.Builder feignSentinelBuilder() {
+        return SentinelFeign.builder();
+    }
 
-	@Bean
-	@ConditionalOnMissingBean
-	public BlockExceptionHandler blockExceptionHandler(ObjectMapper objectMapper) {
-		return new UrlBlockHandler(objectMapper);
-	}
+    @Bean
+    @ConditionalOnMissingBean
+    public BlockExceptionHandler blockExceptionHandler(ObjectMapper objectMapper) {
+        return new UrlBlockHandler(objectMapper);
+    }
 
-	@Bean
-	@ConditionalOnMissingBean
-	public RequestOriginParser requestOriginParser() {
-		return new HeaderRequestOriginParser();
-	}
-
+    @Bean
+    @ConditionalOnMissingBean
+    public RequestOriginParser requestOriginParser() {
+        return new HeaderRequestOriginParser();
+    }
 }

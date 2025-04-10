@@ -25,32 +25,32 @@ import org.springframework.web.client.RestTemplate;
 @ConditionalOnProperty(prefix = "xxl.xxljob.client", name = "enabled", havingValue = "true")
 public class XxlJobClientConfiguration {
 
-	private final RestTemplate restTemplate;
+    private final RestTemplate restTemplate;
 
-	private final XxlJobProperties xxlJobProperties;
+    private final XxlJobProperties xxlJobProperties;
 
-	private final Environment environment;
+    private final Environment environment;
 
-	@Bean
-	public JobLoginService jobLoginService() {
-		return new JobLoginServiceImpl(restTemplate, xxlJobProperties);
-	}
+    @Bean
+    public JobLoginService jobLoginService() {
+        return new JobLoginServiceImpl(restTemplate, xxlJobProperties);
+    }
 
-	@Bean
-	public JobGroupService jobGroupService() {
-		return new JobGroupServiceImpl(jobLoginService(), restTemplate, xxlJobProperties.getAdmin().getAddresses());
-	}
+    @Bean
+    public JobGroupService jobGroupService() {
+        return new JobGroupServiceImpl(
+                jobLoginService(), restTemplate, xxlJobProperties.getAdmin().getAddresses());
+    }
 
-	@Bean
-	public JobInfoService jobInfoService() {
-		return new JobInfoServiceImpl(jobLoginService(), restTemplate, xxlJobProperties);
-	}
+    @Bean
+    public JobInfoService jobInfoService() {
+        return new JobInfoServiceImpl(jobLoginService(), restTemplate, xxlJobProperties);
+    }
 
-	@Bean
-	public XxlJobAutoRegister xxlJobAutoRegister() {
-		log.info("Initializing XxlJobAutoRegister");
+    @Bean
+    public XxlJobAutoRegister xxlJobAutoRegister() {
+        log.info("Initializing XxlJobAutoRegister");
 
-		return new XxlJobAutoRegister(jobGroupService(), jobInfoService(), xxlJobProperties, environment);
-	}
-
+        return new XxlJobAutoRegister(jobGroupService(), jobInfoService(), xxlJobProperties, environment);
+    }
 }

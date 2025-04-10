@@ -7,9 +7,8 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 public class EmailMfaProviderConfig extends OtpBasedMfaProviderConfig {
 
-	@Override
-	public MfaProviderType getProviderType() {
-		return MfaProviderType.EMAIL;
-	}
-
+    @Override
+    public MfaProviderType getProviderType() {
+        return MfaProviderType.EMAIL;
+    }
 }

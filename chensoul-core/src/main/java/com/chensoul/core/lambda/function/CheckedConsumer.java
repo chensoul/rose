@@ -17,7 +17,6 @@ package com.chensoul.core.lambda.function;
 
 import com.chensoul.core.lambda.Sneaky;
 import com.chensoul.core.lambda.Unchecked;
-
 import java.util.function.Consumer;
 
 /**
@@ -28,32 +27,31 @@ import java.util.function.Consumer;
 @FunctionalInterface
 public interface CheckedConsumer<T> {
 
-	/**
-	 * @see {@link Sneaky#consumer(CheckedConsumer)}
-	 */
-	static <T> Consumer<T> sneaky(CheckedConsumer<T> consumer) {
-		return Sneaky.consumer(consumer);
-	}
+    /**
+     * @see {@link Sneaky#consumer(CheckedConsumer)}
+     */
+    static <T> Consumer<T> sneaky(CheckedConsumer<T> consumer) {
+        return Sneaky.consumer(consumer);
+    }
 
-	/**
-	 * @see {@link Unchecked#consumer(CheckedConsumer)}
-	 */
-	static <T> Consumer<T> unchecked(CheckedConsumer<T> consumer) {
-		return Unchecked.consumer(consumer);
-	}
+    /**
+     * @see {@link Unchecked#consumer(CheckedConsumer)}
+     */
+    static <T> Consumer<T> unchecked(CheckedConsumer<T> consumer) {
+        return Unchecked.consumer(consumer);
+    }
 
-	/**
-	 * @see {@link Unchecked#consumer(CheckedConsumer, Consumer)}
-	 */
-	static <T> Consumer<T> unchecked(CheckedConsumer<T> consumer, Consumer<Throwable> handler) {
-		return Unchecked.consumer(consumer, handler);
-	}
+    /**
+     * @see {@link Unchecked#consumer(CheckedConsumer, Consumer)}
+     */
+    static <T> Consumer<T> unchecked(CheckedConsumer<T> consumer, Consumer<Throwable> handler) {
+        return Unchecked.consumer(consumer, handler);
+    }
 
-	/**
-	 * Performs this operation on the given argument.
-	 *
-	 * @param t the input argument
-	 */
-	void accept(T t) throws Throwable;
-
+    /**
+     * Performs this operation on the given argument.
+     *
+     * @param t the input argument
+     */
+    void accept(T t) throws Throwable;
 }

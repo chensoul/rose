@@ -4,12 +4,11 @@ import org.springframework.security.authentication.AuthenticationServiceExceptio
 
 public class AuthMethodNotSupportedException extends AuthenticationServiceException {
 
-	public AuthMethodNotSupportedException(String msg) {
-		super(msg);
-	}
+    public AuthMethodNotSupportedException(String msg) {
+        super(msg);
+    }
 
-	public AuthMethodNotSupportedException(String msg, Throwable cause) {
-		super(msg, cause);
-	}
-
+    public AuthMethodNotSupportedException(String msg, Throwable cause) {
+        super(msg, cause);
+    }
 }

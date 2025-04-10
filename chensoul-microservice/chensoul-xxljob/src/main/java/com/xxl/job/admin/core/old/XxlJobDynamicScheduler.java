@@ -1,4 +1,4 @@
-package com.xxl.job.admin.core.old;// package com.xxl.job.admin.support.schedule;
+package com.xxl.job.admin.core.old; // package com.xxl.job.admin.support.schedule;
 
 //
 // import com.xxl.job.admin.support.conf.XxlJobAdminConfig;

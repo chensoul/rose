@@ -14,49 +14,48 @@ import org.springframework.stereotype.Service;
 @Service
 public class SmsMfaProvider extends OtpBasedMfaProvider<SmsMfaProviderConfig, SmsMfaConfig> {
 
-	// private final SmsService smsService;
+    // private final SmsService smsService;
 
-	public SmsMfaProvider(CacheManager cacheManager, ObjectMapper objectMapper) {
-		super(cacheManager, objectMapper);
-		// this.smsService = smsService;
-	}
+    public SmsMfaProvider(CacheManager cacheManager, ObjectMapper objectMapper) {
+        super(cacheManager, objectMapper);
+        // this.smsService = smsService;
+    }
 
-	@Override
-	public SmsMfaConfig generateTwoFaConfig(User user, SmsMfaProviderConfig providerConfig) {
-		return new SmsMfaConfig();
-	}
+    @Override
+    public SmsMfaConfig generateTwoFaConfig(User user, SmsMfaProviderConfig providerConfig) {
+        return new SmsMfaConfig();
+    }
 
-	@Override
-	protected void sendVerificationCode(SecurityUser user, String verificationCode, SmsMfaProviderConfig providerConfig,
-										SmsMfaConfig twoFaConfig) {
-		log.info("send verification code {} to phoneNumber ", verificationCode, twoFaConfig.getPhoneNumber());
+    @Override
+    protected void sendVerificationCode(
+            SecurityUser user, String verificationCode, SmsMfaProviderConfig providerConfig, SmsMfaConfig twoFaConfig) {
+        log.info("send verification code {} to phoneNumber ", verificationCode, twoFaConfig.getPhoneNumber());
 
-		// Map<String, String> messageData = Map.of(
-		// "code", verificationCode,
-		// "userEmail", user.getEmail()
-		// );
-		// String message =
-		// FormatUtils.formatVariables(providerConfig.getSmsVerificationMessageTemplate(),
-		// "${", "}", messageData);
-		// String phoneNumber = twoFaConfig.getPhoneNumber();
-		// try {
-		// smsService.sendSms(user.getTenantId(), user.getMerchantId(), new
-		// String[]{phoneNumber}, message);
-		// } catch (RuntimeException e) {
-		// throw e;
-		// }
-	}
+        // Map<String, String> messageData = Map.of(
+        // "code", verificationCode,
+        // "userEmail", user.getEmail()
+        // );
+        // String message =
+        // FormatUtils.formatVariables(providerConfig.getSmsVerificationMessageTemplate(),
+        // "${", "}", messageData);
+        // String phoneNumber = twoFaConfig.getPhoneNumber();
+        // try {
+        // smsService.sendSms(user.getTenantId(), user.getMerchantId(), new
+        // String[]{phoneNumber}, message);
+        // } catch (RuntimeException e) {
+        // throw e;
+        // }
+    }
 
-	@Override
-	public void check(String tenantId) {
-		// if (!smsService.isConfigured(tenantId)) {
-		// throw new RuntimeException("SMS util is not configured");
-		// }
-	}
+    @Override
+    public void check(String tenantId) {
+        // if (!smsService.isConfigured(tenantId)) {
+        // throw new RuntimeException("SMS util is not configured");
+        // }
+    }
 
-	@Override
-	public MfaProviderType getType() {
-		return MfaProviderType.SMS;
-	}
-
+    @Override
+    public MfaProviderType getType() {
+        return MfaProviderType.SMS;
+    }
 }

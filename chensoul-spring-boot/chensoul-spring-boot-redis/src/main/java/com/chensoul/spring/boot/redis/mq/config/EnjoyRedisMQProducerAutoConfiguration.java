@@ -1,4 +1,3 @@
-
 /*
  *
  *  * | Licensed 未经许可不能去掉「Enjoy-iot」相关版权
@@ -26,12 +25,11 @@ package com.chensoul.spring.boot.redis.mq.config;
 import com.chensoul.spring.boot.redis.RedisCacheAutoConfiguration;
 import com.chensoul.spring.boot.redis.mq.RedisMQTemplate;
 import com.chensoul.spring.boot.redis.mq.interceptor.RedisMessageInterceptor;
+import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.redis.core.StringRedisTemplate;
-
-import java.util.List;
 
 /**
  * Redis 消息队列 Producer 配置类
@@ -42,13 +40,12 @@ import java.util.List;
 @AutoConfiguration(after = RedisCacheAutoConfiguration.class)
 public class EnjoyRedisMQProducerAutoConfiguration {
 
-	@Bean
-	public RedisMQTemplate redisMQTemplate(StringRedisTemplate redisTemplate,
-										   List<RedisMessageInterceptor> interceptors) {
-		RedisMQTemplate redisMQTemplate = new RedisMQTemplate(redisTemplate);
-		// 添加拦截器
-		interceptors.forEach(redisMQTemplate::addInterceptor);
-		return redisMQTemplate;
-	}
-
+    @Bean
+    public RedisMQTemplate redisMQTemplate(
+            StringRedisTemplate redisTemplate, List<RedisMessageInterceptor> interceptors) {
+        RedisMQTemplate redisMQTemplate = new RedisMQTemplate(redisTemplate);
+        // 添加拦截器
+        interceptors.forEach(redisMQTemplate::addInterceptor);
+        return redisMQTemplate;
+    }
 }

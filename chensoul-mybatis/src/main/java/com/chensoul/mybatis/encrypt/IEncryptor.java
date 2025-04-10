@@ -8,8 +8,7 @@ import com.chensoul.mybatis.encrypt.util.Algorithm;
  */
 public interface IEncryptor {
 
-	String encrypt(Algorithm algorithm, String password, String plaintext, Object metaObject);
+    String encrypt(Algorithm algorithm, String password, String plaintext, Object metaObject);
 
-	String decrypt(Algorithm algorithm, String password, String plaintext, Object metaObject);
-
+    String decrypt(Algorithm algorithm, String password, String plaintext, Object metaObject);
 }

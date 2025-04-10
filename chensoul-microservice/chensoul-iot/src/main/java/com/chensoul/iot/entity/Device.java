@@ -1,8 +1,7 @@
 package com.chensoul.iot.entity;
 
-import lombok.Data;
-
 import java.time.LocalDateTime;
+import lombok.Data;
 
 /**
  * 产品Topic对象 product_topic
@@ -10,27 +9,26 @@ import java.time.LocalDateTime;
 @Data
 public class Device {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private Long productId;
+    private Long productId;
 
-	private String code;
+    private String code;
 
-	private String name;
+    private String name;
 
-	private String nodeType;
+    private String nodeType;
 
-	private Long groupId;
+    private Long groupId;
 
-	/**
-	 * UNACTIVE
-	 */
-	private String status;
+    /**
+     * UNACTIVE
+     */
+    private String status;
 
-	private LocalDateTime activeTime;
+    private LocalDateTime activeTime;
 
-	private LocalDateTime lastOnlineTime;
+    private LocalDateTime lastOnlineTime;
 
-	private LocalDateTime lastOfflineTime;
-
+    private LocalDateTime lastOfflineTime;
 }

@@ -1,4 +1,3 @@
-
 /*
  *
  *  * | Licensed 未经许可不能去掉「Enjoy-iot」相关版权
@@ -32,16 +31,11 @@ import com.chensoul.spring.boot.redis.mq.message.AbstractRedisMessage;
  */
 public interface RedisMessageInterceptor {
 
-	default void sendMessageBefore(AbstractRedisMessage message) {
-	}
+    default void sendMessageBefore(AbstractRedisMessage message) {}
 
-	default void sendMessageAfter(AbstractRedisMessage message) {
-	}
+    default void sendMessageAfter(AbstractRedisMessage message) {}
 
-	default void consumeMessageBefore(AbstractRedisMessage message) {
-	}
+    default void consumeMessageBefore(AbstractRedisMessage message) {}
 
-	default void consumeMessageAfter(AbstractRedisMessage message) {
-	}
-
+    default void consumeMessageAfter(AbstractRedisMessage message) {}
 }

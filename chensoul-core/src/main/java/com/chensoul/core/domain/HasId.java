@@ -8,6 +8,5 @@ import java.io.Serializable;
  */
 public interface HasId<I extends Serializable> extends Serializable {
 
-	I getId();
-
+    I getId();
 }

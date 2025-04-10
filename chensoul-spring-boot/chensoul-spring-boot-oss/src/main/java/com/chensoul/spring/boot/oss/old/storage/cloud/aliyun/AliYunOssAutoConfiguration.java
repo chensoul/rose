@@ -19,6 +19,9 @@
 
 package com.chensoul.spring.boot.oss.old.storage.cloud.aliyun;
 
+import static com.chensoul.spring.boot.oss.old.storage.OssOperation.ALI_YUN_OSS_OPERATION;
+import static com.chensoul.spring.boot.oss.old.storage.OssOperation.OSS_CONFIG_PREFIX_ALIYUN;
+
 import com.aliyun.oss.OSS;
 import com.aliyun.oss.OSSClientBuilder;
 import com.chensoul.spring.boot.oss.old.storage.AliYunOssOperation;
@@ -28,9 +31,6 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import static com.chensoul.spring.boot.oss.old.storage.OssOperation.ALI_YUN_OSS_OPERATION;
-import static com.chensoul.spring.boot.oss.old.storage.OssOperation.OSS_CONFIG_PREFIX_ALIYUN;
 
 /**
  * 阿里云 OSS
@@ -43,15 +43,14 @@ import static com.chensoul.spring.boot.oss.old.storage.OssOperation.OSS_CONFIG_P
 @ConditionalOnProperty(prefix = OSS_CONFIG_PREFIX_ALIYUN, name = "enabled", havingValue = "true")
 public class AliYunOssAutoConfiguration {
 
-	@Bean(destroyMethod = "shutdown")
-	public OSS ossClient(AliYunOssProperties properties) {
-		return new OSSClientBuilder().build(properties.getEndpoint(), properties.getAccessKey(),
-			properties.getSecretKey());
-	}
+    @Bean(destroyMethod = "shutdown")
+    public OSS ossClient(AliYunOssProperties properties) {
+        return new OSSClientBuilder()
+                .build(properties.getEndpoint(), properties.getAccessKey(), properties.getSecretKey());
+    }
 
-	@Bean(ALI_YUN_OSS_OPERATION)
-	public AliYunOssOperation aliYunStorageOperation(OSS ossClient, AliYunOssProperties properties) {
-		return new AliYunOssOperation(ossClient, properties);
-	}
-
+    @Bean(ALI_YUN_OSS_OPERATION)
+    public AliYunOssOperation aliYunStorageOperation(OSS ossClient, AliYunOssProperties properties) {
+        return new AliYunOssOperation(ossClient, properties);
+    }
 }

@@ -28,35 +28,36 @@ import org.springframework.beans.factory.annotation.Value;
 @Data
 public class BaseOssProperties implements java.io.Serializable {
 
-	private Boolean enabled = false;
+    private Boolean enabled = false;
 
-	@Value("${spring.application.name:'oss'}")
-	private String bucket;
+    @Value("${spring.application.name:'oss'}")
+    private String bucket;
 
-	private String mappingPath = "http://minio.battcn.com/";
+    private String mappingPath = "http://minio.battcn.com/";
 
-	/**
-	 * 访问key
-	 **/
-	private String accessKey;
+    /**
+     * 访问key
+     **/
+    private String accessKey;
 
-	/**
-	 * 访问秘钥
-	 **/
-	private String secretKey;
+    /**
+     * 访问秘钥
+     **/
+    private String secretKey;
 
-	/**
-	 * 本地文件临时目录
-	 */
-	private String tmpDir;
+    /**
+     * 本地文件临时目录
+     */
+    private String tmpDir;
 
-	public enum StorageType {
+    public enum StorageType {
 
-		/**
-		 * MINIO
-		 */
-		MINIO, ALIYUN, TENCENT, QINIU
-
-	}
-
+        /**
+         * MINIO
+         */
+        MINIO,
+        ALIYUN,
+        TENCENT,
+        QINIU
+    }
 }

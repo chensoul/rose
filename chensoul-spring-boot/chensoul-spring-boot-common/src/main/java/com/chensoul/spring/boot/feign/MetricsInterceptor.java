@@ -17,33 +17,31 @@ import org.apache.commons.lang3.StringUtils;
  */
 public class MetricsInterceptor implements RequestInterceptor, MeterBinder {
 
-	public static final String FEIGN_REQUEST = "feign.requests";
+    public static final String FEIGN_REQUEST = "feign.requests";
 
-	public static final String FEIGN_REQUEST_ERROR = FEIGN_REQUEST + ".error";
+    public static final String FEIGN_REQUEST_ERROR = FEIGN_REQUEST + ".error";
 
-	private static MeterRegistry meterRegistry;
+    private static MeterRegistry meterRegistry;
 
-	@Override
-	public void apply(RequestTemplate template) { // FeignClient 子上下文调用
-		// 异步执行
-		Micrometers.async(() -> {
-			// 方法统计
-			String methodKey = template.methodMetadata().configKey();
-			Counter counter = Counter.builder(FEIGN_REQUEST)
-				.tags("method", StringUtils.substringBefore(methodKey, StringPool.LEFT_BRACKET)) // Feign
-				// 调用方法（接口
-				// +
-				// 方法）
-				// Tag
-				.register(meterRegistry);
-			counter.increment();
-		});
+    @Override
+    public void apply(RequestTemplate template) { // FeignClient 子上下文调用
+        // 异步执行
+        Micrometers.async(() -> {
+            // 方法统计
+            String methodKey = template.methodMetadata().configKey();
+            Counter counter = Counter.builder(FEIGN_REQUEST)
+                    .tags("method", StringUtils.substringBefore(methodKey, StringPool.LEFT_BRACKET)) // Feign
+                    // 调用方法（接口
+                    // +
+                    // 方法）
+                    // Tag
+                    .register(meterRegistry);
+            counter.increment();
+        });
+    }
 
-	}
-
-	@Override
-	public void bindTo(MeterRegistry registry) { // Spring Boot 主上下文调用
-		this.meterRegistry = registry;
-	}
-
+    @Override
+    public void bindTo(MeterRegistry registry) { // Spring Boot 主上下文调用
+        this.meterRegistry = registry;
+    }
 }

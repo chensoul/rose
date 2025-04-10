@@ -46,82 +46,78 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 @Order(org.springframework.boot.autoconfigure.security.SecurityProperties.BASIC_AUTH_ORDER)
 public class SecurityConfig {
 
-	private final MfaProperties mfaProperties;
+    private final MfaProperties mfaProperties;
 
-	private final UserDetailsService userDetailsService;
+    private final UserDetailsService userDetailsService;
 
-	private final ObjectPostProcessor<Object> objectPostProcessor;
+    private final ObjectPostProcessor<Object> objectPostProcessor;
 
-	@Bean
-	public AuthenticationManager authenticationManager(TokenFactory tokenFactory) throws Exception {
-		AuthenticationManagerBuilder auth = new AuthenticationManagerBuilder(objectPostProcessor);
-		DefaultAuthenticationEventPublisher eventPublisher = objectPostProcessor
-			.postProcess(new DefaultAuthenticationEventPublisher());
-		auth.authenticationEventPublisher(eventPublisher);
+    @Bean
+    public AuthenticationManager authenticationManager(TokenFactory tokenFactory) throws Exception {
+        AuthenticationManagerBuilder auth = new AuthenticationManagerBuilder(objectPostProcessor);
+        DefaultAuthenticationEventPublisher eventPublisher =
+                objectPostProcessor.postProcess(new DefaultAuthenticationEventPublisher());
+        auth.authenticationEventPublisher(eventPublisher);
 
-		auth.authenticationProvider(
-			new RestLoginAuthenticationProvider(userDetailsService, passwordEncoder(), mfaProperties));
-		auth.authenticationProvider(new RestAccessAuthenticationProvider(tokenFactory));
-		auth.authenticationProvider(new RestRefreshAuthenticationProvider(userDetailsService, tokenFactory));
-		return auth.build();
-	}
+        auth.authenticationProvider(
+                new RestLoginAuthenticationProvider(userDetailsService, passwordEncoder(), mfaProperties));
+        auth.authenticationProvider(new RestAccessAuthenticationProvider(tokenFactory));
+        auth.authenticationProvider(new RestRefreshAuthenticationProvider(userDetailsService, tokenFactory));
+        return auth.build();
+    }
 
-	@Bean
-	@ConditionalOnMissingBean
-	public PasswordEncoder passwordEncoder() {
-		return PasswordEncoderFactories.createDelegatingPasswordEncoder();
-	}
+    @Bean
+    @ConditionalOnMissingBean
+    public PasswordEncoder passwordEncoder() {
+        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
+    }
 
-	@Bean("restAuthenticationSuccessHandler")
-	public AuthenticationSuccessHandler restAuthenticationSuccessHandler(TokenFactory tokenFactory) {
-		return new RestAuthenticationSuccessHandler(tokenFactory);
-	}
+    @Bean("restAuthenticationSuccessHandler")
+    public AuthenticationSuccessHandler restAuthenticationSuccessHandler(TokenFactory tokenFactory) {
+        return new RestAuthenticationSuccessHandler(tokenFactory);
+    }
 
-	@Bean("restAuthenticationFailureHandler")
-	public AuthenticationFailureHandler restAuthenticationFailureHandler() {
-		return new RestAuthenticationFailureHandler();
-	}
+    @Bean("restAuthenticationFailureHandler")
+    public AuthenticationFailureHandler restAuthenticationFailureHandler() {
+        return new RestAuthenticationFailureHandler();
+    }
 
-	@Bean
-	public AccessDeniedHandler accessDeniedHandler() {
-		return new RestAccessDeniedHandler();
-	}
+    @Bean
+    public AccessDeniedHandler accessDeniedHandler() {
+        return new RestAccessDeniedHandler();
+    }
 
-	/**
-	 * 声明调用 {@link SecurityContextHolder#setStrategyName(String)} 方法， 设置使用
-	 * {@link TransmittableSecurityContextHolderStrategy} 作为 Security 的上下文策略
-	 */
-	@Bean
-	public MethodInvokingFactoryBean securityContextHolderMethodInvokingFactoryBean() {
-		MethodInvokingFactoryBean methodInvokingFactoryBean = new MethodInvokingFactoryBean();
-		methodInvokingFactoryBean.setTargetClass(SecurityContextHolder.class);
-		methodInvokingFactoryBean.setTargetMethod("setStrategyName");
-		methodInvokingFactoryBean.setArguments(TransmittableSecurityContextHolderStrategy.class.getName());
-		return methodInvokingFactoryBean;
-	}
+    /**
+     * 声明调用 {@link SecurityContextHolder#setStrategyName(String)} 方法， 设置使用
+     * {@link TransmittableSecurityContextHolderStrategy} 作为 Security 的上下文策略
+     */
+    @Bean
+    public MethodInvokingFactoryBean securityContextHolderMethodInvokingFactoryBean() {
+        MethodInvokingFactoryBean methodInvokingFactoryBean = new MethodInvokingFactoryBean();
+        methodInvokingFactoryBean.setTargetClass(SecurityContextHolder.class);
+        methodInvokingFactoryBean.setTargetMethod("setStrategyName");
+        methodInvokingFactoryBean.setArguments(TransmittableSecurityContextHolderStrategy.class.getName());
+        return methodInvokingFactoryBean;
+    }
 
-	@Configuration
-	@RequiredArgsConstructor
-	public static class TokenFactoryConfig {
+    @Configuration
+    @RequiredArgsConstructor
+    public static class TokenFactoryConfig {
 
-		private final RedisTemplate<String, Object> redisTemplate;
+        private final RedisTemplate<String, Object> redisTemplate;
 
-		private final SecurityProperties securityProperties;
+        private final SecurityProperties securityProperties;
 
-		@Bean
-		public TokenFactory tokenFactory() {
-			if (securityProperties.getJwt().isEnabled()) {
-				return new JwtTokenFactory(redisTemplate, securityProperties);
-			}
-			return new RestTokenFactory(redisTemplate, securityProperties);
-		}
+        @Bean
+        public TokenFactory tokenFactory() {
+            if (securityProperties.getJwt().isEnabled()) {
+                return new JwtTokenFactory(redisTemplate, securityProperties);
+            }
+            return new RestTokenFactory(redisTemplate, securityProperties);
+        }
+    }
 
-	}
-
-	@ConditionalOnProperty(prefix = "security.jwt.mfa", value = "enabled", havingValue = "true")
-	@ComponentScan(basePackageClasses = MfaAuthController.class)
-	public class MfaConfig {
-
-	}
-
+    @ConditionalOnProperty(prefix = "security.jwt.mfa", value = "enabled", havingValue = "true")
+    @ComponentScan(basePackageClasses = MfaAuthController.class)
+    public class MfaConfig {}
 }

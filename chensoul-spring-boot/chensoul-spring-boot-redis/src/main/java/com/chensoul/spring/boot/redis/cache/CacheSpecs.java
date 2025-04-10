@@ -20,8 +20,7 @@ import lombok.Data;
 @Data
 public class CacheSpecs {
 
-	private Long timeToLiveInMinutes;
+    private Long timeToLiveInMinutes;
 
-	private Integer maxSize;
-
+    private Integer maxSize;
 }

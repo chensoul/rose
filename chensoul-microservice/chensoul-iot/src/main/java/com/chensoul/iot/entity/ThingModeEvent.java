@@ -8,28 +8,27 @@ import lombok.Data;
 @Data
 public class ThingModeEvent {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private Long productId;
+    private Long productId;
 
-	private String identifier;
+    private String identifier;
 
-	private String name;
+    private String name;
 
-	private boolean required;
+    private boolean required;
 
-	/**
-	 * info,alarm,error
-	 */
-	private String type;
+    /**
+     * info,alarm,error
+     */
+    private String type;
 
-	/**
-	 * thing.event.xxxx.post
-	 */
-	private String method;
+    /**
+     * thing.event.xxxx.post
+     */
+    private String method;
 
-	private String description;
+    private String description;
 
-	private String outputData;
-
+    private String outputData;
 }

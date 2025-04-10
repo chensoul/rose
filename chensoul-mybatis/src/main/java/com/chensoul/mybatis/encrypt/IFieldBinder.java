@@ -9,6 +9,5 @@ import org.apache.ibatis.reflection.MetaObject;
  */
 public interface IFieldBinder {
 
-	void setMetaObject(FieldBind fieldBind, Object value, MetaObject metaObject);
-
+    void setMetaObject(FieldBind fieldBind, Object value, MetaObject metaObject);
 }

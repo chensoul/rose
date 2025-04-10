@@ -26,7 +26,8 @@
         <maven-gpg-plugin.version>3.2.7</maven-gpg-plugin.version>
         <jacoco-maven-plugin.version>0.8.10</jacoco-maven-plugin.version>
         <flatten-maven-plugin.version>1.6.0</flatten-maven-plugin.version>
-        <spring-javaformat-maven-plugin.version>0.0.43</spring-javaformat-maven-plugin.version>
+        <!-- jdk 8-->
+        <spotless-maven-plugin.version>2.22.0</spotless-maven-plugin.version>
         <git-commit-id-plugin.version>4.9.10</git-commit-id-plugin.version>
         <jacoco-maven-plugin.version>0.8.12</jacoco-maven-plugin.version>
     </properties>
@@ -75,8 +76,7 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${maven-surefire-plugin.version}</version>
                 <configuration>
-                    <argLine>${surefireArgLine}</argLine>
-
+                    <!--                    <argLine>${surefireArgLine}</argLine>-->
                     <useFile>false</useFile>
                     <trimStackTrace>false</trimStackTrace>
 
@@ -85,7 +85,6 @@
 
                     <!-- Output test execution times in the logs -->
                     <redirectTestOutputToFile>false</redirectTestOutputToFile>
-
                 </configuration>
             </plugin>
             <plugin>
@@ -149,15 +148,24 @@
                 </executions>
             </plugin>
             <plugin>
-                <groupId>io.spring.javaformat</groupId>
-                <artifactId>spring-javaformat-maven-plugin</artifactId>
-                <version>${spring-javaformat-maven-plugin.version}</version>
+                <groupId>com.diffplug.spotless</groupId>
+                <artifactId>spotless-maven-plugin</artifactId>
+                <version>${spotless-maven-plugin.version}</version>
+                <configuration>
+                    <java>
+                        <importOrder/>
+                        <removeUnusedImports/>
+                        <palantirJavaFormat>
+                            <!-- jdk 8-->
+                            <version>1.1.0</version>
+                        </palantirJavaFormat>
+                    </java>
+                </configuration>
                 <executions>
                     <execution>
-                        <phase>validate</phase>
-                        <inherited>true</inherited>
+                        <phase>compile</phase>
                         <goals>
-                            <goal>validate</goal>
+                            <goal>apply</goal>
                         </goals>
                     </execution>
                 </executions>
@@ -166,6 +174,23 @@
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>flatten-maven-plugin</artifactId>
                 <version>${flatten-maven-plugin.version}</version>
+                <inherited>true</inherited>
+                <configuration>
+                    <updatePomFile>true</updatePomFile>
+                    <flattenDependencyMode>all</flattenDependencyMode>
+                    <flattenMode>resolveCiFriendliesOnly</flattenMode>
+                    <pomElements>
+                        <parent>expand</parent>
+                        <properties>keep</properties>
+                        <dependencies>resolve</dependencies>
+                        <distributionManagement>remove</distributionManagement>
+                        <dependencyManagement>interpolate</dependencyManagement>
+                        <repositories>remove</repositories>
+                        <scm>keep</scm>
+                        <url>keep</url>
+                        <organization>resolve</organization>
+                    </pomElements>
+                </configuration>
                 <executions>
                     <execution>
                         <id>flatten</id>
@@ -173,19 +198,6 @@
                         <goals>
                             <goal>flatten</goal>
                         </goals>
-                        <configuration>
-                            <updatePomFile>true</updatePomFile>
-                            <flattenMode>ossrh</flattenMode>
-                            <pomElements>
-                                <properties>keep</properties>
-                                <distributionManagement>keep</distributionManagement>
-                                <dependencyManagement>keep</dependencyManagement>
-                                <repositories>remove</repositories>
-                                <scm>keep</scm>
-                                <url>keep</url>
-                                <organization>resolve</organization>
-                            </pomElements>
-                        </configuration>
                     </execution>
                     <execution>
                         <id>clean</id>
@@ -303,6 +315,7 @@
                                         <arg>--pinentry-mode</arg>
                                         <arg>loopback</arg>
                                     </gpgArguments>
+                                    <!--suppress UnresolvedMavenProperty -->
                                     <passphrase>${env.MAVEN_GPG_PASSPHRASE}</passphrase>
                                 </configuration>
                             </execution>

@@ -9,22 +9,21 @@ import com.chensoul.upms.model.param.UserRegisterRequest;
 
 public interface UserService extends IService<User> {
 
-	User registerUser(UserRegisterRequest userRegisterRequest);
+    User registerUser(UserRegisterRequest userRegisterRequest);
 
-	User registerUser(UserRegisterRequest userRegisterRequest, boolean sendActivationSms);
+    User registerUser(UserRegisterRequest userRegisterRequest, boolean sendActivationSms);
 
-	void deleteUser(User user);
+    void deleteUser(User user);
 
-	Credential findUserCredentialByUserId(Long userId);
+    Credential findUserCredentialByUserId(Long userId);
 
-	Credential saveUserCredential(Credential credential);
+    Credential saveUserCredential(Credential credential);
 
-	User setUserCredentialEnabled(Long userId, boolean userCredentialsEnabled);
+    User setUserCredentialEnabled(Long userId, boolean userCredentialsEnabled);
 
-	TokenPair getUserToken(Long userId);
+    TokenPair getUserToken(Long userId);
 
-	Page<User> findUserByTenantId(Page page, String tenantId);
+    Page<User> findUserByTenantId(Page page, String tenantId);
 
-	User findUserByPhone(String phone);
-
+    User findUserByPhone(String phone);
 }

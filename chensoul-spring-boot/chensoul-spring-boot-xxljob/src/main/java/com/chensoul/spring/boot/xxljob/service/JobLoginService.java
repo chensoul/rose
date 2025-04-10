@@ -2,8 +2,7 @@ package com.chensoul.spring.boot.xxljob.service;
 
 public interface JobLoginService {
 
-	void login();
+    void login();
 
-	String getCookie();
-
+    String getCookie();
 }

@@ -10,12 +10,11 @@ import java.lang.annotation.*;
 @Documented
 public @interface SysLog {
 
-	String value();
+    String value();
 
-	String expression() default "";
+    String expression() default "";
 
-	boolean request() default true;
+    boolean request() default true;
 
-	boolean response() default false;
-
+    boolean response() default false;
 }

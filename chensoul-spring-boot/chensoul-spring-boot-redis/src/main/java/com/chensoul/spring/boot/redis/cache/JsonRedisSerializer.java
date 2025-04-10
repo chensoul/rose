@@ -20,20 +20,19 @@ import org.springframework.data.redis.serializer.SerializationException;
 
 public class JsonRedisSerializer<K, V> implements RedisSerializer<K, V> {
 
-	private final Class<V> clazz;
+    private final Class<V> clazz;
 
-	public JsonRedisSerializer(Class<V> clazz) {
-		this.clazz = clazz;
-	}
+    public JsonRedisSerializer(Class<V> clazz) {
+        this.clazz = clazz;
+    }
 
-	@Override
-	public byte[] serialize(V v) throws SerializationException {
-		return JacksonUtils.writeValueAsBytes(v);
-	}
+    @Override
+    public byte[] serialize(V v) throws SerializationException {
+        return JacksonUtils.writeValueAsBytes(v);
+    }
 
-	@Override
-	public V deserialize(K key, byte[] bytes) throws SerializationException {
-		return JacksonUtils.fromBytes(bytes, clazz);
-	}
-
+    @Override
+    public V deserialize(K key, byte[] bytes) throws SerializationException {
+        return JacksonUtils.fromBytes(bytes, clazz);
+    }
 }

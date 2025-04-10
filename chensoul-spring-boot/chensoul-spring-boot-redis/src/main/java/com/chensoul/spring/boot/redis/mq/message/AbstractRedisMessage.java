@@ -1,4 +1,3 @@
-
 /*
  *
  *  * | Licensed 未经许可不能去掉「Enjoy-iot」相关版权
@@ -23,10 +22,9 @@
  */
 package com.chensoul.spring.boot.redis.mq.message;
 
-import lombok.Data;
-
 import java.util.HashMap;
 import java.util.Map;
+import lombok.Data;
 
 /**
  * Redis 消息抽象基类
@@ -36,17 +34,16 @@ import java.util.Map;
 @Data
 public abstract class AbstractRedisMessage {
 
-	/**
-	 * 头
-	 */
-	private Map<String, String> headers = new HashMap<>();
+    /**
+     * 头
+     */
+    private Map<String, String> headers = new HashMap<>();
 
-	public String getHeader(String key) {
-		return headers.get(key);
-	}
+    public String getHeader(String key) {
+        return headers.get(key);
+    }
 
-	public void addHeader(String key, String value) {
-		headers.put(key, value);
-	}
-
+    public void addHeader(String key, String value) {
+        headers.put(key, value);
+    }
 }

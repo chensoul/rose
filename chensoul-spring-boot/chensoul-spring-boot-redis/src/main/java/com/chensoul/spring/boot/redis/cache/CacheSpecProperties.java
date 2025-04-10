@@ -15,15 +15,13 @@
  */
 package com.chensoul.spring.boot.redis.cache;
 
+import java.util.Map;
 import lombok.Getter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-
-import java.util.Map;
 
 @ConfigurationProperties(prefix = "cache")
 public class CacheSpecProperties {
 
-	@Getter
-	private Map<String, CacheSpecs> specs;
-
+    @Getter
+    private Map<String, CacheSpecs> specs;
 }

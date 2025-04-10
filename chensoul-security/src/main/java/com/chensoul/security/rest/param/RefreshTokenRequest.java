@@ -7,11 +7,10 @@ import lombok.Getter;
 @Getter
 public class RefreshTokenRequest {
 
-	private final String refreshToken;
+    private final String refreshToken;
 
-	@JsonCreator
-	public RefreshTokenRequest(@JsonProperty("refreshToken") String refreshToken) {
-		this.refreshToken = refreshToken;
-	}
-
+    @JsonCreator
+    public RefreshTokenRequest(@JsonProperty("refreshToken") String refreshToken) {
+        this.refreshToken = refreshToken;
+    }
 }

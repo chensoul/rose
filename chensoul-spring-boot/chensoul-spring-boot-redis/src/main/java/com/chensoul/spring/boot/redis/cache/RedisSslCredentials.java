@@ -24,10 +24,9 @@ import org.springframework.context.annotation.Configuration;
 @Data
 public class RedisSslCredentials {
 
-	private String certFile;
+    private String certFile;
 
-	private String userCertFile;
+    private String userCertFile;
 
-	private String userKeyFile;
-
+    private String userKeyFile;
 }

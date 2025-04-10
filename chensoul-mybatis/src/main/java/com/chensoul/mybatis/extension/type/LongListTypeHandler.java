@@ -1,4 +1,3 @@
-
 /*
  *
  *  * | Licensed 未经许可不能去掉「Enjoy-iot」相关版权
@@ -24,11 +23,6 @@
 package com.chensoul.mybatis.extension.type;
 
 import com.chensoul.core.util.StringPool;
-import org.apache.ibatis.type.JdbcType;
-import org.apache.ibatis.type.MappedJdbcTypes;
-import org.apache.ibatis.type.MappedTypes;
-import org.apache.ibatis.type.TypeHandler;
-
 import java.sql.CallableStatement;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -36,6 +30,10 @@ import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+import org.apache.ibatis.type.JdbcType;
+import org.apache.ibatis.type.MappedJdbcTypes;
+import org.apache.ibatis.type.MappedTypes;
+import org.apache.ibatis.type.TypeHandler;
 
 /**
  * List<Long> 的类型转换器实现类，对应数据库的 varchar 类型
@@ -44,37 +42,36 @@ import java.util.stream.Collectors;
 @MappedTypes(List.class)
 public class LongListTypeHandler implements TypeHandler<List<Long>> {
 
-	private static final String COMMA = ",";
+    private static final String COMMA = ",";
 
-	@Override
-	public void setParameter(PreparedStatement ps, int i, List<Long> strings, JdbcType jdbcType) throws SQLException {
-		// 设置占位符
-		ps.setString(i, strings.stream().map(String::valueOf).collect(Collectors.joining(StringPool.COMMA)));
-	}
+    @Override
+    public void setParameter(PreparedStatement ps, int i, List<Long> strings, JdbcType jdbcType) throws SQLException {
+        // 设置占位符
+        ps.setString(i, strings.stream().map(String::valueOf).collect(Collectors.joining(StringPool.COMMA)));
+    }
 
-	@Override
-	public List<Long> getResult(ResultSet rs, String columnName) throws SQLException {
-		String value = rs.getString(columnName);
-		return getResult(value);
-	}
+    @Override
+    public List<Long> getResult(ResultSet rs, String columnName) throws SQLException {
+        String value = rs.getString(columnName);
+        return getResult(value);
+    }
 
-	@Override
-	public List<Long> getResult(ResultSet rs, int columnIndex) throws SQLException {
-		String value = rs.getString(columnIndex);
-		return getResult(value);
-	}
+    @Override
+    public List<Long> getResult(ResultSet rs, int columnIndex) throws SQLException {
+        String value = rs.getString(columnIndex);
+        return getResult(value);
+    }
 
-	@Override
-	public List<Long> getResult(CallableStatement cs, int columnIndex) throws SQLException {
-		String value = cs.getString(columnIndex);
-		return getResult(value);
-	}
+    @Override
+    public List<Long> getResult(CallableStatement cs, int columnIndex) throws SQLException {
+        String value = cs.getString(columnIndex);
+        return getResult(value);
+    }
 
-	private List<Long> getResult(String value) {
-		if (value == null) {
-			return null;
-		}
-		return Arrays.stream(value.split(StringPool.COMMA)).map(Long::new).collect(Collectors.toList());
-	}
-
+    private List<Long> getResult(String value) {
+        if (value == null) {
+            return null;
+        }
+        return Arrays.stream(value.split(StringPool.COMMA)).map(Long::new).collect(Collectors.toList());
+    }
 }

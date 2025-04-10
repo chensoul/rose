@@ -1,4 +1,3 @@
-
 /*
  *
  *  * | Licensed 未经许可不能去掉「Enjoy-iot」相关版权
@@ -23,17 +22,16 @@
  */
 package com.chensoul.spring.boot.mybatis.mq.rocketmq;
 
+import static com.chensoul.core.CommonConstants.HEADER_TENANT_ID;
+
 import com.baomidou.mybatisplus.core.toolkit.Assert;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.chensoul.mybatis.tenant.util.TenantContextHolder;
+import java.util.List;
 import org.apache.rocketmq.client.hook.ConsumeMessageContext;
 import org.apache.rocketmq.client.hook.ConsumeMessageHook;
 import org.apache.rocketmq.common.message.MessageExt;
 import org.springframework.messaging.handler.invocation.InvocableHandlerMethod;
-
-import java.util.List;
-
-import static com.chensoul.core.CommonConstants.HEADER_TENANT_ID;
 
 /**
  * RocketMQ 消息队列的多租户 {@link ConsumeMessageHook} 实现类
@@ -43,26 +41,25 @@ import static com.chensoul.core.CommonConstants.HEADER_TENANT_ID;
  */
 public class TenantRocketMQConsumeMessageHook implements ConsumeMessageHook {
 
-	@Override
-	public String hookName() {
-		return getClass().getSimpleName();
-	}
+    @Override
+    public String hookName() {
+        return getClass().getSimpleName();
+    }
 
-	@Override
-	public void consumeMessageBefore(ConsumeMessageContext context) {
-		// 校验，消息必须是单条，不然设置租户可能不正确
-		List<MessageExt> messages = context.getMsgList();
-		Assert.isTrue(messages.size() == 1, "消息条数({})不正确", messages.size());
-		// 设置租户编号
-		String tenantId = messages.get(0).getUserProperty(HEADER_TENANT_ID);
-		if (StringUtils.isNotEmpty(tenantId)) {
-			TenantContextHolder.setTenantId(tenantId);
-		}
-	}
+    @Override
+    public void consumeMessageBefore(ConsumeMessageContext context) {
+        // 校验，消息必须是单条，不然设置租户可能不正确
+        List<MessageExt> messages = context.getMsgList();
+        Assert.isTrue(messages.size() == 1, "消息条数({})不正确", messages.size());
+        // 设置租户编号
+        String tenantId = messages.get(0).getUserProperty(HEADER_TENANT_ID);
+        if (StringUtils.isNotEmpty(tenantId)) {
+            TenantContextHolder.setTenantId(tenantId);
+        }
+    }
 
-	@Override
-	public void consumeMessageAfter(ConsumeMessageContext context) {
-		TenantContextHolder.clear();
-	}
-
+    @Override
+    public void consumeMessageAfter(ConsumeMessageContext context) {
+        TenantContextHolder.clear();
+    }
 }

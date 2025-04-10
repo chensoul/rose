@@ -11,12 +11,11 @@ import com.chensoul.security.util.TokenPair;
  */
 public interface TokenFactory {
 
-	TokenPair createPreVerificationTokenPair(SecurityUser securityUser);
+    TokenPair createPreVerificationTokenPair(SecurityUser securityUser);
 
-	TokenPair createTokenPair(SecurityUser securityUser);
+    TokenPair createTokenPair(SecurityUser securityUser);
 
-	SecurityUser parseAccessToken(String accessToken);
+    SecurityUser parseAccessToken(String accessToken);
 
-	SecurityUser parseRefreshToken(String refreshToken);
-
+    SecurityUser parseRefreshToken(String refreshToken);
 }

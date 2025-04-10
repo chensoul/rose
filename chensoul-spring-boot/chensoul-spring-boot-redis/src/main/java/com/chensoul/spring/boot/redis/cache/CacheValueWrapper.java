@@ -17,6 +17,5 @@ package com.chensoul.spring.boot.redis.cache;
 
 public interface CacheValueWrapper<T> {
 
-	T get();
-
+    T get();
 }

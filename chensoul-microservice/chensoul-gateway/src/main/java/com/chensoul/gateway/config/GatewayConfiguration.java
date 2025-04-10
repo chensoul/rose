@@ -14,20 +14,19 @@ import org.springframework.core.annotation.Order;
 @Configuration(proxyBeanMethods = false)
 public class GatewayConfiguration {
 
-	@Bean
-	public RequestGlobalFilter pigRequestGlobalFilter() {
-		return new RequestGlobalFilter();
-	}
+    @Bean
+    public RequestGlobalFilter pigRequestGlobalFilter() {
+        return new RequestGlobalFilter();
+    }
 
-	@Bean
-	public GlobalExceptionHandler globalExceptionHandler() {
-		return new GlobalExceptionHandler();
-	}
+    @Bean
+    public GlobalExceptionHandler globalExceptionHandler() {
+        return new GlobalExceptionHandler();
+    }
 
-	@Bean
-	@Order(Ordered.HIGHEST_PRECEDENCE)
-	public SentinelFallbackHandler sentinelGatewayExceptionHandler() {
-		return new SentinelFallbackHandler();
-	}
-
+    @Bean
+    @Order(Ordered.HIGHEST_PRECEDENCE)
+    public SentinelFallbackHandler sentinelGatewayExceptionHandler() {
+        return new SentinelFallbackHandler();
+    }
 }

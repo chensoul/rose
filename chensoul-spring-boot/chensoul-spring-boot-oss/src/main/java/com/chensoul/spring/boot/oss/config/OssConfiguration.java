@@ -19,10 +19,9 @@ import org.springframework.context.annotation.Configuration;
 @EnableConfigurationProperties(OssProperties.class)
 public class OssConfiguration {
 
-	@Bean
-	@ConditionalOnMissingBean(OssRule.class)
-	public OssRule ossRule() {
-		return new BladeOssRule();
-	}
-
+    @Bean
+    @ConditionalOnMissingBean(OssRule.class)
+    public OssRule ossRule() {
+        return new BladeOssRule();
+    }
 }

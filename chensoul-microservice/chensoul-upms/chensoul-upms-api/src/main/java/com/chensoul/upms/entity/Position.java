@@ -28,28 +28,27 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 public class Position extends TenantEntity {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	/**
-	 * 岗位编号
-	 */
-	private String code;
+    /**
+     * 岗位编号
+     */
+    private String code;
 
-	/**
-	 * 岗位名称
-	 */
-	private String name;
+    /**
+     * 岗位名称
+     */
+    private String name;
 
-	/**
-	 * 岗位排序
-	 */
-	private Integer sort;
+    /**
+     * 岗位排序
+     */
+    private Integer sort;
 
-	/**
-	 * 岗位描述
-	 */
-	private String description;
+    /**
+     * 岗位描述
+     */
+    private String description;
 
-	private Integer status;
-
+    private Integer status;
 }

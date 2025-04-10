@@ -19,46 +19,44 @@
 
 package com.chensoul.spring.boot.oss.old.storage;
 
+import java.util.UUID;
 import org.apache.commons.compress.utils.FileNameUtils;
 import org.apache.commons.lang3.StringUtils;
-
-import java.util.UUID;
 
 /**
  * @author Levin
  */
 public class FileUtils {
 
-	private static final String SEPARATOR = "/";
+    private static final String SEPARATOR = "/";
 
-	/**
-	 * 根据旧的名称生成新的名称
-	 *
-	 * @param originName originName
-	 * @return 生成结果
-	 */
-	public static String randomName(String originName) {
-		final String uuid = UUID.randomUUID().toString();
-		if (StringUtils.isBlank(originName)) {
-			return uuid;
-		}
-		final String extension = FileNameUtils.getExtension(originName);
-		return uuid + "." + extension;
-	}
+    /**
+     * 根据旧的名称生成新的名称
+     *
+     * @param originName originName
+     * @return 生成结果
+     */
+    public static String randomName(String originName) {
+        final String uuid = UUID.randomUUID().toString();
+        if (StringUtils.isBlank(originName)) {
+            return uuid;
+        }
+        final String extension = FileNameUtils.getExtension(originName);
+        return uuid + "." + extension;
+    }
 
-	public static String targetName(boolean random, String prefix, String originName) {
-		return buildTargetName(random, prefix, originName).replaceAll("//", "/");
-	}
+    public static String targetName(boolean random, String prefix, String originName) {
+        return buildTargetName(random, prefix, originName).replaceAll("//", "/");
+    }
 
-	private static String buildTargetName(boolean random, String prefix, String originName) {
-		if (!random) {
-			return StringUtils.join(SEPARATOR, originName);
-		}
-		final String name = randomName(originName);
-		if (StringUtils.isNotBlank(name)) {
-			return StringUtils.isBlank(prefix) ? name : StringUtils.join(prefix, SEPARATOR, name);
-		}
-		return StringUtils.isBlank(prefix) ? name : StringUtils.join(prefix, name);
-	}
-
+    private static String buildTargetName(boolean random, String prefix, String originName) {
+        if (!random) {
+            return StringUtils.join(SEPARATOR, originName);
+        }
+        final String name = randomName(originName);
+        if (StringUtils.isNotBlank(name)) {
+            return StringUtils.isBlank(prefix) ? name : StringUtils.join(prefix, SEPARATOR, name);
+        }
+        return StringUtils.isBlank(prefix) ? name : StringUtils.join(prefix, name);
+    }
 }

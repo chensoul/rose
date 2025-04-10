@@ -17,7 +17,6 @@ package com.chensoul.core.lambda.function;
 
 import com.chensoul.core.lambda.Sneaky;
 import com.chensoul.core.lambda.Unchecked;
-
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
@@ -29,32 +28,31 @@ import java.util.function.Supplier;
 @FunctionalInterface
 public interface CheckedSupplier<T> {
 
-	/**
-	 * @see {@link Sneaky#supplier(CheckedSupplier)}
-	 */
-	static <T> Supplier<T> sneaky(CheckedSupplier<T> supplier) {
-		return Sneaky.supplier(supplier);
-	}
+    /**
+     * @see {@link Sneaky#supplier(CheckedSupplier)}
+     */
+    static <T> Supplier<T> sneaky(CheckedSupplier<T> supplier) {
+        return Sneaky.supplier(supplier);
+    }
 
-	/**
-	 * @see {@link Unchecked#supplier(CheckedSupplier)}
-	 */
-	static <T> Supplier<T> unchecked(CheckedSupplier<T> supplier) {
-		return Unchecked.supplier(supplier);
-	}
+    /**
+     * @see {@link Unchecked#supplier(CheckedSupplier)}
+     */
+    static <T> Supplier<T> unchecked(CheckedSupplier<T> supplier) {
+        return Unchecked.supplier(supplier);
+    }
 
-	/**
-	 * @see {@link Unchecked#supplier(CheckedSupplier, Consumer)}
-	 */
-	static <T> Supplier<T> unchecked(CheckedSupplier<T> supplier, Consumer<Throwable> handler) {
-		return Unchecked.supplier(supplier, handler);
-	}
+    /**
+     * @see {@link Unchecked#supplier(CheckedSupplier, Consumer)}
+     */
+    static <T> Supplier<T> unchecked(CheckedSupplier<T> supplier, Consumer<Throwable> handler) {
+        return Unchecked.supplier(supplier, handler);
+    }
 
-	/**
-	 * Gets a result.
-	 *
-	 * @return a result
-	 */
-	T get() throws Throwable;
-
+    /**
+     * Gets a result.
+     *
+     * @return a result
+     */
+    T get() throws Throwable;
 }

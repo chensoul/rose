@@ -14,26 +14,30 @@ import com.alibaba.excel.util.StringUtils;
  */
 public class IsEnableConverter implements Converter<Boolean> {
 
-	@Override
-	public Class<Boolean> supportJavaTypeKey() {
-		return Boolean.class;
-	}
+    @Override
+    public Class<Boolean> supportJavaTypeKey() {
+        return Boolean.class;
+    }
 
-	@Override
-	public CellDataTypeEnum supportExcelTypeKey() {
-		return CellDataTypeEnum.STRING;
-	}
+    @Override
+    public CellDataTypeEnum supportExcelTypeKey() {
+        return CellDataTypeEnum.STRING;
+    }
 
-	@Override
-	public Boolean convertToJavaData(ReadCellData<?> cellData, ExcelContentProperty excelContentProperty,
-									 GlobalConfiguration globalConfiguration) throws Exception {
-		return !StringUtils.isBlank(cellData.getStringValue()) && !cellData.getStringValue().equals("禁用");
-	}
+    @Override
+    public Boolean convertToJavaData(
+            ReadCellData<?> cellData,
+            ExcelContentProperty excelContentProperty,
+            GlobalConfiguration globalConfiguration)
+            throws Exception {
+        return !StringUtils.isBlank(cellData.getStringValue())
+                && !cellData.getStringValue().equals("禁用");
+    }
 
-	@Override
-	public WriteCellData<?> convertToExcelData(Boolean value, ExcelContentProperty excelContentProperty,
-											   GlobalConfiguration globalConfiguration) throws Exception {
-		return new WriteCellData<>(value ? "启用" : "禁用");
-	}
-
+    @Override
+    public WriteCellData<?> convertToExcelData(
+            Boolean value, ExcelContentProperty excelContentProperty, GlobalConfiguration globalConfiguration)
+            throws Exception {
+        return new WriteCellData<>(value ? "启用" : "禁用");
+    }
 }

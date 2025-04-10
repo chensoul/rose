@@ -15,44 +15,42 @@
  */
 package com.chensoul.spring.boot.redis.cache;
 
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.redis.connection.RedisConnection;
-
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.redis.connection.RedisConnection;
 
 @Slf4j
 @RequiredArgsConstructor
 public class RedisCacheTransaction<K extends Serializable, V extends Serializable> implements CacheTransaction<K, V> {
 
-	private final RedisTransactionalCache<K, V> cache;
+    private final RedisTransactionalCache<K, V> cache;
 
-	private final RedisConnection connection;
+    private final RedisConnection connection;
 
-	@Override
-	public void put(K key, V value) {
-		cache.put(key, value, connection);
-	}
+    @Override
+    public void put(K key, V value) {
+        cache.put(key, value, connection);
+    }
 
-	@Override
-	public boolean commit() {
-		try {
-			List<Object> execResult = connection.exec();
-			return execResult.stream().anyMatch(Objects::nonNull);
-		} finally {
-			connection.close();
-		}
-	}
+    @Override
+    public boolean commit() {
+        try {
+            List<Object> execResult = connection.exec();
+            return execResult.stream().anyMatch(Objects::nonNull);
+        } finally {
+            connection.close();
+        }
+    }
 
-	@Override
-	public void rollback() {
-		try {
-			connection.discard();
-		} finally {
-			connection.close();
-		}
-	}
-
+    @Override
+    public void rollback() {
+        try {
+            connection.discard();
+        } finally {
+            connection.close();
+        }
+    }
 }

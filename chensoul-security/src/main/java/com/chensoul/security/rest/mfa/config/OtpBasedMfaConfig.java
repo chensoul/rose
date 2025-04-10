@@ -5,6 +5,4 @@ import lombok.EqualsAndHashCode;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
-public abstract class OtpBasedMfaConfig extends MfaConfig {
-
-}
+public abstract class OtpBasedMfaConfig extends MfaConfig {}

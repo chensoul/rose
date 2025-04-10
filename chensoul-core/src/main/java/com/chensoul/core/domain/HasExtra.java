@@ -7,6 +7,5 @@ import com.fasterxml.jackson.databind.JsonNode;
  */
 public interface HasExtra {
 
-	JsonNode getExtra();
-
+    JsonNode getExtra();
 }

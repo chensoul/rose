@@ -5,6 +5,5 @@ package com.chensoul.core.domain;
  */
 public interface HasLabel extends HasName {
 
-	String getLabel();
-
+    String getLabel();
 }

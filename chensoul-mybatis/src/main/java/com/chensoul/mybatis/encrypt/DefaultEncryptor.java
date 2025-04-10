@@ -9,12 +9,11 @@ import com.chensoul.mybatis.encrypt.util.AlgorithmUtils;
  */
 public class DefaultEncryptor implements IEncryptor {
 
-	public String encrypt(Algorithm algorithm, String password, String plaintext, Object metaObject) {
-		return AlgorithmUtils.resolve(algorithm, password, true, plaintext);
-	}
+    public String encrypt(Algorithm algorithm, String password, String plaintext, Object metaObject) {
+        return AlgorithmUtils.resolve(algorithm, password, true, plaintext);
+    }
 
-	public String decrypt(Algorithm algorithm, String password, String plaintext, Object metaObject) {
-		return AlgorithmUtils.resolve(algorithm, password, false, plaintext);
-	}
-
+    public String decrypt(Algorithm algorithm, String password, String plaintext, Object metaObject) {
+        return AlgorithmUtils.resolve(algorithm, password, false, plaintext);
+    }
 }

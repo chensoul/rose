@@ -21,20 +21,19 @@ import org.springframework.data.redis.serializer.SerializationException;
 
 public class TypedJsonRedisSerializer<K, V> implements RedisSerializer<K, V> {
 
-	private final TypeReference<V> valueTypeRef;
+    private final TypeReference<V> valueTypeRef;
 
-	public TypedJsonRedisSerializer(TypeReference<V> valueTypeRef) {
-		this.valueTypeRef = valueTypeRef;
-	}
+    public TypedJsonRedisSerializer(TypeReference<V> valueTypeRef) {
+        this.valueTypeRef = valueTypeRef;
+    }
 
-	@Override
-	public byte[] serialize(V v) throws SerializationException {
-		return JacksonUtils.writeValueAsBytes(v);
-	}
+    @Override
+    public byte[] serialize(V v) throws SerializationException {
+        return JacksonUtils.writeValueAsBytes(v);
+    }
 
-	@Override
-	public V deserialize(K key, byte[] bytes) throws SerializationException {
-		return JacksonUtils.fromBytes(bytes, valueTypeRef);
-	}
-
+    @Override
+    public V deserialize(K key, byte[] bytes) throws SerializationException {
+        return JacksonUtils.fromBytes(bytes, valueTypeRef);
+    }
 }

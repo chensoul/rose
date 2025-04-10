@@ -9,27 +9,26 @@ import org.springframework.core.Ordered;
  */
 public interface LauncherService extends Ordered, Comparable<LauncherService> {
 
-	void initialize(ConfigurableApplicationContext applicationContext);
+    void initialize(ConfigurableApplicationContext applicationContext);
 
-	/**
-	 * 获取排列顺序
-	 *
-	 * @return order
-	 */
-	@Override
-	default int getOrder() {
-		return Ordered.HIGHEST_PRECEDENCE;
-	}
+    /**
+     * 获取排列顺序
+     *
+     * @return order
+     */
+    @Override
+    default int getOrder() {
+        return Ordered.HIGHEST_PRECEDENCE;
+    }
 
-	/**
-	 * 对比排序
-	 *
-	 * @param o LauncherService
-	 * @return compare
-	 */
-	@Override
-	default int compareTo(LauncherService o) {
-		return Integer.compare(this.getOrder(), o.getOrder());
-	}
-
+    /**
+     * 对比排序
+     *
+     * @param o LauncherService
+     * @return compare
+     */
+    @Override
+    default int compareTo(LauncherService o) {
+        return Integer.compare(this.getOrder(), o.getOrder());
+    }
 }

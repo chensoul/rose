@@ -17,7 +17,6 @@ package com.chensoul.core.lambda.function;
 
 import com.chensoul.core.lambda.Sneaky;
 import com.chensoul.core.lambda.Unchecked;
-
 import java.util.Comparator;
 import java.util.function.Consumer;
 
@@ -29,30 +28,29 @@ import java.util.function.Consumer;
 @FunctionalInterface
 public interface CheckedComparator<T> {
 
-	/**
-	 * @see {@link Sneaky#comparator(CheckedComparator)}
-	 */
-	static <T> Comparator<T> sneaky(CheckedComparator<T> comparator) {
-		return Sneaky.comparator(comparator);
-	}
+    /**
+     * @see {@link Sneaky#comparator(CheckedComparator)}
+     */
+    static <T> Comparator<T> sneaky(CheckedComparator<T> comparator) {
+        return Sneaky.comparator(comparator);
+    }
 
-	/**
-	 * @see {@link Unchecked#comparator(CheckedComparator)}
-	 */
-	static <T> Comparator<T> unchecked(CheckedComparator<T> comparator) {
-		return Unchecked.comparator(comparator);
-	}
+    /**
+     * @see {@link Unchecked#comparator(CheckedComparator)}
+     */
+    static <T> Comparator<T> unchecked(CheckedComparator<T> comparator) {
+        return Unchecked.comparator(comparator);
+    }
 
-	/**
-	 * @see {@link Unchecked#comparator(CheckedComparator, Consumer)}
-	 */
-	static <T> Comparator<T> unchecked(CheckedComparator<T> comparator, Consumer<Throwable> handler) {
-		return Unchecked.comparator(comparator, handler);
-	}
+    /**
+     * @see {@link Unchecked#comparator(CheckedComparator, Consumer)}
+     */
+    static <T> Comparator<T> unchecked(CheckedComparator<T> comparator, Consumer<Throwable> handler) {
+        return Unchecked.comparator(comparator, handler);
+    }
 
-	/**
-	 * Compares its two arguments for order.
-	 */
-	int compare(T o1, T o2) throws Throwable;
-
+    /**
+     * Compares its two arguments for order.
+     */
+    int compare(T o1, T o2) throws Throwable;
 }

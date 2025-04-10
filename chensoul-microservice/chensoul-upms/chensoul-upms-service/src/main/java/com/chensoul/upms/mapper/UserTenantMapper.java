@@ -5,6 +5,4 @@ import com.chensoul.upms.entity.UserTenant;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
-public interface UserTenantMapper extends BaseMapper<UserTenant> {
-
-}
+public interface UserTenantMapper extends BaseMapper<UserTenant> {}

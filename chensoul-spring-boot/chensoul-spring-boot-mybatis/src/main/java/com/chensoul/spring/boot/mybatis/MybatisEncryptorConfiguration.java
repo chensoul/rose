@@ -20,26 +20,25 @@ import org.springframework.context.annotation.Configuration;
 @ConditionalOnProperty(prefix = "mybatis-plus.encryptor", name = "password")
 public class MybatisEncryptorConfiguration {
 
-	@Value("${mybatis-plus.encryptor.password:-123456654321}")
-	private String password;
+    @Value("${mybatis-plus.encryptor.password:-123456654321}")
+    private String password;
 
-	@Bean
-	@ConditionalOnMissingBean
-	public FieldEncryptInterceptor fieldEncryptInterceptor(IEncryptor encryptor) {
-		return new FieldEncryptInterceptor(encryptor, password);
-	}
+    @Bean
+    @ConditionalOnMissingBean
+    public FieldEncryptInterceptor fieldEncryptInterceptor(IEncryptor encryptor) {
+        return new FieldEncryptInterceptor(encryptor, password);
+    }
 
-	@Bean
-	@ConditionalOnMissingBean
-	public FieldDecryptInterceptor fieldDecryptInterceptor(@Autowired(required = false) IEncryptor encryptor,
-														   @Autowired(required = false) IFieldBinder fieldBinder) {
-		return new FieldDecryptInterceptor(encryptor, fieldBinder, password);
-	}
+    @Bean
+    @ConditionalOnMissingBean
+    public FieldDecryptInterceptor fieldDecryptInterceptor(
+            @Autowired(required = false) IEncryptor encryptor, @Autowired(required = false) IFieldBinder fieldBinder) {
+        return new FieldDecryptInterceptor(encryptor, fieldBinder, password);
+    }
 
-	@Bean
-	@ConditionalOnMissingBean
-	public IEncryptor encryptor() {
-		return new DefaultEncryptor();
-	}
-
+    @Bean
+    @ConditionalOnMissingBean
+    public IEncryptor encryptor() {
+        return new DefaultEncryptor();
+    }
 }

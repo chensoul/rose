@@ -19,24 +19,23 @@ import reactor.core.publisher.Mono;
 @Order(-1)
 public class GlobalExceptionHandler implements ErrorWebExceptionHandler {
 
-	@Override
-	public Mono<Void> handle(ServerWebExchange exchange, Throwable ex) {
-		ServerHttpResponse response = exchange.getResponse();
-		if (response.isCommitted()) {
-			return Mono.error(ex);
-		}
+    @Override
+    public Mono<Void> handle(ServerWebExchange exchange, Throwable ex) {
+        ServerHttpResponse response = exchange.getResponse();
+        if (response.isCommitted()) {
+            return Mono.error(ex);
+        }
 
-		String message;
-		if (ex instanceof NotFoundException) {
-			message = "服务未找到";
-		} else if (ex instanceof ResponseStatusException) {
-			ResponseStatusException responseStatusException = (ResponseStatusException) ex;
-			response.setStatusCode(responseStatusException.getStatus());
-			message = responseStatusException.getMessage();
-		} else {
-			message = "系统异常";
-		}
-		return WebfluxUtils.writeResponse(exchange.getResponse(), RestResponse.error(message));
-	}
-
+        String message;
+        if (ex instanceof NotFoundException) {
+            message = "服务未找到";
+        } else if (ex instanceof ResponseStatusException) {
+            ResponseStatusException responseStatusException = (ResponseStatusException) ex;
+            response.setStatusCode(responseStatusException.getStatus());
+            message = responseStatusException.getMessage();
+        } else {
+            message = "系统异常";
+        }
+        return WebfluxUtils.writeResponse(exchange.getResponse(), RestResponse.error(message));
+    }
 }

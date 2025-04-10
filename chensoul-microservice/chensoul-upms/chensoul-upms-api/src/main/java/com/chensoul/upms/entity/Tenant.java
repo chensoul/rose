@@ -4,13 +4,12 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.chensoul.mybatis.model.AuditEntity;
+import java.time.LocalDateTime;
+import javax.validation.constraints.NotBlank;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 import org.hibernate.validator.constraints.Length;
-
-import javax.validation.constraints.NotBlank;
-import java.time.LocalDateTime;
 
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -18,31 +17,30 @@ import java.time.LocalDateTime;
 @TableName("sys_tenant")
 public class Tenant extends AuditEntity {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	@TableId(value = "id", type = IdType.INPUT)
-	@NotBlank(message = "租户编号不能为空")
-	@Length(max = 20, message = "租户编号长度不能超过20")
-	private String id;
+    @TableId(value = "id", type = IdType.INPUT)
+    @NotBlank(message = "租户编号不能为空")
+    @Length(max = 20, message = "租户编号长度不能超过20")
+    private String id;
 
-	@NotBlank(message = "租户名称不能为空")
-	@Length(max = 20, message = "租户名称长度不能超过20")
-	private String name;
+    @NotBlank(message = "租户名称不能为空")
+    @Length(max = 20, message = "租户名称长度不能超过20")
+    private String name;
 
-	private String domain;
+    private String domain;
 
-	@Length(max = 256, message = "地址长度不能超过256")
-	private String address;
+    @Length(max = 256, message = "地址长度不能超过256")
+    private String address;
 
-	// 行业
-	private String industry;
+    // 行业
+    private String industry;
 
-	private LocalDateTime expireTime;
+    private LocalDateTime expireTime;
 
-	private String contactName;
+    private String contactName;
 
-	private String contactPhone;
+    private String contactPhone;
 
-	private Integer status;
-
+    private Integer status;
 }

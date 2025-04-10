@@ -19,9 +19,8 @@ import org.aspectj.lang.annotation.Aspect;
 @Slf4j
 public class TenantIgnoreAspect {
 
-	@Around("@annotation(tenantIgnore)")
-	public Object around(ProceedingJoinPoint joinPoint, TenantIgnore tenantIgnore) throws Throwable {
-		return TenantUtils.executeIgnore(() -> joinPoint.proceed());
-	}
-
+    @Around("@annotation(tenantIgnore)")
+    public Object around(ProceedingJoinPoint joinPoint, TenantIgnore tenantIgnore) throws Throwable {
+        return TenantUtils.executeIgnore(() -> joinPoint.proceed());
+    }
 }

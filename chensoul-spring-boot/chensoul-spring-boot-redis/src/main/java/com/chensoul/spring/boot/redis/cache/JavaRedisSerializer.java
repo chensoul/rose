@@ -19,17 +19,16 @@ import org.springframework.data.redis.serializer.SerializationException;
 
 public class JavaRedisSerializer<K, V> implements RedisSerializer<K, V> {
 
-	final org.springframework.data.redis.serializer.RedisSerializer<Object> serializer = org.springframework.data.redis.serializer.RedisSerializer
-		.java();
+    final org.springframework.data.redis.serializer.RedisSerializer<Object> serializer =
+            org.springframework.data.redis.serializer.RedisSerializer.java();
 
-	@Override
-	public byte[] serialize(V value) throws SerializationException {
-		return serializer.serialize(value);
-	}
+    @Override
+    public byte[] serialize(V value) throws SerializationException {
+        return serializer.serialize(value);
+    }
 
-	@Override
-	public V deserialize(K key, byte[] bytes) throws SerializationException {
-		return (V) serializer.deserialize(bytes);
-	}
-
+    @Override
+    public V deserialize(K key, byte[] bytes) throws SerializationException {
+        return (V) serializer.deserialize(bytes);
+    }
 }

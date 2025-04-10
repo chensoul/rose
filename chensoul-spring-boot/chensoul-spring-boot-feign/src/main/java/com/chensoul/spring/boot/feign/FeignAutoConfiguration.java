@@ -26,44 +26,43 @@ import org.springframework.context.annotation.Scope;
 @AutoConfiguration(before = SentinelFeignAutoConfiguration.class)
 public class FeignAutoConfiguration {
 
-	@Bean
-	@Scope("prototype")
-	@ConditionalOnMissingBean
-	@ConditionalOnProperty(name = "feign.sentinel.enabled")
-	public Feign.Builder feignSentinelBuilder() {
-		return SentinelFeign.builder();
-	}
+    @Bean
+    @Scope("prototype")
+    @ConditionalOnMissingBean
+    @ConditionalOnProperty(name = "feign.sentinel.enabled")
+    public Feign.Builder feignSentinelBuilder() {
+        return SentinelFeign.builder();
+    }
 
-	@Bean
-	@ConditionalOnMissingBean
-	public BlockExceptionHandler blockExceptionHandler(ObjectMapper objectMapper) {
-		return new UrlBlockHandler(objectMapper);
-	}
+    @Bean
+    @ConditionalOnMissingBean
+    public BlockExceptionHandler blockExceptionHandler(ObjectMapper objectMapper) {
+        return new UrlBlockHandler(objectMapper);
+    }
 
-	@Bean
-	@ConditionalOnMissingBean
-	public RequestOriginParser requestOriginParser() {
-		return new HeaderRequestOriginParser();
-	}
+    @Bean
+    @ConditionalOnMissingBean
+    public RequestOriginParser requestOriginParser() {
+        return new HeaderRequestOriginParser();
+    }
 
-	/**
-	 * set connection close header
-	 *
-	 * @return RequestInterceptor
-	 */
-	@Bean
-	public RequestInterceptor feignRequestCloseInterceptor() {
-		return new FeignRequestCloseInterceptor();
-	}
+    /**
+     * set connection close header
+     *
+     * @return RequestInterceptor
+     */
+    @Bean
+    public RequestInterceptor feignRequestCloseInterceptor() {
+        return new FeignRequestCloseInterceptor();
+    }
 
-	/**
-	 * pig feign 内部请求拦截器
-	 *
-	 * @return {@link RequestInterceptor }
-	 */
-	@Bean
-	public RequestInterceptor feignInnerRequestInterceptor() {
-		return new FeignInnerRequestInterceptor();
-	}
-
+    /**
+     * pig feign 内部请求拦截器
+     *
+     * @return {@link RequestInterceptor }
+     */
+    @Bean
+    public RequestInterceptor feignInnerRequestInterceptor() {
+        return new FeignInnerRequestInterceptor();
+    }
 }

@@ -8,17 +8,16 @@ import lombok.Data;
 @Data
 public class TopicTemplate {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	/**
-	 * basic,model,custom
-	 */
-	private String type;
+    /**
+     * basic,model,custom
+     */
+    private String type;
 
-	private String groupName;
+    private String groupName;
 
-	private String name;
+    private String name;
 
-	private String description;
-
+    private String description;
 }

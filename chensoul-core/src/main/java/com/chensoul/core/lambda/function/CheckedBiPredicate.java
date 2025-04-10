@@ -17,7 +17,6 @@ package com.chensoul.core.lambda.function;
 
 import com.chensoul.core.lambda.Sneaky;
 import com.chensoul.core.lambda.Unchecked;
-
 import java.util.function.BiPredicate;
 import java.util.function.Consumer;
 
@@ -29,35 +28,34 @@ import java.util.function.Consumer;
 @FunctionalInterface
 public interface CheckedBiPredicate<T, U> {
 
-	/**
-	 * @see {@link Sneaky#biPredicate(CheckedBiPredicate)}
-	 */
-	static <T, U> BiPredicate<T, U> sneaky(CheckedBiPredicate<T, U> predicate) {
-		return Sneaky.biPredicate(predicate);
-	}
+    /**
+     * @see {@link Sneaky#biPredicate(CheckedBiPredicate)}
+     */
+    static <T, U> BiPredicate<T, U> sneaky(CheckedBiPredicate<T, U> predicate) {
+        return Sneaky.biPredicate(predicate);
+    }
 
-	/**
-	 * @see {@link Unchecked#biPredicate(CheckedBiPredicate)}
-	 */
-	static <T, U> BiPredicate<T, U> unchecked(CheckedBiPredicate<T, U> predicate) {
-		return Unchecked.biPredicate(predicate);
-	}
+    /**
+     * @see {@link Unchecked#biPredicate(CheckedBiPredicate)}
+     */
+    static <T, U> BiPredicate<T, U> unchecked(CheckedBiPredicate<T, U> predicate) {
+        return Unchecked.biPredicate(predicate);
+    }
 
-	/**
-	 * @see {@link Unchecked#biPredicate(CheckedBiPredicate, Consumer)}
-	 */
-	static <T, U> BiPredicate<T, U> unchecked(CheckedBiPredicate<T, U> predicate, Consumer<Throwable> handler) {
-		return Unchecked.biPredicate(predicate, handler);
-	}
+    /**
+     * @see {@link Unchecked#biPredicate(CheckedBiPredicate, Consumer)}
+     */
+    static <T, U> BiPredicate<T, U> unchecked(CheckedBiPredicate<T, U> predicate, Consumer<Throwable> handler) {
+        return Unchecked.biPredicate(predicate, handler);
+    }
 
-	/**
-	 * Evaluates this predicate on the given arguments.
-	 *
-	 * @param t the first input argument
-	 * @param u the second input argument
-	 * @return {@code true} if the input arguments match the predicate, otherwise
-	 * {@code false}
-	 */
-	boolean test(T t, U u) throws Throwable;
-
+    /**
+     * Evaluates this predicate on the given arguments.
+     *
+     * @param t the first input argument
+     * @param u the second input argument
+     * @return {@code true} if the input arguments match the predicate, otherwise
+     * {@code false}
+     */
+    boolean test(T t, U u) throws Throwable;
 }

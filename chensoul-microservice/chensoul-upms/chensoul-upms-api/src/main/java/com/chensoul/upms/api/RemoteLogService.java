@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 @FeignClient(value = ServiceNameConstants.SYSTEM_SERVICE)
 public interface RemoteLogService {
 
-	@PostMapping("/log")
-	RestResponse<Boolean> saveLog(@RequestBody Log log);
-
+    @PostMapping("/log")
+    RestResponse<Boolean> saveLog(@RequestBody Log log);
 }

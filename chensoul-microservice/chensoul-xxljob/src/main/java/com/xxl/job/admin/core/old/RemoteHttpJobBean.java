@@ -1,4 +1,4 @@
-package com.xxl.job.admin.core.old;// package com.xxl.job.admin.support.jobbean;
+package com.xxl.job.admin.core.old; // package com.xxl.job.admin.support.jobbean;
 
 //
 // import com.xxl.job.admin.support.thread.JobTriggerPoolHelper;

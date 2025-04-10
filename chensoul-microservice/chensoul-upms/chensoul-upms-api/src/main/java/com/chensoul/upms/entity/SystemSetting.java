@@ -14,11 +14,10 @@ import lombok.EqualsAndHashCode;
 @TableName(value = "sys_system_setting", autoResultMap = true)
 public class SystemSetting extends BaseEntity {
 
-	private static final long serialVersionUID = -7670322981725511892L;
+    private static final long serialVersionUID = -7670322981725511892L;
 
-	private SystemSettingType type;
+    private SystemSettingType type;
 
-	@TableField(typeHandler = JacksonTypeHandler.class)
-	private JsonNode content;
-
+    @TableField(typeHandler = JacksonTypeHandler.class)
+    private JsonNode content;
 }

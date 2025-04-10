@@ -20,32 +20,34 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class TenantServiceImpl extends ServiceImpl<TenantMapper, Tenant> implements TenantService {
 
-	private final UserService userService;
+    private final UserService userService;
 
-	private final UserTenantMapper userTenantMapper;
+    private final UserTenantMapper userTenantMapper;
 
-	@Override
-	public UserTenant addUserToTenant(String tenantId, AddUserToTenantRequest request) {
-		User user = userService.getById(request.getUserId());
-		if (user == null) {
-			throw new BusinessException("用户不存在");
-		}
+    @Override
+    public UserTenant addUserToTenant(String tenantId, AddUserToTenantRequest request) {
+        User user = userService.getById(request.getUserId());
+        if (user == null) {
+            throw new BusinessException("用户不存在");
+        }
 
-		Tenant tenant = getById(tenantId);
-		if (tenant == null) {
-			throw new BusinessException("租户不存在");
-		}
+        Tenant tenant = getById(tenantId);
+        if (tenant == null) {
+            throw new BusinessException("租户不存在");
+        }
 
-		UserTenant userTenant = new UserTenant();
-		userTenant.setUserId(request.getUserId());
-		userTenant.setTenantId(tenantId);
-		userTenant.setStatus(UserStatus.PENDING.getCode());
-		userTenantMapper.insert(userTenant);
+        UserTenant userTenant = new UserTenant();
+        userTenant.setUserId(request.getUserId());
+        userTenant.setTenantId(tenantId);
+        userTenant.setStatus(UserStatus.PENDING.getCode());
+        userTenantMapper.insert(userTenant);
 
-		SpringContextHolder
-			.publishEvent(SaveEntityEvent.builder().entity(userTenant).oldEntity(null).created(true).build());
+        SpringContextHolder.publishEvent(SaveEntityEvent.builder()
+                .entity(userTenant)
+                .oldEntity(null)
+                .created(true)
+                .build());
 
-		return userTenant;
-	}
-
+        return userTenant;
+    }
 }

@@ -19,11 +19,11 @@
 
 package com.chensoul.spring.boot.oss.old.storage.properties;
 
+import static com.chensoul.spring.boot.oss.old.storage.OssOperation.OSS_CONFIG_PREFIX_TENCENT;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-
-import static com.chensoul.spring.boot.oss.old.storage.OssOperation.OSS_CONFIG_PREFIX_TENCENT;
 
 /**
  * @author Levin
@@ -34,24 +34,23 @@ import static com.chensoul.spring.boot.oss.old.storage.OssOperation.OSS_CONFIG_P
 @ConfigurationProperties(prefix = OSS_CONFIG_PREFIX_TENCENT)
 public class TencentOssProperties extends BaseOssProperties {
 
-	/**
-	 * AppId
-	 */
-	private String appId;
+    /**
+     * AppId
+     */
+    private String appId;
 
-	/**
-	 * 前缀
-	 */
-	private String prefix;
+    /**
+     * 前缀
+     */
+    private String prefix;
 
-	/**
-	 * 绑定的域名
-	 */
-	private String domain;
+    /**
+     * 绑定的域名
+     */
+    private String domain;
 
-	/**
-	 * 所属地区
-	 */
-	private String region;
-
+    /**
+     * 所属地区
+     */
+    private String region;
 }

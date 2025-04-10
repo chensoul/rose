@@ -13,9 +13,8 @@ import org.springframework.retry.support.RetryTemplate;
 @ConditionalOnClass(RetryTemplate.class)
 public class FeignRetryAutoConfiguration {
 
-	@Bean
-	public FeignRetryAspect feignRetryAspect() {
-		return new FeignRetryAspect();
-	}
-
+    @Bean
+    public FeignRetryAspect feignRetryAspect() {
+        return new FeignRetryAspect();
+    }
 }

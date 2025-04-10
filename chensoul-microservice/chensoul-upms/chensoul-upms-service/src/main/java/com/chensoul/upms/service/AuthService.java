@@ -2,8 +2,7 @@ package com.chensoul.upms.service;
 
 public interface AuthService {
 
-	void sendActivationSms(String phone);
+    void sendActivationSms(String phone);
 
-	String getActivationLink(Long userId);
-
+    String getActivationLink(Long userId);
 }

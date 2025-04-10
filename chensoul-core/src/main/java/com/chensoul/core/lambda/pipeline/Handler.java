@@ -8,6 +8,5 @@ package com.chensoul.core.lambda.pipeline;
 @FunctionalInterface
 public interface Handler<I, O> {
 
-	O process(I input);
-
+    O process(I input);
 }

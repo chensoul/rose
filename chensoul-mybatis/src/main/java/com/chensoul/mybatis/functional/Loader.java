@@ -9,8 +9,7 @@ import java.util.function.Supplier;
  */
 public interface Loader<T> {
 
-	UpdateHandler<T> loadById(Serializable id);
+    UpdateHandler<T> loadById(Serializable id);
 
-	UpdateHandler<T> load(Supplier<T> t);
-
+    UpdateHandler<T> load(Supplier<T> t);
 }

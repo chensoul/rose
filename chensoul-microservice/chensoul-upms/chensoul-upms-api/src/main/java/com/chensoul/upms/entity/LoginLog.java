@@ -1,4 +1,3 @@
-
 /*
  *
  *  * | Licensed 未经许可不能去掉「Enjoy-iot」相关版权
@@ -23,10 +22,9 @@
  */
 package com.chensoul.upms.entity;
 
-import lombok.Data;
-
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import lombok.Data;
 
 /**
  * 登录日志表
@@ -34,28 +32,27 @@ import java.time.LocalDateTime;
 @Data
 public class LoginLog implements Serializable {
 
-	private Long id;
+    private Long id;
 
-	private String name;
+    private String name;
 
-	private String serverIp;
+    private String serverIp;
 
-	private String remoteIp;
+    private String remoteIp;
 
-	private String remoteLocation;
+    private String remoteLocation;
 
-	private String traceId;
+    private String traceId;
 
-	private Long userId;
+    private Long userId;
 
-	private String username;
+    private String username;
 
-	private boolean success;
+    private boolean success;
 
-	private String exception;
+    private String exception;
 
-	private String userAgent;
+    private String userAgent;
 
-	private LocalDateTime createTime;
-
+    private LocalDateTime createTime;
 }

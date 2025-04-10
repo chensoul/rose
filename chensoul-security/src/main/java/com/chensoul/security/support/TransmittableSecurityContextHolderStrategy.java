@@ -1,4 +1,3 @@
-
 /*
  *
  *  * | Licensed 未经许可不能去掉「Enjoy-iot」相关版权
@@ -37,35 +36,34 @@ import org.springframework.util.Assert;
  */
 public class TransmittableSecurityContextHolderStrategy implements SecurityContextHolderStrategy {
 
-	/**
-	 * 使用 TransmittableThreadLocal 作为上下文
-	 */
-	private static final ThreadLocal<SecurityContext> CONTEXT_HOLDER = new TransmittableThreadLocal<>();
+    /**
+     * 使用 TransmittableThreadLocal 作为上下文
+     */
+    private static final ThreadLocal<SecurityContext> CONTEXT_HOLDER = new TransmittableThreadLocal<>();
 
-	@Override
-	public void clearContext() {
-		CONTEXT_HOLDER.remove();
-	}
+    @Override
+    public void clearContext() {
+        CONTEXT_HOLDER.remove();
+    }
 
-	@Override
-	public SecurityContext getContext() {
-		SecurityContext ctx = CONTEXT_HOLDER.get();
-		if (ctx == null) {
-			ctx = createEmptyContext();
-			CONTEXT_HOLDER.set(ctx);
-		}
-		return ctx;
-	}
+    @Override
+    public SecurityContext getContext() {
+        SecurityContext ctx = CONTEXT_HOLDER.get();
+        if (ctx == null) {
+            ctx = createEmptyContext();
+            CONTEXT_HOLDER.set(ctx);
+        }
+        return ctx;
+    }
 
-	@Override
-	public void setContext(SecurityContext context) {
-		Assert.notNull(context, "Only non-null SecurityContext instances are permitted");
-		CONTEXT_HOLDER.set(context);
-	}
+    @Override
+    public void setContext(SecurityContext context) {
+        Assert.notNull(context, "Only non-null SecurityContext instances are permitted");
+        CONTEXT_HOLDER.set(context);
+    }
 
-	@Override
-	public SecurityContext createEmptyContext() {
-		return new SecurityContextImpl();
-	}
-
+    @Override
+    public SecurityContext createEmptyContext() {
+        return new SecurityContextImpl();
+    }
 }

@@ -12,18 +12,17 @@ import org.springframework.scheduling.config.ScheduledTaskRegistrar;
 @EnableScheduling
 public class SchedulingConfiguration implements SchedulingConfigurer {
 
-	@Override
-	public void configureTasks(ScheduledTaskRegistrar taskRegistrar) {
-		taskRegistrar.setScheduler(taskScheduler());
-	}
+    @Override
+    public void configureTasks(ScheduledTaskRegistrar taskRegistrar) {
+        taskRegistrar.setScheduler(taskScheduler());
+    }
 
-	@Bean(destroyMethod = "shutdown")
-	public TaskScheduler taskScheduler() {
-		ThreadPoolTaskScheduler threadPoolScheduler = new ThreadPoolTaskScheduler();
-		threadPoolScheduler.setThreadNamePrefix("scheduler-");
-		threadPoolScheduler.setPoolSize(Runtime.getRuntime().availableProcessors());
-		threadPoolScheduler.setRemoveOnCancelPolicy(true);
-		return threadPoolScheduler;
-	}
-
+    @Bean(destroyMethod = "shutdown")
+    public TaskScheduler taskScheduler() {
+        ThreadPoolTaskScheduler threadPoolScheduler = new ThreadPoolTaskScheduler();
+        threadPoolScheduler.setThreadNamePrefix("scheduler-");
+        threadPoolScheduler.setPoolSize(Runtime.getRuntime().availableProcessors());
+        threadPoolScheduler.setRemoveOnCancelPolicy(true);
+        return threadPoolScheduler;
+    }
 }

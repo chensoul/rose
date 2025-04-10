@@ -17,7 +17,6 @@ package com.chensoul.core.lambda.function;
 
 import com.chensoul.core.lambda.Sneaky;
 import com.chensoul.core.lambda.Unchecked;
-
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
@@ -29,34 +28,33 @@ import java.util.function.Predicate;
 @FunctionalInterface
 public interface CheckedPredicate<T> {
 
-	/**
-	 * @see {@link Sneaky#predicate(CheckedPredicate)}
-	 */
-	static <T> Predicate<T> sneaky(CheckedPredicate<T> predicate) {
-		return Sneaky.predicate(predicate);
-	}
+    /**
+     * @see {@link Sneaky#predicate(CheckedPredicate)}
+     */
+    static <T> Predicate<T> sneaky(CheckedPredicate<T> predicate) {
+        return Sneaky.predicate(predicate);
+    }
 
-	/**
-	 * @see {@link Unchecked#predicate(CheckedPredicate)}
-	 */
-	static <T> Predicate<T> unchecked(CheckedPredicate<T> predicate) {
-		return Unchecked.predicate(predicate);
-	}
+    /**
+     * @see {@link Unchecked#predicate(CheckedPredicate)}
+     */
+    static <T> Predicate<T> unchecked(CheckedPredicate<T> predicate) {
+        return Unchecked.predicate(predicate);
+    }
 
-	/**
-	 * @see {@link Unchecked#predicate(CheckedPredicate, Consumer)}
-	 */
-	static <T> Predicate<T> unchecked(CheckedPredicate<T> function, Consumer<Throwable> handler) {
-		return Unchecked.predicate(function, handler);
-	}
+    /**
+     * @see {@link Unchecked#predicate(CheckedPredicate, Consumer)}
+     */
+    static <T> Predicate<T> unchecked(CheckedPredicate<T> function, Consumer<Throwable> handler) {
+        return Unchecked.predicate(function, handler);
+    }
 
-	/**
-	 * Evaluates this predicate on the given argument.
-	 *
-	 * @param t the input argument
-	 * @return {@code true} if the input argument matches the predicate, otherwise
-	 * {@code false}
-	 */
-	boolean test(T t) throws Throwable;
-
+    /**
+     * Evaluates this predicate on the given argument.
+     *
+     * @param t the input argument
+     * @return {@code true} if the input argument matches the predicate, otherwise
+     * {@code false}
+     */
+    boolean test(T t) throws Throwable;
 }

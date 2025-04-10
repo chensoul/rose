@@ -1,4 +1,3 @@
-
 /*
  *
  *  * | Licensed 未经许可不能去掉「Enjoy-iot」相关版权
@@ -39,38 +38,37 @@ import org.springframework.beans.factory.config.BeanPostProcessor;
  */
 public class TenantRocketMQInitializer implements BeanPostProcessor {
 
-	@Override
-	public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
-		if (bean instanceof DefaultRocketMQListenerContainer) {
-			DefaultRocketMQListenerContainer container = (DefaultRocketMQListenerContainer) bean;
-			initTenantConsumer(container.getConsumer());
-		} else if (bean instanceof RocketMQTemplate) {
-			RocketMQTemplate template = (RocketMQTemplate) bean;
-			initTenantProducer(template.getProducer());
-		}
-		return bean;
-	}
+    @Override
+    public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
+        if (bean instanceof DefaultRocketMQListenerContainer) {
+            DefaultRocketMQListenerContainer container = (DefaultRocketMQListenerContainer) bean;
+            initTenantConsumer(container.getConsumer());
+        } else if (bean instanceof RocketMQTemplate) {
+            RocketMQTemplate template = (RocketMQTemplate) bean;
+            initTenantProducer(template.getProducer());
+        }
+        return bean;
+    }
 
-	private void initTenantProducer(DefaultMQProducer producer) {
-		if (producer == null) {
-			return;
-		}
-		DefaultMQProducerImpl producerImpl = producer.getDefaultMQProducerImpl();
-		if (producerImpl == null) {
-			return;
-		}
-		producerImpl.registerSendMessageHook(new TenantRocketMQSendMessageHook());
-	}
+    private void initTenantProducer(DefaultMQProducer producer) {
+        if (producer == null) {
+            return;
+        }
+        DefaultMQProducerImpl producerImpl = producer.getDefaultMQProducerImpl();
+        if (producerImpl == null) {
+            return;
+        }
+        producerImpl.registerSendMessageHook(new TenantRocketMQSendMessageHook());
+    }
 
-	private void initTenantConsumer(DefaultMQPushConsumer consumer) {
-		if (consumer == null) {
-			return;
-		}
-		DefaultMQPushConsumerImpl consumerImpl = consumer.getDefaultMQPushConsumerImpl();
-		if (consumerImpl == null) {
-			return;
-		}
-		consumerImpl.registerConsumeMessageHook(new TenantRocketMQConsumeMessageHook());
-	}
-
+    private void initTenantConsumer(DefaultMQPushConsumer consumer) {
+        if (consumer == null) {
+            return;
+        }
+        DefaultMQPushConsumerImpl consumerImpl = consumer.getDefaultMQPushConsumerImpl();
+        if (consumerImpl == null) {
+            return;
+        }
+        consumerImpl.registerConsumeMessageHook(new TenantRocketMQConsumeMessageHook());
+    }
 }

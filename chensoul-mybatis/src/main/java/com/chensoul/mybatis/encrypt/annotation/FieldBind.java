@@ -12,10 +12,9 @@ import java.lang.annotation.*;
 @Target({ElementType.FIELD, ElementType.ANNOTATION_TYPE})
 public @interface FieldBind {
 
-	String sharding() default "";
+    String sharding() default "";
 
-	String type();
+    String type();
 
-	String target();
-
+    String target();
 }

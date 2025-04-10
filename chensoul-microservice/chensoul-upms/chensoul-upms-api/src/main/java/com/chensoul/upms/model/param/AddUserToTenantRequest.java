@@ -5,6 +5,5 @@ import lombok.Data;
 @Data
 public class AddUserToTenantRequest {
 
-	private String userId;
-
+    private String userId;
 }

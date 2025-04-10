@@ -8,8 +8,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 @EnableFeignClients(basePackages = "com.chensoul")
 public class UpmsApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(UpmsApplication.class, args);
-	}
-
+    public static void main(String[] args) {
+        SpringApplication.run(UpmsApplication.class, args);
+    }
 }

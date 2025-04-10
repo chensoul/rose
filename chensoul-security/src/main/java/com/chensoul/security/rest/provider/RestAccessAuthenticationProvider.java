@@ -15,25 +15,24 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class RestAccessAuthenticationProvider implements AuthenticationProvider {
 
-	private final TokenFactory tokenFactory;
+    private final TokenFactory tokenFactory;
 
-	@Override
-	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-		String accessToken = (String) authentication.getCredentials();
-		SecurityUser securityUser = authenticate(accessToken);
-		return new RestAccessAuthenticationToken(securityUser);
-	}
+    @Override
+    public Authentication authenticate(Authentication authentication) throws AuthenticationException {
+        String accessToken = (String) authentication.getCredentials();
+        SecurityUser securityUser = authenticate(accessToken);
+        return new RestAccessAuthenticationToken(securityUser);
+    }
 
-	public SecurityUser authenticate(String accessToken) throws AuthenticationException {
-		if (StringUtils.isEmpty(accessToken)) {
-			throw new BadCredentialsException("Token is invalid");
-		}
-		return tokenFactory.parseAccessToken(accessToken);
-	}
+    public SecurityUser authenticate(String accessToken) throws AuthenticationException {
+        if (StringUtils.isEmpty(accessToken)) {
+            throw new BadCredentialsException("Token is invalid");
+        }
+        return tokenFactory.parseAccessToken(accessToken);
+    }
 
-	@Override
-	public boolean supports(Class<?> authentication) {
-		return (RestAccessAuthenticationToken.class.isAssignableFrom(authentication));
-	}
-
+    @Override
+    public boolean supports(Class<?> authentication) {
+        return (RestAccessAuthenticationToken.class.isAssignableFrom(authentication));
+    }
 }

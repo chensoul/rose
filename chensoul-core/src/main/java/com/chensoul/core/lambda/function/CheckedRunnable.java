@@ -17,7 +17,6 @@ package com.chensoul.core.lambda.function;
 
 import com.chensoul.core.lambda.Sneaky;
 import com.chensoul.core.lambda.Unchecked;
-
 import java.util.function.Consumer;
 
 /**
@@ -28,30 +27,29 @@ import java.util.function.Consumer;
 @FunctionalInterface
 public interface CheckedRunnable {
 
-	/**
-	 * @see {@link Sneaky#runnable(CheckedRunnable)}
-	 */
-	static Runnable sneaky(CheckedRunnable runnable) {
-		return Sneaky.runnable(runnable);
-	}
+    /**
+     * @see {@link Sneaky#runnable(CheckedRunnable)}
+     */
+    static Runnable sneaky(CheckedRunnable runnable) {
+        return Sneaky.runnable(runnable);
+    }
 
-	/**
-	 * @see {@link Unchecked#runnable(CheckedRunnable)}
-	 */
-	static Runnable unchecked(CheckedRunnable runnable) {
-		return Unchecked.runnable(runnable);
-	}
+    /**
+     * @see {@link Unchecked#runnable(CheckedRunnable)}
+     */
+    static Runnable unchecked(CheckedRunnable runnable) {
+        return Unchecked.runnable(runnable);
+    }
 
-	/**
-	 * @see {@link Unchecked#runnable(CheckedRunnable, Consumer)}
-	 */
-	static Runnable unchecked(CheckedRunnable runnable, Consumer<Throwable> handler) {
-		return Unchecked.runnable(runnable, handler);
-	}
+    /**
+     * @see {@link Unchecked#runnable(CheckedRunnable, Consumer)}
+     */
+    static Runnable unchecked(CheckedRunnable runnable, Consumer<Throwable> handler) {
+        return Unchecked.runnable(runnable, handler);
+    }
 
-	/**
-	 * Run this runnable.
-	 */
-	void run() throws Throwable;
-
+    /**
+     * Run this runnable.
+     */
+    void run() throws Throwable;
 }

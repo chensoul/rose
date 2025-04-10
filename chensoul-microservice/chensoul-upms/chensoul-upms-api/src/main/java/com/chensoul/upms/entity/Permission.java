@@ -12,24 +12,23 @@ import lombok.experimental.Accessors;
 @TableName("sys_permission")
 public class Permission extends BaseEntity {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private Long appId;
+    private Long appId;
 
-	private Long parentId;
+    private Long parentId;
 
-	private String name;
+    private String name;
 
-	private String icon;
+    private String icon;
 
-	private String url;
+    private String url;
 
-	private String code;
+    private String code;
 
-	private Integer type;
+    private Integer type;
 
-	private Integer sort;
+    private Integer sort;
 
-	private String description;
-
+    private String description;
 }

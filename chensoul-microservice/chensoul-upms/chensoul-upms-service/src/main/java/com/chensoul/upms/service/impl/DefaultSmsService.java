@@ -8,9 +8,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class DefaultSmsService implements SmsService {
 
-	@Override
-	public void sendActivationSms(String url, String phone) {
-		log.info("{}, {}", url, phone);
-	}
-
+    @Override
+    public void sendActivationSms(String url, String phone) {
+        log.info("{}, {}", url, phone);
+    }
 }

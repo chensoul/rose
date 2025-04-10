@@ -9,14 +9,13 @@ import org.springframework.http.HttpHeaders;
  */
 public class FeignRequestCloseInterceptor implements RequestInterceptor {
 
-	/**
-	 * set connection close
-	 *
-	 * @param template
-	 */
-	@Override
-	public void apply(feign.RequestTemplate template) {
-		template.header(HttpHeaders.CONNECTION, "close");
-	}
-
+    /**
+     * set connection close
+     *
+     * @param template
+     */
+    @Override
+    public void apply(feign.RequestTemplate template) {
+        template.header(HttpHeaders.CONNECTION, "close");
+    }
 }

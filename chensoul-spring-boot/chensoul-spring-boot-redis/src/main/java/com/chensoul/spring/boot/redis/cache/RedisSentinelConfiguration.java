@@ -29,47 +29,47 @@ import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 @ConditionalOnProperty(prefix = "redis.connection", value = "type", havingValue = "sentinel")
 public class RedisSentinelConfiguration extends RedisCacheConfiguration {
 
-	@Value("${mq.sentinel.master:}")
-	private String master;
+    @Value("${mq.sentinel.master:}")
+    private String master;
 
-	@Value("${mq.sentinel.sentinels:}")
-	private String sentinels;
+    @Value("${mq.sentinel.sentinels:}")
+    private String sentinels;
 
-	@Value("${mq.sentinel.password:}")
-	private String sentinelPassword;
+    @Value("${mq.sentinel.password:}")
+    private String sentinelPassword;
 
-	@Value("${mq.sentinel.useDefaultPoolConfig:true}")
-	private boolean useDefaultPoolConfig;
+    @Value("${mq.sentinel.useDefaultPoolConfig:true}")
+    private boolean useDefaultPoolConfig;
 
-	@Value("${mq.db:}")
-	private Integer database;
+    @Value("${mq.db:}")
+    private Integer database;
 
-	@Value("${mq.ssl.enabled:false}")
-	private boolean useSsl;
+    @Value("${mq.ssl.enabled:false}")
+    private boolean useSsl;
 
-	@Value("${mq.password:}")
-	private String password;
+    @Value("${mq.password:}")
+    private String password;
 
-	public JedisConnectionFactory loadFactory() {
-		org.springframework.data.redis.connection.RedisSentinelConfiguration redisSentinelConfiguration = new org.springframework.data.redis.connection.RedisSentinelConfiguration();
-		redisSentinelConfiguration.setMaster(master);
-		redisSentinelConfiguration.setSentinels(getNodes(sentinels));
-		redisSentinelConfiguration.setSentinelPassword(sentinelPassword);
-		redisSentinelConfiguration.setPassword(password);
-		redisSentinelConfiguration.setDatabase(database);
-		return new JedisConnectionFactory(redisSentinelConfiguration, buildClientConfig());
-	}
+    public JedisConnectionFactory loadFactory() {
+        org.springframework.data.redis.connection.RedisSentinelConfiguration redisSentinelConfiguration =
+                new org.springframework.data.redis.connection.RedisSentinelConfiguration();
+        redisSentinelConfiguration.setMaster(master);
+        redisSentinelConfiguration.setSentinels(getNodes(sentinels));
+        redisSentinelConfiguration.setSentinelPassword(sentinelPassword);
+        redisSentinelConfiguration.setPassword(password);
+        redisSentinelConfiguration.setDatabase(database);
+        return new JedisConnectionFactory(redisSentinelConfiguration, buildClientConfig());
+    }
 
-	private JedisClientConfiguration buildClientConfig() {
-		JedisClientConfiguration.JedisClientConfigurationBuilder jedisClientConfigurationBuilder = JedisClientConfiguration
-			.builder();
-		if (!useDefaultPoolConfig) {
-			jedisClientConfigurationBuilder.usePooling().poolConfig(buildPoolConfig());
-		}
-		if (useSsl) {
-			jedisClientConfigurationBuilder.useSsl().sslSocketFactory(createSslSocketFactory());
-		}
-		return jedisClientConfigurationBuilder.build();
-	}
-
+    private JedisClientConfiguration buildClientConfig() {
+        JedisClientConfiguration.JedisClientConfigurationBuilder jedisClientConfigurationBuilder =
+                JedisClientConfiguration.builder();
+        if (!useDefaultPoolConfig) {
+            jedisClientConfigurationBuilder.usePooling().poolConfig(buildPoolConfig());
+        }
+        if (useSsl) {
+            jedisClientConfigurationBuilder.useSsl().sslSocketFactory(createSslSocketFactory());
+        }
+        return jedisClientConfigurationBuilder.build();
+    }
 }

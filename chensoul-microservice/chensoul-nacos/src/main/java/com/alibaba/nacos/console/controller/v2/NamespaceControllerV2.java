@@ -30,12 +30,11 @@ import com.alibaba.nacos.console.service.NamespaceOperationService;
 import com.alibaba.nacos.plugin.auth.constant.ActionTypes;
 import com.alibaba.nacos.plugin.auth.constant.SignType;
 import com.alibaba.nacos.plugin.auth.impl.constant.AuthConstants;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 import java.util.UUID;
 import java.util.regex.Pattern;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * NamespaceControllerV2.
@@ -48,99 +47,110 @@ import java.util.regex.Pattern;
 @RequestMapping("/v2/console/namespace")
 public class NamespaceControllerV2 {
 
-	private final NamespaceOperationService namespaceOperationService;
+    private final NamespaceOperationService namespaceOperationService;
 
-	public NamespaceControllerV2(NamespaceOperationService namespaceOperationService) {
-		this.namespaceOperationService = namespaceOperationService;
-	}
+    public NamespaceControllerV2(NamespaceOperationService namespaceOperationService) {
+        this.namespaceOperationService = namespaceOperationService;
+    }
 
-	private final Pattern namespaceIdCheckPattern = Pattern.compile("^[\\w-]+");
+    private final Pattern namespaceIdCheckPattern = Pattern.compile("^[\\w-]+");
 
-	private static final int NAMESPACE_ID_MAX_LENGTH = 128;
+    private static final int NAMESPACE_ID_MAX_LENGTH = 128;
 
-	/**
-	 * Get namespace list.
-	 *
-	 * @return namespace list
-	 */
-	@GetMapping("/list")
-	public Result<List<Namespace>> getNamespaceList() {
-		return Result.success(namespaceOperationService.getNamespaceList());
-	}
+    /**
+     * Get namespace list.
+     *
+     * @return namespace list
+     */
+    @GetMapping("/list")
+    public Result<List<Namespace>> getNamespaceList() {
+        return Result.success(namespaceOperationService.getNamespaceList());
+    }
 
-	/**
-	 * get namespace all info by namespace id.
-	 *
-	 * @param namespaceId namespaceId
-	 * @return namespace all info
-	 */
-	@GetMapping()
-	@Secured(resource = AuthConstants.CONSOLE_RESOURCE_NAME_PREFIX + "namespaces", action = ActionTypes.READ,
-		signType = SignType.CONSOLE)
-	public Result<NamespaceAllInfo> getNamespace(@RequestParam("namespaceId") String namespaceId)
-		throws NacosException {
-		return Result.success(namespaceOperationService.getNamespace(namespaceId));
-	}
+    /**
+     * get namespace all info by namespace id.
+     *
+     * @param namespaceId namespaceId
+     * @return namespace all info
+     */
+    @GetMapping()
+    @Secured(
+            resource = AuthConstants.CONSOLE_RESOURCE_NAME_PREFIX + "namespaces",
+            action = ActionTypes.READ,
+            signType = SignType.CONSOLE)
+    public Result<NamespaceAllInfo> getNamespace(@RequestParam("namespaceId") String namespaceId)
+            throws NacosException {
+        return Result.success(namespaceOperationService.getNamespace(namespaceId));
+    }
 
-	/**
-	 * create namespace.
-	 *
-	 * @param namespaceForm namespaceForm.
-	 * @return whether create ok
-	 */
-	@PostMapping
-	@Secured(resource = AuthConstants.CONSOLE_RESOURCE_NAME_PREFIX + "namespaces", action = ActionTypes.WRITE,
-		signType = SignType.CONSOLE)
-	public Result<Boolean> createNamespace(NamespaceForm namespaceForm) throws NacosException {
+    /**
+     * create namespace.
+     *
+     * @param namespaceForm namespaceForm.
+     * @return whether create ok
+     */
+    @PostMapping
+    @Secured(
+            resource = AuthConstants.CONSOLE_RESOURCE_NAME_PREFIX + "namespaces",
+            action = ActionTypes.WRITE,
+            signType = SignType.CONSOLE)
+    public Result<Boolean> createNamespace(NamespaceForm namespaceForm) throws NacosException {
 
-		namespaceForm.validate();
+        namespaceForm.validate();
 
-		String namespaceId = namespaceForm.getNamespaceId();
-		String namespaceName = namespaceForm.getNamespaceName();
-		String namespaceDesc = namespaceForm.getNamespaceDesc();
+        String namespaceId = namespaceForm.getNamespaceId();
+        String namespaceName = namespaceForm.getNamespaceName();
+        String namespaceDesc = namespaceForm.getNamespaceDesc();
 
-		if (StringUtils.isBlank(namespaceId)) {
-			namespaceId = UUID.randomUUID().toString();
-		} else {
-			namespaceId = namespaceId.trim();
-			if (!namespaceIdCheckPattern.matcher(namespaceId).matches()) {
-				throw new NacosApiException(HttpStatus.BAD_REQUEST.value(), ErrorCode.ILLEGAL_NAMESPACE,
-					"namespaceId [" + namespaceId + "] mismatch the pattern");
-			}
-			if (namespaceId.length() > NAMESPACE_ID_MAX_LENGTH) {
-				throw new NacosApiException(HttpStatus.BAD_REQUEST.value(), ErrorCode.ILLEGAL_NAMESPACE,
-					"too long namespaceId, over " + NAMESPACE_ID_MAX_LENGTH);
-			}
-		}
-		return Result.success(namespaceOperationService.createNamespace(namespaceId, namespaceName, namespaceDesc));
-	}
+        if (StringUtils.isBlank(namespaceId)) {
+            namespaceId = UUID.randomUUID().toString();
+        } else {
+            namespaceId = namespaceId.trim();
+            if (!namespaceIdCheckPattern.matcher(namespaceId).matches()) {
+                throw new NacosApiException(
+                        HttpStatus.BAD_REQUEST.value(),
+                        ErrorCode.ILLEGAL_NAMESPACE,
+                        "namespaceId [" + namespaceId + "] mismatch the pattern");
+            }
+            if (namespaceId.length() > NAMESPACE_ID_MAX_LENGTH) {
+                throw new NacosApiException(
+                        HttpStatus.BAD_REQUEST.value(),
+                        ErrorCode.ILLEGAL_NAMESPACE,
+                        "too long namespaceId, over " + NAMESPACE_ID_MAX_LENGTH);
+            }
+        }
+        return Result.success(namespaceOperationService.createNamespace(namespaceId, namespaceName, namespaceDesc));
+    }
 
-	/**
-	 * edit namespace.
-	 *
-	 * @param namespaceForm namespace params
-	 * @return whether edit ok
-	 */
-	@PutMapping
-	@Secured(resource = AuthConstants.CONSOLE_RESOURCE_NAME_PREFIX + "namespaces", action = ActionTypes.WRITE,
-		signType = SignType.CONSOLE)
-	public Result<Boolean> editNamespace(NamespaceForm namespaceForm) throws NacosException {
-		namespaceForm.validate();
-		return Result.success(namespaceOperationService.editNamespace(namespaceForm.getNamespaceId(),
-			namespaceForm.getNamespaceName(), namespaceForm.getNamespaceDesc()));
-	}
+    /**
+     * edit namespace.
+     *
+     * @param namespaceForm namespace params
+     * @return whether edit ok
+     */
+    @PutMapping
+    @Secured(
+            resource = AuthConstants.CONSOLE_RESOURCE_NAME_PREFIX + "namespaces",
+            action = ActionTypes.WRITE,
+            signType = SignType.CONSOLE)
+    public Result<Boolean> editNamespace(NamespaceForm namespaceForm) throws NacosException {
+        namespaceForm.validate();
+        return Result.success(namespaceOperationService.editNamespace(
+                namespaceForm.getNamespaceId(), namespaceForm.getNamespaceName(), namespaceForm.getNamespaceDesc()));
+    }
 
-	/**
-	 * delete namespace by id.
-	 *
-	 * @param namespaceId namespace ID
-	 * @return whether delete ok
-	 */
-	@DeleteMapping
-	@Secured(resource = AuthConstants.CONSOLE_RESOURCE_NAME_PREFIX + "namespaces", action = ActionTypes.WRITE,
-		signType = SignType.CONSOLE)
-	public Result<Boolean> deleteNamespace(@RequestParam("namespaceId") String namespaceId) {
-		return Result.success(namespaceOperationService.removeNamespace(namespaceId));
-	}
-
+    /**
+     * delete namespace by id.
+     *
+     * @param namespaceId namespace ID
+     * @return whether delete ok
+     */
+    @DeleteMapping
+    @Secured(
+            resource = AuthConstants.CONSOLE_RESOURCE_NAME_PREFIX + "namespaces",
+            action = ActionTypes.WRITE,
+            signType = SignType.CONSOLE)
+    public Result<Boolean> deleteNamespace(@RequestParam("namespaceId") String namespaceId) {
+        return Result.success(namespaceOperationService.removeNamespace(namespaceId));
+    }
 }

@@ -20,18 +20,17 @@ import org.springframework.scheduling.annotation.EnableAsync;
 @ConditionalOnWebApplication
 public class SysLogConfiguration {
 
-	@Bean
-	@ConditionalOnMissingBean
-	public SysLogListener sysLogListener() {
-		return new SysLogListener(sysLogInfo -> {
-			log.info("sysLogInfo: {}", sysLogInfo);
-		});
-	}
+    @Bean
+    @ConditionalOnMissingBean
+    public SysLogListener sysLogListener() {
+        return new SysLogListener(sysLogInfo -> {
+            log.info("sysLogInfo: {}", sysLogInfo);
+        });
+    }
 
-	@Bean
-	public SysLogAspect sysLogAspect() {
-		log.info("Initializing SysLogAspect");
-		return new SysLogAspect();
-	}
-
+    @Bean
+    public SysLogAspect sysLogAspect() {
+        log.info("Initializing SysLogAspect");
+        return new SysLogAspect();
+    }
 }

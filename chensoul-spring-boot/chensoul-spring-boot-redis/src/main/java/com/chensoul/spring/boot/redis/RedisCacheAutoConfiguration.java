@@ -25,50 +25,51 @@ import org.springframework.data.redis.serializer.RedisSerializer;
 @EnableConfigurationProperties(CacheProperties.class)
 public class RedisCacheAutoConfiguration {
 
-	private final RedisSerializer<Object> redisSerializer;
+    private final RedisSerializer<Object> redisSerializer;
 
-	private final CacheProperties cacheProperties;
+    private final CacheProperties cacheProperties;
 
-	private final CacheManagerCustomizers cacheManagerCustomizers;
+    private final CacheManagerCustomizers cacheManagerCustomizers;
 
-	@Bean
-	public RedisCacheManager redisCacheManager(RedisConnectionFactory connectionFactory) {
-		RedisCacheWriter redisCacheWriter = RedisCacheWriter.nonLockingRedisCacheWriter(connectionFactory)
-			.withStatisticsCollector(CacheStatisticsCollector.create());
-		RedisCacheConfiguration cacheConfiguration = redisCacheConfiguration()
-			.serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(redisSerializer));
+    @Bean
+    public RedisCacheManager redisCacheManager(RedisConnectionFactory connectionFactory) {
+        RedisCacheWriter redisCacheWriter = RedisCacheWriter.nonLockingRedisCacheWriter(connectionFactory)
+                .withStatisticsCollector(CacheStatisticsCollector.create());
+        RedisCacheConfiguration cacheConfiguration = redisCacheConfiguration()
+                .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(redisSerializer));
 
-		TtlRedisCacheManager cacheManager = new TtlRedisCacheManager(redisCacheWriter, cacheConfiguration,
-			this.cacheProperties.getCacheNames().toArray(new String[]{}));
-		cacheManager.setTransactionAware(false);
-		return this.cacheManagerCustomizers.customize(cacheManager);
-	}
+        TtlRedisCacheManager cacheManager = new TtlRedisCacheManager(
+                redisCacheWriter,
+                cacheConfiguration,
+                this.cacheProperties.getCacheNames().toArray(new String[] {}));
+        cacheManager.setTransactionAware(false);
+        return this.cacheManagerCustomizers.customize(cacheManager);
+    }
 
-	@Bean
-	@Primary
-	public RedisCacheConfiguration redisCacheConfiguration() {
-		log.info("Initializing RedisCacheConfiguration");
+    @Bean
+    @Primary
+    public RedisCacheConfiguration redisCacheConfiguration() {
+        log.info("Initializing RedisCacheConfiguration");
 
-		RedisCacheConfiguration config = RedisCacheConfiguration.defaultCacheConfig()
-			.serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(redisSerializer));
+        RedisCacheConfiguration config = RedisCacheConfiguration.defaultCacheConfig()
+                .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(redisSerializer));
 
-		CacheProperties.Redis redisProperties = this.cacheProperties.getRedis();
-		if (redisProperties.getTimeToLive() != null) {
-			config = config.entryTtl(redisProperties.getTimeToLive());
-		}
+        CacheProperties.Redis redisProperties = this.cacheProperties.getRedis();
+        if (redisProperties.getTimeToLive() != null) {
+            config = config.entryTtl(redisProperties.getTimeToLive());
+        }
 
-		if (redisProperties.getKeyPrefix() != null) {
-			config = config.prefixCacheNameWith(redisProperties.getKeyPrefix());
-		}
+        if (redisProperties.getKeyPrefix() != null) {
+            config = config.prefixCacheNameWith(redisProperties.getKeyPrefix());
+        }
 
-		if (!redisProperties.isCacheNullValues()) {
-			config = config.disableCachingNullValues();
-		}
+        if (!redisProperties.isCacheNullValues()) {
+            config = config.disableCachingNullValues();
+        }
 
-		if (!redisProperties.isUseKeyPrefix()) {
-			config = config.disableKeyPrefix();
-		}
-		return config;
-	}
-
+        if (!redisProperties.isUseKeyPrefix()) {
+            config = config.disableKeyPrefix();
+        }
+        return config;
+    }
 }

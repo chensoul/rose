@@ -1,11 +1,10 @@
 package com.chensoul.core.domain;
 
+import java.io.Serializable;
+import javax.validation.constraints.Pattern;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
-
-import javax.validation.constraints.Pattern;
-import java.io.Serializable;
 
 /**
  * @param <I>
@@ -16,21 +15,20 @@ import java.io.Serializable;
 @EqualsAndHashCode(callSuper = true)
 public abstract class ContactBased<I extends Serializable> extends BaseDataWithExtra<I> implements HasEmail, HasId<I> {
 
-	private static final long serialVersionUID = 5047448057830660988L;
+    private static final long serialVersionUID = 5047448057830660988L;
 
-	protected String phone;
+    protected String phone;
 
-	@Pattern(regexp = EMAIL_REGEXP, message = "邮箱不合法")
-	protected String email;
+    @Pattern(regexp = EMAIL_REGEXP, message = "邮箱不合法")
+    protected String email;
 
-	protected String country;
+    protected String country;
 
-	protected String state;
+    protected String state;
 
-	protected String city;
+    protected String city;
 
-	protected String address;
+    protected String address;
 
-	protected String zip;
-
+    protected String zip;
 }

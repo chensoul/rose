@@ -1,4 +1,3 @@
-
 /*
  *
  *  * | Licensed 未经许可不能去掉「Enjoy-iot」相关版权
@@ -34,13 +33,12 @@ import org.springframework.beans.factory.config.BeanPostProcessor;
  */
 public class TenantRabbitMQInitializer implements BeanPostProcessor {
 
-	@Override
-	public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
-		if (bean instanceof RabbitTemplate) {
-			RabbitTemplate rabbitTemplate = (RabbitTemplate) bean;
-			rabbitTemplate.addBeforePublishPostProcessors(new TenantRabbitMQMessagePostProcessor());
-		}
-		return bean;
-	}
-
+    @Override
+    public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
+        if (bean instanceof RabbitTemplate) {
+            RabbitTemplate rabbitTemplate = (RabbitTemplate) bean;
+            rabbitTemplate.addBeforePublishPostProcessors(new TenantRabbitMQMessagePostProcessor());
+        }
+        return bean;
+    }
 }

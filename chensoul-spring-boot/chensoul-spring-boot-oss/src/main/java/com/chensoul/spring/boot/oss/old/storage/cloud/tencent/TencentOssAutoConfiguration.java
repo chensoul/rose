@@ -19,6 +19,9 @@
 
 package com.chensoul.spring.boot.oss.old.storage.cloud.tencent;
 
+import static com.chensoul.spring.boot.oss.old.storage.OssOperation.OSS_CONFIG_PREFIX_TENCENT;
+import static com.chensoul.spring.boot.oss.old.storage.OssOperation.TENCENT_OSS_OPERATION;
+
 import com.chensoul.spring.boot.oss.old.storage.TencentOssOperation;
 import com.chensoul.spring.boot.oss.old.storage.properties.TencentOssProperties;
 import com.qcloud.cos.COSClient;
@@ -31,9 +34,6 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import static com.chensoul.spring.boot.oss.old.storage.OssOperation.OSS_CONFIG_PREFIX_TENCENT;
-import static com.chensoul.spring.boot.oss.old.storage.OssOperation.TENCENT_OSS_OPERATION;
-
 /**
  * OSS自动配置
  *
@@ -45,17 +45,16 @@ import static com.chensoul.spring.boot.oss.old.storage.OssOperation.TENCENT_OSS_
 @ConditionalOnProperty(prefix = OSS_CONFIG_PREFIX_TENCENT, name = "enabled", havingValue = "true")
 public class TencentOssAutoConfiguration {
 
-	@Bean
-	public COSClient cosClient(TencentOssProperties properties) {
-		COSCredentials credentials = new BasicCOSCredentials(properties.getAccessKey(), properties.getSecretKey());
-		// 初始化客户端配置
-		ClientConfig clientConfig = new ClientConfig(new Region(properties.getRegion()));
-		return new COSClient(credentials, clientConfig);
-	}
+    @Bean
+    public COSClient cosClient(TencentOssProperties properties) {
+        COSCredentials credentials = new BasicCOSCredentials(properties.getAccessKey(), properties.getSecretKey());
+        // 初始化客户端配置
+        ClientConfig clientConfig = new ClientConfig(new Region(properties.getRegion()));
+        return new COSClient(credentials, clientConfig);
+    }
 
-	@Bean(TENCENT_OSS_OPERATION)
-	public TencentOssOperation tencentStorageOperation(COSClient cosClient, TencentOssProperties properties) {
-		return new TencentOssOperation(cosClient, properties);
-	}
-
+    @Bean(TENCENT_OSS_OPERATION)
+    public TencentOssOperation tencentStorageOperation(COSClient cosClient, TencentOssProperties properties) {
+        return new TencentOssOperation(cosClient, properties);
+    }
 }

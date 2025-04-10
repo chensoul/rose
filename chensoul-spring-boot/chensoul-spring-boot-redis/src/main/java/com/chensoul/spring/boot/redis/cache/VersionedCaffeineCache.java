@@ -17,80 +17,78 @@ package com.chensoul.spring.boot.redis.cache;
 
 import com.chensoul.core.domain.HasVersion;
 import com.chensoul.core.util.Pair;
+import java.io.Serializable;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
 
-import java.io.Serializable;
-
 public abstract class VersionedCaffeineCache<K extends VersionedCacheKey, V extends Serializable & HasVersion>
-	extends CaffeineTransactionalCache<K, V> implements VersionedCache<K, V> {
+        extends CaffeineTransactionalCache<K, V> implements VersionedCache<K, V> {
 
-	public VersionedCaffeineCache(CacheManager cacheManager, String cacheName) {
-		super(cacheManager, cacheName);
-	}
+    public VersionedCaffeineCache(CacheManager cacheManager, String cacheName) {
+        super(cacheManager, cacheName);
+    }
 
-	@Override
-	public CacheValueWrapper<V> get(K key) {
-		Pair<Long, V> versionValuePair = doGet(key);
-		if (versionValuePair != null) {
-			return SimpleCacheValueWrapper.wrap(versionValuePair.getSecond());
-		}
-		return null;
-	}
+    @Override
+    public CacheValueWrapper<V> get(K key) {
+        Pair<Long, V> versionValuePair = doGet(key);
+        if (versionValuePair != null) {
+            return SimpleCacheValueWrapper.wrap(versionValuePair.getSecond());
+        }
+        return null;
+    }
 
-	@Override
-	public void put(K key, V value) {
-		Long version = getVersion(value);
-		if (version == null) {
-			return;
-		}
-		doPut(key, value, version);
-	}
+    @Override
+    public void put(K key, V value) {
+        Long version = getVersion(value);
+        if (version == null) {
+            return;
+        }
+        doPut(key, value, version);
+    }
 
-	private void doPut(K key, V value, Long version) {
-		lock.lock();
-		try {
-			Pair<Long, V> versionValuePair = doGet(key);
-			if (versionValuePair == null || version > versionValuePair.getFirst()) {
-				failAllTransactionsByKey(key);
-				cache.put(key, wrapValue(value, version));
-			}
-		} finally {
-			lock.unlock();
-		}
-	}
+    private void doPut(K key, V value, Long version) {
+        lock.lock();
+        try {
+            Pair<Long, V> versionValuePair = doGet(key);
+            if (versionValuePair == null || version > versionValuePair.getFirst()) {
+                failAllTransactionsByKey(key);
+                cache.put(key, wrapValue(value, version));
+            }
+        } finally {
+            lock.unlock();
+        }
+    }
 
-	private Pair<Long, V> doGet(K key) {
-		Cache.ValueWrapper source = cache.get(key);
-		return source == null ? null : (Pair<Long, V>) source.get();
-	}
+    private Pair<Long, V> doGet(K key) {
+        Cache.ValueWrapper source = cache.get(key);
+        return source == null ? null : (Pair<Long, V>) source.get();
+    }
 
-	@Override
-	public void evict(K key) {
-		lock.lock();
-		try {
-			failAllTransactionsByKey(key);
-			cache.evict(key);
-		} finally {
-			lock.unlock();
-		}
-	}
+    @Override
+    public void evict(K key) {
+        lock.lock();
+        try {
+            failAllTransactionsByKey(key);
+            cache.evict(key);
+        } finally {
+            lock.unlock();
+        }
+    }
 
-	@Override
-	public void evict(K key, Long version) {
-		if (version == null) {
-			return;
-		}
-		doPut(key, null, version);
-	}
+    @Override
+    public void evict(K key, Long version) {
+        if (version == null) {
+            return;
+        }
+        doPut(key, null, version);
+    }
 
-	@Override
-	void doPutIfAbsent(K key, V value) {
-		cache.putIfAbsent(key, wrapValue(value, getVersion(value)));
-	}
+    @Override
+    void doPutIfAbsent(K key, V value) {
+        cache.putIfAbsent(key, wrapValue(value, getVersion(value)));
+    }
 
-	private Pair<Long, V> wrapValue(V value, Long version) {
-		return Pair.of(version, value);
-	}
-
+    private Pair<Long, V> wrapValue(V value, Long version) {
+        return Pair.of(version, value);
+    }
 }

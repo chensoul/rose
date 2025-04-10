@@ -20,10 +20,9 @@ import org.springframework.lang.Nullable;
 
 public interface RedisSerializer<K, T> {
 
-	@Nullable
-	byte[] serialize(@Nullable T t) throws SerializationException;
+    @Nullable
+    byte[] serialize(@Nullable T t) throws SerializationException;
 
-	@Nullable
-	T deserialize(K key, @Nullable byte[] bytes) throws SerializationException;
-
+    @Nullable
+    T deserialize(K key, @Nullable byte[] bytes) throws SerializationException;
 }

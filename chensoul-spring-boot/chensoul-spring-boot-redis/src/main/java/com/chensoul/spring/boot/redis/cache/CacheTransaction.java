@@ -17,10 +17,9 @@ package com.chensoul.spring.boot.redis.cache;
 
 public interface CacheTransaction<K, V> {
 
-	void put(K key, V value);
+    void put(K key, V value);
 
-	boolean commit();
+    boolean commit();
 
-	void rollback();
-
+    void rollback();
 }

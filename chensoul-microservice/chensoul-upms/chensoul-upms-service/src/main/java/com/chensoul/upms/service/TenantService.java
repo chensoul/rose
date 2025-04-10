@@ -7,6 +7,5 @@ import com.chensoul.upms.model.param.AddUserToTenantRequest;
 
 public interface TenantService extends IService<Tenant> {
 
-	UserTenant addUserToTenant(String tenantId, AddUserToTenantRequest request);
-
+    UserTenant addUserToTenant(String tenantId, AddUserToTenantRequest request);
 }

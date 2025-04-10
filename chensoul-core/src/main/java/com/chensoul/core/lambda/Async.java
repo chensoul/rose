@@ -7,24 +7,21 @@ import java.util.function.Supplier;
 
 public final class Async {
 
-	private Async() {
+    private Async() {}
 
-	}
+    public static <U> CompletionStage<U> supplyAsync(Supplier<U> supplier) {
+        return SameExecutorCompletionStage.of(CompletableFuture.supplyAsync(supplier), null);
+    }
 
-	public static <U> CompletionStage<U> supplyAsync(Supplier<U> supplier) {
-		return SameExecutorCompletionStage.of(CompletableFuture.supplyAsync(supplier), null);
-	}
+    public static <U> CompletionStage<U> supplyAsync(Supplier<U> supplier, Executor executor) {
+        return SameExecutorCompletionStage.of(CompletableFuture.supplyAsync(supplier, executor), executor);
+    }
 
-	public static <U> CompletionStage<U> supplyAsync(Supplier<U> supplier, Executor executor) {
-		return SameExecutorCompletionStage.of(CompletableFuture.supplyAsync(supplier, executor), executor);
-	}
+    public static CompletionStage<Void> runAsync(Runnable runnable, Executor executor) {
+        return SameExecutorCompletionStage.of(CompletableFuture.runAsync(runnable, executor), executor);
+    }
 
-	public static CompletionStage<Void> runAsync(Runnable runnable, Executor executor) {
-		return SameExecutorCompletionStage.of(CompletableFuture.runAsync(runnable, executor), executor);
-	}
-
-	public static CompletionStage<Void> runAsync(Runnable runnable) {
-		return SameExecutorCompletionStage.of(CompletableFuture.runAsync(runnable), null);
-	}
-
+    public static CompletionStage<Void> runAsync(Runnable runnable) {
+        return SameExecutorCompletionStage.of(CompletableFuture.runAsync(runnable), null);
+    }
 }

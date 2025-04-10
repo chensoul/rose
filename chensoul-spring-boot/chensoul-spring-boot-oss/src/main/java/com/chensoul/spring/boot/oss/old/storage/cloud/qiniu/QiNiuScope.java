@@ -40,9 +40,10 @@ package com.chensoul.spring.boot.oss.old.storage.cloud.qiniu;
  */
 public enum QiNiuScope {
 
-	/**
-	 * 默认
-	 */
-	DEFAULT, REPLACE, PREFIXAL
-
+    /**
+     * 默认
+     */
+    DEFAULT,
+    REPLACE,
+    PREFIXAL
 }

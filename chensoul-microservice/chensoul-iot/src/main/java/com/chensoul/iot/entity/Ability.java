@@ -11,23 +11,22 @@ import lombok.Data;
 @Data
 public class Ability {
 
-	private Long id;
+    private Long id;
 
-	/**
-	 * 1: properties; 2: service;3: event
-	 */
-	private Integer type;
+    /**
+     * 1: properties; 2: service;3: event
+     */
+    private Integer type;
 
-	private Long categoryId;
+    private Long categoryId;
 
-	private String identifier;
+    private String identifier;
 
-	private String name;
+    private String name;
 
-	private boolean required;
+    private boolean required;
 
-	private boolean std;
+    private boolean std;
 
-	private String description;
-
+    private String description;
 }

@@ -17,13 +17,12 @@ import org.springframework.core.annotation.Order;
 @PropertySource(value = "classpath:common-config.yml", factory = YamlPropertySourceFactory.class)
 public class EnvironmentConfiguration {
 
-	@Order
-	@EventListener(WebServerInitializedEvent.class)
-	public void afterStart(WebServerInitializedEvent event) {
-		String appName = SpringContextHolder.getApplicationName();
-		int localPort = event.getWebServer().getPort();
-		String profiles = String.join(StringPool.COMMA, SpringContextHolder.getActiveProfiles());
-		log.info("{} 启动完成，当前使用的端口: {} ，启用的 Profile: {}", appName, localPort, profiles);
-	}
-
+    @Order
+    @EventListener(WebServerInitializedEvent.class)
+    public void afterStart(WebServerInitializedEvent event) {
+        String appName = SpringContextHolder.getApplicationName();
+        int localPort = event.getWebServer().getPort();
+        String profiles = String.join(StringPool.COMMA, SpringContextHolder.getActiveProfiles());
+        log.info("{} 启动完成，当前使用的端口: {} ，启用的 Profile: {}", appName, localPort, profiles);
+    }
 }

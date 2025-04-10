@@ -8,29 +8,25 @@ import java.io.Closeable;
  */
 public interface WatcherService extends Closeable {
 
-	/**
-	 * No op watcher util.
-	 *
-	 * @return the watcher util
-	 */
-	static WatcherService noOp() {
-		return new WatcherService() {
-		};
-	}
+    /**
+     * No op watcher util.
+     *
+     * @return the watcher util
+     */
+    static WatcherService noOp() {
+        return new WatcherService() {};
+    }
 
-	/**
-	 * Close.
-	 */
-	@Override
-	default void close() {
-	}
+    /**
+     * Close.
+     */
+    @Override
+    default void close() {}
 
-	/**
-	 * Start the watch.
-	 *
-	 * @param name the name
-	 */
-	default void start(final String name) {
-	}
-
+    /**
+     * Start the watch.
+     *
+     * @param name the name
+     */
+    default void start(final String name) {}
 }

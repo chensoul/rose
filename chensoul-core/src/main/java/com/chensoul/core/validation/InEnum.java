@@ -1,13 +1,13 @@
 package com.chensoul.core.validation;
 
-import javax.validation.Constraint;
-import javax.validation.Payload;
+import static java.lang.annotation.ElementType.*;
+import static java.lang.annotation.RetentionPolicy.RUNTIME;
+
 import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
-
-import static java.lang.annotation.ElementType.*;
-import static java.lang.annotation.RetentionPolicy.RUNTIME;
+import javax.validation.Constraint;
+import javax.validation.Payload;
 
 /**
  * 枚举校验注解
@@ -21,26 +21,24 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Constraint(validatedBy = {EnumCheckValidator.class})
 public @interface InEnum {
 
-	String message() default "必须在指定范围 {value}";
+    String message() default "必须在指定范围 {value}";
 
-	Class<?>[] groups() default {};
+    Class<?>[] groups() default {};
 
-	Class<? extends Payload>[] payload() default {};
+    Class<? extends Payload>[] payload() default {};
 
-	String propertyKey() default "code";
+    String propertyKey() default "code";
 
-	Class<? extends Enum<?>> value();
+    Class<? extends Enum<?>> value();
 
-	/**
-	 * 同一个元素上指定多个该注解时使用
-	 */
-	@Target({METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER, TYPE_USE})
-	@Retention(RUNTIME)
-	@Documented
-	public @interface List {
+    /**
+     * 同一个元素上指定多个该注解时使用
+     */
+    @Target({METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER, TYPE_USE})
+    @Retention(RUNTIME)
+    @Documented
+    public @interface List {
 
-		InEnum[] value();
-
-	}
-
+        InEnum[] value();
+    }
 }

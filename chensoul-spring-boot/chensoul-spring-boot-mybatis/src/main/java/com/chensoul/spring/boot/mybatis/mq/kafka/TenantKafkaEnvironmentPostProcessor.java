@@ -1,4 +1,3 @@
-
 /*
  *
  *  * | Licensed 未经许可不能去掉「Enjoy-iot」相关版权
@@ -37,23 +36,23 @@ import org.springframework.util.StringUtils;
 @Slf4j
 public class TenantKafkaEnvironmentPostProcessor implements EnvironmentPostProcessor {
 
-	private static final String PROPERTY_KEY_INTERCEPTOR_CLASSES = "spring.kafka.producer.properties.interceptor.classes";
+    private static final String PROPERTY_KEY_INTERCEPTOR_CLASSES =
+            "spring.kafka.producer.properties.interceptor.classes";
 
-	@Override
-	public void postProcessEnvironment(ConfigurableEnvironment environment, SpringApplication application) {
-		// 添加 TenantKafkaProducerInterceptor 拦截器
-		try {
-			String value = environment.getProperty(PROPERTY_KEY_INTERCEPTOR_CLASSES);
-			if (StringUtils.isEmpty(value)) {
-				value = TenantKafkaProducerInterceptor.class.getName();
-			} else {
-				value += "," + TenantKafkaProducerInterceptor.class.getName();
-			}
-			environment.getSystemProperties().put(PROPERTY_KEY_INTERCEPTOR_CLASSES, value);
-		} catch (NoClassDefFoundError ignore) {
-			// 如果触发 NoClassDefFoundError 异常，说明 TenantKafkaProducerInterceptor 类不存在，即没引入
-			// kafka-spring 依赖
-		}
-	}
-
+    @Override
+    public void postProcessEnvironment(ConfigurableEnvironment environment, SpringApplication application) {
+        // 添加 TenantKafkaProducerInterceptor 拦截器
+        try {
+            String value = environment.getProperty(PROPERTY_KEY_INTERCEPTOR_CLASSES);
+            if (StringUtils.isEmpty(value)) {
+                value = TenantKafkaProducerInterceptor.class.getName();
+            } else {
+                value += "," + TenantKafkaProducerInterceptor.class.getName();
+            }
+            environment.getSystemProperties().put(PROPERTY_KEY_INTERCEPTOR_CLASSES, value);
+        } catch (NoClassDefFoundError ignore) {
+            // 如果触发 NoClassDefFoundError 异常，说明 TenantKafkaProducerInterceptor 类不存在，即没引入
+            // kafka-spring 依赖
+        }
+    }
 }

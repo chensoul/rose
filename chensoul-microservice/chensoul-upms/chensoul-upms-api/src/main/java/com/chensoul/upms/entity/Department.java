@@ -28,38 +28,37 @@ import lombok.EqualsAndHashCode;
 @TableName("sys_dept")
 public class Department extends TenantEntity {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	/**
-	 * 父主键
-	 */
-	private Long parentId;
+    /**
+     * 父主键
+     */
+    private Long parentId;
 
-	/**
-	 * 祖级机构主键
-	 */
-	private String traceId;
+    /**
+     * 祖级机构主键
+     */
+    private String traceId;
 
-	/**
-	 * 部门名
-	 */
-	private String name;
+    /**
+     * 部门名
+     */
+    private String name;
 
-	/**
-	 * 部门全称
-	 */
-	private String fullName;
+    /**
+     * 部门全称
+     */
+    private String fullName;
 
-	/**
-	 * 排序
-	 */
-	private Integer sort;
+    /**
+     * 排序
+     */
+    private Integer sort;
 
-	/**
-	 * 备注
-	 */
-	private String description;
+    /**
+     * 备注
+     */
+    private String description;
 
-	private Integer status;
-
+    private Integer status;
 }

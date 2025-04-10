@@ -5,6 +5,5 @@ package com.chensoul.core.domain;
  */
 public interface HasName {
 
-	String getName();
-
+    String getName();
 }

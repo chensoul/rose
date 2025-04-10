@@ -19,13 +19,12 @@
 
 package com.chensoul.spring.boot.oss.old.storage.properties;
 
+import static com.chensoul.spring.boot.oss.old.storage.OssOperation.OSS_CONFIG_PREFIX_MINIO;
+
+import java.time.Duration;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-
-import java.time.Duration;
-
-import static com.chensoul.spring.boot.oss.old.storage.OssOperation.OSS_CONFIG_PREFIX_MINIO;
 
 /**
  * minio 配置信息
@@ -37,49 +36,48 @@ import static com.chensoul.spring.boot.oss.old.storage.OssOperation.OSS_CONFIG_P
 @ConfigurationProperties(prefix = OSS_CONFIG_PREFIX_MINIO)
 public class MinioOssProperties extends BaseOssProperties {
 
-	/**
-	 * minio实例的URL。包括端口。如果未提供端口，则采用HTTP端口。
-	 */
-	private String endpoint = "https://play.min.io";
+    /**
+     * minio实例的URL。包括端口。如果未提供端口，则采用HTTP端口。
+     */
+    private String endpoint = "https://play.min.io";
 
-	private int port = 80;
+    private int port = 80;
 
-	private String region;
+    private String region;
 
-	/**
-	 * minio实例上的访问
-	 */
-	private String accessKey = "Q3AM3UQ867SPQQA43P2F";
+    /**
+     * minio实例上的访问
+     */
+    private String accessKey = "Q3AM3UQ867SPQQA43P2F";
 
-	/**
-	 * minio实例上的密钥（密码）
-	 */
-	private String secretKey = "zuf+tfteSlswRu7BJ86wekitnifILbZam1KYY3TG";
+    /**
+     * minio实例上的密钥（密码）
+     */
+    private String secretKey = "zuf+tfteSlswRu7BJ86wekitnifILbZam1KYY3TG";
 
-	/**
-	 * If the scheme is not provided in {@code url} property, define if the connection is
-	 * done via HTTP or HTTPS.
-	 */
-	private Boolean secure = false;
+    /**
+     * If the scheme is not provided in {@code url} property, define if the connection is
+     * done via HTTP or HTTPS.
+     */
+    private Boolean secure = false;
 
-	/**
-	 * 在执行器上注册的度量配置前缀。
-	 */
-	private String metricName = "minio.oss";
+    /**
+     * 在执行器上注册的度量配置前缀。
+     */
+    private String metricName = "minio.oss";
 
-	/**
-	 * 连接超时时间。
-	 */
-	private Duration connectTimeout = Duration.ofSeconds(10);
+    /**
+     * 连接超时时间。
+     */
+    private Duration connectTimeout = Duration.ofSeconds(10);
 
-	/**
-	 * 写入超时时间
-	 */
-	private Duration writeTimeout = Duration.ofSeconds(60);
+    /**
+     * 写入超时时间
+     */
+    private Duration writeTimeout = Duration.ofSeconds(60);
 
-	/**
-	 * 读取超时时间
-	 */
-	private Duration readTimeout = Duration.ofSeconds(10);
-
+    /**
+     * 读取超时时间
+     */
+    private Duration readTimeout = Duration.ofSeconds(10);
 }

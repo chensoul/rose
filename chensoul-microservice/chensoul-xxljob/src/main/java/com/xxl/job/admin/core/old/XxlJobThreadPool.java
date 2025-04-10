@@ -1,4 +1,4 @@
-package com.xxl.job.admin.core.old;// package com.xxl.job.admin.support.quartz;
+package com.xxl.job.admin.core.old; // package com.xxl.job.admin.support.quartz;
 
 //
 // import org.quartz.SchedulerConfigException;

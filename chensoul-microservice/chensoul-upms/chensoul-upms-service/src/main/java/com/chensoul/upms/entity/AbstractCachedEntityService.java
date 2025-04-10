@@ -9,23 +9,22 @@ import java.io.Serializable;
 
 @Getter
 public abstract class AbstractCachedEntityService<K extends Serializable, V extends Serializable, E>
-	extends AbstractEntityService {
+        extends AbstractEntityService {
 
-	protected final TransactionalCache<K, V> cache;
+    protected final TransactionalCache<K, V> cache;
 
-	public AbstractCachedEntityService(ApplicationEventPublisher eventPublisher, TransactionalCache<K, V> cache) {
-		super(eventPublisher);
-		this.cache = cache;
-	}
+    public AbstractCachedEntityService(ApplicationEventPublisher eventPublisher, TransactionalCache<K, V> cache) {
+        super(eventPublisher);
+        this.cache = cache;
+    }
 
-	public void publishEvictEvent(E event) {
-		if (TransactionSynchronizationManager.isActualTransactionActive()) {
-			eventPublisher.publishEvent(event);
-		} else {
-			handleEvictEvent(event);
-		}
-	}
+    public void publishEvictEvent(E event) {
+        if (TransactionSynchronizationManager.isActualTransactionActive()) {
+            eventPublisher.publishEvent(event);
+        } else {
+            handleEvictEvent(event);
+        }
+    }
 
-	public abstract void handleEvictEvent(E event);
-
+    public abstract void handleEvictEvent(E event);
 }

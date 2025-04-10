@@ -5,7 +5,8 @@ package com.chensoul.mybatis.encrypt.util;
  * @since 0.0.1
  */
 public enum Algorithm {
-
-	MD5_32, MD5_16, AES, BASE64;
-
+    MD5_32,
+    MD5_16,
+    AES,
+    BASE64;
 }

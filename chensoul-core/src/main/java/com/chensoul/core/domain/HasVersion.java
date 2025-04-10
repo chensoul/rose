@@ -2,9 +2,7 @@ package com.chensoul.core.domain;
 
 public interface HasVersion {
 
-	Long getVersion();
+    Long getVersion();
 
-	default void setVersion(Long version) {
-	}
-
+    default void setVersion(Long version) {}
 }

@@ -17,7 +17,6 @@ package com.chensoul.core.lambda.function;
 
 import com.chensoul.core.lambda.Sneaky;
 import com.chensoul.core.lambda.Unchecked;
-
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
@@ -29,33 +28,32 @@ import java.util.function.Consumer;
 @FunctionalInterface
 public interface CheckedBiConsumer<T, U> {
 
-	/**
-	 * @see {@link Sneaky#biConsumer(CheckedBiConsumer)}
-	 */
-	static <T, U> BiConsumer<T, U> sneaky(CheckedBiConsumer<T, U> consumer) {
-		return Sneaky.biConsumer(consumer);
-	}
+    /**
+     * @see {@link Sneaky#biConsumer(CheckedBiConsumer)}
+     */
+    static <T, U> BiConsumer<T, U> sneaky(CheckedBiConsumer<T, U> consumer) {
+        return Sneaky.biConsumer(consumer);
+    }
 
-	/**
-	 * @see {@link Unchecked#biConsumer(CheckedBiConsumer)}
-	 */
-	static <T, U> BiConsumer<T, U> unchecked(CheckedBiConsumer<T, U> consumer) {
-		return Unchecked.biConsumer(consumer);
-	}
+    /**
+     * @see {@link Unchecked#biConsumer(CheckedBiConsumer)}
+     */
+    static <T, U> BiConsumer<T, U> unchecked(CheckedBiConsumer<T, U> consumer) {
+        return Unchecked.biConsumer(consumer);
+    }
 
-	/**
-	 * @see {@link Unchecked#biConsumer(CheckedBiConsumer, Consumer)}
-	 */
-	static <T, U> BiConsumer<T, U> unchecked(CheckedBiConsumer<T, U> consumer, Consumer<Throwable> handler) {
-		return Unchecked.biConsumer(consumer, handler);
-	}
+    /**
+     * @see {@link Unchecked#biConsumer(CheckedBiConsumer, Consumer)}
+     */
+    static <T, U> BiConsumer<T, U> unchecked(CheckedBiConsumer<T, U> consumer, Consumer<Throwable> handler) {
+        return Unchecked.biConsumer(consumer, handler);
+    }
 
-	/**
-	 * Performs this operation on the given arguments.
-	 *
-	 * @param t the first input argument
-	 * @param u the second input argument
-	 */
-	void accept(T t, U u) throws Throwable;
-
+    /**
+     * Performs this operation on the given arguments.
+     *
+     * @param t the first input argument
+     * @param u the second input argument
+     */
+    void accept(T t, U u) throws Throwable;
 }

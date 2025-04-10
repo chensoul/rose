@@ -1,16 +1,14 @@
 package com.chensoul.spring.boot.xxljob.model;
 
-import lombok.Data;
-
 import java.util.List;
+import lombok.Data;
 
 @Data
 public class XxlJobGroupPage {
 
-	private Long recordsFiltered;
+    private Long recordsFiltered;
 
-	private Long recordsTotal;
+    private Long recordsTotal;
 
-	private List<XxlJobGroup> data;
-
+    private List<XxlJobGroup> data;
 }

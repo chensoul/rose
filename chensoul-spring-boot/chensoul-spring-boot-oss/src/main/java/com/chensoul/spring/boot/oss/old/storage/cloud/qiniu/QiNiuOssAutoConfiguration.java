@@ -19,6 +19,9 @@
 
 package com.chensoul.spring.boot.oss.old.storage.cloud.qiniu;
 
+import static com.chensoul.spring.boot.oss.old.storage.OssOperation.OSS_CONFIG_PREFIX_QINIU;
+import static com.chensoul.spring.boot.oss.old.storage.OssOperation.QI_NIU_OSS_OPERATION;
+
 import com.chensoul.spring.boot.oss.old.storage.QiNiuOssOperation;
 import com.chensoul.spring.boot.oss.old.storage.cloud.qiniu.connection.QiNiuConnectionFactory;
 import com.chensoul.spring.boot.oss.old.storage.cloud.qiniu.connection.QiNiuOssClientConnectionFactory;
@@ -27,9 +30,6 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 
-import static com.chensoul.spring.boot.oss.old.storage.OssOperation.OSS_CONFIG_PREFIX_QINIU;
-import static com.chensoul.spring.boot.oss.old.storage.OssOperation.QI_NIU_OSS_OPERATION;
-
 /**
  * @author Levin
  */
@@ -37,15 +37,14 @@ import static com.chensoul.spring.boot.oss.old.storage.OssOperation.QI_NIU_OSS_O
 @ConditionalOnProperty(prefix = OSS_CONFIG_PREFIX_QINIU, name = "enabled", havingValue = "true")
 public class QiNiuOssAutoConfiguration {
 
-	@Bean
-	public QiNiuConnectionFactory qiNiuConnectionFactory(QiNiuOssProperties properties) {
-		return new QiNiuOssClientConnectionFactory(properties);
-	}
+    @Bean
+    public QiNiuConnectionFactory qiNiuConnectionFactory(QiNiuOssProperties properties) {
+        return new QiNiuOssClientConnectionFactory(properties);
+    }
 
-	@Bean(QI_NIU_OSS_OPERATION)
-	public QiNiuOssOperation qiNiuStorageOperation(QiNiuOssProperties properties,
-												   QiNiuConnectionFactory qiNiuConnectionFactory) {
-		return new QiNiuOssOperation(properties, qiNiuConnectionFactory);
-	}
-
+    @Bean(QI_NIU_OSS_OPERATION)
+    public QiNiuOssOperation qiNiuStorageOperation(
+            QiNiuOssProperties properties, QiNiuConnectionFactory qiNiuConnectionFactory) {
+        return new QiNiuOssOperation(properties, qiNiuConnectionFactory);
+    }
 }

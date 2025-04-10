@@ -1,4 +1,3 @@
-
 /*
  *
  *  * | Licensed 未经许可不能去掉「Enjoy-iot」相关版权
@@ -23,11 +22,11 @@
  */
 package com.chensoul.spring.boot.mybatis.mq.rocketmq;
 
+import static com.chensoul.core.CommonConstants.HEADER_TENANT_ID;
+
 import com.chensoul.mybatis.tenant.util.TenantContextHolder;
 import org.apache.rocketmq.client.hook.SendMessageContext;
 import org.apache.rocketmq.client.hook.SendMessageHook;
-
-import static com.chensoul.core.CommonConstants.HEADER_TENANT_ID;
 
 /**
  * RocketMQ 消息队列的多租户 {@link SendMessageHook} 实现类
@@ -38,22 +37,20 @@ import static com.chensoul.core.CommonConstants.HEADER_TENANT_ID;
  */
 public class TenantRocketMQSendMessageHook implements SendMessageHook {
 
-	@Override
-	public String hookName() {
-		return getClass().getSimpleName();
-	}
+    @Override
+    public String hookName() {
+        return getClass().getSimpleName();
+    }
 
-	@Override
-	public void sendMessageBefore(SendMessageContext sendMessageContext) {
-		String tenantId = TenantContextHolder.getTenantId();
-		if (tenantId == null) {
-			return;
-		}
-		sendMessageContext.getMessage().putUserProperty(HEADER_TENANT_ID, tenantId.toString());
-	}
+    @Override
+    public void sendMessageBefore(SendMessageContext sendMessageContext) {
+        String tenantId = TenantContextHolder.getTenantId();
+        if (tenantId == null) {
+            return;
+        }
+        sendMessageContext.getMessage().putUserProperty(HEADER_TENANT_ID, tenantId.toString());
+    }
 
-	@Override
-	public void sendMessageAfter(SendMessageContext sendMessageContext) {
-	}
-
+    @Override
+    public void sendMessageAfter(SendMessageContext sendMessageContext) {}
 }

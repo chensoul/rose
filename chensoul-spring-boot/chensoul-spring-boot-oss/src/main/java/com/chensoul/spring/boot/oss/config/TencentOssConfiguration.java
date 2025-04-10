@@ -21,15 +21,15 @@ import org.springframework.context.annotation.Bean;
 @ConditionalOnProperty(value = "oss.name", havingValue = "tencent")
 public class TencentOssConfiguration {
 
-	private final OssProperties ossProperties;
+    private final OssProperties ossProperties;
 
-	@Bean
-	public COSClient cosClient() {
-		COSCredentials credentials = new BasicCOSCredentials(ossProperties.getAccessKey(),
-			ossProperties.getSecretKey());
-		// 初始化客户端配置
-		ClientConfig clientConfig = new ClientConfig(new Region((String) ossProperties.getArgs().get("region")));
-		return new COSClient(credentials, clientConfig);
-	}
-
+    @Bean
+    public COSClient cosClient() {
+        COSCredentials credentials =
+                new BasicCOSCredentials(ossProperties.getAccessKey(), ossProperties.getSecretKey());
+        // 初始化客户端配置
+        ClientConfig clientConfig =
+                new ClientConfig(new Region((String) ossProperties.getArgs().get("region")));
+        return new COSClient(credentials, clientConfig);
+    }
 }

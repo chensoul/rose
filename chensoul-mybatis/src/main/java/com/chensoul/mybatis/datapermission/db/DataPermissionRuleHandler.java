@@ -1,4 +1,3 @@
-
 /*
  *
  *  * | Licensed 未经许可不能去掉「Enjoy-iot」相关版权
@@ -28,12 +27,11 @@ import com.baomidou.mybatisplus.extension.plugins.handler.MultiDataPermissionHan
 import com.chensoul.mybatis.datapermission.rule.DataPermissionRule;
 import com.chensoul.mybatis.datapermission.rule.DataPermissionRuleFactory;
 import com.chensoul.mybatis.util.MyBatisUtils;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import net.sf.jsqlparser.expression.Expression;
 import net.sf.jsqlparser.expression.operators.conditional.AndExpression;
 import net.sf.jsqlparser.schema.Table;
-
-import java.util.List;
 
 /**
  * 基于 {@link DataPermissionRule} 的数据权限处理器
@@ -45,34 +43,33 @@ import java.util.List;
 @RequiredArgsConstructor
 public class DataPermissionRuleHandler implements MultiDataPermissionHandler {
 
-	private final DataPermissionRuleFactory ruleFactory;
+    private final DataPermissionRuleFactory ruleFactory;
 
-	@Override
-	public Expression getSqlSegment(Table table, Expression where, String mappedStatementId) {
-		// 获得 Mapper 对应的数据权限的规则
-		List<DataPermissionRule> rules = ruleFactory.getDataPermissionRule(mappedStatementId);
-		if (CollectionUtils.isEmpty(rules)) {
-			return null;
-		}
+    @Override
+    public Expression getSqlSegment(Table table, Expression where, String mappedStatementId) {
+        // 获得 Mapper 对应的数据权限的规则
+        List<DataPermissionRule> rules = ruleFactory.getDataPermissionRule(mappedStatementId);
+        if (CollectionUtils.isEmpty(rules)) {
+            return null;
+        }
 
-		// 生成条件
-		Expression allExpression = null;
-		for (DataPermissionRule rule : rules) {
-			// 判断表名是否匹配
-			String tableName = MyBatisUtils.getTableName(table);
-			if (!rule.getTableNames().contains(tableName)) {
-				continue;
-			}
+        // 生成条件
+        Expression allExpression = null;
+        for (DataPermissionRule rule : rules) {
+            // 判断表名是否匹配
+            String tableName = MyBatisUtils.getTableName(table);
+            if (!rule.getTableNames().contains(tableName)) {
+                continue;
+            }
 
-			// 单条规则的条件
-			Expression oneExpress = rule.getExpression(tableName, table.getAlias());
-			if (oneExpress == null) {
-				continue;
-			}
-			// 拼接到 allExpression 中
-			allExpression = allExpression == null ? oneExpress : new AndExpression(allExpression, oneExpress);
-		}
-		return allExpression;
-	}
-
+            // 单条规则的条件
+            Expression oneExpress = rule.getExpression(tableName, table.getAlias());
+            if (oneExpress == null) {
+                continue;
+            }
+            // 拼接到 allExpression 中
+            allExpression = allExpression == null ? oneExpress : new AndExpression(allExpression, oneExpress);
+        }
+        return allExpression;
+    }
 }

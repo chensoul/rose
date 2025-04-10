@@ -13,12 +13,11 @@ import com.chensoul.upms.entity.OAuth2Client;
  */
 public interface OAuth2ClientService extends IService<OAuth2Client> {
 
-	OAuth2Client getByClientId(String clientId);
+    OAuth2Client getByClientId(String clientId);
 
-	Boolean removeClientDetailsById(Long id);
+    Boolean removeClientDetailsById(Long id);
 
-	Boolean updateClientDetailsById(OAuth2Client OAuth2Client);
+    Boolean updateClientDetailsById(OAuth2Client OAuth2Client);
 
-	boolean saveClientDetails(OAuth2Client OAuth2Client);
-
+    boolean saveClientDetails(OAuth2Client OAuth2Client);
 }
