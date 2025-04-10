@@ -1,0 +1,45 @@
+services:
+  chensoul-monitor:
+    build:
+      context: ./chensoul-microservice/chensoul-monitor
+    restart: always
+    image: chensoul/chensoul-monitor
+    container_name: chensoul-monitor
+    ports:
+      - "7010:7010"
+
+  chensoul-xxljob:
+    build:
+      context: ./chensoul-microservice/chensoul-xxljob
+    image: chensoul/chensoul-xxljob
+    container_name: chensoul-xxljob
+    restart: always
+    ports:
+      - "7020:7020"
+
+  chensoul-gateway:
+    build:
+      context: ./chensoul-microservice/chensoul-gateway
+    restart: always
+    container_name: chensoul-gateway
+    image: chensoul/chensoul-gateway
+    ports:
+      - "9999:9999"
+
+  chensoul-auth:
+    build:
+      context: ./chensoul-microservice/chensoul-auth
+    restart: always
+    container_name: chensoul-auth
+    image: chensoul/chensoul-auth
+    ports:
+      - "3000:3000"
+
+  chensoul-upms:
+    build:
+      context: ./chensoul-microservice/chensoul-upms/chensoul-upms-service
+    restart: always
+    container_name: chensoul-upms
+    image: chensoul/chensoul-upms-service
+    ports:
+      - "8010:8010"

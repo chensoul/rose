@@ -29,7 +29,7 @@ services:
       MYSQL_ROOT_HOST: "%"
       MYSQL_ROOT_PASSWORD: root
     volumes:
-      - ./docs/sql/chensoul.sql:/docker-entrypoint-initdb.d/chensoul.sql:ro
+      - ./sql/chensoul.sql:/docker-entrypoint-initdb.d/chensoul.sql:ro
     healthcheck:
       test: [ "CMD", "mysqladmin" ,"ping", "-h", "localhost" ]
       interval: 5s
@@ -162,48 +162,3 @@ services:
     restart: always
     ports:
       - "8858:8858"
-
-  chensoul-monitor:
-    build:
-      context: ./chensoul-visual/chensoul-monitor
-    restart: always
-    image: chensoul/chensoul-monitor
-    container_name: chensoul-monitor
-    ports:
-      - "7010:7010"
-
-  chensoul-xxljob:
-    build:
-      context: ./chensoul-visual/chensoul-xxljob
-    image: chensoul/chensoul-xxljob
-    container_name: chensoul-xxljob
-    restart: always
-    ports:
-      - "7020:7020"
-
-  chensoul-gateway:
-    build:
-      context: ./chensoul-gateway
-    restart: always
-    container_name: chensoul-gateway
-    image: chensoul/chensoul-gateway
-    ports:
-      - "9999:9999"
-
-  chensoul-auth:
-    build:
-      context: ./chensoul-auth
-    restart: always
-    container_name: chensoul-auth
-    image: chensoul/chensoul-auth
-    ports:
-      - "3000:3000"
-
-  chensoul-upms:
-    build:
-      context: ./chensoul-upms/chensoul-upms-service
-    restart: always
-    container_name: chensoul-upms
-    image: chensoul/chensoul-upms-service
-    ports:
-      - "8010:8010"
