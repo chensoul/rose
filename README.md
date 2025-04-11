@@ -1,4 +1,15 @@
-# chensoul-cloud
+# rose
+
+[![Build Status](https://github.com/chensoul/rose/actions/workflows/maven.yml/badge.svg)](https://github.com/chensoul/rose-framework/actions/workflows/maven.yml)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.chensoul/rose/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.chensoul/rose)
+[![sonar-quality-gate](https://sonarcloud.io/api/project_badges/measure?project=rose&metric=alert_status)](https://sonarcloud.io/dashboard?id=rose-framework)
+[![sonar-coverage](https://sonarcloud.io/api/project_badges/measure?project=rose&metric=coverage)](https://sonarcloud.io/dashboard?id=rose)
+
+## Prerequisites
+
+- Jdk 8+
+- Maven 3.4.5
 
 ## TODO
 
@@ -21,7 +32,11 @@
 | Spring Boot Admin    | 2.7.16     | <img src="https://img.shields.io/maven-metadata/v?label=&color=blue&versionPrefix=2&metadataUrl=https://repo1.maven.org/maven2/de/codecentric/spring-boot-admin-dependencies/maven-metadata.xml">                            |       |
 | MyBatis Plus	        | 3.5.11     | <img src="https://img.shields.io/maven-metadata/v?label=&color=blue&versionPrefix=3&metadataUrl=https://repo1.maven.org/maven2/com/baomidou/mybatis-plus-bom/maven-metadata.xml">                                            |       |
 | SpringDoc OpenAPI    | 1.8.0      | <img src="https://img.shields.io/maven-metadata/v?label=&color=blue&versionPrefix=1&metadataUrl=https://repo1.maven.org/maven2/org/springdoc/springdoc-openapi/maven-metadata.xml">                                          
-| Nacos                | 2.5.1      | <img src="https://img.shields.io/maven-metadata/v?label=&color=blue&versionPrefix=2&metadataUrl=https://repo1.maven.org/maven2/com/alibaba/nacos/nacos-all/maven-metadata.xml">                                              
+| Nacos                | 2.2.0      | <img src="https://img.shields.io/maven-metadata/v?label=&color=blue&versionPrefix=2&metadataUrl=https://repo1.maven.org/maven2/com/alibaba/nacos/nacos-all/maven-metadata.xml">                                              
+
+说明：
+
+- Spring Boot 2.7.18 对应使用的 nacos 版本为 2.2.0
 
 ## Integrations
 
@@ -78,6 +93,31 @@ spring-boot-microservice-best-practices: https://github.com/abhisheksr01/spring-
 - GitHub Flow
 - GitLab Flow
 
+## 开发原则
+
+1. 每开发一个功能，要包含详细的自动化测试
+2. 每发现一个bug，修复时要包含详细的自动化测试，测试内容包含能复现 bug 的测试
+3. [十二要素应用宣言](https://12factor.net/zh_cn/)
+    1. 基准代码：一份基准代码，多份部署。每个应用只对应一份基准代码，但可以同时存在多份部署
+    2. 依赖：显式声明依赖关系
+    3. 配置：**代码和配置严格分离，将应用的配置存储于环境变量中**
+    4. 后端服务：把后端服务当作附加资源
+    5. 构建，发布，运行：**严格区分构建，发布，运行这三个步骤**
+    6. 进程：以一个或多个无状态进程运行应用
+    7. 端口绑定：通过端口绑定来提供服务
+    8. 并发：通过进程模型进行扩展
+    9. 易处理：快速启动和优雅终止可最大化健壮性
+    10. 开发环境与线上环境等价：尽可能的保持开发，预发布，线上环境相同
+    11. 日志：把日志当作事件流
+    12. 管理进程：后台管理任务当作一次性进程运行
+4. 评价一个项目是否优秀的其中一个因素：在不修改基础代码和基础数据的情况下，是否可以随时开源
+
 ## Preference
 
+- https://github.com/microsphere-projects
+- https://gitee.com/battcn/wemirr-platform
+- https://gitee.com/zhijiantianya/ruoyi-vue-pro
+- https://gitee.com/zhijiantianya/yudao-cloud
+- https://github.com/cenbow/dante-engine
+- https://gitee.com/log4j/pig
 - https://gitee.com/open-enjoy/enjoy-iot

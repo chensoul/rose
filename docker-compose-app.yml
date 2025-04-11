@@ -1,45 +1,45 @@
 services:
-  chensoul-monitor:
+  rose-monitor:
     build:
-      context: ./chensoul-microservice/chensoul-monitor
+      context: ./rose-microservice/rose-monitor
     restart: always
-    image: chensoul/chensoul-monitor
-    container_name: chensoul-monitor
+    image: chensoul/rose-monitor
+    container_name: rose-monitor
     ports:
       - "7010:7010"
 
-  chensoul-xxljob:
+  rose-xxljob:
     build:
-      context: ./chensoul-microservice/chensoul-xxljob
-    image: chensoul/chensoul-xxljob
-    container_name: chensoul-xxljob
+      context: ./rose-microservice/rose-xxljob
+    image: chensoul/rose-xxljob
+    container_name: rose-xxljob
     restart: always
     ports:
       - "7020:7020"
 
-  chensoul-gateway:
+  rose-gateway:
     build:
-      context: ./chensoul-microservice/chensoul-gateway
+      context: ./rose-microservice/rose-gateway
     restart: always
-    container_name: chensoul-gateway
-    image: chensoul/chensoul-gateway
+    container_name: rose-gateway
+    image: chensoul/rose-gateway
     ports:
       - "9999:9999"
 
-  chensoul-auth:
+  rose-auth:
     build:
-      context: ./chensoul-microservice/chensoul-auth
+      context: ./rose-microservice/rose-auth
     restart: always
-    container_name: chensoul-auth
-    image: chensoul/chensoul-auth
+    container_name: rose-auth
+    image: chensoul/rose-auth
     ports:
       - "3000:3000"
 
-  chensoul-upms:
+  rose-upms:
     build:
-      context: ./chensoul-microservice/chensoul-upms/chensoul-upms-service
+      context: ./rose-microservice/rose-upms/rose-upms-service
     restart: always
-    container_name: chensoul-upms
-    image: chensoul/chensoul-upms-service
+    container_name: rose-upms
+    image: chensoul/rose-upms-service
     ports:
       - "8010:8010"

@@ -3,7 +3,8 @@ DROP DATABASE IF EXISTS `nacos`;
 
 create database `nacos` default character set utf8mb4 collate utf8mb4_general_ci;
 
-USE `nacos`;
+use nacos;
+
 /******************************************/
 /*   表名称 = config_info                  */
 /******************************************/

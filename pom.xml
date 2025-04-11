@@ -4,28 +4,28 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>com.chensoul</groupId>
-        <artifactId>chensoul-build</artifactId>
+        <groupId>com.chensoul.rose</groupId>
+        <artifactId>rose-build</artifactId>
         <version>0.0.1-SNAPSHOT</version>
-        <relativePath>./chensoul-build/pom.xml</relativePath>
+        <relativePath>./rose-build/pom.xml</relativePath>
     </parent>
-    <artifactId>chensoul-cloud</artifactId>
+    <artifactId>rose</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <scm>
-        <url>https://github.com/chensoul/chensoul-cloud</url>
-        <connection>git://github.com/chensoul/chensoul-cloud.git</connection>
-        <developerConnection>git@github.com/chensoul/chensoul-cloud.git</developerConnection>
+        <url>https://github.com/chensoul/rose</url>
+        <connection>git://github.com/chensoul/rose.git</connection>
+        <developerConnection>git@github.com/chensoul/rose.git</developerConnection>
     </scm>
 
     <issueManagement>
         <system>Github Issues</system>
-        <url>https://github.com/chensoul/chensoul-cloud/issues</url>
+        <url>https://github.com/chensoul/rose/issues</url>
     </issueManagement>
     <ciManagement>
         <system>Github Actions</system>
-        <url>https://github.com/chensoul/chensoul-cloud/actions</url>
+        <url>https://github.com/chensoul/rose/actions</url>
     </ciManagement>
 
     <organization>
@@ -49,11 +49,9 @@
     <properties>
         <spring-boot.version>2.7.18</spring-boot.version>
         <spring-cloud.version>2021.0.9</spring-cloud.version>
-        <spring-cloud-alibaba.version>2021.1</spring-cloud-alibaba.version>
-        <spring-boot-admin.version>2.7.16</spring-boot-admin.version>
+        <spring-cloud-alibaba.version>2021.0.6.2</spring-cloud-alibaba.version>
         <spring.authorization.version>0.4.5</spring.authorization.version>
-        <spring.framework.version>5.3.39</spring.framework.version>
-        <spring.security.version>5.8.16</spring.security.version>
+        <spring-boot-admin.version>2.7.16</spring-boot-admin.version>
         <mybatis-plus.version>3.5.11</mybatis-plus.version>
         <dynamic-datasource.version>4.3.1</dynamic-datasource.version>
         <mybatis-plus-join.version>1.5.3</mybatis-plus-join.version>
@@ -70,42 +68,19 @@
     </properties>
 
     <modules>
-        <module>chensoul-build</module>
-        <module>chensoul-dependencies</module>
-        <module>chensoul-core</module>
-        <module>chensoul-ip2region</module>
-        <module>chensoul-excel</module>
-        <module>chensoul-security</module>
-        <module>chensoul-mybatis</module>
-        <module>chensoul-spring-boot</module>
-        <module>chensoul-microservice</module>
+        <module>rose-build</module>
+        <module>rose-dependencies</module>
+        <module>rose-core</module>
+        <module>rose-ip2region</module>
+        <module>rose-excel</module>
+        <module>rose-security</module>
+        <module>rose-mybatis</module>
+        <module>rose-spring-boot</module>
+        <module>rose-microservice</module>
     </modules>
 
     <dependencyManagement>
         <dependencies>
-            <dependency>
-                <groupId>io.netty</groupId>
-                <artifactId>netty-bom</artifactId>
-                <version>${netty.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-framework-bom</artifactId> <!-- JDK8 版本独有：保证 Spring Framework 尽量高 -->
-                <version>${spring.framework.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework.security</groupId>
-                <artifactId>spring-security-bom</artifactId> <!-- JDK8 版本独有：保证 Spring Security 尽量高 -->
-                <version>${spring.security.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-dependencies</artifactId>
@@ -124,6 +99,13 @@
                 <groupId>com.alibaba.cloud</groupId>
                 <artifactId>spring-cloud-alibaba-dependencies</artifactId>
                 <version>${spring-cloud-alibaba.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>io.netty</groupId>
+                <artifactId>netty-bom</artifactId>
+                <version>${netty.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>

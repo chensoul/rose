@@ -14,10 +14,10 @@ services:
       - "9001:9000"
       - "9000:9000"
 
-  chensoul-mysql:
+  rose-mysql:
     image: mysql:8
     restart: always
-    container_name: chensoul-mysql
+    container_name: rose-mysql
     command: [
       'mysqld',
       '--log-bin=mysql-bin',
@@ -29,7 +29,7 @@ services:
       MYSQL_ROOT_HOST: "%"
       MYSQL_ROOT_PASSWORD: 123456
     volumes:
-      - ./sql/chensoul.sql:/docker-entrypoint-initdb.d/chensoul.sql:ro
+      - ./sql/rose.sql:/docker-entrypoint-initdb.d/rose.sql:ro
     healthcheck:
       test: [ "CMD", "mysqladmin" ,"ping", "-h", "localhost" ]
       interval: 5s
@@ -38,14 +38,14 @@ services:
     ports:
       - "3306:3306"
 
-  chensoul-canal-server:
+  rose-canal-server:
     image: canal/canal-server
-    container_name: chensoul-canal-server
+    container_name: rose-canal-server
     ports:
       - "11111:11111"
     environment:
       - canal.auto.scan=false
-      - canal.instance.master.address=chensoul-mysql:3306
+      - canal.instance.master.address=rose-mysql:3306
       - canal.instance.dbUsername=canal
       - canal.instance.dbPassword=canal
       - canal.admin.register.auto=true
@@ -54,21 +54,21 @@ services:
       - canal.instance.tsdb.enable=false
       - canal.instance.connectionCharset=UTF-8
 
-  chensoul-canal-admin:
+  rose-canal-admin:
     image: canal/canal-admin
-    container_name: chensoul-canal-admin
+    container_name: rose-canal-admin
     ports:
       - "8089:8089"
     environment:
       - canal.adminUser=admin
       - canal.adminPasswd=123456
-      - spring.datasource.url=jdbc:mysql://chensoul-mysql:3306/canal_manager?autoReconnect=true&useUnicode=true
+      - spring.datasource.url=jdbc:mysql://rose-mysql:3306/canal_manager?autoReconnect=true&useUnicode=true
       - spring.datasource.username=root
       - spring.datasource.password=root
 
-  chensoul-redis:
+  rose-redis:
     image: redis:7
-    container_name: chensoul-redis
+    container_name: rose-redis
     restart: always
     environment:
       ALLOW_EMPTY_PASSWORD: "yes"
@@ -138,25 +138,29 @@ services:
       - redis-node4
       - redis-node5
 
-  chensoul-nacos:
-    image: nacos/nacos-server:v2.5.1
-    container_name: chensoul-nacos
+  rose-nacos:
+    image: nacos/nacos-server:v2.2.3-slim
+    container_name: rose-nacos
     restart: always
     environment:
       - MODE=standalone
+      - PREFER_HOST_MODE=hostname
       - SPRING_DATASOURCE_PLATFORM=mysql
-      - MYSQL_SERVICE_HOST=chensoul-mysql
+      - MYSQL_SERVICE_HOST=rose-mysql
       - MYSQL_SERVICE_DB_NAME=nacos
       - MYSQL_SERVICE_USER=root
       - MYSQL_SERVICE_PASSWORD=123456
+      - NACOS_AUTH_IDENTITY_KEY=KEY_123456
+      - NACOS_AUTH_IDENTITY_VALUE=VALUE_123456
+      - NACOS_AUTH_TOKEN=SecretKey012345678901234567890123456789012345678901234567890123456789
     ports:
       - "8848:8848"
       - "9848:9848"
       - "9849:9849"
 
-  sentinel:
+  rose-sentinel:
     image: bladex/sentinel-dashboard:1.8.8
-    container_name: sentinel
+    container_name: rose-sentinel
     restart: always
     ports:
       - "8858:8858"

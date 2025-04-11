@@ -1,0 +1,10 @@
+.git
+.gitignore
+*.iml
+.idea
+
+logs
+docs
+
+target/*-javadoc.jar
+target/*-sources.jar
