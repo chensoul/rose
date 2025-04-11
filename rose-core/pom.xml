@@ -6,12 +6,10 @@
     <parent>
         <groupId>com.chensoul.rose</groupId>
         <artifactId>rose</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>${revision}</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <artifactId>rose-core</artifactId>
-
-    <name>rose-core</name>
 
     <dependencies>
         <dependency>

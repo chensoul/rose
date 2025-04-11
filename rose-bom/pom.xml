@@ -6,93 +6,97 @@
     <parent>
         <groupId>com.chensoul.rose</groupId>
         <artifactId>rose</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>${revision}</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>rose-dependencies</artifactId>
+    <artifactId>rose-bom</artifactId>
     <packaging>pom</packaging>
-
-    <name>rose-dependencies</name>
 
     <dependencyManagement>
         <dependencies>
             <dependency>
                 <groupId>com.chensoul.rose</groupId>
                 <artifactId>rose-core</artifactId>
-                <version>${project.version}</version>
+                <version>${revision}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.chensoul.rose</groupId>
                 <artifactId>rose-excel</artifactId>
-                <version>${project.version}</version>
+                <version>${revision}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.chensoul.rose</groupId>
+                <artifactId>rose-security</artifactId>
+                <version>${revision}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.chensoul.rose</groupId>
                 <artifactId>rose-ip2region</artifactId>
-                <version>${project.version}</version>
+                <version>${revision}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.chensoul.rose</groupId>
                 <artifactId>rose-mybatis</artifactId>
-                <version>${project.version}</version>
+                <version>${revision}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.chensoul.rose</groupId>
                 <artifactId>rose-spring-boot-common</artifactId>
-                <version>${project.version}</version>
+                <version>${revision}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.chensoul.rose</groupId>
                 <artifactId>rose-spring-boot-feign</artifactId>
-                <version>${project.version}</version>
+                <version>${revision}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.chensoul.rose</groupId>
                 <artifactId>rose-spring-boot-mybatis</artifactId>
-                <version>${project.version}</version>
+                <version>${revision}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.chensoul.rose</groupId>
                 <artifactId>rose-spring-boot-redis</artifactId>
-                <version>${project.version}</version>
+                <version>${revision}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.chensoul.rose</groupId>
                 <artifactId>rose-spring-boot-security</artifactId>
-                <version>${project.version}</version>
+                <version>${revision}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.chensoul.rose</groupId>
                 <artifactId>rose-spring-boot-seata</artifactId>
-                <version>${project.version}</version>
+                <version>${revision}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.chensoul.rose</groupId>
                 <artifactId>rose-spring-boot-syslog</artifactId>
-                <version>${project.version}</version>
+                <version>${revision}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.chensoul.rose</groupId>
                 <artifactId>rose-spring-boot-springdoc</artifactId>
-                <version>${project.version}</version>
+                <version>${revision}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.chensoul.rose</groupId>
                 <artifactId>rose-spring-boot-xxljob</artifactId>
-                <version>${project.version}</version>
+                <version>${revision}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

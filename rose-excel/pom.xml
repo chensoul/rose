@@ -6,24 +6,20 @@
     <parent>
         <groupId>com.chensoul.rose</groupId>
         <artifactId>rose</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>${revision}</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <artifactId>rose-excel</artifactId>
-
-    <name>rose-excel</name>
 
     <dependencies>
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>easyexcel</artifactId>
         </dependency>
-
         <dependency>
             <groupId>org.hibernate.validator</groupId>
             <artifactId>hibernate-validator</artifactId>
         </dependency>
-
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>

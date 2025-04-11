@@ -5,11 +5,10 @@
     <parent>
         <groupId>com.chensoul.rose</groupId>
         <artifactId>rose</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>${revision}</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-
     <artifactId>rose-ip2region</artifactId>
 
     <dependencies>
@@ -18,7 +17,6 @@
             <artifactId>rose-core</artifactId>
             <version>${project.version}</version>
         </dependency>
-
         <dependency>
             <groupId>org.lionsoul</groupId>
             <artifactId>ip2region</artifactId>
