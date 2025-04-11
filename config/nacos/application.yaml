@@ -1,15 +1,3 @@
-server:
-  undertow:
-    buffer-size: 1024
-    direct-buffers: true
-    threads:
-      io: 16
-      worker: 400
-  servlet:
-    encoding:
-      charset: UTF-8
-      force: true
-
 spring:
   main:
     allow-circular-references: true
@@ -107,6 +95,9 @@ xxl:
 security:
   oauth2:
     client:
+      client-id: rose
+      client-secret: rose
+      scope: server
       user-authorization-uri: http://${AUTH_HOST:rose-auth}/oauth/authorize
       ignore-urls:
         - /v2/api-docs

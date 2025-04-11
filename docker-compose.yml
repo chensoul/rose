@@ -1,8 +1,13 @@
 services:
   rose-mysql:
-    image: mysql:8
-    restart: always
+    build:
+      context: ./sql
+    image: chensoul/rose-mysql
     container_name: rose-mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_HOST: "%"
+      MYSQL_ROOT_PASSWORD: 123456
     command: [
       'mysqld',
       '--log-bin=mysql-bin',
@@ -10,9 +15,6 @@ services:
       '--default-time-zone=+8:00',
       '--lower-case-table-names=1'
     ]
-    environment:
-      MYSQL_ROOT_HOST: "%"
-      MYSQL_ROOT_PASSWORD: 123456
     volumes:
       - ./sql/rose.sql:/docker-entrypoint-initdb.d/rose.sql:ro
     healthcheck:

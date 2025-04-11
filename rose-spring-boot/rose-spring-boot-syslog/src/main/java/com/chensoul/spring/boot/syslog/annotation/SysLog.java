@@ -9,12 +9,7 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 public @interface SysLog {
+	String value();
 
-    String value();
-
-    String expression() default "";
-
-    boolean request() default true;
-
-    boolean response() default false;
+	String expression() default "";
 }

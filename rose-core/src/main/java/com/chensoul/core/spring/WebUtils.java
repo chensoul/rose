@@ -1,31 +1,28 @@
 package com.chensoul.core.spring;
 
-import static org.springframework.http.HttpHeaders.USER_AGENT;
-
 import com.chensoul.core.exception.BusinessException;
 import com.chensoul.core.jackson.JacksonUtils;
 import com.chensoul.core.util.NetUtils;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
+import org.springframework.http.MediaType;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+
+import javax.servlet.DispatcherType;
+import javax.servlet.Filter;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
-import javax.servlet.DispatcherType;
-import javax.servlet.Filter;
-import javax.servlet.ServletRequest;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.ArrayUtils;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.boot.web.servlet.FilterRegistrationBean;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.http.server.reactive.ServerHttpRequest;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
+
+import static org.springframework.http.HttpHeaders.USER_AGENT;
 
 /**
  * @author <a href="mailto:ichensoul@gmail.com">chensoul</a>
@@ -33,217 +30,151 @@ import org.springframework.web.context.request.ServletRequestAttributes;
  */
 @Slf4j
 public class WebUtils extends org.springframework.web.util.WebUtils {
+	public static final String X_REQUESTED_WITH = "X-Requested-With";
+	public static final String XMLHTTP_REQUEST = "XMLHttpRequest";
 
-    public static final String X_REQUESTED_WITH = "X-Requested-With";
+	private static final List<String> CLIENT_IP_HEADER_NAMES = Arrays.asList(
+		"X-Forwarded-For",
+		"X-Real-IP",
+		"Proxy-Client-IP",
+		"WL-Proxy-Client-IP",
+		"HTTP_CLIENT_IP",
+		"HTTP_X_FORWARDED_FOR");
 
-    public static final String XMLHTTP_REQUEST = "XMLHttpRequest";
+	public static String getUsername() {
+		HttpServletRequest request = WebUtils.ofRequest().get();
+		Principal userPrincipal = request.getUserPrincipal();
+		if (userPrincipal != null) {
+			return userPrincipal.getName();
+		}
+		return null;
+	}
 
-    private static final List<String> CLIENT_IP_HEADER_NAMES = Arrays.asList(
-            "X-Forwarded-For",
-            "X-Real-IP",
-            "Proxy-Client-IP",
-            "WL-Proxy-Client-IP",
-            "HTTP_CLIENT_IP",
-            "HTTP_X_FORWARDED_FOR");
+	public static String getUserAgent(final HttpServletRequest request) {
+		if (request != null) {
+			return request.getHeader(USER_AGENT);
+		}
+		return null;
+	}
 
-    public static String getUsername() {
-        HttpServletRequest request = WebUtils.ofRequest().get();
-        Principal userPrincipal = request.getUserPrincipal();
-        if (userPrincipal != null) {
-            return userPrincipal.getName();
-        }
-        return null;
-    }
+	public static String getClientIp(HttpServletRequest request, String... otherHeaderNames) {
+		if (request == null) {
+			return null;
+		}
 
-    public static String getUserAgent(final HttpServletRequest request) {
-        if (request != null) {
-            return request.getHeader(USER_AGENT);
-        }
-        return null;
-    }
+		List<String> headers = new ArrayList<>(CLIENT_IP_HEADER_NAMES);
+		headers.addAll(Arrays.asList(otherHeaderNames));
 
-    public static String getRemoteIp(String... otherHeaderNames) {
-        return getRemoteIp(ofRequest().orElse(null), otherHeaderNames);
-    }
+		String ip;
+		for (String header : headers) {
+			ip = request.getHeader(header);
+			if (!NetUtils.isUnknown(ip)) {
+				return NetUtils.getMultistageReverseProxyIp(ip);
+			}
+		}
 
-    public static String getRemoteIp(ServerHttpRequest request, String... otherHeaderNames) {
-        if (request == null) {
-            return null;
-        }
+		ip = request.getRemoteHost();
+		return NetUtils.getMultistageReverseProxyIp(ip);
+	}
 
-        if (ArrayUtils.isNotEmpty(otherHeaderNames)) {
-            CLIENT_IP_HEADER_NAMES.addAll(Arrays.asList(otherHeaderNames));
-        }
+	public static String getValue(String headerName) {
+		return getValue(ofRequest().orElse(null), headerName);
+	}
 
-        HttpHeaders httpHeaders = request.getHeaders();
+	public static String getValue(HttpServletRequest request, String headerName) {
+		if (request == null) {
+			return null;
+		}
+		return StringUtils.defaultString(request.getParameter(headerName), request.getHeader(headerName));
+	}
 
-        String ip;
-        for (String header : CLIENT_IP_HEADER_NAMES) {
-            ip = httpHeaders.getFirst(header);
-            if (!NetUtils.isUnknown(ip)) {
-                return NetUtils.getMultistageReverseProxyIp(ip);
-            }
-        }
+	public static String constructUrl(HttpServletRequest request) {
+		return String.format(
+			"%s://%s:%d%s", getScheme(request), getDomainName(request), getPort(request), request.getRequestURI());
+	}
 
-        ip = Objects.requireNonNull(request.getRemoteAddress()).getAddress().getHostAddress();
-        return NetUtils.getMultistageReverseProxyIp(ip);
-    }
+	public static String getScheme(HttpServletRequest request) {
+		String scheme = request.getScheme();
+		String forwardedProto = request.getHeader("x-forwarded-proto");
+		if (forwardedProto != null) {
+			scheme = forwardedProto;
+		}
+		return scheme;
+	}
 
-    public static String getRemoteIp(HttpServletRequest request, String... otherHeaderNames) {
-        if (request == null) {
-            return null;
-        }
-        if (ArrayUtils.isNotEmpty(otherHeaderNames)) {
-            CLIENT_IP_HEADER_NAMES.addAll(Arrays.asList(otherHeaderNames));
-        }
+	public static String getDomainName(HttpServletRequest request) {
+		return request.getServerName();
+	}
 
-        String ip;
-        for (String header : CLIENT_IP_HEADER_NAMES) {
-            ip = request.getHeader(header);
-            if (!NetUtils.isUnknown(ip)) {
-                return NetUtils.getMultistageReverseProxyIp(ip);
-            }
-        }
+	public static String getDomainNameAndPort(HttpServletRequest request) {
+		String domainName = getDomainName(request);
+		String scheme = getScheme(request);
+		int port = getPort(request);
+		if (needsPort(scheme, port)) {
+			domainName += ":" + port;
+		}
+		return domainName;
+	}
 
-        ip = request.getRemoteHost();
-        return NetUtils.getMultistageReverseProxyIp(ip);
-    }
+	private static boolean needsPort(String scheme, int port) {
+		boolean isHttpDefault = "http".equalsIgnoreCase(scheme) && port == 80;
+		boolean isHttpsDefault = "https".equalsIgnoreCase(scheme) && port == 443;
+		return !isHttpDefault && !isHttpsDefault;
+	}
 
-    public static String getValue(String headerName) {
-        return getValue(ofRequest().orElse(null), headerName);
-    }
+	public static int getPort(HttpServletRequest request) {
+		String forwardedProto = request.getHeader("x-forwarded-proto");
 
-    public static String getValue(HttpServletRequest request, String headerName) {
-        if (request == null) {
-            return null;
-        }
-        return StringUtils.defaultString(request.getParameter(headerName), request.getHeader(headerName));
-    }
+		int serverPort = request.getServerPort();
+		if (request.getHeader("x-forwarded-port") != null) {
+			try {
+				serverPort = request.getIntHeader("x-forwarded-port");
+			} catch (NumberFormatException e) {
+			}
+		} else if (forwardedProto != null) {
+			switch (forwardedProto) {
+				case "http":
+					serverPort = 80;
+					break;
+				case "https":
+					serverPort = 443;
+					break;
+			}
+		}
+		return serverPort;
+	}
 
-    public static String getValue(ServerHttpRequest request, String headerName) {
-        if (request == null) {
-            return null;
-        }
-        return StringUtils.defaultString(
-                request.getQueryParams().getFirst(headerName),
-                request.getHeaders().getFirst(headerName));
-    }
+	public static void renderJson(int httpStatus, Object result) throws IOException {
+		HttpServletResponse response = getResponse();
+		response.setCharacterEncoding(StandardCharsets.UTF_8.toString());
+		response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+		response.setStatus(httpStatus);
 
-    public static boolean isJsonRequest(ServletRequest request) {
-        return StringUtils.startsWithIgnoreCase(request.getContentType(), MediaType.APPLICATION_JSON_VALUE);
-    }
+		JacksonUtils.writeValue(response.getWriter(), result);
+	}
 
-    public static String constructUrl(HttpServletRequest request) {
-        return String.format(
-                "%s://%s:%d%s", getScheme(request), getDomainName(request), getPort(request), request.getRequestURI());
-    }
+	public static void renderJson(Object result) throws IOException {
+		renderJson(HttpServletResponse.SC_OK, result);
+	}
 
-    public static String getScheme(HttpServletRequest request) {
-        String scheme = request.getScheme();
-        String forwardedProto = request.getHeader("x-forwarded-proto");
-        if (forwardedProto != null) {
-            scheme = forwardedProto;
-        }
-        return scheme;
-    }
+	public static Optional<HttpServletRequest> ofRequest() {
+		return Optional.of(((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest());
+	}
 
-    public static String getDomainName(HttpServletRequest request) {
-        return request.getServerName();
-    }
+	public static HttpServletRequest getRequest() {
+		return ofRequest().orElseThrow(() -> new BusinessException("Request is null"));
+	}
 
-    public static String getDomainNameAndPort(HttpServletRequest request) {
-        String domainName = getDomainName(request);
-        String scheme = getScheme(request);
-        int port = getPort(request);
-        if (needsPort(scheme, port)) {
-            domainName += ":" + port;
-        }
-        return domainName;
-    }
+	public static HttpServletResponse getResponse() {
+		return ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getResponse();
+	}
 
-    private static boolean needsPort(String scheme, int port) {
-        boolean isHttpDefault = "http".equalsIgnoreCase(scheme) && port == 80;
-        boolean isHttpsDefault = "https".equalsIgnoreCase(scheme) && port == 443;
-        return !isHttpDefault && !isHttpsDefault;
-    }
-
-    public static int getPort(HttpServletRequest request) {
-        String forwardedProto = request.getHeader("x-forwarded-proto");
-
-        int serverPort = request.getServerPort();
-        if (request.getHeader("x-forwarded-port") != null) {
-            try {
-                serverPort = request.getIntHeader("x-forwarded-port");
-            } catch (NumberFormatException e) {
-            }
-        } else if (forwardedProto != null) {
-            switch (forwardedProto) {
-                case "http":
-                    serverPort = 80;
-                    break;
-                case "https":
-                    serverPort = 443;
-                    break;
-            }
-        }
-        return serverPort;
-    }
-
-    public static void renderJson(int httpStatus, Object result) throws IOException {
-        HttpServletResponse response = getResponse();
-        response.setCharacterEncoding(StandardCharsets.UTF_8.toString());
-        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-        response.setStatus(httpStatus);
-
-        JacksonUtils.writeValue(response.getWriter(), result);
-    }
-
-    public static void renderJson(Object result) throws IOException {
-        renderJson(HttpServletResponse.SC_OK, result);
-    }
-
-    public static Optional<HttpServletRequest> ofRequest() {
-        return Optional.of(((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest());
-    }
-
-    public static HttpServletRequest getRequest() {
-        return ofRequest().orElseThrow(() -> new BusinessException("Request is null"));
-    }
-
-    public static HttpServletResponse getResponse() {
-        return ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getResponse();
-    }
-
-    public static <T extends Filter> FilterRegistrationBean<T> createFilterBean(T filter, Integer order) {
-        FilterRegistrationBean<T> registrationBean = new FilterRegistrationBean<>(filter);
-        registrationBean.setDispatcherTypes(DispatcherType.REQUEST);
-        registrationBean.addUrlPatterns("/*");
-        registrationBean.setName(filter.getClass().getSimpleName());
-        registrationBean.setOrder(order);
-        return registrationBean;
-    }
-
-    public static boolean isJsonRequest(HttpServletRequest request) {
-        // 优先检查明确标识：X-Requested-With
-        String requestedWith = request.getHeader(X_REQUESTED_WITH);
-        if (XMLHTTP_REQUEST.equalsIgnoreCase(requestedWith)) {
-            return Boolean.TRUE;
-        }
-
-        // 补充检查：Content-Type 是否为 JSON（适用于 POST/PUT）
-        String contentType = request.getContentType();
-        if (contentType != null && contentType.toLowerCase().startsWith(MediaType.APPLICATION_JSON_VALUE)) {
-            return Boolean.TRUE;
-        }
-
-        // 谨慎检查 Accept 头
-        String acceptHeader = request.getHeader("Accept");
-        if (acceptHeader != null) {
-            if (acceptHeader.toLowerCase().contains(MediaType.APPLICATION_JSON_VALUE)) {
-                return Boolean.TRUE;
-            }
-        }
-
-        return Boolean.FALSE;
-    }
+	public static <T extends Filter> FilterRegistrationBean<T> createFilterBean(T filter, Integer order) {
+		FilterRegistrationBean<T> registrationBean = new FilterRegistrationBean<>(filter);
+		registrationBean.setDispatcherTypes(DispatcherType.REQUEST);
+		registrationBean.addUrlPatterns("/*");
+		registrationBean.setName(filter.getClass().getSimpleName());
+		registrationBean.setOrder(order);
+		return registrationBean;
+	}
 }

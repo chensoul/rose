@@ -15,11 +15,10 @@ spring:
       config:
         server-addr: ${spring.cloud.nacos.discovery.server-addr}
         namespace: rose-${spring.profiles.active}
-        file-extension: yaml
   config:
     import:
-      - optional:nacos:chensoul.yaml
-      - optional:nacos:${spring.application.name}.yaml
+      - optional:nacos:application.yaml
+      - optional:nacos:${spring.application.name}-${spring.profiles.active}.yaml
 
 canal:
   server:
