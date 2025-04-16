@@ -16,10 +16,10 @@
 
 package org.springframework.messaging.handler.invocation;
 
-import static com.chensoul.core.CommonConstants.HEADER_TENANT_ID;
+import static com.chensoul.rose.core.CommonConstants.HEADER_TENANT_ID;
 
-import com.chensoul.mybatis.tenant.util.TenantContextHolder;
-import com.chensoul.mybatis.tenant.util.TenantUtils;
+import com.chensoul.rose.mybatis.tenant.util.TenantContextHolder;
+import com.chensoul.rose.mybatis.tenant.util.TenantUtils;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;

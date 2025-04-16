@@ -1,10 +1,7 @@
 .git
 .gitignore
-*.iml
-.idea
+.github
 
-logs
+target
 docs
-
-target/*-javadoc.jar
-target/*-sources.jar
+logs

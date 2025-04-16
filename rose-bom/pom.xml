@@ -35,12 +35,6 @@
 
             <dependency>
                 <groupId>com.chensoul.rose</groupId>
-                <artifactId>rose-ip2region</artifactId>
-                <version>${revision}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.chensoul.rose</groupId>
                 <artifactId>rose-mybatis</artifactId>
                 <version>${revision}</version>
             </dependency>

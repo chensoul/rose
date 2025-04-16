@@ -1,6 +1,6 @@
-com.chensoul.spring.boot.mybatis.MybatisEncryptorConfiguration
-com.chensoul.spring.boot.mybatis.MybatisCoreConfiguration
-com.chensoul.spring.boot.mybatis.MybatisTenantConfiguration
-com.chensoul.spring.boot.mybatis.MybatisDataPermissionConfiguration
+com.chensoul.rose.mybatis.MybatisEncryptorConfiguration
+com.chensoul.rose.mybatis.MybatisCoreConfiguration
+com.chensoul.rose.mybatis.MybatisTenantConfiguration
+com.chensoul.rose.mybatis.MybatisDataPermissionConfiguration
 
 

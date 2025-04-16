@@ -13,7 +13,7 @@
     <dependencies>
         <dependency>
             <groupId>com.chensoul.rose</groupId>
-            <artifactId>rose-ip2region</artifactId>
+            <artifactId>rose-core</artifactId>
             <version>${project.version}</version>
         </dependency>
 
@@ -21,7 +21,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-aop</artifactId>
         </dependency>
-
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>

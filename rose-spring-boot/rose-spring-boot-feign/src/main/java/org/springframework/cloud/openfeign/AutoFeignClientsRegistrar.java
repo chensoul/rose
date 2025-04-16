@@ -1,6 +1,6 @@
 package org.springframework.cloud.openfeign;
 
-import com.chensoul.spring.boot.feign.FeignAutoConfiguration;
+import com.chensoul.rose.feign.FeignAutoConfiguration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;

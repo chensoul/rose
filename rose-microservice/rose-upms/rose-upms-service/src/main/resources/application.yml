@@ -1,5 +1,6 @@
 server:
   port: 8010
+  shutdown: graceful
 
 spring.application.name: rose-upms
 spring.profiles.active: dev
@@ -7,6 +8,10 @@ spring.profiles.active: dev
 spring:
   main:
     allow-bean-definition-overriding: true
+  datasource:
+    url: jdbc:mysql://${MYSQL_HOST:rose-mysql}:${MYSQL_PORT:3306}/chensoul?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai
+    username: root
+    password:
   cloud:
     nacos:
       username: nacos
@@ -23,12 +28,6 @@ spring:
       - optional:nacos:chensoul.yaml
       - optional:nacos:${spring.application.name}.yaml
 
-
-  datasource:
-    url: jdbc:mysql://${MYSQL_HOST:rose-mysql}:${MYSQL_PORT:3306}/chensoul?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai
-    username: root
-    password:
-
 # 租户表维护
 mybatis-plus:
   tenant:
@@ -39,3 +38,4 @@ mybatis-plus:
       - sys_tenant
       - sys_user
       - sys_credential
+

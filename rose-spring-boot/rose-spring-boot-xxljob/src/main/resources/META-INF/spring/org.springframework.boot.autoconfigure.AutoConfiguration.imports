@@ -1,2 +1,2 @@
-com.chensoul.spring.boot.xxljob.config.XxlJobClientConfiguration
-com.chensoul.spring.boot.xxljob.config.XxlJobExecutorConfiguration
+com.chensoul.rose.xxljob.config.XxlJobClientConfiguration
+com.chensoul.rose.xxljob.config.XxlJobExecutorConfiguration

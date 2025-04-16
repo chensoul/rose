@@ -1,8 +1,8 @@
-com.chensoul.spring.boot.config.EnvironmentConfiguration
-com.chensoul.spring.boot.config.JacksonConfiguration
-com.chensoul.spring.boot.config.MetricConfiguration
-com.chensoul.spring.boot.config.RestTemplateConfiguration
-com.chensoul.spring.boot.config.RetryConfiguration
-com.chensoul.spring.boot.config.TaskExecutorConfiguration
-com.chensoul.spring.boot.config.UndertowSSLConfiguration
-com.chensoul.spring.boot.config.WebMvcConfiguration
+com.chensoul.rose.config.EnvironmentConfiguration
+com.chensoul.rose.config.JacksonConfiguration
+com.chensoul.rose.config.MetricConfiguration
+com.chensoul.rose.config.RestTemplateConfiguration
+com.chensoul.rose.config.RetryConfiguration
+com.chensoul.rose.config.TaskExecutorConfiguration
+com.chensoul.rose.config.UndertowSSLConfiguration
+com.chensoul.rose.config.WebMvcConfiguration

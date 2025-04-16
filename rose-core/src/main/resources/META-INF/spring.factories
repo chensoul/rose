@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  com.chensoul.core.spring.SpringContextHolder
+  com.chensoul.rose.core.spring.SpringContextHolder

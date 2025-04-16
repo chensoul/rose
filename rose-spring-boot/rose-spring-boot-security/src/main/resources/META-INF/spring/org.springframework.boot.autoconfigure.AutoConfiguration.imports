@@ -1,2 +1,2 @@
-com.chensoul.spring.boot.security.config.WebSecurityConfig
-com.chensoul.spring.boot.security.config.SecurityConfig
+com.chensoul.rose.security.config.WebSecurityConfig
+com.chensoul.rose.security.config.SecurityConfig

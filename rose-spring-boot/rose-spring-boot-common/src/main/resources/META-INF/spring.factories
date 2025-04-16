@@ -1,1 +1,1 @@
-org.springframework.context.ApplicationContextInitializer=com.chensoul.spring.boot.env.DefaultApplicationContextInitializer
+org.springframework.context.ApplicationContextInitializer=com.chensoul.rose.env.DefaultApplicationContextInitializer
