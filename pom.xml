@@ -288,6 +288,9 @@
                         <layers>
                             <enabled>true</enabled>
                         </layers>
+                        <image>
+                            <name>${env.USER}/${project.artifactId}</name>
+                        </image>
                     </configuration>
                     <executions>
                         <execution>

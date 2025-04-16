@@ -144,8 +144,6 @@
                         <importOrder/>
                         <removeUnusedImports/>
                         <palantirJavaFormat>
-                            <!-- jdk 8-->
-                            <version>1.1.0</version>
                         </palantirJavaFormat>
                     </java>
                 </configuration>
