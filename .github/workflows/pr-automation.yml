@@ -4,8 +4,8 @@ on:
     types:
       - closed
 
-
 jobs:
   pr-automation:
     name: PR Automation
+    # https://github.com/apache/maven-gh-actions-shared/blob/v4/.github/workflows/pr-automation.yml
     uses: apache/maven-gh-actions-shared/.github/workflows/pr-automation.yml@v4
