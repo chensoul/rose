@@ -25,11 +25,11 @@ jobs:
           gpg-passphrase: MAVEN_GPG_PASSPHRASE
 
       - name: Build and Test
-        run: mvn clean verify
+        run: ./mvnw clean verify
 
       - name: Release to Maven Central
         run: |
-          mvn -Pjavadoc -Prelease deploy
+          ./mvnw -Prelease deploy
         env:
           MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
           MAVEN_PASSWORD: ${{ secrets.OSSRH_TOKEN }}
@@ -43,5 +43,5 @@ jobs:
 
       - name: Build and Publish Docker Image
         run: |
-          mvn -pl rose-microservice/rose-upms/rose-upms-service spring-boot:build-image -DskipTests
+          ./mvnw -pl rose-microservice/rose-upms/rose-upms-service spring-boot:build-image -DskipTests
           docker push ${{ secrets.DOCKER_USERNAME }}/rose-upms-service
