@@ -1,4 +1,4 @@
-name: Publish Snapshot
+name: Maven build
 
 on:
   push:
@@ -18,24 +18,6 @@ jobs:
           java-version: '8'
           distribution: 'temurin'
           cache: 'maven'
-          server-id: ossrh
-          server-username: MAVEN_USERNAME
-          server-password: MAVEN_PASSWORD
-          # gpg --list-secret-keys
-          # gpg --armor --export-secret-keys YOUR_ID
-          gpg-private-key: ${{ secrets.GPG_SECRET_KEY }}
-          gpg-passphrase: MAVEN_GPG_PASSPHRASE
 
-      - name: Generate Java docs
-        run: mvn -ntp -Pjavadoc -B javadoc:aggregate
-
-      - name: Build with Maven and deploy to Sonatype snapshot repository
-        env:
-          MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
-          MAVEN_PASSWORD: ${{ secrets.OSSRH_TOKEN }}
-          MAVEN_GPG_PASSPHRASE: ${{ secrets.SIGNING_PASSPHRASE }}
-        run: |
-          mvn -ntp --batch-mode --update-snapshots -Pjavadoc -Prelease deploy
-
-      - name: Capture project version
-        run: echo PROJECT_VERSION=$(mvn help:evaluate -Dexpression=project.version --quiet -DforceStdout) >> $GITHUB_ENV
+      - name: Build with Maven
+        run: mvn -ntp verify
