@@ -3,6 +3,9 @@ name: Release to Maven Central
 on:
   workflow_dispatch:
 
+env:
+  MAVEN_ARGS: -B -e -ntp
+
 jobs:
   publish:
     runs-on: ubuntu-latest
@@ -22,11 +25,11 @@ jobs:
           gpg-passphrase: MAVEN_GPG_PASSPHRASE
 
       - name: Build and Test
-        run: mvn -ntp clean verify
+        run: mvn clean verify
 
       - name: Release to Maven Central
         run: |
-          mvn -ntp --batch-mode -Pjavadoc -Prelease deploy
+          mvn -Pjavadoc -Prelease deploy
         env:
           MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
           MAVEN_PASSWORD: ${{ secrets.OSSRH_TOKEN }}

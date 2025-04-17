@@ -1,23 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xmlns="http://maven.apache.org/POM/4.0.0"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-    <parent>
-        <groupId>com.chensoul.rose</groupId>
-        <artifactId>rose</artifactId>
-        <version>${revision}</version>
-        <relativePath>../pom.xml</relativePath>
-    </parent>
-    <artifactId>rose-microservice</artifactId>
-    <packaging>pom</packaging>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.chensoul.rose</groupId>
+    <artifactId>rose</artifactId>
+    <version>${revision}</version>
+    <relativePath>../pom.xml</relativePath>
+  </parent>
+  <artifactId>rose-microservice</artifactId>
+  <packaging>pom</packaging>
 
-    <modules>
-        <module>rose-xxljob</module>
-        <module>rose-monitor</module>
-        <module>rose-gateway</module>
-        <module>rose-upms</module>
-        <module>rose-iot</module>
-        <module>rose-canal</module>
-    </modules>
+  <modules>
+    <module>rose-canal</module>
+    <module>rose-gateway</module>
+    <module>rose-iot</module>
+    <module>rose-monitor</module>
+    <module>rose-upms</module>
+    <module>rose-xxljob</module>
+  </modules>
 </project>
