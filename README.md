@@ -121,3 +121,4 @@ spring-boot-microservice-best-practices: https://github.com/abhisheksr01/spring-
 - https://github.com/cenbow/dante-engine
 - https://gitee.com/log4j/pig
 - https://gitee.com/open-enjoy/enjoy-iot
+- https://github.com/mojohaus/versions/tree/master/.github
