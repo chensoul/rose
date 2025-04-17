@@ -3,34 +3,32 @@ tag-template: 'v$RESOLVED_VERSION'
 
 categories:
   - title: 'Breaking'
-    label: 'type: breaking'
-  - title: 'New'
-    label: 'type: feature'
+    label: 'breaking'
+  - title: 'New feature'
+    label: 'feature'
   - title: 'Bug Fixes'
-    label: 'type: bug'
-  - title: 'Maintenance'
-    label: 'type: maintenance'
+    label: 'bug'
   - title: 'Documentation'
-    label: 'type: docs'
+    label: 'documentation'
   - title: 'Other changes'
   - title: 'Dependency Updates'
-    label: 'type: dependencies'
+    label: 'dependencies'
     collapse-after: 5
 
 version-resolver:
   major:
     labels:
-      - 'type: breaking'
+      - 'breaking'
   minor:
     labels:
-      - 'type: feature'
+      - 'feature'
+      - 'enhancement'
   patch:
     labels:
-      - 'type: bug'
-      - 'type: maintenance'
-      - 'type: docs'
-      - 'type: dependencies'
-      - 'type: security'
+      - 'bug'
+      - 'documentation'
+      - 'dependencies'
+      - 'security'
 
 exclude-labels:
   - 'skip-changelog'
