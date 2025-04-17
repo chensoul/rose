@@ -4,6 +4,7 @@ on:
     types:
       - closed
 
+
 jobs:
   pr-automation:
     name: PR Automation
