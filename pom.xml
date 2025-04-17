@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>com.chensoul.rose</groupId>
@@ -70,7 +71,6 @@
     <seata.version>1.6.1</seata.version>
     <skywalking.version>8.12.0</skywalking.version>
     <spring-boot-admin.version>2.7.16</spring-boot-admin.version>
-
     <spring-boot.version>2.7.18</spring-boot.version>
     <spring-cloud-alibaba.version>2021.0.6.2</spring-cloud-alibaba.version>
     <spring-cloud.version>2021.0.9</spring-cloud.version>
@@ -210,7 +210,6 @@
         <artifactId>springdoc-openapi-webmvc-core</artifactId>
         <version>${springdoc.version}</version>
       </dependency>
-
       <dependency>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-web</artifactId>
@@ -274,31 +273,40 @@
     </dependency>
   </dependencies>
 
-  <build>
-    <pluginManagement>
-      <plugins>
-        <plugin>
-          <groupId>org.springframework.boot</groupId>
-          <artifactId>spring-boot-maven-plugin</artifactId>
-          <version>${spring-boot.version}</version>
-          <executions>
-            <execution>
-              <goals>
-                <goal>repackage</goal>
-                <goal>build-info</goal>
-              </goals>
-            </execution>
-          </executions>
-          <configuration>
-            <layers>
-              <enabled>true</enabled>
-            </layers>
-            <image>
-              <name>${env.USER}/${project.artifactId}</name>
-            </image>
-          </configuration>
-        </plugin>
-      </plugins>
-    </pluginManagement>
-  </build>
+  <profiles>
+    <profile>
+      <id>springboot</id>
+      <activation>
+        <activeByDefault>false</activeByDefault>
+        <file>
+          <exists>src/main/resources/application.yaml</exists>
+        </file>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-maven-plugin</artifactId>
+            <version>${spring-boot.version}</version>
+            <executions>
+              <execution>
+                <goals>
+                  <goal>repackage</goal>
+                  <goal>build-info</goal>
+                </goals>
+              </execution>
+            </executions>
+            <configuration>
+              <layers>
+                <enabled>true</enabled>
+              </layers>
+              <image>
+                <name>${env.USER}/${project.artifactId}</name>
+              </image>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
 </project>
