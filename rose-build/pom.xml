@@ -163,21 +163,6 @@
                 <configuration>
                     <updatePomFile>true</updatePomFile>
                     <flattenMode>resolveCiFriendliesOnly</flattenMode>
-                    <pomElements>
-                        <dependencyManagement>resolve</dependencyManagement>
-                    </pomElements>
-                    <!--                    <flattenDependencyMode>all</flattenDependencyMode>-->
-                    <!--                    <pomElements>-->
-                    <!--                        <parent>expand</parent>-->
-                    <!--                        <properties>keep</properties>-->
-                    <!--                        <dependencies>resolve</dependencies>-->
-                    <!--                        <distributionManagement>remove</distributionManagement>-->
-                    <!--                        <dependencyManagement>interpolate</dependencyManagement>-->
-                    <!--                        <repositories>remove</repositories>-->
-                    <!--                        <scm>keep</scm>-->
-                    <!--                        <url>keep</url>-->
-                    <!--                        <organization>resolve</organization>-->
-                    <!--                    </pomElements>-->
                 </configuration>
                 <executions>
                     <execution>
