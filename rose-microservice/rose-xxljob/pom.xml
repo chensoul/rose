@@ -11,7 +11,7 @@
   <artifactId>rose-xxljob</artifactId>
 
   <properties>
-    <mybatis-spring-boot-starter.version>2.3.2</mybatis-spring-boot-starter.version>
+    <mybatis-spring-boot-starter.version>3.0.4</mybatis-spring-boot-starter.version>
     <xxljob.version>2.5.0</xxljob.version>
   </properties>
 
