@@ -32,7 +32,7 @@
     <!-- spotless for java 8 -->
     <spotless-maven-plugin.version>2.22.0</spotless-maven-plugin.version>
     <!-- sundrio-maven-plugin for java 8 -->
-    <sundrio-maven-plugin.version>0.103.0</sundrio-maven-plugin.version>
+    <sundrio-maven-plugin.version>0.200.3</sundrio-maven-plugin.version>
     <surefire.argLine>-Duser.language=en</surefire.argLine>
   </properties>
 
