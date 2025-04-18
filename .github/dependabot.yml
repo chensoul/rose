@@ -35,3 +35,21 @@ updates:
       - dependency-name: de.codecentric:spring-boot-admin-dependencies
         versions:
           - ">= 3"
+      - dependency-name: com.xuxueli:xxl-job-core
+        versions:
+          - ">= 3"
+      - dependency-name: org.mybatis.spring.boot:mybatis-spring-boot-starter
+        versions:
+          - ">= 3"
+      - dependency-name: net.logstash.logback:logstash-logback-encoder
+        versions:
+          - ">= 8"
+      - dependency-name: io.sundr:sundr-maven-plugin
+        versions:
+          - ">= 0.2"
+      - dependency-name: com.mycila:license-maven-plugin
+        versions:
+          - ">= 5"
+      - dependency-name: com.github.ekryd.sortpom:sortpom-maven-plugin
+        versions:
+          - ">= 3"
