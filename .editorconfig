@@ -12,7 +12,7 @@ insert_final_newline = true
 [*.java]
 indent_style = tab
 
-[*.{json,yml,yaml}]
+[*.{json,yml,yaml,xml}]
 indent_size = 2
 
 [*.md]
