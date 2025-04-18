@@ -236,7 +236,7 @@
             <groupId>com.github.ekryd.sortpom</groupId>
             <artifactId>sortpom-maven-plugin</artifactId>
             <!-- jdk 8 只能使用 2.X 版本 -->
-            <version>2.15.0</version>
+            <version>4.0.0</version>
             <executions>
               <execution>
                 <id>sort</id>
