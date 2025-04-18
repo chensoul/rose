@@ -1,12 +1,3 @@
-# To get started with Dependabot version updates, you'll need to specify which
-# package ecosystems to update and where the package manifests are located.
-# Please see the documentation for all handler options:
-# https://docs.github.com/github/administering-a-repository/configuration-options-for-dependency-updates
-
-# 文件的配置选项：https://docs.github.com/zh/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file
-# 自定义依赖项更新：https://docs.github.com/zh/code-security/dependabot/dependabot-version-updates/customizing-dependency-updates
-# 管理依赖项更新的所有拉取请求：https://docs.github.com/zh/code-security/dependabot/working-with-dependabot/managing-pull-requests-for-dependency-updates
-
 version: 2
 updates:
   - package-ecosystem: github-actions
@@ -16,7 +7,7 @@ updates:
     schedule:
       interval: weekly
     labels:
-      - DEPENDABOT
+      - maintenance
     commit-message:
       prefix: "[DEPENDABOT]"
 
@@ -34,19 +25,11 @@ updates:
             - ">= 2022"
         - dependency-name: com.alibaba.cloud:spring-cloud-alibaba-dependencies
           versions:
-            - "= 2021.1"
-            - ">= 2022"
+            - "> 2021.1"
         - dependency-name: org.springframework.security:spring-security-oauth2-authorization-server
           versions:
             - ">= 1"
-            - ">= 1.1"
         - dependency-name: org.springframework.boot:spring-boot-dependencies
-          versions:
-            - ">= 3"
-        - dependency-name: org.springframework.boot:spring-boot-starter-security
-          versions:
-            - ">= 3"
-        - dependency-name: org.springframework.boot:spring-boot-maven-support
           versions:
             - ">= 3"
         - dependency-name: de.codecentric:spring-boot-admin-dependencies
