@@ -53,3 +53,6 @@ updates:
       - dependency-name: com.github.ekryd.sortpom:sortpom-maven-plugin
         versions:
           - ">= 3"
+      - dependency-name: com.diffplug.spotless:spotless-maven-plugin
+        versions:
+          - ">= 2.3"
