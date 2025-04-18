@@ -8,10 +8,15 @@
   <packaging>pom</packaging>
 
   <properties>
+    <java.version>8</java.version>
+    <maven.compiler.source>${java.version}</maven.compiler.source>
+    <maven.compiler.target>${java.version}</maven.compiler.target>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
     <flatten-maven-plugin.version>1.7.0</flatten-maven-plugin.version>
     <git-commit-id-plugin.version>4.9.10</git-commit-id-plugin.version>
     <jacoco-maven-plugin.version>0.8.13</jacoco-maven-plugin.version>
-    <java.version>8</java.version>
     <!-- license for java 8 -->
     <license-maven-plugin.version>4.6</license-maven-plugin.version>
     <maven-compiler-plugin.version>3.13.0</maven-compiler-plugin.version>
@@ -24,10 +29,6 @@
     <maven-scm-plugin.version>2.1.0</maven-scm-plugin.version>
     <maven-source-plugin.version>3.3.1</maven-source-plugin.version>
     <maven-surefire-plugin.version>3.5.2</maven-surefire-plugin.version>
-    <maven.compiler.source>${java.version}</maven.compiler.source>
-    <maven.compiler.target>${java.version}</maven.compiler.target>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <!-- spotless for java 8 -->
     <spotless-maven-plugin.version>2.22.0</spotless-maven-plugin.version>
     <!-- sundrio-maven-plugin for java 8 -->
@@ -63,7 +64,6 @@
           <flattenMode>resolveCiFriendliesOnly</flattenMode>
         </configuration>
       </plugin>
-
       <plugin>
         <groupId>pl.project13.maven</groupId>
         <artifactId>git-commit-id-plugin</artifactId>
@@ -94,7 +94,6 @@
         <artifactId>jacoco-maven-plugin</artifactId>
         <version>${jacoco-maven-plugin.version}</version>
       </plugin>
-
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
@@ -180,20 +179,6 @@
           </excludes>
         </configuration>
       </plugin>
-
-      <!-- 需要 jdk17 -->
-      <!--            <plugin>-->
-      <!--                <groupId>com.marvinformatics.jacoco</groupId>-->
-      <!--                <artifactId>easy-jacoco-maven-plugin</artifactId>-->
-      <!--                <version>0.1.3</version>-->
-      <!--                <configuration>-->
-      <!--                    <haltOnFailure>true</haltOnFailure>-->
-      <!--                    <projectExtraProperties>-->
-      <!--                        <license.skip>true</license.skip>-->
-      <!--                    </projectExtraProperties>-->
-      <!--                </configuration>-->
-      <!--            </plugin>-->
-
       <plugin>
         <groupId>io.sundr</groupId>
         <artifactId>sundr-maven-plugin</artifactId>
@@ -227,29 +212,15 @@
             <groupId>com.mycila</groupId>
             <artifactId>license-maven-plugin</artifactId>
             <version>${license-maven-plugin.version}</version>
-            <executions>
-              <execution>
-                <phase>validate</phase>
-                <goals>
-                  <goal>check</goal>
-                </goals>
-              </execution>
-            </executions>
-            <dependencies>
-              <dependency>
-                <groupId>com.mycila</groupId>
-                <artifactId>license-maven-plugin-git</artifactId>
-                <version>${license-maven-plugin.version}</version>
-              </dependency>
-            </dependencies>
             <configuration>
+              <quiet>true</quiet>
+              <aggregate>true</aggregate>
               <properties>
                 <owner>Chensoul, Inc.</owner>
-                <email>ichensoul@gmail.com</email>
               </properties>
               <licenseSets>
                 <licenseSet>
-                  <header>com/mycila/maven/plugin/license/templates/APACHE-2.txt</header>
+                  <header>header.txt</header>
                   <includes>
                     <include>**/*.java</include>
                   </includes>
@@ -276,13 +247,10 @@
               </execution>
             </executions>
             <configuration>
-              <keepBlankLines>true</keepBlankLines>
+              <keepBlankLines>false</keepBlankLines>
               <lineSeparator>\n</lineSeparator>
               <createBackupFile>false</createBackupFile>
               <predefinedSortOrder>default_1_0_0</predefinedSortOrder>
-              <sortProperties>true</sortProperties>
-              <sortModules>true</sortModules>
-              <sortDependencies>scope,groupId,artifactId</sortDependencies>
               <sortPlugins>artifactId</sortPlugins>
             </configuration>
           </plugin>

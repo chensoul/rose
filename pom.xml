@@ -23,8 +23,9 @@
 
   <licenses>
     <license>
-      <name>MIT License</name>
-      <url>http://www.opensource.org/licenses/mit-license.php</url>
+      <name>Apache License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <distribution>repo</distribution>
     </license>
   </licenses>
 
@@ -61,20 +62,21 @@
   </ciManagement>
 
   <properties>
+    <revision>0.0.1-SNAPSHOT</revision>
+
+    <spring-boot.version>2.7.18</spring-boot.version>
+    <spring-cloud-alibaba.version>2021.0.6.2</spring-cloud-alibaba.version>
+    <spring-cloud.version>2021.0.9</spring-cloud.version>
+    <spring.authorization.version>0.4.5</spring.authorization.version>
+    <spring-boot-admin.version>2.7.16</spring-boot-admin.version>
     <dynamic-datasource.version>4.3.1</dynamic-datasource.version>
     <jjwt.version>0.12.6</jjwt.version>
     <mybatis-plus-join.version>1.5.3</mybatis-plus-join.version>
     <mybatis-plus.version>3.5.11</mybatis-plus.version>
     <netty.version>4.2.0.Final</netty.version>
     <redisson.version>3.41.0</redisson.version>
-    <revision>0.0.1-SNAPSHOT</revision>
     <seata.version>1.6.1</seata.version>
     <skywalking.version>8.12.0</skywalking.version>
-    <spring-boot-admin.version>2.7.16</spring-boot-admin.version>
-    <spring-boot.version>2.7.18</spring-boot.version>
-    <spring-cloud-alibaba.version>2021.0.6.2</spring-cloud-alibaba.version>
-    <spring-cloud.version>2021.0.9</spring-cloud.version>
-    <spring.authorization.version>0.4.5</spring.authorization.version>
     <springdoc.version>1.8.0</springdoc.version>
     <therapi.version>0.15.0</therapi.version>
     <transmittable-thread-local.version>2.14.5</transmittable-thread-local.version>
@@ -83,6 +85,53 @@
 
   <dependencyManagement>
     <dependencies>
+      <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-dependencies</artifactId>
+        <version>${spring-boot.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework.cloud</groupId>
+        <artifactId>spring-cloud-dependencies</artifactId>
+        <version>${spring-cloud.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>com.alibaba.cloud</groupId>
+        <artifactId>spring-cloud-alibaba-dependencies</artifactId>
+        <version>${spring-cloud-alibaba.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>com.baomidou</groupId>
+        <artifactId>mybatis-plus-bom</artifactId>
+        <version>${mybatis-plus.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>io.netty</groupId>
+        <artifactId>netty-bom</artifactId>
+        <version>${netty.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+
+      <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-web</artifactId>
+        <version>${spring-boot.version}</version>
+        <exclusions>
+          <exclusion>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
+            <groupId>org.springframework.boot</groupId>
+          </exclusion>
+        </exclusions>
+      </dependency>
       <dependency>
         <groupId>com.alibaba</groupId>
         <artifactId>transmittable-thread-local</artifactId>
@@ -209,52 +258,6 @@
         <groupId>org.springdoc</groupId>
         <artifactId>springdoc-openapi-webmvc-core</artifactId>
         <version>${springdoc.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-web</artifactId>
-        <version>${spring-boot.version}</version>
-        <exclusions>
-          <exclusion>
-            <artifactId>spring-boot-starter-tomcat</artifactId>
-            <groupId>org.springframework.boot</groupId>
-          </exclusion>
-        </exclusions>
-      </dependency>
-      <dependency>
-        <groupId>com.alibaba.cloud</groupId>
-        <artifactId>spring-cloud-alibaba-dependencies</artifactId>
-        <version>${spring-cloud-alibaba.version}</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-      <dependency>
-        <groupId>com.baomidou</groupId>
-        <artifactId>mybatis-plus-bom</artifactId>
-        <version>${mybatis-plus.version}</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-      <dependency>
-        <groupId>io.netty</groupId>
-        <artifactId>netty-bom</artifactId>
-        <version>${netty.version}</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-      <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-dependencies</artifactId>
-        <version>${spring-boot.version}</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-      <dependency>
-        <groupId>org.springframework.cloud</groupId>
-        <artifactId>spring-cloud-dependencies</artifactId>
-        <version>${spring-cloud.version}</version>
-        <type>pom</type>
-        <scope>import</scope>
       </dependency>
     </dependencies>
   </dependencyManagement>

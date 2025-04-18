@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 
 env:
-  MAVEN_ARGS: -B -e -ntp
+  MAVEN_ARGS: -B -C -V -ntp -Dhttp.keepAlive=false -e
 
 jobs:
   publish:
